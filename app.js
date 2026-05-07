@@ -149,7 +149,7 @@ function sel(pageEl, label) {
     const l = f.querySelector('label'); if (l && l.textContent.trim() === label) return f.querySelector('select');
   } return null;
 }
-function sv(pageEl, label) { const s = sel(pageEl, label); return s ? s.value : ''; }
+function sv(pageEl, label) { const s = sel(pageEl, label); const v = s ? s.value : ''; return (!v || v === 'הכל') ? '' : v; }
 function ageR(pageEl) {
   const ins = pageEl.querySelectorAll('.age-num');
   return ins.length === 2 ? [parseInt(ins[0].value)||0, parseInt(ins[1].value)||120] : [0,120];
