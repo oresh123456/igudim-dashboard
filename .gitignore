@@ -8,7 +8,10 @@ __test_*
 
 # Old dashboard copies
 igudim_agudot_dashboard*
-data.js
+
+# Internal generator & intermediate files
+mock-data.js
+generate-mock-data.js
 
 # Claude internals
 .claude/
