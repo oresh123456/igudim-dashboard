@@ -1,0 +1,1753 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>דשבורד איגודים ואגודות · משרד התרבות והספורט</title>
+<script>if(sessionStorage.getItem('dashboard_auth')!=='ok')window.location.replace('index.html');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="mock-data.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #F5F1EB; --surface: #FFFFFF; --surface-soft: #FBF8F2;
+    --ink: #1A1A1A; --ink-muted: #6B6B6B; --ink-faint: #9A9A9A;
+    --line: #E5E1D8; --line-soft: #EFEBE3;
+    --primary: #0D5F73; --primary-soft: #E3EEF1;
+    --accent: #B45309; --accent-soft: #F7EBD8;
+    --women: #86198F; --women-soft: #F4E4F7;
+    --success: #2F7D5B; --danger: #B23A3A;
+    --radius: 6px; --radius-lg: 10px;
+  }
+  html { font-size: 15px; }
+  body {
+    font-family: 'Heebo', system-ui, sans-serif;
+    background: var(--bg); color: var(--ink); line-height: 1.55;
+    min-height: 100vh; -webkit-font-smoothing: antialiased;
+    font-feature-settings: "tnum" 1;
+  }
+
+  .tabs {
+    display: flex; align-items: stretch; gap: 0;
+    padding: 16px 32px 0;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+  }
+  .tab {
+    background: transparent; border: none;
+    padding: 14px 20px;
+    font-family: inherit; font-size: 14px; color: var(--ink-muted);
+    cursor: pointer; transition: color 0.15s ease;
+    font-weight: 400;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    white-space: nowrap;
+  }
+  .tab:hover { color: var(--ink); }
+  .tab.active { color: var(--ink); font-weight: 500; }
+  .tab[data-tab="bf"].active,
+  .tab[data-tab="ba"].active { border-bottom-color: var(--primary); }
+  .tab[data-tab="af"].active,
+  .tab[data-tab="aa"].active { border-bottom-color: var(--accent); }
+  .tab[data-tab="wg"].active,
+  .tab[data-tab="ws"].active { border-bottom-color: var(--women); }
+  .tab-divider {
+    align-self: stretch; width: 1px;
+    background: var(--line);
+    margin: 8px 8px 9px;
+  }
+  .tab-group-label {
+    align-self: center;
+    font-size: 10px; color: var(--ink-faint);
+    letter-spacing: 0.08em;
+    margin: 0 8px 0 4px;
+    padding-bottom: 2px;
+  }
+
+  main { padding: 24px 32px 60px; }
+  .page { display: none; }
+  .page.active { display: block; animation: fade 0.25s ease-out; }
+  @keyframes fade {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .filter-bar {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 14px 16px; margin-bottom: 18px;
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  }
+  .filter-bar-label {
+    font-size: 11px; color: var(--ink-muted);
+    letter-spacing: 0.04em;
+    border-left: 1px solid var(--line);
+    padding-left: 14px; margin-left: 4px;
+    align-self: stretch;
+    display: flex; align-items: center; gap: 4px;
+    font-weight: 400;
+  }
+  .filter-bar-label strong { font-weight: 600; color: var(--ink); }
+  .filter {
+    display: flex; flex-direction: column; gap: 4px;
+    flex: 1; min-width: 130px;
+  }
+  .filter label {
+    font-size: 10px; color: var(--ink-muted);
+    letter-spacing: 0.03em;
+  }
+  .filter select {
+    font-family: inherit; font-size: 13px; color: var(--ink);
+    background: var(--surface-soft);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 6px 10px;
+    cursor: pointer;
+    transition: border-color 0.15s;
+    appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' stroke='%236B6B6B' fill='none' stroke-width='1.5'/></svg>");
+    background-repeat: no-repeat;
+    background-position: left 10px center;
+    padding-left: 28px;
+  }
+  .filter select:hover { border-color: var(--ink-muted); }
+  .filter select:focus { outline: 2px solid var(--primary-soft); outline-offset: 1px; border-color: var(--primary); }
+  .filter-reset {
+    font-size: 12px; background: transparent; border: none;
+    cursor: pointer; align-self: end; padding: 7px 4px;
+    text-decoration: underline; text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+  }
+  .page[data-tab="bf"] .filter-reset,
+  .page[data-tab="ba"] .filter-reset { color: var(--primary); }
+  .page[data-tab="af"] .filter-reset,
+  .page[data-tab="aa"] .filter-reset { color: var(--accent); }
+  .page[data-tab="wg"] .filter-reset,
+  .page[data-tab="ws"] .filter-reset { color: var(--women); }
+
+  .age-range {
+    display: flex; align-items: center; gap: 6px;
+    background: var(--surface-soft); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 5px 10px;
+    transition: border-color 0.15s;
+  }
+  .age-range:hover { border-color: var(--ink-muted); }
+  .age-range:focus-within { outline: 2px solid var(--primary-soft); outline-offset: 1px; border-color: var(--primary); }
+  .age-num {
+    width: 100%; border: none; background: transparent;
+    font-family: inherit; font-size: 13px; color: var(--ink);
+    text-align: center; outline: none; padding: 1px 0;
+    appearance: textfield; -moz-appearance: textfield;
+    font-feature-settings: "tnum" 1;
+  }
+  .age-num::-webkit-outer-spin-button,
+  .age-num::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  .age-range .sep { color: var(--ink-faint); font-size: 12px; user-select: none; }
+
+  .kpis {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 12px; margin-bottom: 18px;
+  }
+  .kpi {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 14px 18px; position: relative; overflow: hidden;
+  }
+  .kpi::before {
+    content: ''; position: absolute;
+    top: 0; right: 0; bottom: 0; width: 3px;
+  }
+  .page[data-tab="bf"] .kpi::before,
+  .page[data-tab="ba"] .kpi::before { background: var(--primary); }
+  .page[data-tab="af"] .kpi::before,
+  .page[data-tab="aa"] .kpi::before { background: var(--accent); }
+  .page[data-tab="wg"] .kpi::before,
+  .page[data-tab="ws"] .kpi::before { background: var(--women); }
+  .kpi-label { font-size: 12px; color: var(--ink-muted); margin-bottom: 6px; font-weight: 400; }
+  .kpi-value { font-size: 26px; font-weight: 600; color: var(--ink); letter-spacing: -0.01em; line-height: 1.1; }
+
+  .grid {
+    display: grid; grid-template-columns: repeat(12, 1fr); gap: 14px;
+  }
+  .col-12 { grid-column: span 12; }
+  .col-8 { grid-column: span 8; }
+  .col-6 { grid-column: span 6; }
+  .col-4 { grid-column: span 4; }
+  .col-3 { grid-column: span 3; }
+  .card {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 16px 18px 18px;
+    display: flex; flex-direction: column;
+  }
+  .card-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 14px; gap: 10px;
+  }
+  .card-title { font-size: 14px; font-weight: 500; color: var(--ink); }
+  .card-meta { font-size: 11px; color: var(--ink-faint); letter-spacing: 0.02em; white-space: nowrap; }
+  .card-canvas-wrap { position: relative; width: 100%; }
+  .h-280 { height: 280px; } .h-300 { height: 300px; } .h-320 { height: 320px; } .h-360 { height: 360px; } .h-500 { height: 500px; }
+
+  .yoy-layout {
+    display: grid;
+    grid-template-columns: 1fr 240px;
+    gap: 22px;
+  }
+  .yoy-chart-wrap { position: relative; min-width: 0; }
+  .yoy-totals {
+    display: flex; flex-direction: column;
+    gap: 14px;
+    padding: 8px 22px 8px 0;
+    border-right: 1px solid var(--line);
+  }
+  .yoy-totals-label {
+    font-size: 12px; color: var(--ink-muted);
+    letter-spacing: 0.02em; font-weight: 500;
+  }
+  .yoy-totals-chart-wrap { flex: 1; position: relative; min-height: 0; }
+
+  .footer-note {
+    margin-top: 22px;
+    padding: 14px 18px;
+    background: var(--surface-soft);
+    border: 1px dashed var(--line);
+    border-radius: var(--radius-lg);
+    font-size: 12px; color: var(--ink-muted); line-height: 1.7;
+  }
+  .footer-note strong { color: var(--ink); font-weight: 500; }
+  .footer-note em { color: var(--ink); font-style: normal; font-weight: 500; }
+  .footer-note code {
+    font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+    font-size: 11px;
+    background: var(--surface);
+    padding: 1px 5px; border-radius: 3px;
+    color: var(--women);
+  }
+
+  @media (max-width: 1100px) {
+    .col-8, .col-6, .col-4, .col-3 { grid-column: span 12; }
+    .kpis { grid-template-columns: repeat(2, 1fr); }
+    .tabs { overflow-x: auto; flex-wrap: nowrap; }
+    .yoy-layout { grid-template-columns: 1fr; }
+    .yoy-totals {
+      border-right: none; padding: 18px 0 0 0;
+      border-top: 1px solid var(--line);
+    }
+    .yoy-totals-chart-wrap { min-height: 140px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="tabs">
+  <span class="tab-group-label">תקציב</span>
+  <button class="tab active" data-tab="bf">איגודים</button>
+  <button class="tab" data-tab="ba">אגודות</button>
+  <span class="tab-divider"></span>
+  <span class="tab-group-label">ספורטאים</span>
+  <button class="tab" data-tab="af">איגודים</button>
+  <button class="tab" data-tab="aa">אגודות</button>
+  <span class="tab-divider"></span>
+  <span class="tab-group-label">השוואה מגדרית</span>
+  <button class="tab" data-tab="wg">ספורט נשים</button>
+  <button class="tab" data-tab="ws">ניקוד נשים</button>
+</nav>
+
+<main>
+
+  <!-- ============================================ -->
+  <!-- ===== PAGE 1: BUDGET / FEDERATIONS ===== -->
+  <!-- ============================================ -->
+  <section class="page active" id="page-bf" data-tab="bf">
+    <div class="filter-bar">
+      <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
+      <div class="filter">
+        <label>איגוד</label>
+        <select><option>הכל</option><option>כדורגל</option><option>כדורסל</option><option>שחייה</option><option>אתלטיקה</option><option>טניס</option></select>
+      </div>
+      <div class="filter">
+        <label>ענף</label>
+        <select><option>הכל</option><option>כדורגל</option><option>כדורסל</option><option>שחייה</option><option>אתלטיקה</option><option>טניס</option><option>כדורעף</option><option>התעמלות</option><option>ג'ודו</option></select>
+      </div>
+      <div class="filter">
+        <label>סיווג אולימפי</label>
+        <select><option>הכל</option><option>אולימפי</option><option>פרה-אולימפי</option><option>לא אולימפי</option></select>
+      </div>
+      <div class="filter">
+        <label>סוג ענף</label>
+        <select><option>הכל</option><option>אישי</option><option>קבוצתי</option></select>
+      </div>
+      <button class="filter-reset">איפוס פילטרים</button>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi"><div class="kpi-label">סך תקציב לאיגודים</div><div class="kpi-value">₪84.5M</div></div>
+      <div class="kpi"><div class="kpi-label">איגודים מתוקצבים</div><div class="kpi-value">64</div></div>
+      <div class="kpi"><div class="kpi-label">תקציב ממוצע לאיגוד</div><div class="kpi-value">₪1.32M</div></div>
+      <div class="kpi"><div class="kpi-label">מתוכם אולימפיים</div><div class="kpi-value">23</div></div>
+    </div>
+
+    <div class="grid">
+      <div class="card col-8">
+        <div class="card-head"><span class="card-title">תקציב לפי איגוד</span><span class="card-meta">מקלות אופקיים · 10 מובילים</span></div>
+        <div class="card-canvas-wrap h-360"><canvas id="bf_byFederation"></canvas></div>
+      </div>
+      <div class="card col-4">
+        <div class="card-head"><span class="card-title">תקציב לפי סיווג אולימפי</span><span class="card-meta">עוגה</span></div>
+        <div class="card-canvas-wrap h-360"><canvas id="bf_olympic"></canvas></div>
+      </div>
+
+      <div class="card col-4">
+        <div class="card-head"><span class="card-title">תקציב לפי סוג ענף</span><span class="card-meta">עוגה · אישי / קבוצתי</span></div>
+        <div class="card-canvas-wrap h-300"><canvas id="bf_branchType"></canvas></div>
+      </div>
+      <div class="card col-8">
+        <div class="card-head"><span class="card-title">איגודים שטרם השלימו תנאי סף</span><span class="card-meta">מקלות מוערמים · צבע = איגוד · אורך הבר = מספר איגודים שטרם השלימו</span></div>
+        <div class="card-canvas-wrap h-360"><canvas id="bf_thresholdBreakdown"></canvas></div>
+      </div>
+
+      <div class="card col-12">
+        <div class="card-head"><span class="card-title">תקציב לאיגוד · השוואת 2025 ל-2026</span><span class="card-meta">מקלות מקובצים · 10 איגודים מובילים</span></div>
+        <div class="yoy-layout h-500">
+          <div class="yoy-chart-wrap"><canvas id="bf_yoyComparison"></canvas></div>
+          <div class="yoy-totals">
+            <div class="yoy-totals-label">סה"כ — כל האיגודים</div>
+            <div class="yoy-totals-chart-wrap"><canvas id="bf_yoyTotal"></canvas></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      <strong>הערה תכנונית:</strong> דף זה מסתמך על FACT ברמת איגוד × {סיווג אולימפי, סוג ענף, עמידה בסף}. ממדי מיקום (יישוב, פריפריאליות, סוציו-אקונומי) אינם רלוונטיים לרמה זו — איגוד הוא גוף ארצי.
+    </div>
+  </section>
+
+
+  <!-- ============================================ -->
+  <!-- ===== PAGE 2: BUDGET / ASSOCIATIONS ===== -->
+  <!-- ============================================ -->
+  <section class="page" id="page-ba" data-tab="ba">
+    <div class="filter-bar">
+      <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
+      <div class="filter">
+        <label>אגודה</label>
+        <select><option>הכל</option></select>
+      </div>
+      <div class="filter">
+        <label>קבוצה</label>
+        <select><option>הכל</option></select>
+      </div>
+      <div class="filter">
+        <label>ענף</label>
+        <select><option>הכל</option><option>כדורגל</option><option>כדורסל</option><option>שחייה</option><option>אתלטיקה</option><option>טניס</option><option>כדורעף</option><option>התעמלות</option><option>ג'ודו</option></select>
+      </div>
+      <div class="filter">
+        <label>סיווג אולימפי</label>
+        <select><option>הכל</option><option>אולימפי</option><option>פרה-אולימפי</option><option>לא אולימפי</option></select>
+      </div>
+      <div class="filter">
+        <label>סוג ענף</label>
+        <select><option>הכל</option><option>אישי</option><option>קבוצתי</option></select>
+      </div>
+      <div class="filter">
+        <label>תחרויות</label>
+        <select><option>הכל</option><option>אליפות אירופה</option><option>שום תחרות</option></select>
+      </div>
+      <button class="filter-reset">איפוס פילטרים</button>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi"><div class="kpi-label">סך תקציב לאגודות</div><div class="kpi-value">₪63.6M</div></div>
+      <div class="kpi"><div class="kpi-label">אגודות מתוקצבות</div><div class="kpi-value">412</div></div>
+      <div class="kpi"><div class="kpi-label">תקציב ממוצע לאגודה</div><div class="kpi-value">₪154K</div></div>
+      <div class="kpi"><div class="kpi-label">מספר קבוצות</div><div class="kpi-value">1,247</div></div>
+    </div>
+
+    <div class="grid">
+      <div class="card col-12">
+        <div class="card-head"><span class="card-title">תקציב לפי אגודה</span><span class="card-meta">מקלות אופקיים · 10 מובילות</span></div>
+        <div class="card-canvas-wrap h-360"><canvas id="ba_byAssoc"></canvas></div>
+      </div>
+
+      <div class="card col-8">
+        <div class="card-head"><span class="card-title">תקציב לפי רשות מקומית</span><span class="card-meta">מקלות אופקיים · 10 מובילות</span></div>
+        <div class="card-canvas-wrap h-360"><canvas id="ba_byCity"></canvas></div>
+      </div>
+      <div class="card col-4">
+        <div class="card-head"><span class="card-title">תקציב לפי רמת פריפריאליות</span><span class="card-meta">מקלות אופקיים</span></div>
+        <div class="card-canvas-wrap h-360"><canvas id="ba_byPeriphery"></canvas></div>
+      </div>
+
+      <div class="card col-12">
+        <div class="card-head"><span class="card-title">תקציב לפי מדד סוציו-אקונומי</span><span class="card-meta">גרף מגמה (פס) · אשכולות 1–10 (1 = נמוך, 10 = גבוה)</span></div>
+        <div class="card-canvas-wrap h-280"><canvas id="ba_bySocio"></canvas></div>
+      </div>
+
+      <div class="card col-12">
+        <div class="card-head"><span class="card-title">תקציב לקבוצות</span><span class="card-meta">מקלות אופקיים · 10 מובילות</span></div>
+        <div class="card-canvas-wrap h-360"><canvas id="ba_byTeam"></canvas></div>
+      </div>
+
+      <div class="card col-12">
+        <div class="card-head"><span class="card-title">אגודות שטרם השלימו תנאי סף</span><span class="card-meta">מקלות מוערמים · צבע = אגודה</span></div>
+        <div class="card-canvas-wrap h-360"><canvas id="ba_thresholdBreakdown"></canvas></div>
+      </div>
+
+      <div class="card col-12">
+        <div class="card-head"><span class="card-title">תקציב לאגודה · השוואת 2025 ל-2026</span><span class="card-meta">מקלות מקובצים · 10 אגודות מובילות</span></div>
+        <div class="yoy-layout h-500">
+          <div class="yoy-chart-wrap"><canvas id="ba_yoyComparison"></canvas></div>
+          <div class="yoy-totals">
+            <div class="yoy-totals-label">סה"כ — כל האגודות</div>
+            <div class="yoy-totals-chart-wrap"><canvas id="ba_yoyTotal"></canvas></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      <strong>הערה תכנונית:</strong> דף זה מסתמך על FACT ברמת אגודה × {יישוב, פריפריאליות, סוציו-אקונומי, סוג ענף, תחרויות, קבוצה, עמידה בסף}.
+    </div>
+  </section>
+
+
+  <!-- ============================================ -->
+  <!-- ===== PAGE 3: ATHLETES / FEDERATIONS ===== -->
+  <!-- ============================================ -->
+  <section class="page" id="page-af" data-tab="af">
+    <div class="filter-bar">
+      <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
+      <div class="filter">
+        <label>איגוד</label>
+        <select><option>הכל</option><option>כדורגל</option><option>כדורסל</option><option>שחייה</option><option>אתלטיקה</option><option>טניס</option></select>
+      </div>
+      <div class="filter">
+        <label>ענף</label>
+        <select><option>הכל</option><option>כדורגל</option><option>כדורסל</option><option>שחייה</option><option>אתלטיקה</option><option>טניס</option><option>כדורעף</option><option>התעמלות</option><option>ג'ודו</option></select>
+      </div>
+      <div class="filter">
+        <label>סיווג אולימפי</label>
+        <select><option>הכל</option><option>אולימפי</option><option>פרה-אולימפי</option><option>לא אולימפי</option></select>
+      </div>
+      <div class="filter">
+        <label>סוג ענף</label>
+        <select><option>הכל</option><option>אישי</option><option>קבוצתי</option></select>
+      </div>
+      <div class="filter">
+        <label>מגדר</label>
+        <select><option>הכל</option><option>נשים</option><option>גברים</option></select>
+      </div>
+      <div class="filter">
+        <label>שכבת גיל (טווח)</label>
+        <div class="age-range">
+          <input type="number" class="age-num" min="0" max="120" value="6" aria-label="גיל מינימלי">
+          <span class="sep">–</span>
+          <input type="number" class="age-num" min="0" max="120" value="50" aria-label="גיל מקסימלי">
+        </div>
+      </div>
+      <button class="filter-reset">איפוס פילטרים</button>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi"><div class="kpi-label">סך ספורטאים באיגודים</div><div class="kpi-value">87,340</div></div>
+      <div class="kpi"><div class="kpi-label">איגודים פעילים</div><div class="kpi-value">64</div></div>
+      <div class="kpi"><div class="kpi-label">ממוצע ספורטאים לאיגוד</div><div class="kpi-value">1,365</div></div>
+      <div class="kpi"><div class="kpi-label">אחוז נשים</div><div class="kpi-value">38.2%</div></div>
+    </div>
+
+    <div class="grid">
+      <div class="card col-8">
+        <div class="card-head"><span class="card-title">ספורטאים לפי איגוד</span><span class="card-meta">מקלות אופקיים · 10 מובילים</span></div>
+        <div class="card-canvas-wrap h-360"><canvas id="af_byFederation"></canvas></div>
+      </div>
+      <div class="card col-4">
+        <div class="card-head"><span class="card-title">לפי סיווג אולימפי</span><span class="card-meta">עוגה</span></div>
+        <div class="card-canvas-wrap h-360"><canvas id="af_olympic"></canvas></div>
+      </div>
+
+      <div class="card col-4">
+        <div class="card-head"><span class="card-title">לפי סוג ענף</span><span class="card-meta">עוגה</span></div>
+        <div class="card-canvas-wrap h-320"><canvas id="af_branchType"></canvas></div>
+      </div>
+      <div class="card col-8">
+        <div class="card-head"><span class="card-title">חלוקה מגדרית לפי איגוד</span><span class="card-meta">מקלות מוערמים · 8 מובילים</span></div>
+        <div class="card-canvas-wrap h-320"><canvas id="af_genderByFed"></canvas></div>
+      </div>
+
+      <div class="card col-12">
+        <div class="card-head"><span class="card-title">ספורטאים לפי שכבת גיל — נשים מול גברים</span><span class="card-meta">קווי מגמה מקבילים · גיל 6–50</span></div>
+        <div class="card-canvas-wrap h-300"><canvas id="af_byAge"></canvas></div>
+      </div>
+
+      <div class="card col-12">
+        <div class="card-head"><span class="card-title">כמות ספורטאים באיגודים · השוואת 2025 ל-2026</span><span class="card-meta">מקלות מקובצים · 10 איגודים מובילים</span></div>
+        <div class="yoy-layout h-500">
+          <div class="yoy-chart-wrap"><canvas id="af_yoyComparison"></canvas></div>
+          <div class="yoy-totals">
+            <div class="yoy-totals-label">סה"כ — כל הספורטאים באיגודים</div>
+            <div class="yoy-totals-chart-wrap"><canvas id="af_yoyTotal"></canvas></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      <strong>הערה תכנונית:</strong> ספורטאים תמיד רשומים ברמת אגודה. דף זה הוא תצוגת aggregation בלבד — סיכום לפי איגוד-אם.
+    </div>
+  </section>
+
+
+  <!-- ============================================ -->
+  <!-- ===== PAGE 4: ATHLETES / ASSOCIATIONS ===== -->
+  <!-- ============================================ -->
+  <section class="page" id="page-aa" data-tab="aa">
+    <div class="filter-bar">
+      <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
+      <div class="filter">
+        <label>איגוד-אם</label>
+        <select><option>הכל</option><option>כדורגל</option><option>כדורסל</option><option>שחייה</option><option>אתלטיקה</option></select>
+      </div>
+      <div class="filter">
+        <label>אגודה</label>
+        <select><option>הכל</option></select>
+      </div>
+      <div class="filter">
+        <label>קבוצה</label>
+        <select><option>הכל</option></select>
+      </div>
+      <div class="filter">
+        <label>ענף</label>
+        <select><option>הכל</option><option>כדורגל</option><option>כדורסל</option><option>שחייה</option><option>אתלטיקה</option><option>טניס</option><option>כדורעף</option><option>התעמלות</option><option>ג'ודו</option></select>
+      </div>
+      <div class="filter">
+        <label>סיווג אולימפי</label>
+        <select><option>הכל</option><option>אולימפי</option><option>פרה-אולימפי</option><option>לא אולימפי</option></select>
+      </div>
+      <div class="filter">
+        <label>סוג ענף</label>
+        <select><option>הכל</option><option>אישי</option><option>קבוצתי</option></select>
+      </div>
+      <div class="filter">
+        <label>מגדר</label>
+        <select><option>הכל</option><option>נשים</option><option>גברים</option></select>
+      </div>
+      <div class="filter">
+        <label>שכבת גיל (טווח)</label>
+        <div class="age-range">
+          <input type="number" class="age-num" min="0" max="120" value="6" aria-label="גיל מינימלי">
+          <span class="sep">–</span>
+          <input type="number" class="age-num" min="0" max="120" value="50" aria-label="גיל מקסימלי">
+        </div>
+      </div>
+      <button class="filter-reset">איפוס פילטרים</button>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi"><div class="kpi-label">סך ספורטאים באגודות</div><div class="kpi-value">87,340</div></div>
+      <div class="kpi"><div class="kpi-label">אגודות פעילות</div><div class="kpi-value">412</div></div>
+      <div class="kpi"><div class="kpi-label">ממוצע לאגודה</div><div class="kpi-value">212</div></div>
+      <div class="kpi"><div class="kpi-label">מספר קבוצות</div><div class="kpi-value">1,247</div></div>
+    </div>
+
+    <div class="grid">
+      <div class="card col-12">
+        <div class="card-head"><span class="card-title">ספורטאים לפי אגודה</span><span class="card-meta">מקלות אופקיים · 10 מובילות</span></div>
+        <div class="card-canvas-wrap h-360"><canvas id="aa_byAssoc"></canvas></div>
+      </div>
+
+      <div class="card col-8">
+        <div class="card-head"><span class="card-title">ספורטאים לפי רשות מקומית</span><span class="card-meta">מקלות אופקיים · 10 מובילות</span></div>
+        <div class="card-canvas-wrap h-360"><canvas id="aa_byCity"></canvas></div>
+      </div>
+      <div class="card col-4">
+        <div class="card-head"><span class="card-title">לפי רמת פריפריאליות</span><span class="card-meta">מקלות אופקיים</span></div>
+        <div class="card-canvas-wrap h-360"><canvas id="aa_byPeriphery"></canvas></div>
+      </div>
+
+      <div class="card col-12">
+        <div class="card-head"><span class="card-title">ספורטאים לפי מדד סוציו-אקונומי</span><span class="card-meta">גרף מגמה · אשכולות 1–10</span></div>
+        <div class="card-canvas-wrap h-280"><canvas id="aa_bySocio"></canvas></div>
+      </div>
+
+      <div class="card col-6">
+        <div class="card-head"><span class="card-title">ספורטאים לקבוצות</span><span class="card-meta">מקלות אופקיים · 10 מובילות</span></div>
+        <div class="card-canvas-wrap h-360"><canvas id="aa_byTeam"></canvas></div>
+      </div>
+      <div class="card col-6">
+        <div class="card-head"><span class="card-title">ספורטאים לפי שכבת גיל — נשים מול גברים</span><span class="card-meta">קווי מגמה מקבילים · גיל 6–50</span></div>
+        <div class="card-canvas-wrap h-360"><canvas id="aa_byAge"></canvas></div>
+      </div>
+
+      <div class="card col-12">
+        <div class="card-head"><span class="card-title">כמות ספורטאים באגודות · השוואת 2025 ל-2026</span><span class="card-meta">מקלות מקובצים · 10 אגודות מובילות</span></div>
+        <div class="yoy-layout h-500">
+          <div class="yoy-chart-wrap"><canvas id="aa_yoyComparison"></canvas></div>
+          <div class="yoy-totals">
+            <div class="yoy-totals-label">סה"כ — כל הספורטאים באגודות</div>
+            <div class="yoy-totals-chart-wrap"><canvas id="aa_yoyTotal"></canvas></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      <strong>הערה תכנונית:</strong> דף זה הוא רמת הגרנולריות הנמוכה ביותר — תעודת זהות × אגודה × קבוצה × שכבת גיל.
+    </div>
+  </section>
+
+
+  <!-- ============================================ -->
+  <!-- ===== PAGE 5: WOMEN'S SPORT (counts + composition) ===== -->
+  <!-- ============================================ -->
+  <section class="page" id="page-wg" data-tab="wg">
+    <div class="filter-bar">
+      <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
+      <div class="filter">
+        <label>איגוד</label>
+        <select><option>הכל</option><option>כדורגל</option><option>כדורסל</option><option>שחייה</option><option>אתלטיקה</option><option>טניס</option></select>
+      </div>
+      <div class="filter">
+        <label>אגודה</label>
+        <select><option>הכל</option></select>
+      </div>
+      <div class="filter">
+        <label>קבוצה</label>
+        <select><option>הכל</option></select>
+      </div>
+      <div class="filter">
+        <label>ענף</label>
+        <select><option>הכל</option><option>כדורגל</option><option>כדורסל</option><option>שחייה</option><option>אתלטיקה</option><option>טניס</option><option>כדורעף</option><option>התעמלות</option><option>ג'ודו</option></select>
+      </div>
+      <div class="filter">
+        <label>סיווג אולימפי</label>
+        <select><option>הכל</option><option>אולימפי</option><option>פרה-אולימפי</option><option>לא אולימפי</option></select>
+      </div>
+      <div class="filter">
+        <label>סוג ענף</label>
+        <select><option>הכל</option><option>אישי</option><option>קבוצתי</option></select>
+      </div>
+      <div class="filter">
+        <label>שכבת גיל (טווח)</label>
+        <div class="age-range">
+          <input type="number" class="age-num" min="0" max="120" value="6" aria-label="גיל מינימלי">
+          <span class="sep">–</span>
+          <input type="number" class="age-num" min="0" max="120" value="50" aria-label="גיל מקסימלי">
+        </div>
+      </div>
+      <button class="filter-reset">איפוס פילטרים</button>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi"><div class="kpi-label">סה"כ ספורטאיות</div><div class="kpi-value">33,360</div></div>
+      <div class="kpi"><div class="kpi-label">סה"כ מאמנות</div><div class="kpi-value">426</div></div>
+      <div class="kpi"><div class="kpi-label">נשים בתפקידי הנהלה</div><div class="kpi-value">187</div></div>
+      <div class="kpi"><div class="kpi-label">חלק נשים מסך הספורטאים</div><div class="kpi-value">38.2%</div></div>
+    </div>
+
+    <div class="grid">
+
+      <!-- Section A: gender YoY trend -->
+      <div class="card col-12">
+        <div class="card-head"><span class="card-title">אחוז שינוי בהישגיות — נשים מול גברים</span><span class="card-meta">YoY % · ההפרש (קו כהה) חיובי = הפער מצטמצם</span></div>
+        <div class="card-canvas-wrap h-320"><canvas id="wg_yoyGenderTrend"></canvas></div>
+      </div>
+
+      <!-- Section B: women's count breakdowns -->
+      <div class="card col-6">
+        <div class="card-head"><span class="card-title">כמות נשים לפי ענפים</span><span class="card-meta">מקלות אופקיים · 10 מובילים</span></div>
+        <div class="card-canvas-wrap h-360"><canvas id="wg_byBranch"></canvas></div>
+      </div>
+      <div class="card col-3">
+        <div class="card-head"><span class="card-title">לפי סיווג ענף</span><span class="card-meta">עוגה</span></div>
+        <div class="card-canvas-wrap h-360"><canvas id="wg_byBranchType"></canvas></div>
+      </div>
+      <div class="card col-3">
+        <div class="card-head"><span class="card-title">לפי סיווג אולימפי</span><span class="card-meta">עוגה</span></div>
+        <div class="card-canvas-wrap h-360"><canvas id="wg_byOlympic"></canvas></div>
+      </div>
+
+      <!-- Section C: teams + coaches + management -->
+      <div class="card col-6">
+        <div class="card-head"><span class="card-title">כמות נבחרות נשים — לפי איגוד</span><span class="card-meta">מקלות אופקיים · 10 מובילים</span></div>
+        <div class="card-canvas-wrap h-360"><canvas id="wg_teamsByFed"></canvas></div>
+      </div>
+      <div class="card col-6">
+        <div class="card-head"><span class="card-title">כמות קבוצות נשים — לפי אגודה</span><span class="card-meta">מקלות אופקיים · 10 מובילות</span></div>
+        <div class="card-canvas-wrap h-360"><canvas id="wg_teamsByAssoc"></canvas></div>
+      </div>
+
+      <div class="card col-6">
+        <div class="card-head"><span class="card-title">כמות מאמנות — לפי איגוד</span><span class="card-meta">מקלות אופקיים · 10 מובילים</span></div>
+        <div class="card-canvas-wrap h-360"><canvas id="wg_coachesByFed"></canvas></div>
+      </div>
+      <div class="card col-6">
+        <div class="card-head"><span class="card-title">נשים בתפקידי הנהלה — לפי איגוד</span><span class="card-meta">מקלות אופקיים · 10 מובילים</span></div>
+        <div class="card-canvas-wrap h-360"><canvas id="wg_managementByFed"></canvas></div>
+      </div>
+
+      <!-- Section D: gender comparison -->
+      <div class="card col-12">
+        <div class="card-head"><span class="card-title">ספורטאים לפי שכבת גיל — נשים מול גברים</span><span class="card-meta">קווי מגמה מקבילים · גיל 6–50</span></div>
+        <div class="card-canvas-wrap h-320"><canvas id="wg_ageByGender"></canvas></div>
+      </div>
+
+      <div class="card col-6">
+        <div class="card-head"><span class="card-title">רמה סוציו-אקונומית — נשים מול גברים</span><span class="card-meta">מקלות מקובצים · אשכולות 1–10</span></div>
+        <div class="card-canvas-wrap h-360"><canvas id="wg_socioByGender"></canvas></div>
+      </div>
+      <div class="card col-6">
+        <div class="card-head"><span class="card-title">רמת פריפריאליות — נשים מול גברים</span><span class="card-meta">מקלות מקובצים · אשכולות 1–5</span></div>
+        <div class="card-canvas-wrap h-360"><canvas id="wg_periByGender"></canvas></div>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      <strong>הערה תכנונית:</strong> כל הנתונים מגיעים מ-<code>FACT_support_request_spo</code> עם השדות <code>female_cnt</code>, <code>male_cnt</code>, <code>female_coaches_cnt</code>, <code>female_management_cnt</code>. הדף מתמקד ב<em>כמויות</em> ובהשוואה מגדרית. גרפי <em>ניקוד נשים</em> נמצאים בלשונית "ניקוד נשים".
+    </div>
+  </section>
+
+
+  <!-- ============================================ -->
+  <!-- ===== PAGE 6: WOMEN'S SCORE ===== -->
+  <!-- ============================================ -->
+  <section class="page" id="page-ws" data-tab="ws">
+    <div class="filter-bar">
+      <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
+      <div class="filter">
+        <label>איגוד</label>
+        <select><option>הכל</option><option>כדורגל</option><option>כדורסל</option><option>שחייה</option><option>אתלטיקה</option><option>טניס</option></select>
+      </div>
+      <div class="filter">
+        <label>אגודה</label>
+        <select><option>הכל</option></select>
+      </div>
+      <div class="filter">
+        <label>קבוצה</label>
+        <select><option>הכל</option></select>
+      </div>
+      <div class="filter">
+        <label>ענף</label>
+        <select><option>הכל</option><option>כדורגל</option><option>כדורסל</option><option>שחייה</option><option>אתלטיקה</option><option>טניס</option><option>כדורעף</option><option>התעמלות</option><option>ג'ודו</option></select>
+      </div>
+      <div class="filter">
+        <label>סיווג אולימפי</label>
+        <select><option>הכל</option><option>אולימפי</option><option>פרה-אולימפי</option><option>לא אולימפי</option></select>
+      </div>
+      <div class="filter">
+        <label>סוג ענף</label>
+        <select><option>הכל</option><option>אישי</option><option>קבוצתי</option></select>
+      </div>
+      <div class="filter">
+        <label>שכבת גיל (טווח)</label>
+        <div class="age-range">
+          <input type="number" class="age-num" min="0" max="120" value="6" aria-label="גיל מינימלי">
+          <span class="sep">–</span>
+          <input type="number" class="age-num" min="0" max="120" value="50" aria-label="גיל מקסימלי">
+        </div>
+      </div>
+      <button class="filter-reset">איפוס פילטרים</button>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi"><div class="kpi-label">סך ניקוד הישגיות נשים</div><div class="kpi-value">2,612</div></div>
+      <div class="kpi"><div class="kpi-label">ניקוד קידום ספורט נשים</div><div class="kpi-value">3,847</div></div>
+      <div class="kpi"><div class="kpi-label">יחס ניקוד נשים/גברים</div><div class="kpi-value">0.71</div></div>
+      <div class="kpi"><div class="kpi-label">חלק נשים בניקוד הישגיות</div><div class="kpi-value">30.7%</div></div>
+    </div>
+
+    <div class="grid">
+
+      <!-- Section A: trend over years -->
+      <div class="card col-12">
+        <div class="card-head"><span class="card-title">ניקוד קידום נשים — לפי שנים</span><span class="card-meta">קו מגמה · סך כללי</span></div>
+        <div class="card-canvas-wrap h-320"><canvas id="ws_promoTrend"></canvas></div>
+      </div>
+
+      <!-- Section B: score distribution mirrors -->
+      <div class="card col-6">
+        <div class="card-head"><span class="card-title">ניקוד נשים לפי ענפים</span><span class="card-meta">מקלות אופקיים · 10 מובילים</span></div>
+        <div class="card-canvas-wrap h-360"><canvas id="ws_byScoreBranch"></canvas></div>
+      </div>
+      <div class="card col-3">
+        <div class="card-head"><span class="card-title">לפי סיווג ענף</span><span class="card-meta">עוגה</span></div>
+        <div class="card-canvas-wrap h-360"><canvas id="ws_byScoreBranchType"></canvas></div>
+      </div>
+      <div class="card col-3">
+        <div class="card-head"><span class="card-title">לפי סיווג אולימפי</span><span class="card-meta">עוגה</span></div>
+        <div class="card-canvas-wrap h-360"><canvas id="ws_byScoreOlympic"></canvas></div>
+      </div>
+
+      <!-- Section C: gender comparison on score -->
+      <div class="card col-12">
+        <div class="card-head"><span class="card-title">ניקוד לפי שכבת גיל — נשים מול גברים</span><span class="card-meta">קווי מגמה מקבילים · גיל 6–50</span></div>
+        <div class="card-canvas-wrap h-320"><canvas id="ws_ageScoreByGender"></canvas></div>
+      </div>
+
+      <div class="card col-6">
+        <div class="card-head"><span class="card-title">ניקוד לפי רמה סוציו-אקונומית — נשים מול גברים</span><span class="card-meta">מקלות מקובצים · אשכולות 1–10</span></div>
+        <div class="card-canvas-wrap h-360"><canvas id="ws_socioScoreByGender"></canvas></div>
+      </div>
+      <div class="card col-6">
+        <div class="card-head"><span class="card-title">ניקוד לפי רמת פריפריאליות — נשים מול גברים</span><span class="card-meta">מקלות מקובצים · אשכולות 1–5</span></div>
+        <div class="card-canvas-wrap h-360"><canvas id="ws_periScoreByGender"></canvas></div>
+      </div>
+
+      <!-- Section D: women's achievement score by demographic context -->
+      <div class="card col-6">
+        <div class="card-head"><span class="card-title">ניקוד הישגיות נשים — לפי רמה סוציו-אקונומית</span><span class="card-meta">קו מגמה · אשכולות 1–10</span></div>
+        <div class="card-canvas-wrap h-320"><canvas id="ws_byScoreSocio"></canvas></div>
+      </div>
+      <div class="card col-6">
+        <div class="card-head"><span class="card-title">ניקוד הישגיות נשים — לפי רמת פריפריאליות</span><span class="card-meta">מקלות אופקיים · אשכולות 1–5</span></div>
+        <div class="card-canvas-wrap h-320"><canvas id="ws_byScorePeri"></canvas></div>
+      </div>
+
+      <div class="card col-12">
+        <div class="card-head"><span class="card-title">ניקוד הישגיות נשים — לפי רשות מקומית</span><span class="card-meta">מקלות אופקיים · 12 רשויות מובילות</span></div>
+        <div class="card-canvas-wrap h-360"><canvas id="ws_byScoreCity"></canvas></div>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      <strong>הערה תכנונית:</strong> דף זה מתמקד ב<em>ניקוד</em> — <code>female_score</code>, <code>female_achievement_score</code>, <code>women_promotion_score</code>. כל גרף שיש לו תאומה של "כמות" בדף "ספורט נשים" מופיע כאן בגרסת "ניקוד" — כל גרסה עונה על שאלה אחרת: כמות = "כמה נשים", ניקוד = "כמה הן מצליחות".
+    </div>
+  </section>
+
+</main>
+
+<script>
+(function() {
+  const tabs = document.querySelectorAll('.tab');
+  const pages = document.querySelectorAll('.page');
+  const renderedPages = new Set(['bf']);
+
+  tabs.forEach(t => {
+    t.addEventListener('click', () => {
+      const target = t.dataset.tab;
+      tabs.forEach(x => x.classList.toggle('active', x === t));
+      pages.forEach(p => p.classList.toggle('active', p.id === 'page-' + target));
+      if (!renderedPages.has(target)) {
+        renderedPages.add(target);
+        if (target === 'ba') renderBA();
+        if (target === 'af') renderAF();
+        if (target === 'aa') renderAA();
+        if (target === 'wg') renderWG();
+        if (target === 'ws') renderWS();
+      }
+    });
+  });
+
+  Chart.defaults.font.family = "'Heebo', sans-serif";
+  Chart.defaults.font.size = 12;
+  Chart.defaults.color = '#1A1A1A';
+  Chart.defaults.borderColor = '#E5E1D8';
+
+  const TEAL = '#0D5F73', TEAL_LIGHT = '#5BB1C7', TEAL_PALE = '#B8DDE9';
+  const AMBER = '#B45309', AMBER_LIGHT = '#EBA75C', AMBER_PALE = '#F7DBB1';
+  const WOMEN = '#86198F', WOMEN_LIGHT = '#C57FCF', WOMEN_PALE = '#E8C8ED';
+  const ENTITY_COLORS = ['#9F1239','#C2410C','#92400E','#A16207','#3F6212','#0F766E','#1D4ED8','#5B21B6','#86198F','#9D174D','#7C2D12','#1F2937'];
+
+  const fmtM = (v) => '₪' + v.toLocaleString('he-IL') + 'M';
+  const fmtNum = (v) => v.toLocaleString('he-IL');
+
+  // ===== Universal data labels plugin =====
+  const dataLabelsPlugin = {
+    id: 'dataLabels',
+    afterDatasetsDraw(chart, args, opts) {
+      if (opts && opts.display === false) return;
+      const ctx = chart.ctx;
+      const chartType = chart.config.type;
+      const defaultFmt = (v) => (typeof v === 'number') ? v.toLocaleString('he-IL') : String(v);
+      const fmt = (opts && opts.formatter) || defaultFmt;
+      ctx.save();
+      ctx.font = '600 10px Heebo, sans-serif';
+      ctx.fillStyle = '#1A1A1A';
+      chart.data.datasets.forEach((dataset, dsIdx) => {
+        if (dataset.dataLabels && dataset.dataLabels.display === false) return;
+        const meta = chart.getDatasetMeta(dsIdx);
+        if (meta.hidden) return;
+        meta.data.forEach((element, idx) => {
+          const raw = dataset.data[idx];
+          if (raw == null) return;
+          let value, displayText;
+          if (typeof raw === 'object') { value = raw.y; displayText = raw.name || fmt(raw.y); }
+          else { value = raw; displayText = fmt(value); }
+          if (chartType === 'doughnut' || chartType === 'pie') {
+            const pos = element.tooltipPosition();
+            ctx.fillStyle = '#FFFFFF';
+            ctx.font = '700 12px Heebo, sans-serif';
+            ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+            ctx.fillText(value + '%', pos.x, pos.y);
+            ctx.fillStyle = '#1A1A1A';
+            ctx.font = '600 10px Heebo, sans-serif';
+            return;
+          }
+          if (chartType === 'scatter' || chartType === 'bubble') {
+            ctx.textAlign = 'right'; ctx.textBaseline = 'bottom';
+            ctx.font = '500 10px Heebo, sans-serif';
+            ctx.fillText(displayText, element.x - 6, element.y - 2);
+            ctx.font = '600 10px Heebo, sans-serif';
+            return;
+          }
+          const isHorizontalBar = chartType === 'bar' && chart.options.indexAxis === 'y';
+          if (isHorizontalBar) {
+            ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+            ctx.fillText(displayText, element.x + 4, element.y);
+          } else if (chartType === 'line') {
+            ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
+            ctx.fillText(displayText, element.x, element.y - 5);
+          } else {
+            ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
+            ctx.fillText(displayText, element.x, element.y - 4);
+          }
+        });
+      });
+      ctx.restore();
+    }
+  };
+  Chart.register(dataLabelsPlugin);
+
+  // ===== Option helpers =====
+  function hbarOptions(formatter) {
+    return {
+      responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+      plugins: { legend: { display: false }, tooltip: { rtl: true,
+        callbacks: { label: (c) => formatter(c.parsed.x) } },
+        dataLabels: { formatter: formatter } },
+      scales: {
+        x: { ticks: { callback: formatter, font: { size: 11 }, color: '#9A9A9A' },
+             grid: { color: '#EFEBE3', drawBorder: false } },
+        y: { position: 'right', ticks: { font: { size: 12 }, color: '#1A1A1A' },
+             grid: { display: false, drawBorder: false } }
+      }
+    };
+  }
+  function pieOptions() {
+    return {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: true, position: 'bottom', rtl: true,
+          labels: { font: { size: 11 }, color: '#1A1A1A', boxWidth: 10, boxHeight: 10, padding: 12 } },
+        tooltip: { rtl: true, callbacks: { label: (c) => c.label + ': ' + c.parsed + '%' } }
+      },
+      cutout: '52%'
+    };
+  }
+  function lineOptions(formatter, xTitle, showLabels) {
+    return {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { rtl: true,
+        callbacks: { label: (c) => formatter(c.parsed.y) } },
+        dataLabels: { formatter: formatter, display: showLabels !== false } },
+      scales: {
+        x: { title: { display: !!xTitle, text: xTitle, font: { size: 11 }, color: '#9A9A9A' },
+             ticks: { font: { size: 11 }, color: '#6B6B6B' },
+             grid: { display: false, drawBorder: false } },
+        y: { ticks: { callback: formatter, font: { size: 11 }, color: '#9A9A9A' },
+             grid: { color: '#EFEBE3', drawBorder: false }, beginAtZero: true }
+      }
+    };
+  }
+  function stackedHbarOptions(formatter) {
+    return {
+      responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+      plugins: {
+        legend: { display: true, position: 'bottom', rtl: true,
+          labels: { font: { size: 11 }, color: '#1A1A1A', boxWidth: 10, boxHeight: 10, padding: 10 } },
+        tooltip: { rtl: true, callbacks: { label: (c) => c.dataset.label + ': ' + formatter(c.parsed.x) } },
+        dataLabels: { formatter: formatter }
+      },
+      scales: {
+        x: { stacked: true, ticks: { callback: formatter, font: { size: 11 }, color: '#9A9A9A' },
+             grid: { color: '#EFEBE3', drawBorder: false } },
+        y: { stacked: true, position: 'right', ticks: { font: { size: 12 }, color: '#1A1A1A' },
+             grid: { display: false, drawBorder: false } }
+      }
+    };
+  }
+  function groupedHbarOptions(formatter) {
+    return {
+      responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+      plugins: {
+        legend: { display: true, position: 'bottom', rtl: true, reverse: true,
+          labels: { font: { size: 12 }, color: '#1A1A1A', boxWidth: 14, boxHeight: 10, padding: 14 } },
+        tooltip: { rtl: true,
+          callbacks: { label: (c) => c.dataset.label + ': ' + formatter(c.parsed.x) } },
+        dataLabels: { formatter: formatter }
+      },
+      scales: {
+        x: { ticks: { callback: formatter, font: { size: 11 }, color: '#9A9A9A' },
+             grid: { color: '#EFEBE3', drawBorder: false } },
+        y: { position: 'right', ticks: { font: { size: 12 }, color: '#1A1A1A' },
+             grid: { display: false, drawBorder: false } }
+      }
+    };
+  }
+  function groupedVbarOptions(formatter, xTitle) {
+    return {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: true, position: 'bottom', rtl: true,
+          labels: { font: { size: 12 }, color: '#1A1A1A', boxWidth: 14, boxHeight: 10, padding: 14 } },
+        tooltip: { rtl: true,
+          callbacks: { label: (c) => c.dataset.label + ': ' + formatter(c.parsed.y) } },
+        dataLabels: { formatter: formatter }
+      },
+      scales: {
+        x: { title: { display: !!xTitle, text: xTitle, font: { size: 11 }, color: '#9A9A9A' },
+             ticks: { font: { size: 11 }, color: '#1A1A1A' },
+             grid: { display: false, drawBorder: false } },
+        y: { ticks: { callback: formatter, font: { size: 11 }, color: '#9A9A9A' },
+             grid: { color: '#EFEBE3', drawBorder: false }, beginAtZero: true }
+      }
+    };
+  }
+  function yoyTotalOptions(formatter) {
+    return {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { rtl: true, callbacks: { label: (c) => formatter(c.parsed.y) } },
+        dataLabels: { formatter: formatter }
+      },
+      scales: {
+        x: { grid: { display: false },
+             ticks: { font: { size: 11, weight: '500' }, color: '#6B6B6B' },
+             border: { display: false } },
+        y: { display: false, beginAtZero: true, grace: '20%' }
+      },
+      layout: { padding: { top: 22, bottom: 4 } }
+    };
+  }
+  function thresholdBreakdownOptions() {
+    return {
+      responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+      plugins: {
+        legend: { display: true, position: 'bottom', rtl: true, align: 'start',
+          labels: { font: { size: 11 }, color: '#1A1A1A', boxWidth: 10, boxHeight: 10, padding: 8 } },
+        tooltip: { rtl: true,
+          filter: (item) => item.parsed.x > 0,
+          callbacks: { label: (c) => c.dataset.label + ' — דורש השלמה' } },
+        dataLabels: { display: false }
+      },
+      scales: {
+        x: { stacked: true, beginAtZero: true,
+          ticks: { stepSize: 1, precision: 0, font: { size: 11 }, color: '#9A9A9A' },
+          grid: { color: '#EFEBE3', drawBorder: false },
+          title: { display: true, text: 'מספר איגודים/אגודות שטרם השלימו', font: { size: 11 }, color: '#9A9A9A' } },
+        y: { stacked: true, position: 'right',
+          ticks: { font: { size: 13, weight: '500' }, color: '#1A1A1A' },
+          grid: { display: false, drawBorder: false } }
+      }
+    };
+  }
+  function buildEntityDatasets(entities, matrix) {
+    return entities.map((name, i) => ({
+      label: name,
+      data: matrix[i],
+      backgroundColor: ENTITY_COLORS[i % ENTITY_COLORS.length],
+      borderColor: '#FFFFFF',
+      borderWidth: 1.5,
+      barThickness: 38
+    }));
+  }
+
+
+  // ============================================
+  // PAGE 1: BUDGET / FEDERATIONS (eager)
+  // ============================================
+  new Chart(document.getElementById('bf_byFederation'), {
+    type: 'bar',
+    data: {
+      labels: ['כדורגל','כדורסל','שחייה','אתלטיקה','טניס','כדורעף','התעמלות',"ג'ודו",'חתירה','אופניים'],
+      datasets: [{ data: [22.5, 16.4, 9.8, 7.2, 5.1, 4.5, 3.6, 2.8, 2.2, 1.9],
+        backgroundColor: TEAL, borderRadius: 2, barThickness: 18 }]
+    },
+    options: hbarOptions(fmtM)
+  });
+  new Chart(document.getElementById('bf_olympic'), {
+    type: 'doughnut',
+    data: { labels: ['אולימפי','לא אולימפי','פרה-אולימפי'],
+      datasets: [{ data: [78, 18, 4], backgroundColor: [TEAL, TEAL_LIGHT, TEAL_PALE],
+        borderWidth: 2, borderColor: '#FFFFFF' }] },
+    options: pieOptions()
+  });
+  new Chart(document.getElementById('bf_branchType'), {
+    type: 'doughnut',
+    data: { labels: ['קבוצתי','אישי'],
+      datasets: [{ data: [62, 38], backgroundColor: [TEAL, TEAL_LIGHT],
+        borderWidth: 2, borderColor: '#FFFFFF' }] },
+    options: pieOptions()
+  });
+  new Chart(document.getElementById('bf_thresholdBreakdown'), {
+    type: 'bar',
+    data: {
+      labels: ['סף מקצועי', 'סף מנהלי', 'סף מלא (שניהם)'],
+      datasets: buildEntityDatasets(
+        ['כדורעף','התעמלות','סייף','סקווש','איגרוף','אופניים','חתירה','היאבקות','טאקוונדו','גלישה',"ג'ודו",'בייסבול'],
+        [
+          [1,1,1], [1,1,1], [1,1,1],
+          [1,0,1], [1,0,1], [1,0,1], [1,0,1],
+          [0,1,1], [0,1,1], [0,1,1], [0,1,1], [0,1,1]
+        ]
+      )
+    },
+    options: thresholdBreakdownOptions()
+  });
+  new Chart(document.getElementById('bf_yoyComparison'), {
+    type: 'bar',
+    data: {
+      labels: ['כדורגל','כדורסל','שחייה','אתלטיקה','טניס','כדורעף','התעמלות',"ג'ודו",'חתירה','אופניים'],
+      datasets: [
+        { label: '2026', data: [22.5, 16.4, 9.8, 7.2, 5.1, 4.5, 3.6, 2.8, 2.2, 1.9],
+          backgroundColor: TEAL, borderRadius: 2 },
+        { label: '2025', data: [21.7, 15.8, 9.4, 6.9, 4.9, 4.3, 3.5, 2.7, 2.1, 1.8],
+          backgroundColor: TEAL_LIGHT, borderRadius: 2 }
+      ]
+    },
+    options: groupedHbarOptions(fmtM)
+  });
+  new Chart(document.getElementById('bf_yoyTotal'), {
+    type: 'bar',
+    data: {
+      labels: ['2025', '2026'],
+      datasets: [{ data: [81.5, 84.5],
+        backgroundColor: [TEAL_LIGHT, TEAL],
+        borderRadius: 3, barThickness: 32 }]
+    },
+    options: yoyTotalOptions(fmtM)
+  });
+
+
+  // ============================================
+  // PAGE 2: BUDGET / ASSOCIATIONS (lazy)
+  // ============================================
+  function renderBA() {
+    new Chart(document.getElementById('ba_byAssoc'), {
+      type: 'bar',
+      data: {
+        labels: ['מכבי ת"א','הפועל י-ם','מכבי חיפה','הפועל ב"ש','בית"ר י-ם','מכבי נתניה','הפועל ת"א','אליצור אשקלון','הפועל חולון','מכבי ראשל"צ'],
+        datasets: [{ data: [4.2, 3.8, 3.5, 3.1, 2.9, 2.4, 2.2, 1.9, 1.7, 1.5],
+          backgroundColor: TEAL, borderRadius: 2, barThickness: 18 }]
+      },
+      options: hbarOptions(fmtM)
+    });
+    new Chart(document.getElementById('ba_byCity'), {
+      type: 'bar',
+      data: {
+        labels: ['תל אביב-יפו','ירושלים','חיפה','באר שבע','ראשון לציון','נתניה','אשדוד','רמת גן','חולון','פתח תקווה'],
+        datasets: [{ data: [11.9, 9.2, 6.6, 4.8, 4.0, 3.1, 2.8, 2.5, 2.1, 1.8],
+          backgroundColor: TEAL, borderRadius: 2, barThickness: 18 }]
+      },
+      options: hbarOptions(fmtM)
+    });
+    new Chart(document.getElementById('ba_byPeriphery'), {
+      type: 'bar',
+      data: {
+        labels: ['1 - פריפריאלי','2','3','4','5 - מרכז'],
+        datasets: [{ data: [3.5, 6.2, 9.5, 17.7, 26.7],
+          backgroundColor: TEAL, borderRadius: 2, barThickness: 22 }]
+      },
+      options: hbarOptions(fmtM)
+    });
+    new Chart(document.getElementById('ba_bySocio'), {
+      type: 'line',
+      data: {
+        labels: ['1','2','3','4','5','6','7','8','9','10'],
+        datasets: [{ data: [1.4, 2.5, 3.9, 5.3, 7.2, 8.2, 9.2, 10.6, 7.8, 7.5],
+          borderColor: TEAL, backgroundColor: 'rgba(13, 95, 115, 0.1)',
+          fill: true, tension: 0.35, pointRadius: 3, pointBackgroundColor: TEAL,
+          pointBorderColor: '#FFFFFF', pointBorderWidth: 1.5, borderWidth: 2 }]
+      },
+      options: lineOptions(fmtM, 'אשכול סוציו-אקונומי')
+    });
+    new Chart(document.getElementById('ba_byTeam'), {
+      type: 'bar',
+      data: {
+        labels: ['מכבי ת"א — כדורגל בוגרים','הפועל ת"א — כדורגל בוגרים','מכבי חיפה — כדורגל בוגרים','בית"ר י-ם — כדורגל בוגרים','מכבי ת"א — כדורסל בוגרים','הפועל י-ם — כדורסל בוגרים','הפועל ב"ש — כדורגל בוגרים','מכבי ראשל"צ — כדורסל בוגרים','מכבי ת"א — כדורגל נוער','מכבי ת"א — כדורגל נשים'],
+        datasets: [{ data: [5.2, 4.1, 3.8, 3.5, 3.2, 2.9, 2.7, 2.1, 1.6, 0.9],
+          backgroundColor: TEAL, borderRadius: 2, barThickness: 18 }]
+      },
+      options: hbarOptions(fmtM)
+    });
+    new Chart(document.getElementById('ba_thresholdBreakdown'), {
+      type: 'bar',
+      data: {
+        labels: ['סף מקצועי', 'סף מנהלי', 'סף מלא (שניהם)'],
+        datasets: buildEntityDatasets(
+          ['מכבי כפר סבא','הפועל קטמון','מכבי הרצליה','הפועל אילת','מכבי שעריים','ספורט עכו','מכבי תל מונד','מכבי דימונה','הפועל ערד','מ.ס יבנה','הפועל יהוד','מכבי גני תקווה'],
+          [
+            [1,1,1], [1,1,1], [1,1,1],
+            [1,0,1], [1,0,1], [1,0,1], [1,0,1],
+            [0,1,1], [0,1,1], [0,1,1], [0,1,1], [0,1,1]
+          ]
+        )
+      },
+      options: thresholdBreakdownOptions()
+    });
+    new Chart(document.getElementById('ba_yoyComparison'), {
+      type: 'bar',
+      data: {
+        labels: ['מכבי ת"א','הפועל י-ם','מכבי חיפה','הפועל ב"ש','בית"ר י-ם','מכבי נתניה','הפועל ת"א','אליצור אשקלון','הפועל חולון','מכבי ראשל"צ'],
+        datasets: [
+          { label: '2026', data: [4.2, 3.8, 3.5, 3.1, 2.9, 2.4, 2.2, 1.9, 1.7, 1.5],
+            backgroundColor: TEAL, borderRadius: 2 },
+          { label: '2025', data: [4.0, 3.6, 3.4, 3.0, 2.7, 2.3, 2.1, 1.8, 1.6, 1.4],
+            backgroundColor: TEAL_LIGHT, borderRadius: 2 }
+        ]
+      },
+      options: groupedHbarOptions(fmtM)
+    });
+    new Chart(document.getElementById('ba_yoyTotal'), {
+      type: 'bar',
+      data: {
+        labels: ['2025', '2026'],
+        datasets: [{ data: [60.6, 63.6],
+          backgroundColor: [TEAL_LIGHT, TEAL],
+          borderRadius: 3, barThickness: 32 }]
+      },
+      options: yoyTotalOptions(fmtM)
+    });
+  }
+
+
+  // ============================================
+  // PAGE 3: ATHLETES / FEDERATIONS (lazy)
+  // ============================================
+  function renderAF() {
+    new Chart(document.getElementById('af_byFederation'), {
+      type: 'bar',
+      data: {
+        labels: ['כדורגל','כדורסל','שחייה','אתלטיקה','כדורעף','טניס','התעמלות',"ג'ודו",'אופניים','חתירה'],
+        datasets: [{ data: [24500, 12300, 8400, 6200, 5100, 4300, 3800, 2400, 1900, 1200],
+          backgroundColor: AMBER, borderRadius: 2, barThickness: 18 }]
+      },
+      options: hbarOptions(fmtNum)
+    });
+    new Chart(document.getElementById('af_olympic'), {
+      type: 'doughnut',
+      data: { labels: ['אולימפי','לא אולימפי','פרה-אולימפי'],
+        datasets: [{ data: [71, 26, 3], backgroundColor: [AMBER, AMBER_LIGHT, AMBER_PALE],
+          borderWidth: 2, borderColor: '#FFFFFF' }] },
+      options: pieOptions()
+    });
+    new Chart(document.getElementById('af_branchType'), {
+      type: 'doughnut',
+      data: { labels: ['קבוצתי','אישי'],
+        datasets: [{ data: [64, 36], backgroundColor: [AMBER, AMBER_LIGHT],
+          borderWidth: 2, borderColor: '#FFFFFF' }] },
+      options: pieOptions()
+    });
+    new Chart(document.getElementById('af_genderByFed'), {
+      type: 'bar',
+      data: {
+        labels: ['כדורגל','כדורסל','שחייה','אתלטיקה','כדורעף','טניס','התעמלות',"ג'ודו"],
+        datasets: [
+          { label: 'גברים', data: [21500, 9800, 4400, 3800, 2100, 2700, 1500, 1700],
+            backgroundColor: AMBER, borderRadius: 2, barThickness: 16 },
+          { label: 'נשים', data: [3000, 2500, 4000, 2400, 3000, 1600, 2300, 700],
+            backgroundColor: AMBER_LIGHT, borderRadius: 2, barThickness: 16 }
+        ]
+      },
+      options: stackedHbarOptions(fmtNum)
+    });
+    const ageLabels = Array.from({length: 45}, (_, i) => String(6 + i));
+    const maleAgeAF   = [2100,2500,3050,3700,4100,3950,3750,3650,3500,3300,3050,2650,2080,1760,1580,1460,1320,1180,1110,1030,960,890,810,780,750,720,685,650,615,575,535,492,450,405,360,315,270,243,216,189,171,153,135,117,99];
+    const femaleAgeAF = [1400,1700,2050,2500,2700,2550,2350,2150,1900,1700,1450,1150,820,640,520,440,380,320,290,270,240,210,190,170,150,130,115,100,85,75,65,58,50,45,40,35,30,27,24,21,19,17,15,13,11];
+    new Chart(document.getElementById('af_byAge'), {
+      type: 'line',
+      data: {
+        labels: ageLabels,
+        datasets: [
+          { label: 'גברים', data: maleAgeAF,
+            borderColor: AMBER, backgroundColor: 'rgba(180, 83, 9, 0.08)',
+            fill: false, tension: 0.3, pointRadius: 0, pointHoverRadius: 4,
+            pointBackgroundColor: AMBER, pointBorderColor: '#FFFFFF',
+            pointBorderWidth: 1.5, borderWidth: 2 },
+          { label: 'נשים', data: femaleAgeAF,
+            borderColor: WOMEN, backgroundColor: 'rgba(134, 25, 143, 0.08)',
+            fill: false, tension: 0.3, pointRadius: 0, pointHoverRadius: 4,
+            pointBackgroundColor: WOMEN, pointBorderColor: '#FFFFFF',
+            pointBorderWidth: 1.5, borderWidth: 2 }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: true, position: 'bottom', rtl: true,
+            labels: { font: { size: 12 }, color: '#1A1A1A', boxWidth: 14, boxHeight: 10, padding: 14 } },
+          tooltip: { rtl: true,
+            callbacks: { label: (c) => c.dataset.label + ': ' + fmtNum(c.parsed.y) } },
+          dataLabels: { display: false }
+        },
+        scales: {
+          x: { title: { display: true, text: 'גיל (שנים)', font: { size: 11 }, color: '#9A9A9A' },
+               ticks: { font: { size: 11 }, color: '#6B6B6B' },
+               grid: { display: false, drawBorder: false } },
+          y: { ticks: { callback: fmtNum, font: { size: 11 }, color: '#9A9A9A' },
+               grid: { color: '#EFEBE3', drawBorder: false }, beginAtZero: true }
+        }
+      }
+    });
+    new Chart(document.getElementById('af_yoyComparison'), {
+      type: 'bar',
+      data: {
+        labels: ['כדורגל','כדורסל','שחייה','אתלטיקה','כדורעף','טניס','התעמלות',"ג'ודו",'אופניים','חתירה'],
+        datasets: [
+          { label: '2026', data: [24500, 12300, 8400, 6200, 5100, 4300, 3800, 2400, 1900, 1200],
+            backgroundColor: AMBER, borderRadius: 2 },
+          { label: '2025', data: [23000, 11600, 7900, 5900, 4800, 4100, 3600, 2300, 1800, 1100],
+            backgroundColor: AMBER_LIGHT, borderRadius: 2 }
+        ]
+      },
+      options: groupedHbarOptions(fmtNum)
+    });
+    new Chart(document.getElementById('af_yoyTotal'), {
+      type: 'bar',
+      data: {
+        labels: ['2025', '2026'],
+        datasets: [{ data: [82310, 87340],
+          backgroundColor: [AMBER_LIGHT, AMBER],
+          borderRadius: 3, barThickness: 32 }]
+      },
+      options: yoyTotalOptions(fmtNum)
+    });
+  }
+
+
+  // ============================================
+  // PAGE 4: ATHLETES / ASSOCIATIONS (lazy)
+  // ============================================
+  function renderAA() {
+    new Chart(document.getElementById('aa_byAssoc'), {
+      type: 'bar',
+      data: {
+        labels: ['מכבי ת"א','הפועל י-ם','מכבי חיפה','הפועל ב"ש','בית"ר י-ם','מכבי נתניה','הפועל ת"א','הפועל חולון','מכבי ראשל"צ','אליצור אשקלון'],
+        datasets: [{ data: [1840, 1620, 1480, 1310, 1180, 1020, 940, 820, 780, 690],
+          backgroundColor: AMBER, borderRadius: 2, barThickness: 18 }]
+      },
+      options: hbarOptions(fmtNum)
+    });
+    new Chart(document.getElementById('aa_byCity'), {
+      type: 'bar',
+      data: {
+        labels: ['תל אביב-יפו','ירושלים','חיפה','ראשון לציון','באר שבע','נתניה','אשדוד','רמת גן','חולון','פתח תקווה'],
+        datasets: [{ data: [11800, 9200, 7100, 5800, 5400, 4200, 3900, 3500, 3100, 2800],
+          backgroundColor: AMBER, borderRadius: 2, barThickness: 18 }]
+      },
+      options: hbarOptions(fmtNum)
+    });
+    new Chart(document.getElementById('aa_byPeriphery'), {
+      type: 'bar',
+      data: {
+        labels: ['1 - פריפריאלי','2','3','4','5 - מרכז'],
+        datasets: [{ data: [6200, 9800, 14500, 24300, 32540],
+          backgroundColor: AMBER, borderRadius: 2, barThickness: 22 }]
+      },
+      options: hbarOptions(fmtNum)
+    });
+    new Chart(document.getElementById('aa_bySocio'), {
+      type: 'line',
+      data: {
+        labels: ['1','2','3','4','5','6','7','8','9','10'],
+        datasets: [{ data: [2100, 3800, 5900, 8200, 10400, 12100, 13800, 14200, 9800, 7040],
+          borderColor: AMBER, backgroundColor: 'rgba(180, 83, 9, 0.1)',
+          fill: true, tension: 0.35, pointRadius: 3, pointBackgroundColor: AMBER,
+          pointBorderColor: '#FFFFFF', pointBorderWidth: 1.5, borderWidth: 2 }]
+      },
+      options: lineOptions(fmtNum, 'אשכול סוציו-אקונומי')
+    });
+    new Chart(document.getElementById('aa_byTeam'), {
+      type: 'bar',
+      data: {
+        labels: ['מכבי ת"א — כדורגל בוגרים','הפועל ת"א — כדורגל בוגרים','מכבי חיפה — כדורגל בוגרים','בית"ר י-ם — כדורגל בוגרים','הפועל ב"ש — כדורגל בוגרים','מכבי נתניה — כדורגל בוגרים','מכבי ת"א — כדורגל נוער','הפועל ת"א — כדורגל נוער','מכבי ת"א — כדורגל נשים','מכבי חיפה — כדורגל נשים'],
+        datasets: [{ data: [28, 27, 26, 26, 25, 24, 23, 22, 22, 21],
+          backgroundColor: AMBER, borderRadius: 2, barThickness: 16 }]
+      },
+      options: hbarOptions(fmtNum)
+    });
+    const ageLabels = Array.from({length: 45}, (_, i) => String(6 + i));
+    const maleAgeAA   = [2100,2500,3050,3700,4100,3950,3750,3650,3500,3300,3050,2650,2080,1760,1580,1460,1320,1180,1110,1030,960,890,810,780,750,720,685,650,615,575,535,492,450,405,360,315,270,243,216,189,171,153,135,117,99];
+    const femaleAgeAA = [1400,1700,2050,2500,2700,2550,2350,2150,1900,1700,1450,1150,820,640,520,440,380,320,290,270,240,210,190,170,150,130,115,100,85,75,65,58,50,45,40,35,30,27,24,21,19,17,15,13,11];
+    new Chart(document.getElementById('aa_byAge'), {
+      type: 'line',
+      data: {
+        labels: ageLabels,
+        datasets: [
+          { label: 'גברים', data: maleAgeAA,
+            borderColor: AMBER, backgroundColor: 'rgba(180, 83, 9, 0.08)',
+            fill: false, tension: 0.3, pointRadius: 0, pointHoverRadius: 4,
+            pointBackgroundColor: AMBER, pointBorderColor: '#FFFFFF',
+            pointBorderWidth: 1.5, borderWidth: 2 },
+          { label: 'נשים', data: femaleAgeAA,
+            borderColor: WOMEN, backgroundColor: 'rgba(134, 25, 143, 0.08)',
+            fill: false, tension: 0.3, pointRadius: 0, pointHoverRadius: 4,
+            pointBackgroundColor: WOMEN, pointBorderColor: '#FFFFFF',
+            pointBorderWidth: 1.5, borderWidth: 2 }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: true, position: 'bottom', rtl: true,
+            labels: { font: { size: 12 }, color: '#1A1A1A', boxWidth: 14, boxHeight: 10, padding: 14 } },
+          tooltip: { rtl: true,
+            callbacks: { label: (c) => c.dataset.label + ': ' + fmtNum(c.parsed.y) } },
+          dataLabels: { display: false }
+        },
+        scales: {
+          x: { title: { display: true, text: 'גיל (שנים)', font: { size: 11 }, color: '#9A9A9A' },
+               ticks: { font: { size: 11 }, color: '#6B6B6B' },
+               grid: { display: false, drawBorder: false } },
+          y: { ticks: { callback: fmtNum, font: { size: 11 }, color: '#9A9A9A' },
+               grid: { color: '#EFEBE3', drawBorder: false }, beginAtZero: true }
+        }
+      }
+    });
+    new Chart(document.getElementById('aa_yoyComparison'), {
+      type: 'bar',
+      data: {
+        labels: ['מכבי ת"א','הפועל י-ם','מכבי חיפה','הפועל ב"ש','בית"ר י-ם','מכבי נתניה','הפועל ת"א','הפועל חולון','מכבי ראשל"צ','אליצור אשקלון'],
+        datasets: [
+          { label: '2026', data: [1840, 1620, 1480, 1310, 1180, 1020, 940, 820, 780, 690],
+            backgroundColor: AMBER, borderRadius: 2 },
+          { label: '2025', data: [1730, 1530, 1410, 1240, 1110, 970, 890, 780, 740, 650],
+            backgroundColor: AMBER_LIGHT, borderRadius: 2 }
+        ]
+      },
+      options: groupedHbarOptions(fmtNum)
+    });
+    new Chart(document.getElementById('aa_yoyTotal'), {
+      type: 'bar',
+      data: {
+        labels: ['2025', '2026'],
+        datasets: [{ data: [82310, 87340],
+          backgroundColor: [AMBER_LIGHT, AMBER],
+          borderRadius: 3, barThickness: 32 }]
+      },
+      options: yoyTotalOptions(fmtNum)
+    });
+  }
+
+
+  // ============================================
+  // PAGE 5: WOMEN'S SPORT (counts) (lazy)
+  // ============================================
+  function renderWG() {
+    // YoY % change in achievement — men vs women
+    new Chart(document.getElementById('wg_yoyGenderTrend'), {
+      type: 'line',
+      data: {
+        labels: ['2021','2022','2023','2024','2025','2026'],
+        datasets: [
+          { label: 'גברים — שינוי שנתי %', data: [2.1, 5.8, 1.4, 2.9, 3.2, 2.6],
+            borderColor: AMBER, fill: false, tension: 0.3, pointRadius: 4,
+            pointBackgroundColor: AMBER, pointBorderColor: '#FFFFFF', pointBorderWidth: 1.5, borderWidth: 2 },
+          { label: 'נשים — שינוי שנתי %', data: [3.4, 2.7, 4.1, 6.8, 5.5, 7.2],
+            borderColor: WOMEN, fill: false, tension: 0.3, pointRadius: 4,
+            pointBackgroundColor: WOMEN, pointBorderColor: '#FFFFFF', pointBorderWidth: 1.5, borderWidth: 2 },
+          { label: 'ההפרש (נשים − גברים)', data: [1.3, -3.1, 2.7, 3.9, 2.3, 4.6],
+            borderColor: '#1F2937', backgroundColor: 'rgba(31, 41, 55, 0.08)',
+            fill: true, tension: 0.3, pointRadius: 5, pointBackgroundColor: '#1F2937',
+            pointBorderColor: '#FFFFFF', pointBorderWidth: 1.5, borderWidth: 2.5 }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: true, position: 'bottom', rtl: true,
+            labels: { font: { size: 12 }, color: '#1A1A1A', boxWidth: 14, boxHeight: 10, padding: 14 } },
+          tooltip: { rtl: true,
+            callbacks: { label: (c) => c.dataset.label + ': ' + (c.parsed.y > 0 ? '+' : '') + c.parsed.y.toFixed(1) + '%' } },
+          dataLabels: { formatter: (v) => (v > 0 ? '+' : '') + v.toFixed(1) + '%' }
+        },
+        scales: {
+          x: { ticks: { font: { size: 12, weight: '500' }, color: '#1A1A1A' },
+               grid: { display: false, drawBorder: false } },
+          y: { ticks: { callback: (v) => (v > 0 ? '+' : '') + v + '%', font: { size: 11 }, color: '#9A9A9A' },
+               grid: { color: '#EFEBE3', drawBorder: false } }
+        }
+      }
+    });
+
+    // Women by branch
+    new Chart(document.getElementById('wg_byBranch'), {
+      type: 'bar',
+      data: {
+        labels: ['כדורסל','שחייה','אתלטיקה','כדורעף','התעמלות','כדורגל','טניס',"ג'ודו",'חתירה','אופניים'],
+        datasets: [{ data: [5400, 4200, 2400, 3000, 2300, 3000, 1600, 700, 540, 540],
+          backgroundColor: WOMEN, borderRadius: 2, barThickness: 18 }]
+      },
+      options: hbarOptions(fmtNum)
+    });
+    new Chart(document.getElementById('wg_byBranchType'), {
+      type: 'doughnut',
+      data: { labels: ['קבוצתי','אישי'],
+        datasets: [{ data: [54, 46], backgroundColor: [WOMEN, WOMEN_LIGHT],
+          borderWidth: 2, borderColor: '#FFFFFF' }] },
+      options: pieOptions()
+    });
+    new Chart(document.getElementById('wg_byOlympic'), {
+      type: 'doughnut',
+      data: { labels: ['אולימפי','לא אולימפי','פרה-אולימפי'],
+        datasets: [{ data: [76, 21, 3], backgroundColor: [WOMEN, WOMEN_LIGHT, WOMEN_PALE],
+          borderWidth: 2, borderColor: '#FFFFFF' }] },
+      options: pieOptions()
+    });
+
+    // Teams + coaches + management
+    new Chart(document.getElementById('wg_teamsByFed'), {
+      type: 'bar',
+      data: {
+        labels: ['כדורסל','שחייה','התעמלות','כדורעף','אתלטיקה','טניס',"ג'ודו",'קליעה','חתירה','איגרוף'],
+        datasets: [{ data: [8, 7, 6, 5, 5, 4, 4, 3, 3, 2],
+          backgroundColor: WOMEN, borderRadius: 2, barThickness: 18 }]
+      },
+      options: hbarOptions(fmtNum)
+    });
+    new Chart(document.getElementById('wg_teamsByAssoc'), {
+      type: 'bar',
+      data: {
+        labels: ['מכבי ת"א','הפועל י-ם','מכבי חיפה','הפועל ב"ש','בית"ר י-ם','מכבי נתניה','הפועל ת"א','הפועל חולון','אליצור אשקלון','מכבי ראשל"צ'],
+        datasets: [{ data: [14, 12, 11, 9, 8, 7, 7, 6, 5, 5],
+          backgroundColor: WOMEN, borderRadius: 2, barThickness: 18 }]
+      },
+      options: hbarOptions(fmtNum)
+    });
+    new Chart(document.getElementById('wg_coachesByFed'), {
+      type: 'bar',
+      data: {
+        labels: ['התעמלות','שחייה','כדורסל','אתלטיקה','כדורעף','טניס',"ג'ודו",'קליעה','חתירה','איגרוף'],
+        datasets: [{ data: [62, 54, 48, 42, 38, 32, 24, 18, 14, 9],
+          backgroundColor: WOMEN, borderRadius: 2, barThickness: 18 }]
+      },
+      options: hbarOptions(fmtNum)
+    });
+    new Chart(document.getElementById('wg_managementByFed'), {
+      type: 'bar',
+      data: {
+        labels: ['התעמלות','שחייה','כדורסל','כדורעף','אתלטיקה','טניס',"ג'ודו",'קליעה','חתירה','איגרוף'],
+        datasets: [{ data: [28, 24, 22, 19, 17, 15, 12, 9, 7, 5],
+          backgroundColor: WOMEN, borderRadius: 2, barThickness: 18 }]
+      },
+      options: hbarOptions(fmtNum)
+    });
+
+    // Gender comparison
+    const ageLabels = Array.from({length: 45}, (_, i) => String(6 + i));
+    const maleAge   = [2100,2500,3050,3700,4100,3950,3750,3650,3500,3300,3050,2650,2080,1760,1580,1460,1320,1180,1110,1030,960,890,810,780,750,720,685,650,615,575,535,492,450,405,360,315,270,243,216,189,171,153,135,117,99];
+    const femaleAge = [1400,1700,2050,2500,2700,2550,2350,2150,1900,1700,1450,1150,820,640,520,440,380,320,290,270,240,210,190,170,150,130,115,100,85,75,65,58,50,45,40,35,30,27,24,21,19,17,15,13,11];
+    new Chart(document.getElementById('wg_ageByGender'), {
+      type: 'line',
+      data: {
+        labels: ageLabels,
+        datasets: [
+          { label: 'גברים', data: maleAge,
+            borderColor: AMBER, backgroundColor: 'rgba(180, 83, 9, 0.08)',
+            fill: false, tension: 0.3, pointRadius: 0, pointHoverRadius: 4,
+            pointBackgroundColor: AMBER, pointBorderColor: '#FFFFFF',
+            pointBorderWidth: 1.5, borderWidth: 2 },
+          { label: 'נשים', data: femaleAge,
+            borderColor: WOMEN, backgroundColor: 'rgba(134, 25, 143, 0.08)',
+            fill: false, tension: 0.3, pointRadius: 0, pointHoverRadius: 4,
+            pointBackgroundColor: WOMEN, pointBorderColor: '#FFFFFF',
+            pointBorderWidth: 1.5, borderWidth: 2 }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: true, position: 'bottom', rtl: true,
+            labels: { font: { size: 12 }, color: '#1A1A1A', boxWidth: 14, boxHeight: 10, padding: 14 } },
+          tooltip: { rtl: true,
+            callbacks: { label: (c) => c.dataset.label + ': ' + fmtNum(c.parsed.y) } },
+          dataLabels: { display: false }
+        },
+        scales: {
+          x: { title: { display: true, text: 'גיל (שנים)', font: { size: 11 }, color: '#9A9A9A' },
+               ticks: { font: { size: 11 }, color: '#6B6B6B' },
+               grid: { display: false, drawBorder: false } },
+          y: { ticks: { callback: fmtNum, font: { size: 11 }, color: '#9A9A9A' },
+               grid: { color: '#EFEBE3', drawBorder: false }, beginAtZero: true }
+        }
+      }
+    });
+    new Chart(document.getElementById('wg_socioByGender'), {
+      type: 'bar',
+      data: {
+        labels: ['1','2','3','4','5','6','7','8','9','10'],
+        datasets: [
+          { label: 'גברים', data: [1290, 2330, 3620, 5030, 6380, 7430, 8460, 8720, 6010, 4310],
+            backgroundColor: AMBER, borderRadius: 2 },
+          { label: 'נשים', data: [810, 1470, 2280, 3170, 4020, 4670, 5340, 5480, 3790, 2730],
+            backgroundColor: WOMEN, borderRadius: 2 }
+        ]
+      },
+      options: groupedVbarOptions(fmtNum, 'אשכול סוציו-אקונומי')
+    });
+    new Chart(document.getElementById('wg_periByGender'), {
+      type: 'bar',
+      data: {
+        labels: ['1 - פריפריאלי','2','3','4','5 - מרכז'],
+        datasets: [
+          { label: 'גברים', data: [3800, 6020, 8910, 14920, 19980],
+            backgroundColor: AMBER, borderRadius: 2 },
+          { label: 'נשים', data: [2400, 3780, 5590, 9380, 12560],
+            backgroundColor: WOMEN, borderRadius: 2 }
+        ]
+      },
+      options: groupedVbarOptions(fmtNum, 'אשכול פריפריאליות')
+    });
+  }
+
+
+  // ============================================
+  // PAGE 6: WOMEN'S SCORE (lazy)
+  // ============================================
+  function renderWS() {
+    new Chart(document.getElementById('ws_promoTrend'), {
+      type: 'line',
+      data: {
+        labels: ['2021','2022','2023','2024','2025','2026'],
+        datasets: [{
+          data: [2480, 2740, 3010, 3340, 3610, 3847],
+          borderColor: WOMEN, backgroundColor: 'rgba(134, 25, 143, 0.10)',
+          fill: true, tension: 0.3, pointRadius: 4,
+          pointBackgroundColor: WOMEN, pointBorderColor: '#FFFFFF',
+          pointBorderWidth: 1.5, borderWidth: 2.5
+        }]
+      },
+      options: lineOptions(fmtNum, 'שנה')
+    });
+
+    new Chart(document.getElementById('ws_byScoreBranch'), {
+      type: 'bar',
+      data: {
+        labels: ['כדורסל','שחייה','אתלטיקה','כדורעף','התעמלות','כדורגל','טניס',"ג'ודו",'חתירה','אופניים'],
+        datasets: [{ data: [1380, 1080, 580, 720, 580, 620, 410, 180, 140, 140],
+          backgroundColor: WOMEN, borderRadius: 2, barThickness: 18 }]
+      },
+      options: hbarOptions(fmtNum)
+    });
+    new Chart(document.getElementById('ws_byScoreBranchType'), {
+      type: 'doughnut',
+      data: { labels: ['קבוצתי','אישי'],
+        datasets: [{ data: [58, 42], backgroundColor: [WOMEN, WOMEN_LIGHT],
+          borderWidth: 2, borderColor: '#FFFFFF' }] },
+      options: pieOptions()
+    });
+    new Chart(document.getElementById('ws_byScoreOlympic'), {
+      type: 'doughnut',
+      data: { labels: ['אולימפי','לא אולימפי','פרה-אולימפי'],
+        datasets: [{ data: [82, 14, 4], backgroundColor: [WOMEN, WOMEN_LIGHT, WOMEN_PALE],
+          borderWidth: 2, borderColor: '#FFFFFF' }] },
+      options: pieOptions()
+    });
+
+    const ageLabels = Array.from({length: 45}, (_, i) => String(6 + i));
+    const maleScoreAge   = [180,210,260,330,395,420,440,460,475,485,490,475,420,375,335,310,290,275,260,245,228,212,195,182,170,160,150,142,132,123,114,105,96,87,78,68,58,52,46,40,36,32,28,24,20];
+    const femaleScoreAge = [140,170,210,260,295,300,295,285,270,255,235,210,170,140,118,100,86,74,68,62,55,49,44,40,35,31,27,24,21,18,16,14,12,11,10,9,8,7,6,5,5,4,4,3,3];
+    new Chart(document.getElementById('ws_ageScoreByGender'), {
+      type: 'line',
+      data: {
+        labels: ageLabels,
+        datasets: [
+          { label: 'גברים — ניקוד', data: maleScoreAge,
+            borderColor: AMBER, fill: false, tension: 0.3, pointRadius: 0, pointHoverRadius: 4,
+            pointBackgroundColor: AMBER, pointBorderColor: '#FFFFFF',
+            pointBorderWidth: 1.5, borderWidth: 2 },
+          { label: 'נשים — ניקוד', data: femaleScoreAge,
+            borderColor: WOMEN, fill: false, tension: 0.3, pointRadius: 0, pointHoverRadius: 4,
+            pointBackgroundColor: WOMEN, pointBorderColor: '#FFFFFF',
+            pointBorderWidth: 1.5, borderWidth: 2 }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: true, position: 'bottom', rtl: true,
+            labels: { font: { size: 12 }, color: '#1A1A1A', boxWidth: 14, boxHeight: 10, padding: 14 } },
+          tooltip: { rtl: true,
+            callbacks: { label: (c) => c.dataset.label + ': ' + fmtNum(c.parsed.y) } },
+          dataLabels: { display: false }
+        },
+        scales: {
+          x: { title: { display: true, text: 'גיל (שנים)', font: { size: 11 }, color: '#9A9A9A' },
+               ticks: { font: { size: 11 }, color: '#6B6B6B' },
+               grid: { display: false, drawBorder: false } },
+          y: { ticks: { callback: fmtNum, font: { size: 11 }, color: '#9A9A9A' },
+               grid: { color: '#EFEBE3', drawBorder: false }, beginAtZero: true }
+        }
+      }
+    });
+    new Chart(document.getElementById('ws_socioScoreByGender'), {
+      type: 'bar',
+      data: {
+        labels: ['1','2','3','4','5','6','7','8','9','10'],
+        datasets: [
+          { label: 'גברים — ניקוד', data: [180, 340, 540, 780, 1020, 1230, 1450, 1520, 1110, 870],
+            backgroundColor: AMBER, borderRadius: 2 },
+          { label: 'נשים — ניקוד', data: [85, 142, 218, 305, 408, 492, 580, 624, 538, 460],
+            backgroundColor: WOMEN, borderRadius: 2 }
+        ]
+      },
+      options: groupedVbarOptions(fmtNum, 'אשכול סוציו-אקונומי')
+    });
+    new Chart(document.getElementById('ws_periScoreByGender'), {
+      type: 'bar',
+      data: {
+        labels: ['1 - פריפריאלי','2','3','4','5 - מרכז'],
+        datasets: [
+          { label: 'גברים — ניקוד', data: [380, 640, 950, 1480, 1780],
+            backgroundColor: AMBER, borderRadius: 2 },
+          { label: 'נשים — ניקוד', data: [185, 320, 480, 740, 887],
+            backgroundColor: WOMEN, borderRadius: 2 }
+        ]
+      },
+      options: groupedVbarOptions(fmtNum, 'אשכול פריפריאליות')
+    });
+
+    new Chart(document.getElementById('ws_byScoreSocio'), {
+      type: 'line',
+      data: {
+        labels: ['1','2','3','4','5','6','7','8','9','10'],
+        datasets: [{
+          data: [85, 142, 218, 305, 408, 492, 580, 624, 538, 460],
+          borderColor: WOMEN, backgroundColor: 'rgba(134, 25, 143, 0.10)',
+          fill: true, tension: 0.3, pointRadius: 3,
+          pointBackgroundColor: WOMEN, pointBorderColor: '#FFFFFF',
+          pointBorderWidth: 1.5, borderWidth: 2
+        }]
+      },
+      options: lineOptions(fmtNum, 'אשכול סוציו-אקונומי')
+    });
+    new Chart(document.getElementById('ws_byScorePeri'), {
+      type: 'bar',
+      data: {
+        labels: ['1 - פריפריאלי','2','3','4','5 - מרכז'],
+        datasets: [{ data: [185, 320, 480, 740, 887],
+          backgroundColor: WOMEN, borderRadius: 2, barThickness: 22 }]
+      },
+      options: hbarOptions(fmtNum)
+    });
+    new Chart(document.getElementById('ws_byScoreCity'), {
+      type: 'bar',
+      data: {
+        labels: ['תל אביב-יפו','ירושלים','חיפה','ראשון לציון','באר שבע','נתניה','אשדוד','רמת גן','חולון','פתח תקווה','הרצליה','כפר סבא'],
+        datasets: [{ data: [380, 295, 240, 195, 168, 145, 132, 124, 112, 98, 85, 72],
+          backgroundColor: WOMEN, borderRadius: 2, barThickness: 16 }]
+      },
+      options: hbarOptions(fmtNum)
+    });
+  }
+})();
+</script>
+</body>
+</html>

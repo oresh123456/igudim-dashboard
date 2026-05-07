@@ -1,0 +1,14 @@
+# Source data — not for public repo
+*.xlsx
+*.pdf
+*.PDF
+
+# Test files
+__test_*
+
+# Old dashboard copies
+igudim_agudot_dashboard*
+data.js
+
+# Claude internals
+.claude/

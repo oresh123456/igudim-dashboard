@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>דשבורד איגודים ואגודות · כניסה</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Heebo',sans-serif;background:#F5F1EB;display:flex;align-items:center;justify-content:center;min-height:100vh}
+.login-card{background:#fff;border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,.08);padding:48px 40px;max-width:400px;width:90%;text-align:center}
+.login-card h1{font-size:1.4rem;font-weight:600;color:#1a1a2e;margin-bottom:8px}
+.login-card p{font-size:.9rem;color:#666;margin-bottom:24px}
+.login-card input{width:100%;padding:12px 16px;border:2px solid #e0dcd4;border-radius:10px;font-family:'Heebo',sans-serif;font-size:1rem;text-align:center;outline:none;transition:border-color .2s}
+.login-card input:focus{border-color:#2563eb}
+.login-card button{margin-top:16px;width:100%;padding:12px;border:none;border-radius:10px;background:#2563eb;color:#fff;font-family:'Heebo',sans-serif;font-size:1rem;font-weight:600;cursor:pointer;transition:background .2s}
+.login-card button:hover{background:#1d4ed8}
+.error{color:#dc2626;font-size:.85rem;margin-top:10px;display:none}
+.subtitle{font-size:.8rem;color:#999;margin-top:20px}
+</style>
+</head>
+<body>
+<div class="login-card">
+  <h1>משרד התרבות והספורט</h1>
+  <p>דשבורד איגודים ואגודות — גרסת הדגמה</p>
+  <form id="loginForm">
+    <input type="password" id="pwd" placeholder="סיסמה" autocomplete="off" autofocus>
+    <button type="submit">כניסה</button>
+    <div class="error" id="err">סיסמה שגויה</div>
+  </form>
+  <div class="subtitle">גישה מוגבלת למורשים בלבד</div>
+</div>
+<script>
+const HASH = '63d5616420abc08af7fc0d00cc6dc09b33f3e175d0ab5f4110fbeb40d8212120';
+document.getElementById('loginForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const pwd = document.getElementById('pwd').value;
+  const enc = new TextEncoder();
+  const buf = await crypto.subtle.digest('SHA-256', enc.encode(pwd));
+  const hex = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+  if (hex === HASH) {
+    sessionStorage.setItem('dashboard_auth', 'ok');
+    window.location.href = 'dashboard.html';
+  } else {
+    document.getElementById('err').style.display = 'block';
+    document.getElementById('pwd').value = '';
+  }
+});
+if (sessionStorage.getItem('dashboard_auth') === 'ok') window.location.href = 'dashboard.html';
+</script>
+</body>
+</html>
