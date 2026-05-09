@@ -45,13 +45,14 @@ Chart.register({
     ctx.save(); ctx.font = '600 10px Heebo, sans-serif'; ctx.fillStyle = '#1A1A1A';
     chart.data.datasets.forEach((ds, di) => {
       if (ds.dataLabels && ds.dataLabels.display === false) return;
+      const dsFmt = (ds.dataLabels && ds.dataLabels.formatter) || fmt;
       const meta = chart.getDatasetMeta(di);
       if (meta.hidden) return;
       meta.data.forEach((el, idx) => {
         const raw = ds.data[idx]; if (raw == null) return;
         let val, txt;
-        if (typeof raw === 'object') { val = raw.y; txt = raw.name || fmt(raw.y); }
-        else { val = raw; txt = fmt(val); }
+        if (typeof raw === 'object') { val = raw.y; txt = raw.name || dsFmt(raw.y, idx); }
+        else { val = raw; txt = dsFmt(val, idx); }
         if (ct === 'doughnut' || ct === 'pie') {
           const p = el.tooltipPosition(); ctx.fillStyle = '#FFF'; ctx.font = '700 12px Heebo, sans-serif';
           ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(val + '%', p.x, p.y);
@@ -287,16 +288,35 @@ function renderBF() {
   mc('bf_branchType', { type:'doughnut', data:{ labels:['קבוצתי','אישי'],
     datasets:[{data:[tP,100-tP], backgroundColor:[TEAL,TEAL_L], borderWidth:2, borderColor:'#FFF'}]}, options:pieOpts() });
 
-  // threshold breakdown
-  const fail = r26.filter(r => r.is_pass_threshold_condition === 'לא עבר');
-  const fNames = [...new Set(fail.map(r=>r.association_name))].slice(0,12);
-  mc('bf_thresholdBreakdown', { type:'bar', data:{ labels:['סף מקצועי','סף מנהלי','סף מלא (שניהם)'],
-    datasets: fNames.map((nm,i) => {
-      const my = fail.filter(r=>r.association_name===nm);
-      const pf = my.some(r=>r.is_pass_professional_condition==='לא')?1:0;
-      const af = my.some(r=>r.is_pass_admin_condition==='לא')?1:0;
-      return {label:nm, data:[pf,af,(pf&&af)?1:0], backgroundColor:ENT_C[i%ENT_C.length], borderColor:'#FFF', borderWidth:1.5, barThickness:38};
-    })}, options:threshOpts() });
+  // תקציב לפי כמות ספורטאים
+  const athBudget = {}, athCount = {};
+  r26.forEach(r => {
+    const nm = r.association_name;
+    athBudget[nm] = (athBudget[nm]||0) + (r.total_budget||0);
+    athCount[nm] = (athCount[nm]||0) + (r.male_cnt||0) + (r.female_cnt||0);
+  });
+  const athSorted = Object.entries(athCount).sort((a,b)=>b[1]-a[1]).slice(0,8);
+  const athNames = athSorted.map(e=>e[0]);
+  mc('bf_byAthletes', { type:'bar', data:{ labels:athNames,
+    datasets:[{data:athNames.map(n=>+((athBudget[n]||0)/1e6).toFixed(1)),
+      backgroundColor:TEAL, borderRadius:2, barThickness:16,
+      dataLabels:{formatter:(v,idx)=>fmtM(v)+' | '+fmtN(athCount[athNames[idx]])+'  '}}]},
+    options:hbarOpts(v=>fmtM(v)) });
+
+  // תקציב לפי הישגיות
+  const achBudget = {}, achScore = {};
+  r26.forEach(r => {
+    const nm = r.association_name;
+    achBudget[nm] = (achBudget[nm]||0) + (r.total_budget||0);
+    achScore[nm] = (achScore[nm]||0) + (r.male_achievement_score||0) + (r.female_achievement_score||0);
+  });
+  const achSorted = Object.entries(achScore).sort((a,b)=>b[1]-a[1]).slice(0,8);
+  const achNames = achSorted.map(e=>e[0]);
+  mc('bf_byAchievement', { type:'bar', data:{ labels:achNames,
+    datasets:[{data:achNames.map(n=>+((achBudget[n]||0)/1e6).toFixed(1)),
+      backgroundColor:AMBER, borderRadius:2, barThickness:16,
+      dataLabels:{formatter:(v,idx)=>fmtM(v)+' | '+achScore[achNames[idx]].toFixed(0)+' נק\'  '}}]},
+    options:hbarOpts(v=>fmtM(v)) });
 
   // YoY comparison
   const m26 = Object.fromEntries(grpSum(r26,'association_name','total_budget'));
@@ -364,16 +384,35 @@ function renderBA() {
   mc('ba_byTeam', { type:'bar', data:{ labels:tmT10.map(e=>e[0]),
     datasets:[{data:tmT10.map(e=>+(e[1]/1e6).toFixed(1)), backgroundColor:TEAL, borderRadius:2, barThickness:18}]}, options:hbarOpts(fmtM) });
 
-  // threshold breakdown
-  const fail = r26.filter(r => r.is_pass_threshold_condition === 'לא עבר');
-  const fNames = [...new Set(fail.map(r=>r.society_name||r.association_name))].slice(0,12);
-  mc('ba_thresholdBreakdown', { type:'bar', data:{ labels:['סף מקצועי','סף מנהלי','סף מלא (שניהם)'],
-    datasets: fNames.map((nm,i) => {
-      const my = fail.filter(r=>(r.society_name||r.association_name)===nm);
-      const pf = my.some(r=>r.is_pass_professional_condition==='לא')?1:0;
-      const af = my.some(r=>r.is_pass_admin_condition==='לא')?1:0;
-      return {label:nm, data:[pf,af,(pf&&af)?1:0], backgroundColor:ENT_C[i%ENT_C.length], borderColor:'#FFF', borderWidth:1.5, barThickness:38};
-    })}, options:threshOpts() });
+  // תקציב לפי כמות ספורטאים (BA)
+  const baAthBudget = {}, baAthCount = {};
+  r26.forEach(r => {
+    const nm = r.society_name || r.association_name;
+    baAthBudget[nm] = (baAthBudget[nm]||0) + (r.total_budget||0);
+    baAthCount[nm] = (baAthCount[nm]||0) + (r.male_cnt||0) + (r.female_cnt||0);
+  });
+  const baAthSorted = Object.entries(baAthCount).sort((a,b)=>b[1]-a[1]).slice(0,10);
+  const baAthNames = baAthSorted.map(e=>e[0]);
+  mc('ba_byAthletes', { type:'bar', data:{ labels:baAthNames,
+    datasets:[{data:baAthNames.map(n=>+((baAthBudget[n]||0)/1e6).toFixed(1)),
+      backgroundColor:TEAL, borderRadius:2, barThickness:18,
+      dataLabels:{formatter:(v,idx)=>fmtM(v)+' | '+fmtN(baAthCount[baAthNames[idx]])+'  '}}]},
+    options:hbarOpts(v=>fmtM(v)) });
+
+  // תקציב לפי הישגיות (BA)
+  const baAchBudget = {}, baAchScore = {};
+  r26.forEach(r => {
+    const nm = r.society_name || r.association_name;
+    baAchBudget[nm] = (baAchBudget[nm]||0) + (r.total_budget||0);
+    baAchScore[nm] = (baAchScore[nm]||0) + (r.male_achievement_score||0) + (r.female_achievement_score||0);
+  });
+  const baAchSorted = Object.entries(baAchScore).sort((a,b)=>b[1]-a[1]).slice(0,10);
+  const baAchNames = baAchSorted.map(e=>e[0]);
+  mc('ba_byAchievement', { type:'bar', data:{ labels:baAchNames,
+    datasets:[{data:baAchNames.map(n=>+((baAchBudget[n]||0)/1e6).toFixed(1)),
+      backgroundColor:AMBER, borderRadius:2, barThickness:18,
+      dataLabels:{formatter:(v,idx)=>fmtM(v)+' | '+baAchScore[baAchNames[idx]].toFixed(0)+' נק\'  '}}]},
+    options:hbarOpts(v=>fmtM(v)) });
 
   // YoY
   const m26 = Object.fromEntries(grpSum(r26,'society_name','total_budget'));
