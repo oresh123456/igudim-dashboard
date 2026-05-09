@@ -258,9 +258,7 @@
   <button class="tab" data-tab="af">איגודים</button>
   <button class="tab" data-tab="aa">אגודות</button>
   <span class="tab-divider"></span>
-  <span class="tab-group-label">השוואה מגדרית</span>
   <button class="tab" data-tab="wg">ספורט נשים</button>
-  <button class="tab" data-tab="ws">ניקוד נשים</button>
 </nav>
 
 <main>
@@ -299,7 +297,7 @@
 
     <div class="grid">
       <div class="card col-8">
-        <div class="card-head"><span class="card-title">תקציב לפי איגוד</span><span class="card-meta">מקלות אופקיים · 10 מובילים</span></div>
+        <div class="card-head"><span class="card-title">תקציב לפי איגוד</span><span class="card-meta">מקלות מוערמים · 10 מובילים · צבע = רצועת תקציב</span></div>
         <div class="card-canvas-wrap h-360"><canvas id="bf_byFederation"></canvas></div>
       </div>
       <div class="card col-4">
@@ -380,7 +378,7 @@
 
     <div class="grid">
       <div class="card col-12">
-        <div class="card-head"><span class="card-title">תקציב לפי אגודה</span><span class="card-meta">מקלות אופקיים · 10 מובילות</span></div>
+        <div class="card-head"><span class="card-title">תקציב לפי אגודה</span><span class="card-meta">מקלות מוערמים · 10 מובילות · צבע = רצועת תקציב</span></div>
         <div class="card-canvas-wrap h-360"><canvas id="ba_byAssoc"></canvas></div>
       </div>
 
@@ -457,7 +455,7 @@
         <select><option value="">הכל</option><option>נשים</option><option>גברים</option></select>
       </div>
       <div class="filter">
-        <label>שכבת גיל (טווח)</label>
+        <label>טווח גיל</label>
         <div class="age-range">
           <input type="number" class="age-num" min="0" max="120" value="6" aria-label="גיל מינימלי">
           <span class="sep">–</span>
@@ -494,8 +492,17 @@
       </div>
 
       <div class="card col-12">
-        <div class="card-head"><span class="card-title">ספורטאים לפי שכבת גיל — נשים מול גברים</span><span class="card-meta">קווי מגמה מקבילים · גיל 6–50</span></div>
+        <div class="card-head"><span class="card-title">ספורטאים לפי גיל — נשים מול גברים</span><span class="card-meta">קווי מגמה מקבילים · גיל 6–50</span></div>
         <div class="card-canvas-wrap h-300"><canvas id="af_byAge"></canvas></div>
+      </div>
+
+      <div class="card col-6">
+        <div class="card-head"><span class="card-title">גברים — לפי קבוצת גיל</span><span class="card-meta">מקלות אנכיים · ילדים / נוער / בוגרים / ותיקים</span></div>
+        <div class="card-canvas-wrap h-280"><canvas id="af_ageGroupM"></canvas></div>
+      </div>
+      <div class="card col-6">
+        <div class="card-head"><span class="card-title">נשים — לפי קבוצת גיל</span><span class="card-meta">מקלות אנכיים · ילדים / נוער / בוגרים / ותיקים</span></div>
+        <div class="card-canvas-wrap h-280"><canvas id="af_ageGroupW"></canvas></div>
       </div>
 
       <div class="card col-12">
@@ -551,7 +558,7 @@
         <select><option value="">הכל</option><option>נשים</option><option>גברים</option></select>
       </div>
       <div class="filter">
-        <label>שכבת גיל (טווח)</label>
+        <label>טווח גיל</label>
         <div class="age-range">
           <input type="number" class="age-num" min="0" max="120" value="6" aria-label="גיל מינימלי">
           <span class="sep">–</span>
@@ -593,8 +600,17 @@
         <div class="card-canvas-wrap h-360"><canvas id="aa_byTeam"></canvas></div>
       </div>
       <div class="card col-6">
-        <div class="card-head"><span class="card-title">ספורטאים לפי שכבת גיל — נשים מול גברים</span><span class="card-meta">קווי מגמה מקבילים · גיל 6–50</span></div>
+        <div class="card-head"><span class="card-title">ספורטאים לפי גיל — נשים מול גברים</span><span class="card-meta">קווי מגמה מקבילים · גיל 6–50</span></div>
         <div class="card-canvas-wrap h-360"><canvas id="aa_byAge"></canvas></div>
+      </div>
+
+      <div class="card col-6">
+        <div class="card-head"><span class="card-title">גברים — לפי קבוצת גיל</span><span class="card-meta">מקלות אנכיים · ילדים / נוער / בוגרים / ותיקים</span></div>
+        <div class="card-canvas-wrap h-280"><canvas id="aa_ageGroupM"></canvas></div>
+      </div>
+      <div class="card col-6">
+        <div class="card-head"><span class="card-title">נשים — לפי קבוצת גיל</span><span class="card-meta">מקלות אנכיים · ילדים / נוער / בוגרים / ותיקים</span></div>
+        <div class="card-canvas-wrap h-280"><canvas id="aa_ageGroupW"></canvas></div>
       </div>
 
       <div class="card col-12">
@@ -616,26 +632,18 @@
 
 
   <!-- ============================================ -->
-  <!-- ===== PAGE 5: WOMEN'S SPORT (counts + composition) ===== -->
+  <!-- ===== PAGE 5: WOMEN'S SPORT ===== -->
   <!-- ============================================ -->
   <section class="page" id="page-wg" data-tab="wg">
     <div class="filter-bar">
       <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
       <div class="filter">
         <label>איגוד</label>
-        <select><option value="">הכל</option><option>כדורגל</option><option>כדורסל</option><option>שחייה</option><option>אתלטיקה</option><option>טניס</option></select>
-      </div>
-      <div class="filter">
-        <label>אגודה</label>
-        <select><option value="">הכל</option></select>
-      </div>
-      <div class="filter">
-        <label>קבוצה</label>
         <select><option value="">הכל</option></select>
       </div>
       <div class="filter">
         <label>ענף</label>
-        <select><option value="">הכל</option><option>כדורגל</option><option>כדורסל</option><option>שחייה</option><option>אתלטיקה</option><option>טניס</option><option>כדורעף</option><option>התעמלות</option><option>ג'ודו</option></select>
+        <select><option value="">הכל</option></select>
       </div>
       <div class="filter">
         <label>סיווג אולימפי</label>
@@ -645,190 +653,102 @@
         <label>סוג ענף</label>
         <select><option value="">הכל</option><option>אישי</option><option>קבוצתי</option></select>
       </div>
-      <div class="filter">
-        <label>שכבת גיל (טווח)</label>
-        <div class="age-range">
-          <input type="number" class="age-num" min="0" max="120" value="6" aria-label="גיל מינימלי">
-          <span class="sep">–</span>
-          <input type="number" class="age-num" min="0" max="120" value="50" aria-label="גיל מקסימלי">
-        </div>
-      </div>
       <button class="filter-reset">איפוס פילטרים</button>
     </div>
 
     <div class="kpis">
-      <div class="kpi"><div class="kpi-label">סה"כ ספורטאיות</div><div class="kpi-value">33,360</div></div>
-      <div class="kpi"><div class="kpi-label">סה"כ מאמנות</div><div class="kpi-value">426</div></div>
-      <div class="kpi"><div class="kpi-label">נשים בתפקידי הנהלה</div><div class="kpi-value">187</div></div>
-      <div class="kpi"><div class="kpi-label">חלק נשים מסך הספורטאים</div><div class="kpi-value">38.2%</div></div>
+      <div class="kpi"><div class="kpi-label">סה"כ ניקוד נשים</div><div class="kpi-value">—</div></div>
+      <div class="kpi"><div class="kpi-label">ניקוד קידום נשים</div><div class="kpi-value">—</div></div>
+      <div class="kpi"><div class="kpi-label">ניקוד הישגיות נשים</div><div class="kpi-value">—</div></div>
+      <div class="kpi"><div class="kpi-label">סה"כ מאמנות</div><div class="kpi-value">—</div></div>
     </div>
 
     <div class="grid">
 
-      <!-- Section A: gender YoY trend -->
-      <div class="card col-12">
-        <div class="card-head"><span class="card-title">אחוז שינוי בהישגיות — נשים מול גברים</span><span class="card-meta">YoY % · ההפרש (קו כהה) חיובי = הפער מצטמצם</span></div>
-        <div class="card-canvas-wrap h-320"><canvas id="wg_yoyGenderTrend"></canvas></div>
-      </div>
-
-      <!-- Section B: women's count breakdowns -->
+      <!-- ניקוד נשים מול נשים — השוואה לפי פילטר + פירוק -->
       <div class="card col-6">
-        <div class="card-head"><span class="card-title">כמות נשים לפי ענפים</span><span class="card-meta">מקלות אופקיים · 10 מובילים</span></div>
-        <div class="card-canvas-wrap h-360"><canvas id="wg_byBranch"></canvas></div>
+        <div class="card-head"><span class="card-title">ניקוד נשים לפי איגוד</span><span class="card-meta">מקלות אופקיים · 10 מובילים · השוואה לפי פילטר</span></div>
+        <div class="card-canvas-wrap h-360"><canvas id="wg_byFed"></canvas></div>
       </div>
       <div class="card col-3">
-        <div class="card-head"><span class="card-title">לפי סיווג ענף</span><span class="card-meta">עוגה</span></div>
+        <div class="card-head"><span class="card-title">פירוק — סוג ענף</span><span class="card-meta">ניקוד קידום נשים · קבוצתי / אישי</span></div>
         <div class="card-canvas-wrap h-360"><canvas id="wg_byBranchType"></canvas></div>
       </div>
       <div class="card col-3">
-        <div class="card-head"><span class="card-title">לפי סיווג אולימפי</span><span class="card-meta">עוגה</span></div>
+        <div class="card-head"><span class="card-title">פירוק — סיווג אולימפי</span><span class="card-meta">ניקוד נשים · אולימפי / לא אולימפי</span></div>
         <div class="card-canvas-wrap h-360"><canvas id="wg_byOlympic"></canvas></div>
       </div>
 
-      <!-- Section C: teams + coaches + management -->
+      <!-- אחוז שינוי בניקוד הישגיות -->
+      <div class="card col-12">
+        <div class="card-head"><span class="card-title">שינוי % בניקוד הישגיות נשים — לפי איגוד</span><span class="card-meta">2025 → 2026 · מסודר לפי שיעור שינוי</span></div>
+        <div class="card-canvas-wrap h-280"><canvas id="wg_achChange"></canvas></div>
+      </div>
+
+      <!-- איגודים — כמות נבחרות | אגודות — כמות קבוצות -->
       <div class="card col-6">
-        <div class="card-head"><span class="card-title">כמות נבחרות נשים — לפי איגוד</span><span class="card-meta">מקלות אופקיים · 10 מובילים</span></div>
+        <div class="card-head"><span class="card-title">איגודים — כמות נבחרות</span><span class="card-meta">מקלות מקובצים · נשים מול גברים · 10 מובילים</span></div>
         <div class="card-canvas-wrap h-360"><canvas id="wg_teamsByFed"></canvas></div>
       </div>
       <div class="card col-6">
-        <div class="card-head"><span class="card-title">כמות קבוצות נשים — לפי אגודה</span><span class="card-meta">מקלות אופקיים · 10 מובילות</span></div>
-        <div class="card-canvas-wrap h-360"><canvas id="wg_teamsByAssoc"></canvas></div>
+        <div class="card-head"><span class="card-title">אגודות — כמות קבוצות</span><span class="card-meta">מקלות מקובצים · נשים מול גברים · 10 מובילות</span></div>
+        <div class="card-canvas-wrap h-360"><canvas id="wg_groupsByAssoc"></canvas></div>
       </div>
 
-      <div class="card col-6">
-        <div class="card-head"><span class="card-title">כמות מאמנות — לפי איגוד</span><span class="card-meta">מקלות אופקיים · 10 מובילים</span></div>
-        <div class="card-canvas-wrap h-360"><canvas id="wg_coachesByFed"></canvas></div>
-      </div>
-      <div class="card col-6">
-        <div class="card-head"><span class="card-title">נשים בתפקידי הנהלה — לפי איגוד</span><span class="card-meta">מקלות אופקיים · 10 מובילים</span></div>
-        <div class="card-canvas-wrap h-360"><canvas id="wg_managementByFed"></canvas></div>
-      </div>
-
-      <!-- Section D: gender comparison -->
+      <!-- גרף גילאים -->
       <div class="card col-12">
-        <div class="card-head"><span class="card-title">ספורטאים לפי שכבת גיל — נשים מול גברים</span><span class="card-meta">קווי מגמה מקבילים · גיל 6–50</span></div>
-        <div class="card-canvas-wrap h-320"><canvas id="wg_ageByGender"></canvas></div>
+        <div class="card-head"><span class="card-title">גרף גילאים — גברים מול נשים</span><span class="card-meta">קווי מגמה מקבילים · גיל 6–50</span></div>
+        <div class="card-canvas-wrap h-280"><canvas id="wg_ageByGender"></canvas></div>
       </div>
 
+      <!-- נתונים גיאוגרפיים לפי מגדר -->
       <div class="card col-6">
-        <div class="card-head"><span class="card-title">רמה סוציו-אקונומית — נשים מול גברים</span><span class="card-meta">מקלות מקובצים · אשכולות 1–10</span></div>
-        <div class="card-canvas-wrap h-360"><canvas id="wg_socioByGender"></canvas></div>
+        <div class="card-head"><span class="card-title">נתונים גיאוגרפיים — סוציו-אקונומי</span><span class="card-meta">מקלות מקובצים · אשכולות 1–10 · גברים מול נשים</span></div>
+        <div class="card-canvas-wrap h-320"><canvas id="wg_socioByGender"></canvas></div>
       </div>
       <div class="card col-6">
-        <div class="card-head"><span class="card-title">רמת פריפריאליות — נשים מול גברים</span><span class="card-meta">מקלות מקובצים · אשכולות 1–5</span></div>
-        <div class="card-canvas-wrap h-360"><canvas id="wg_periByGender"></canvas></div>
+        <div class="card-head"><span class="card-title">נתונים גיאוגרפיים — רמת פריפריאליות</span><span class="card-meta">מקלות מקובצים · אשכולות 1–5 · גברים מול נשים</span></div>
+        <div class="card-canvas-wrap h-320"><canvas id="wg_periByGender"></canvas></div>
       </div>
+
+      <!-- אחוז נשים הנהלה | מספר מאמנות -->
+      <div class="card col-6">
+        <div class="card-head"><span class="card-title">נשים בהנהלה — לפי איגוד</span><span class="card-meta">מקלות אופקיים · 10 מובילים</span></div>
+        <div class="card-canvas-wrap h-320"><canvas id="wg_mgmtByFed"></canvas></div>
+      </div>
+      <div class="card col-6">
+        <div class="card-head"><span class="card-title">מספר מאמנות — לפי איגוד</span><span class="card-meta">מקלות אופקיים · 10 מובילים</span></div>
+        <div class="card-canvas-wrap h-320"><canvas id="wg_coachesByFed"></canvas></div>
+      </div>
+
+      <!-- קבוצתי — ליגות וקבוצות -->
+      <div class="card col-6">
+        <div class="card-head"><span class="card-title">קבוצתי — מספר קבוצות לליגה</span><span class="card-meta">בר · ספורט קבוצתי בלבד</span></div>
+        <div class="card-canvas-wrap h-280"><canvas id="wg_groupsPerLeague"></canvas></div>
+      </div>
+      <div class="card col-6">
+        <div class="card-head"><span class="card-title">מספר ליגות באיגוד</span><span class="card-meta">מקלות אופקיים · ספורט קבוצתי</span></div>
+        <div class="card-canvas-wrap h-280"><canvas id="wg_leaguesPerFed"></canvas></div>
+      </div>
+
+      <!-- כל ניקוד בנפרד לפי חלוקות גיאוגרפיות -->
+      <div class="card col-4">
+        <div class="card-head"><span class="card-title">ניקוד נשים — לפי רשות מקומית</span><span class="card-meta">מקלות אופקיים · 10 מובילות</span></div>
+        <div class="card-canvas-wrap h-320"><canvas id="wg_scoreByCity"></canvas></div>
+      </div>
+      <div class="card col-4">
+        <div class="card-head"><span class="card-title">ניקוד הישגיות — לפי אשכול סוציו-אקונומי</span><span class="card-meta">בר · אשכולות 1–10</span></div>
+        <div class="card-canvas-wrap h-320"><canvas id="wg_scoreByCluster"></canvas></div>
+      </div>
+      <div class="card col-4">
+        <div class="card-head"><span class="card-title">ניקוד קידום נשים — לפי פריפריאליות</span><span class="card-meta">בר · אשכולות 1–5</span></div>
+        <div class="card-canvas-wrap h-320"><canvas id="wg_scoreByPeri"></canvas></div>
+      </div>
+
     </div>
 
     <div class="footer-note">
-      <strong>הערה תכנונית:</strong> כל הנתונים מגיעים מ-<code>FACT_support_request_spo</code> עם השדות <code>female_cnt</code>, <code>male_cnt</code>, <code>female_coaches_cnt</code>, <code>female_management_cnt</code>. הדף מתמקד ב<em>כמויות</em> ובהשוואה מגדרית. גרפי <em>ניקוד נשים</em> נמצאים בלשונית "ניקוד נשים".
-    </div>
-  </section>
-
-
-  <!-- ============================================ -->
-  <!-- ===== PAGE 6: WOMEN'S SCORE ===== -->
-  <!-- ============================================ -->
-  <section class="page" id="page-ws" data-tab="ws">
-    <div class="filter-bar">
-      <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
-      <div class="filter">
-        <label>איגוד</label>
-        <select><option value="">הכל</option><option>כדורגל</option><option>כדורסל</option><option>שחייה</option><option>אתלטיקה</option><option>טניס</option></select>
-      </div>
-      <div class="filter">
-        <label>אגודה</label>
-        <select><option value="">הכל</option></select>
-      </div>
-      <div class="filter">
-        <label>קבוצה</label>
-        <select><option value="">הכל</option></select>
-      </div>
-      <div class="filter">
-        <label>ענף</label>
-        <select><option value="">הכל</option><option>כדורגל</option><option>כדורסל</option><option>שחייה</option><option>אתלטיקה</option><option>טניס</option><option>כדורעף</option><option>התעמלות</option><option>ג'ודו</option></select>
-      </div>
-      <div class="filter">
-        <label>סיווג אולימפי</label>
-        <select><option value="">הכל</option><option>אולימפי</option><option>פרה-אולימפי</option><option>לא אולימפי</option></select>
-      </div>
-      <div class="filter">
-        <label>סוג ענף</label>
-        <select><option value="">הכל</option><option>אישי</option><option>קבוצתי</option></select>
-      </div>
-      <div class="filter">
-        <label>שכבת גיל (טווח)</label>
-        <div class="age-range">
-          <input type="number" class="age-num" min="0" max="120" value="6" aria-label="גיל מינימלי">
-          <span class="sep">–</span>
-          <input type="number" class="age-num" min="0" max="120" value="50" aria-label="גיל מקסימלי">
-        </div>
-      </div>
-      <button class="filter-reset">איפוס פילטרים</button>
-    </div>
-
-    <div class="kpis">
-      <div class="kpi"><div class="kpi-label">סך ניקוד הישגיות נשים</div><div class="kpi-value">2,612</div></div>
-      <div class="kpi"><div class="kpi-label">ניקוד קידום ספורט נשים</div><div class="kpi-value">3,847</div></div>
-      <div class="kpi"><div class="kpi-label">יחס ניקוד נשים/גברים</div><div class="kpi-value">0.71</div></div>
-      <div class="kpi"><div class="kpi-label">חלק נשים בניקוד הישגיות</div><div class="kpi-value">30.7%</div></div>
-    </div>
-
-    <div class="grid">
-
-      <!-- Section A: trend over years -->
-      <div class="card col-12">
-        <div class="card-head"><span class="card-title">ניקוד קידום נשים — לפי שנים</span><span class="card-meta">קו מגמה · סך כללי</span></div>
-        <div class="card-canvas-wrap h-320"><canvas id="ws_promoTrend"></canvas></div>
-      </div>
-
-      <!-- Section B: score distribution mirrors -->
-      <div class="card col-6">
-        <div class="card-head"><span class="card-title">ניקוד נשים לפי ענפים</span><span class="card-meta">מקלות אופקיים · 10 מובילים</span></div>
-        <div class="card-canvas-wrap h-360"><canvas id="ws_byScoreBranch"></canvas></div>
-      </div>
-      <div class="card col-3">
-        <div class="card-head"><span class="card-title">לפי סיווג ענף</span><span class="card-meta">עוגה</span></div>
-        <div class="card-canvas-wrap h-360"><canvas id="ws_byScoreBranchType"></canvas></div>
-      </div>
-      <div class="card col-3">
-        <div class="card-head"><span class="card-title">לפי סיווג אולימפי</span><span class="card-meta">עוגה</span></div>
-        <div class="card-canvas-wrap h-360"><canvas id="ws_byScoreOlympic"></canvas></div>
-      </div>
-
-      <!-- Section C: gender comparison on score -->
-      <div class="card col-12">
-        <div class="card-head"><span class="card-title">ניקוד לפי שכבת גיל — נשים מול גברים</span><span class="card-meta">קווי מגמה מקבילים · גיל 6–50</span></div>
-        <div class="card-canvas-wrap h-320"><canvas id="ws_ageScoreByGender"></canvas></div>
-      </div>
-
-      <div class="card col-6">
-        <div class="card-head"><span class="card-title">ניקוד לפי רמה סוציו-אקונומית — נשים מול גברים</span><span class="card-meta">מקלות מקובצים · אשכולות 1–10</span></div>
-        <div class="card-canvas-wrap h-360"><canvas id="ws_socioScoreByGender"></canvas></div>
-      </div>
-      <div class="card col-6">
-        <div class="card-head"><span class="card-title">ניקוד לפי רמת פריפריאליות — נשים מול גברים</span><span class="card-meta">מקלות מקובצים · אשכולות 1–5</span></div>
-        <div class="card-canvas-wrap h-360"><canvas id="ws_periScoreByGender"></canvas></div>
-      </div>
-
-      <!-- Section D: women's achievement score by demographic context -->
-      <div class="card col-6">
-        <div class="card-head"><span class="card-title">ניקוד הישגיות נשים — לפי רמה סוציו-אקונומית</span><span class="card-meta">קו מגמה · אשכולות 1–10</span></div>
-        <div class="card-canvas-wrap h-320"><canvas id="ws_byScoreSocio"></canvas></div>
-      </div>
-      <div class="card col-6">
-        <div class="card-head"><span class="card-title">ניקוד הישגיות נשים — לפי רמת פריפריאליות</span><span class="card-meta">מקלות אופקיים · אשכולות 1–5</span></div>
-        <div class="card-canvas-wrap h-320"><canvas id="ws_byScorePeri"></canvas></div>
-      </div>
-
-      <div class="card col-12">
-        <div class="card-head"><span class="card-title">ניקוד הישגיות נשים — לפי רשות מקומית</span><span class="card-meta">מקלות אופקיים · 12 רשויות מובילות</span></div>
-        <div class="card-canvas-wrap h-360"><canvas id="ws_byScoreCity"></canvas></div>
-      </div>
-    </div>
-
-    <div class="footer-note">
-      <strong>הערה תכנונית:</strong> דף זה מתמקד ב<em>ניקוד</em> — <code>female_score</code>, <code>female_achievement_score</code>, <code>women_promotion_score</code>. כל גרף שיש לו תאומה של "כמות" בדף "ספורט נשים" מופיע כאן בגרסת "ניקוד" — כל גרסה עונה על שאלה אחרת: כמות = "כמה נשים", ניקוד = "כמה הן מצליחות".
+      <strong>הערה תכנונית:</strong> ניקוד מ-<code>female_score</code>, <code>female_achievement_score</code>, <code>women_promotion_score</code> ב-<code>FACT_support_request_spo</code>; גיל ומגדר מ-<code>FACT_athlete</code>; נתוני אשכולות דרך <code>dim_authority</code>.
     </div>
   </section>
 
