@@ -339,21 +339,6 @@ function renderBF() {
   mc('bf_branchType', { type:'doughnut', data:{ labels:['קבוצתי','אישי'],
     datasets:[{data:[tP,100-tP], backgroundColor:[TEAL,TEAL_L], borderWidth:2, borderColor:'#FFF'}]}, options:pieOpts() });
 
-  // תקציב לפי כמות ספורטאים
-  const athBudget = {}, athCount = {};
-  r26.forEach(r => {
-    const nm = r.association_name;
-    athBudget[nm] = (athBudget[nm]||0) + (r.total_budget||0);
-    athCount[nm] = (athCount[nm]||0) + (r.male_cnt||0) + (r.female_cnt||0);
-  });
-  const athSorted = Object.entries(athCount).sort((a,b)=>b[1]-a[1]).slice(0,8);
-  const athNames = athSorted.map(e=>e[0]);
-  mc('bf_byAthletes', { type:'bar', data:{ labels:athNames,
-    datasets:[{data:athNames.map(n=>+((athBudget[n]||0)/1e6).toFixed(1)),
-      backgroundColor:TEAL, borderRadius:2, barThickness:16,
-      dataLabels:{formatter:(v,idx)=>fmtM(v)+' | '+fmtN(athCount[athNames[idx]])+'  '}}]},
-    options:hbarOpts(v=>fmtM(v)) });
-
   // תקציב לפי הישגיות
   const achBudget = {}, achScore = {};
   r26.forEach(r => {
@@ -442,21 +427,6 @@ function renderBA() {
   mc('ba_byTeam', { type:'bar', data:{ labels:tmT10.map(e=>e[0]),
     datasets:[{data:tmT10.map(e=>+(e[1]/1e6).toFixed(1)), backgroundColor:TEAL, borderRadius:2, barThickness:18}]}, options:hbarOpts(fmtM) });
 
-  // תקציב לפי כמות ספורטאים (BA)
-  const baAthBudget = {}, baAthCount = {};
-  r26.forEach(r => {
-    const nm = r.society_name || r.association_name;
-    baAthBudget[nm] = (baAthBudget[nm]||0) + (r.total_budget||0);
-    baAthCount[nm] = (baAthCount[nm]||0) + (r.male_cnt||0) + (r.female_cnt||0);
-  });
-  const baAthSorted = Object.entries(baAthCount).sort((a,b)=>b[1]-a[1]).slice(0,10);
-  const baAthNames = baAthSorted.map(e=>e[0]);
-  mc('ba_byAthletes', { type:'bar', data:{ labels:baAthNames,
-    datasets:[{data:baAthNames.map(n=>+((baAthBudget[n]||0)/1e6).toFixed(1)),
-      backgroundColor:TEAL, borderRadius:2, barThickness:18,
-      dataLabels:{formatter:(v,idx)=>fmtM(v)+' | '+fmtN(baAthCount[baAthNames[idx]])+'  '}}]},
-    options:hbarOpts(v=>fmtM(v)) });
-
   // תקציב לפי הישגיות (BA)
   const baAchBudget = {}, baAchScore = {};
   r26.forEach(r => {
@@ -503,10 +473,16 @@ function renderAF() {
   const femPct = total ? ((ath26.filter(a=>a.athlete_gender==='נקבה').length/total)*100).toFixed(1)+'%' : '0%';
   setKPI(p, [fmtN(total), fmtN(fedIds.size), fmtN(avg), femPct]);
 
-  // by federation
+  // by federation (stacked by gender)
   const byFed = grpCnt(ath26, 'association_name');
-  mc('af_byFederation', { type:'bar', data:{ labels:byFed.slice(0,10).map(e=>e[0]),
-    datasets:[{data:byFed.slice(0,10).map(e=>e[1]), backgroundColor:AMBER, borderRadius:2, barThickness:18}]}, options:hbarOpts(fmtN) });
+  const topFeds = byFed.slice(0,10).map(e=>e[0]);
+  const maleByFed = topFeds.map(n => ath26.filter(a=>a.association_name===n&&a.athlete_gender==='זכר').length);
+  const femByFed = topFeds.map(n => ath26.filter(a=>a.association_name===n&&a.athlete_gender==='נקבה').length);
+  mc('af_byFederation', { type:'bar', data:{ labels:topFeds,
+    datasets:[
+      {label:'גברים', data:maleByFed, backgroundColor:AMBER, borderRadius:2, barThickness:18},
+      {label:'נשים', data:femByFed, backgroundColor:AMBER_L, borderRadius:2, barThickness:18}
+    ]}, options:stackHbarOpts(fmtN) });
 
   // olympic doughnut
   const oC = ath26.filter(a => BR(a.branch_id)?.is_olympic_branch===1).length;
@@ -519,16 +495,6 @@ function renderAF() {
   const tP = total ? Math.round(tC/total*100) : 0;
   mc('af_branchType', { type:'doughnut', data:{ labels:['קבוצתי','אישי'],
     datasets:[{data:[tP,100-tP], backgroundColor:[AMBER,AMBER_L], borderWidth:2, borderColor:'#FFF'}]}, options:pieOpts() });
-
-  // gender by federation
-  const topFeds = byFed.slice(0,8).map(e=>e[0]);
-  const maleByFed = topFeds.map(n => ath26.filter(a=>a.association_name===n&&a.athlete_gender==='זכר').length);
-  const femByFed = topFeds.map(n => ath26.filter(a=>a.association_name===n&&a.athlete_gender==='נקבה').length);
-  mc('af_genderByFed', { type:'bar', data:{ labels:topFeds,
-    datasets:[
-      {label:'גברים', data:maleByFed, backgroundColor:AMBER, borderRadius:2, barThickness:16},
-      {label:'נשים', data:femByFed, backgroundColor:AMBER_L, borderRadius:2, barThickness:16}
-    ]}, options:stackHbarOpts(fmtN) });
 
   // age distribution (line by individual age)
   const mAge = ageDist(ath26, 'זכר');
@@ -582,7 +548,7 @@ function renderAF() {
 // ============================================================
 function renderAA() {
   const p = pg('aa');
-  const ath = fATH(MOCK.fact_athlete, p, 'איגוד-אם');
+  const ath = fATH(MOCK.fact_athlete, p);
   const a26 = ath.filter(a=>a.support_request_year===2026);
   const a25 = ath.filter(a=>a.support_request_year===2025);
 
@@ -592,10 +558,16 @@ function renderAA() {
   const tmCodes = new Set(a26.filter(a=>a.team_code).map(a=>a.team_code));
   setKPI(p, [fmtN(total), fmtN(socIds.size), fmtN(avg), fmtN(tmCodes.size)]);
 
-  // by society
+  // by society (stacked by gender)
   const bySoc = grpCnt(a26, 'society_name');
-  mc('aa_byAssoc', { type:'bar', data:{ labels:bySoc.slice(0,10).map(e=>e[0]),
-    datasets:[{data:bySoc.slice(0,10).map(e=>e[1]), backgroundColor:AMBER, borderRadius:2, barThickness:18}]}, options:hbarOpts(fmtN) });
+  const topSoc = bySoc.slice(0,10).map(e=>e[0]);
+  const maleBySoc = topSoc.map(n => a26.filter(a=>a.society_name===n&&a.athlete_gender==='זכר').length);
+  const femBySoc = topSoc.map(n => a26.filter(a=>a.society_name===n&&a.athlete_gender==='נקבה').length);
+  mc('aa_byAssoc', { type:'bar', data:{ labels:topSoc,
+    datasets:[
+      {label:'גברים', data:maleBySoc, backgroundColor:AMBER, borderRadius:2, barThickness:18},
+      {label:'נשים', data:femBySoc, backgroundColor:AMBER_L, borderRadius:2, barThickness:18}
+    ]}, options:stackHbarOpts(fmtN) });
 
   // by city
   const byCity = grpCnt(a26, 'authority_name');
@@ -866,7 +838,6 @@ function populateFilters() {
 
   // AA
   p = pg('aa');
-  fillSel(sel(p,'איגוד-אם'), assocNames);
   fillSel(sel(p,'אגודה'), societyNames);
   fillSel(sel(p,'קבוצה'), teamNames);
   fillSel(sel(p,'ענף'), branchNames);
