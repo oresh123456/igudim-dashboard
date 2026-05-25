@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ספורט נשים — ניקוד</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #F5F1EB; --surface: #FFFFFF; --surface-soft: #FBF8F2;
+    --ink: #1A1A1A; --ink-muted: #6B6B6B; --ink-faint: #9A9A9A;
+    --line: #E5E1D8; --line-soft: #EFEBE3;
+    --women: #86198F; --women-soft: #F4E4F7;
+    --radius: 6px; --radius-lg: 10px;
+  }
+  html { font-size: 15px; }
+  body { font-family: 'Heebo', system-ui, sans-serif;
+    background: var(--bg); color: var(--ink); line-height: 1.55;
+    min-height: 100vh; -webkit-font-smoothing: antialiased;
+    font-feature-settings: "tnum" 1; }
+  header { background: var(--surface); border-bottom: 1px solid var(--line);
+    padding: 18px 32px; display: flex; align-items: baseline; gap: 14px; }
+  header h1 { font-size: 18px; font-weight: 600; color: var(--ink); }
+  header .meta { font-size: 12px; color: var(--ink-faint); letter-spacing: 0.04em; }
+  header .meta-badge { display: inline-block; background: var(--women-soft); color: var(--women);
+    padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 500; margin-inline-start: 10px; }
+  .page-tabs { background: var(--surface); border-bottom: 1px solid var(--line);
+    padding: 0 32px; display: flex; gap: 0; }
+  .ptab { padding: 14px 22px; text-decoration: none; color: var(--ink-muted);
+    font-size: 14px; font-weight: 400; border-bottom: 2px solid transparent;
+    transition: color .15s; margin-bottom: -1px; }
+  .ptab:hover { color: var(--ink); }
+  .ptab.active { color: var(--women); font-weight: 500; border-bottom-color: var(--women); }
+  main { padding: 24px 32px 60px; }
+  .filter-bar { background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--radius-lg); padding: 14px 16px; margin-bottom: 18px;
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .filter-bar-label { font-size: 11px; color: var(--ink-muted); letter-spacing: 0.04em;
+    border-left: 1px solid var(--line); padding-left: 14px; margin-left: 4px;
+    align-self: stretch; display: flex; align-items: center; gap: 4px; font-weight: 400; }
+  .filter-bar-label strong { font-weight: 600; color: var(--ink); }
+  .filter { display: flex; flex-direction: column; gap: 4px; }
+  .filter label { font-size: 11px; color: var(--ink-muted); font-weight: 500; }
+  .filter select { font-family: inherit; font-size: 13px; padding: 6px 10px;
+    border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface);
+    color: var(--ink); cursor: pointer; min-width: 130px; outline: none; }
+  .filter select:focus { border-color: var(--women); }
+  .filter-reset { margin-inline-start: auto; background: transparent; border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 7px 14px; font-family: inherit; font-size: 12px;
+    color: var(--ink-muted); cursor: pointer; transition: background .15s; }
+  .filter-reset:hover { background: var(--surface-soft); color: var(--ink); }
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 18px; }
+  .kpi { background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--radius-lg); padding: 16px 18px; }
+  .kpi-label { font-size: 12px; color: var(--ink-muted); margin-bottom: 6px; font-weight: 400; }
+  .kpi-value { font-size: 26px; font-weight: 600; color: var(--ink); letter-spacing: -0.01em; line-height: 1.1; }
+  .section-title { font-size: 13px; font-weight: 600;
+    letter-spacing: 0.04em; margin: 8px 0 10px; padding: 6px 12px;
+    background: var(--women-soft); color: var(--women);
+    border-radius: var(--radius); display: inline-block; }
+  .section-title:first-of-type { margin-top: 0; }
+  .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 14px; margin-bottom: 18px; }
+  .col-12 { grid-column: span 12; }
+  .col-6 { grid-column: span 6; }
+  .card { background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--radius-lg); padding: 16px 18px 18px; display: flex; flex-direction: column; }
+  .card-head { display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 14px; gap: 10px; }
+  .card-title { font-size: 14px; font-weight: 500; color: var(--ink); }
+  .card-meta { font-size: 11px; color: var(--ink-faint); letter-spacing: 0.02em; white-space: nowrap; }
+  .card-canvas-wrap { position: relative; width: 100%; }
+  .h-320 { height: 320px; } .h-380 { height: 380px; } .h-420 { height: 420px; }
+  .footer-note { margin-top: 22px; padding: 14px 18px; background: var(--surface-soft);
+    border: 1px dashed var(--line); border-radius: var(--radius-lg);
+    font-size: 12px; color: var(--ink-muted); line-height: 1.7; }
+  .footer-note strong { color: var(--ink); font-weight: 500; }
+  @media (max-width: 1100px) {
+    .kpis { grid-template-columns: repeat(2, 1fr); }
+    .col-6 { grid-column: span 12; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>ספורט נשים</h1>
+  <span class="meta">משרד התרבות והספורט · אגף הספורט</span>
+  <span class="meta-badge">מוקאפ סטטי · נתונים להמחשה בלבד</span>
+</header>
+
+<nav class="page-tabs">
+  <a href="wg-scores.html"   class="ptab active">ניקוד</a>
+  <a href="wg-athletes.html" class="ptab">כמות</a>
+  <a href="wg-roles.html"    class="ptab">בעלי תפקיד</a>
+</nav>
+
+<main>
+
+  <div class="filter-bar">
+    <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
+    <div class="filter"><label>איגוד</label><select><option>הכל</option></select></div>
+    <div class="filter"><label>אגודה</label><select><option>הכל</option></select></div>
+    <div class="filter"><label>ענף</label><select><option>הכל</option></select></div>
+    <button class="filter-reset">איפוס פילטרים</button>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="kpi-label">סך ניקוד מנשים</div><div class="kpi-value">29,640</div></div>
+    <div class="kpi"><div class="kpi-label">אחוז נשים מסך הניקוד</div><div class="kpi-value">39.9%</div></div>
+    <div class="kpi"><div class="kpi-label">ניקוד נשים — מקבוצות</div><div class="kpi-value">11,100</div></div>
+    <div class="kpi"><div class="kpi-label">ניקוד נשים — מהישג אישי</div><div class="kpi-value">18,540</div></div>
+  </div>
+
+  <div class="section-title">השוואת סך-הכל — מקלות מוערמים</div>
+  <div class="grid">
+    <div class="card col-12">
+      <div class="card-head"><span class="card-title">לפי איגוד — סך הניקוד</span><span class="card-meta">מקל אחד לאיגוד · זכר (תחתון) + נקבה (עליון)</span></div>
+      <div class="card-canvas-wrap h-380"><canvas id="c_stackByFed"></canvas></div>
+    </div>
+    <div class="card col-12">
+      <div class="card-head"><span class="card-title">לפי רשות מקומית — סך הניקוד</span><span class="card-meta">10 רשויות מובילות · זכר + נקבה</span></div>
+      <div class="card-canvas-wrap h-380"><canvas id="c_stackByCity"></canvas></div>
+    </div>
+  </div>
+
+  <div class="section-title">השוואת מגדרים בנפרד — מקלות צמודים</div>
+  <div class="grid">
+    <div class="card col-12">
+      <div class="card-head"><span class="card-title">לפי איגוד</span><span class="card-meta">10 איגודים · זכר מול נקבה (קבוצות + אישי)</span></div>
+      <div class="card-canvas-wrap h-380"><canvas id="c_totalByFed"></canvas></div>
+    </div>
+    <div class="card col-12">
+      <div class="card-head"><span class="card-title">לפי רשות מקומית</span><span class="card-meta">10 רשויות מובילות · זכר מול נקבה</span></div>
+      <div class="card-canvas-wrap h-380"><canvas id="c_totalByCity"></canvas></div>
+    </div>
+    <div class="card col-6">
+      <div class="card-head"><span class="card-title">לפי מדד סוציו-אקונומי</span><span class="card-meta">אשכולות 1–10</span></div>
+      <div class="card-canvas-wrap h-320"><canvas id="c_totalBySocio"></canvas></div>
+    </div>
+    <div class="card col-6">
+      <div class="card-head"><span class="card-title">לפי רמת פריפריאליות</span><span class="card-meta">אשכולות 1–5 · 1 = פריפריאלי · 5 = מרכז</span></div>
+      <div class="card-canvas-wrap h-320"><canvas id="c_totalByPeriph"></canvas></div>
+    </div>
+  </div>
+
+  <div class="section-title">פירוק לפי מקור הניקוד: קבוצות מול הישג אישי</div>
+  <div class="grid">
+    <div class="card col-12">
+      <div class="card-head"><span class="card-title">לפי איגוד</span><span class="card-meta">2 מקורות (קבוצות + הישג אישי) · כל מקור מפורק לזכר/נקבה</span></div>
+      <div class="card-canvas-wrap h-420"><canvas id="c_splitByFed"></canvas></div>
+    </div>
+    <div class="card col-12">
+      <div class="card-head"><span class="card-title">לפי רשות מקומית</span><span class="card-meta">10 רשויות מובילות</span></div>
+      <div class="card-canvas-wrap h-420"><canvas id="c_splitByCity"></canvas></div>
+    </div>
+    <div class="card col-6">
+      <div class="card-head"><span class="card-title">לפי מדד סוציו-אקונומי</span><span class="card-meta">אשכולות 1–10</span></div>
+      <div class="card-canvas-wrap h-380"><canvas id="c_splitBySocio"></canvas></div>
+    </div>
+    <div class="card col-6">
+      <div class="card-head"><span class="card-title">לפי רמת פריפריאליות</span><span class="card-meta">אשכולות 1–5</span></div>
+      <div class="card-canvas-wrap h-380"><canvas id="c_splitByPeriph"></canvas></div>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    <strong>הגיון התרשים:</strong> ניקוד הישגיות לא נספר אחיד — קבוצות נשים תורמות לפי הגדרת הקבוצה (סעיף 15-3-א/ב, סוג ענף קבוצתי), בעוד ספורטאיות אישיות תורמות לפי הישג אישי. הסקציה העליונה מאחדת את שני המקורות לערך אחד של "סך תרומת נשים". הסקציה התחתונה מפרידה ביניהם, כדי שראש איגוד קבוצתי (כדורגל, כדורסל) ייראה היכן הוא חזק, וראש איגוד אישי (שחייה, אתלטיקה) יזהה איפה ההזדמנות. כל מקור מפורק לפי מגדר כדי לראות איפה הנשים יחסית לגברים.
+  </div>
+
+</main>
+
+<script>
+  Chart.defaults.font.family = "'Heebo', sans-serif";
+  Chart.defaults.font.size = 12;
+  Chart.defaults.color = '#1A1A1A';
+  Chart.defaults.borderColor = '#E5E1D8';
+
+  // Single-bar (women total) palette
+  const WOM_TOTAL = '#86198F', WOM_TOTAL_B = '#6B1373';
+  // Split palette: 4 distinct colors so user can identify each source × gender
+  const TEAM_M = '#0D5F73', TEAM_M_B = '#0A4A5A';   // קבוצות — זכר (dark teal)
+  const TEAM_F = '#86198F', TEAM_F_B = '#6B1373';   // קבוצות — נקבה (dark purple)
+  const PERS_M = '#B8DDE9', PERS_M_B = '#7FB8CC';   // הישג אישי — זכר (light teal)
+  const PERS_F = '#E8C8ED', PERS_F_B = '#C99AD2';   // הישג אישי — נקבה (light purple)
+
+  const fmtN = v => v.toLocaleString('he-IL');
+
+  // Stacked M+F (total score visible as bar height)
+  const TOTAL_M = '#B8DDE9', TOTAL_M_B = '#7FB8CC';
+  const TOTAL_F = '#E8C8ED', TOTAL_F_B = '#C99AD2';
+  function makeStackedTotal(canvasId, labels, men, women, rotate) {
+    new Chart(document.getElementById(canvasId), {
+      type: 'bar',
+      data: { labels: labels,
+        datasets: [
+          { label: 'זכר',  data: men, stack: 'all',
+            backgroundColor: TOTAL_M, borderColor: TOTAL_M_B, borderWidth: 1, borderRadius: 2 },
+          { label: 'נקבה', data: women, stack: 'all',
+            backgroundColor: TOTAL_F, borderColor: TOTAL_F_B, borderWidth: 1, borderRadius: 2 }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: true, position: 'top', align: 'start', rtl: true,
+            labels: { font: { size: 12 }, color: '#1A1A1A', boxWidth: 14, boxHeight: 14, padding: 12 } },
+          tooltip: { rtl: true, callbacks: { label: c => c.dataset.label + ': ' + fmtN(c.parsed.y) } }
+        },
+        scales: {
+          x: { stacked: true,
+               ticks: { font: { size: 11 }, color: '#1A1A1A',
+                        maxRotation: rotate ? 45 : 0, minRotation: rotate ? 30 : 0, autoSkip: false },
+               grid: { display: false, drawBorder: false } },
+          y: { stacked: true, beginAtZero: true,
+               ticks: { callback: fmtN, font: { size: 11 }, color: '#9A9A9A' },
+               grid: { color: '#EFEBE3', drawBorder: false } }
+        },
+        layout: { padding: { top: 6, bottom: 4 } }
+      }
+    });
+  }
+
+  // Section B — grouped M vs F (separate bars for separate inspection)
+  function makeTotal(canvasId, labels, men, women, rotate) {
+    new Chart(document.getElementById(canvasId), {
+      type: 'bar',
+      data: { labels: labels,
+        datasets: [
+          { label: 'זכר',  data: men,
+            backgroundColor: TOTAL_M, borderColor: TOTAL_M_B, borderWidth: 1, borderRadius: 2 },
+          { label: 'נקבה', data: women,
+            backgroundColor: TOTAL_F, borderColor: TOTAL_F_B, borderWidth: 1, borderRadius: 2 }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: true, position: 'top', align: 'start', rtl: true,
+            labels: { font: { size: 12 }, color: '#1A1A1A', boxWidth: 14, boxHeight: 14, padding: 12 } },
+          tooltip: { rtl: true, callbacks: { label: c => c.dataset.label + ': ' + fmtN(c.parsed.y) } }
+        },
+        scales: {
+          x: { ticks: { font: { size: 11 }, color: '#1A1A1A',
+                        maxRotation: rotate ? 45 : 0, minRotation: rotate ? 30 : 0, autoSkip: false },
+               grid: { display: false, drawBorder: false } },
+          y: { beginAtZero: true,
+               ticks: { callback: fmtN, font: { size: 11 }, color: '#9A9A9A' },
+               grid: { color: '#EFEBE3', drawBorder: false } }
+        },
+        layout: { padding: { top: 6, bottom: 4 } }
+      }
+    });
+  }
+
+  // Section B — 2 stacks per category: teams (M+F) | personal (M+F)
+  function makeSplit(canvasId, labels, teamM, teamF, persM, persF, rotate) {
+    new Chart(document.getElementById(canvasId), {
+      type: 'bar',
+      data: { labels: labels,
+        datasets: [
+          { label: 'קבוצות — זכר',     data: teamM, stack: 'team',
+            backgroundColor: TEAM_M, borderColor: TEAM_M_B, borderWidth: 1, borderRadius: 2 },
+          { label: 'קבוצות — נקבה',    data: teamF, stack: 'team',
+            backgroundColor: TEAM_F, borderColor: TEAM_F_B, borderWidth: 1, borderRadius: 2 },
+          { label: 'הישג אישי — זכר',  data: persM, stack: 'personal',
+            backgroundColor: PERS_M, borderColor: PERS_M_B, borderWidth: 1, borderRadius: 2 },
+          { label: 'הישג אישי — נקבה', data: persF, stack: 'personal',
+            backgroundColor: PERS_F, borderColor: PERS_F_B, borderWidth: 1, borderRadius: 2 }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: true, position: 'top', align: 'start', rtl: true,
+            labels: { font: { size: 11 }, color: '#1A1A1A', boxWidth: 14, boxHeight: 14, padding: 12 } },
+          tooltip: { rtl: true, callbacks: { label: c => c.dataset.label + ': ' + fmtN(c.parsed.y) } }
+        },
+        scales: {
+          x: { stacked: true,
+               ticks: { font: { size: 11 }, color: '#1A1A1A',
+                        maxRotation: rotate ? 45 : 0, minRotation: rotate ? 30 : 0, autoSkip: false },
+               grid: { display: false, drawBorder: false } },
+          y: { stacked: true, beginAtZero: true,
+               ticks: { callback: fmtN, font: { size: 11 }, color: '#9A9A9A' },
+               grid: { color: '#EFEBE3', drawBorder: false } }
+        },
+        layout: { padding: { top: 6, bottom: 4 } }
+      }
+    });
+  }
+
+  // ── DATA ──
+  const FEDS = ['התאחדות הכדורגל','איגוד הכדורסל','איגוד השחייה','איגוד האתלטיקה','איגוד הטניס','איגוד הכדורעף','איגוד ההתעמלות',"איגוד הג'ודו",'איגוד החתירה','איגוד האופניים'];
+  const CITIES = ['תל אביב-יפו','ירושלים','חיפה','ראשון לציון','פתח תקווה','באר שבע','נתניה','אשדוד','חולון','רמת גן'];
+
+  // ── STACKED section: same M/F numbers, rendered as totals ──
+  makeStackedTotal('c_stackByFed', FEDS,
+    /* זכר  */ [8700, 6350, 6000, 4800, 4200, 3750, 1900, 3600, 2500, 2800],
+    /* נקבה */ [2350, 2540, 3900, 3300, 2850, 4200, 6300, 1950, 1300,  950],
+    true);
+  makeStackedTotal('c_stackByCity', CITIES,
+    /* זכר  */ [5700, 5000, 4400, 3500, 3100, 2800, 2500, 2300, 2000, 1700],
+    /* נקבה */ [2800, 2400, 2100, 1800, 1600, 1450, 1350, 1250, 1100,  950],
+    true);
+
+  // ── GROUPED section: same numbers, rendered as separate bars per gender ──
+  makeTotal('c_totalByFed', FEDS,
+    /* זכר  */ [8700, 6350, 6000, 4800, 4200, 3750, 1900, 3600, 2500, 2800],
+    /* נקבה */ [2350, 2540, 3900, 3300, 2850, 4200, 6300, 1950, 1300,  950],
+    true);
+  makeTotal('c_totalByCity', CITIES,
+    /* זכר  */ [5700, 5000, 4400, 3500, 3100, 2800, 2500, 2300, 2000, 1700],
+    /* נקבה */ [2800, 2400, 2100, 1800, 1600, 1450, 1350, 1250, 1100,  950],
+    true);
+  makeTotal('c_totalBySocio', ['1','2','3','4','5','6','7','8','9','10'],
+    /* זכר  */ [ 850, 1700, 2700, 3700, 4800, 5800, 6600, 7100, 6200, 4900],
+    /* נקבה */ [ 400,  800, 1300, 1800, 2400, 3000, 3500, 3800, 3300, 2600],
+    false);
+  makeTotal('c_totalByPeriph', ['1 — פריפריאלי','2','3','4','5 — מרכז'],
+    /* זכר  */ [1900, 3500, 6100, 10800, 18200],
+    /* נקבה */ [ 950, 1700, 3000,  5500,  9200],
+    false);
+
+  // Section B — split by source × gender
+  // Per fed: [team_M, team_F, personal_M, personal_F]
+  makeSplit('c_splitByFed', FEDS,
+    /* team_M     */ [8500, 6200,  200,  300,  500, 3500,  200,  100,  800, 1500],
+    /* team_F     */ [2300, 2500,  100,  200,  350, 4000,  500,   50,  500,  600],
+    /* personal_M */ [ 200,  150, 5800, 4500, 3700,  250, 1700, 3500, 1700, 1300],
+    /* personal_F */ [  50,   40, 3800, 3100, 2500,  200, 5800, 1900,  800,  350],
+    true);
+
+  makeSplit('c_splitByCity', CITIES,
+    /* team_M     */ [3500, 3100, 2700, 2100, 1900, 1700, 1500, 1400, 1200, 1000],
+    /* team_F     */ [1600, 1400, 1200, 1000,  900,  800,  750,  700,  600,  500],
+    /* personal_M */ [2200, 1900, 1700, 1400, 1200, 1100, 1000,  900,  800,  700],
+    /* personal_F */ [1200, 1000,  900,  800,  700,  650,  600,  550,  500,  450],
+    true);
+
+  makeSplit('c_splitBySocio', ['1','2','3','4','5','6','7','8','9','10'],
+    /* team_M     */ [ 600, 1200, 1900, 2600, 3300, 4000, 4500, 4800, 4200, 3300],
+    /* team_F     */ [ 250,  500,  800, 1100, 1500, 1900, 2200, 2400, 2100, 1600],
+    /* personal_M */ [ 250,  500,  800, 1100, 1500, 1800, 2100, 2300, 2000, 1600],
+    /* personal_F */ [ 150,  300,  500,  700,  900, 1100, 1300, 1400, 1200, 1000],
+    false);
+
+  makeSplit('c_splitByPeriph', ['1 — פריפריאלי','2','3','4','5 — מרכז'],
+    /* team_M     */ [1300, 2400, 4200, 7500, 12500],
+    /* team_F     */ [ 600, 1100, 1900, 3400,  5700],
+    /* personal_M */ [ 600, 1100, 1900, 3300,  5700],
+    /* personal_F */ [ 350,  600, 1100, 2100,  3500],
+    false);
+</script>
+
+</body>
+</html>

@@ -186,6 +186,22 @@ function grpCnt(arr, k) {
   const m = {}; arr.forEach(r => { const key = r[k]||'לא ידוע'; m[key] = (m[key]||0) + 1; });
   return Object.entries(m).sort((a,b) => b[1]-a[1]);
 }
+function grpAthletes(arr, k) {
+  const m = {}; arr.forEach(r => { const key = r[k]||'לא ידוע'; m[key] = (m[key]||0) + (r.male_cnt||0) + (r.female_cnt||0); });
+  return m;
+}
+function grpTeams(arr, k) {
+  const m = {}; arr.forEach(r => { if (!r.team_code) return; const key = r[k]||'לא ידוע'; (m[key] = m[key] || new Set()).add(r.team_code); });
+  return Object.fromEntries(Object.entries(m).map(([k,v]) => [k, v.size]));
+}
+function authAthletes(arr, field) {
+  const m = {}; arr.forEach(r => { const a = AU(r.authority_id); if (!a) return; const k = a[field]; if (k==null) return; m[k] = (m[k]||0) + (r.male_cnt||0) + (r.female_cnt||0); });
+  return m;
+}
+function authTeams(arr, field) {
+  const m = {}; arr.forEach(r => { if (!r.team_code) return; const a = AU(r.authority_id); if (!a) return; const k = a[field]; if (k==null) return; (m[k] = m[k] || new Set()).add(r.team_code); });
+  return Object.fromEntries(Object.entries(m).map(([k,v]) => [k, v.size]));
+}
 
 // ── Filter DOM helpers ──
 function pg(id) { return document.getElementById('page-' + id); }
@@ -314,18 +330,11 @@ function renderBF() {
   const oIds = new Set(r26.filter(r => BR(r.branch_id)?.is_olympic_branch===1).map(r=>r.association_id));
   setKPI(p, ['₪'+(tot/1e6).toFixed(1)+'M', fmtN(ids.size), '₪'+(avg/1e6).toFixed(2)+'M', fmtN(oIds.size)]);
 
-  // by federation — stacked by budget band (רצועות ראשיות)
+  // by federation — total budget (single-color)
   const byA = grpSum(r26, 'association_name', 'total_budget');
   const t10 = byA.slice(0,10);
-  const fedBB = {};
-  t10.forEach(([nm]) => { fedBB[nm] = aggBandBudgets(r26.filter(r=>r.association_name===nm)); });
-  const activeBands = BUDGET_BANDS.filter(b => t10.some(([nm])=>(fedBB[nm][b.key]||0)>0));
   mc('bf_byFederation', { type:'bar', data:{ labels:t10.map(e=>e[0]),
-    datasets: activeBands.map(b=>({
-      label: b.key,
-      data: t10.map(([nm])=>+((fedBB[nm][b.key]||0)/1e6).toFixed(2)),
-      backgroundColor: b.color, borderRadius: 2, barThickness: 22,
-    }))}, options:stackHbarOpts(fmtM) });
+    datasets:[{data:t10.map(e=>+(e[1]/1e6).toFixed(1)), backgroundColor:TEAL, borderRadius:2, barThickness:22}]}, options:hbarOpts(fmtM) });
 
   // olympic doughnut
   const oB = r26.filter(r => BR(r.branch_id)?.is_olympic_branch===1).reduce((s,r)=>s+(r.total_budget||0),0);
@@ -388,46 +397,71 @@ function renderBA() {
   const tmCodes = new Set(r26.filter(r=>r.team_code).map(r=>r.team_code));
   setKPI(p, ['₪'+(tot/1e6).toFixed(1)+'M', fmtN(socIds.size), '₪'+(avg/1e6).toFixed(2)+'M', fmtN(tmCodes.size)]);
 
-  // by society — stacked by budget band (רצועות ראשיות)
+  const PURPLE = '#534AB7';
+
+  // ─── 1. by society — תקציב (חד-צבעי), קבוצות, ספורטאים ───
   const bySoc = grpSum(r26, 'society_name', 'total_budget');
   const t10 = bySoc.slice(0,10);
-  const assocBB = {};
-  t10.forEach(([nm]) => { assocBB[nm] = aggBandBudgets(r26.filter(r=>r.society_name===nm)); });
-  const assocActiveBands = BUDGET_BANDS.filter(b => t10.some(([nm])=>(assocBB[nm][b.key]||0)>0));
-  mc('ba_byAssoc', { type:'bar', data:{ labels:t10.map(e=>e[0]),
-    datasets: assocActiveBands.map(b=>({
-      label: b.key,
-      data: t10.map(([nm])=>+((assocBB[nm][b.key]||0)/1e6).toFixed(2)),
-      backgroundColor: b.color, borderRadius: 2, barThickness: 22,
-    }))}, options:stackHbarOpts(fmtM) });
+  const socNames = t10.map(e=>e[0]);
+  mc('ba_byAssoc', { type:'bar', data:{ labels:socNames,
+    datasets:[{data:t10.map(e=>+(e[1]/1e6).toFixed(1)), backgroundColor:TEAL, borderRadius:2, barThickness:22}]}, options:hbarOpts(fmtM) });
+  const socTeams = grpTeams(r26, 'society_name');
+  mc('ba_byAssoc_teams', { type:'bar', data:{ labels:socNames,
+    datasets:[{data:socNames.map(n=>socTeams[n]||0), backgroundColor:AMBER, borderRadius:2, barThickness:22}]}, options:hbarOpts(fmtN) });
+  const socAth = grpAthletes(r26, 'society_name');
+  mc('ba_byAssoc_athletes', { type:'bar', data:{ labels:socNames,
+    datasets:[{data:socNames.map(n=>socAth[n]||0), backgroundColor:PURPLE, borderRadius:2, barThickness:22}]}, options:hbarOpts(fmtN) });
 
-  // by city (authority)
+  // ─── 2. by city (authority) — תקציב, קבוצות, ספורטאים ───
   const byCity = grpSum(r26, 'authority_name', 'total_budget');
   const cT10 = byCity.filter(e=>e[0]!=='לא ידוע').slice(0,10);
-  mc('ba_byCity', { type:'bar', data:{ labels:cT10.map(e=>e[0]),
+  const cityNames = cT10.map(e=>e[0]);
+  mc('ba_byCity', { type:'bar', data:{ labels:cityNames,
     datasets:[{data:cT10.map(e=>+(e[1]/1e6).toFixed(1)), backgroundColor:TEAL, borderRadius:2, barThickness:18}]}, options:hbarOpts(fmtM) });
+  const cityTeams = grpTeams(r26, 'authority_name');
+  mc('ba_byCity_teams', { type:'bar', data:{ labels:cityNames,
+    datasets:[{data:cityNames.map(n=>cityTeams[n]||0), backgroundColor:AMBER, borderRadius:2, barThickness:18}]}, options:hbarOpts(fmtN) });
+  const cityAth = grpAthletes(r26, 'authority_name');
+  mc('ba_byCity_athletes', { type:'bar', data:{ labels:cityNames,
+    datasets:[{data:cityNames.map(n=>cityAth[n]||0), backgroundColor:PURPLE, borderRadius:2, barThickness:18}]}, options:hbarOpts(fmtN) });
 
-  // by peripherality
-  const periMap = srByCluster(r26, 'peripherality_cluster', 'total_budget');
+  // ─── 3. by peripherality — תקציב, קבוצות, ספורטאים ───
   const periLabels = ['1 - פריפריאלי','2','3','4','5 - מרכז'];
+  const periKeys = [1,2,3,4,5];
+  const periBudMap = srByCluster(r26, 'peripherality_cluster', 'total_budget');
   mc('ba_byPeriphery', { type:'bar', data:{ labels:periLabels,
-    datasets:[{data:[1,2,3,4,5].map(k=>+((periMap[k]||0)/1e6).toFixed(1)), backgroundColor:TEAL, borderRadius:2, barThickness:22}]}, options:hbarOpts(fmtM) });
+    datasets:[{data:periKeys.map(k=>+((periBudMap[k]||0)/1e6).toFixed(1)), backgroundColor:TEAL, borderRadius:2, barThickness:22}]}, options:hbarOpts(fmtM) });
+  const periTeamsMap = authTeams(r26, 'peripherality_cluster');
+  mc('ba_byPeriphery_teams', { type:'bar', data:{ labels:periLabels,
+    datasets:[{data:periKeys.map(k=>periTeamsMap[k]||0), backgroundColor:AMBER, borderRadius:2, barThickness:22}]}, options:hbarOpts(fmtN) });
+  const periAthMap = authAthletes(r26, 'peripherality_cluster');
+  mc('ba_byPeriphery_athletes', { type:'bar', data:{ labels:periLabels,
+    datasets:[{data:periKeys.map(k=>periAthMap[k]||0), backgroundColor:PURPLE, borderRadius:2, barThickness:22}]}, options:hbarOpts(fmtN) });
 
-  // by socioeconomic
-  const socioMap = srByCluster(r26, 'socioeconomic_cluster', 'total_budget');
-  mc('ba_bySocio', { type:'line', data:{ labels:['1','2','3','4','5','6','7','8','9','10'],
-    datasets:[{data:[1,2,3,4,5,6,7,8,9,10].map(k=>+((socioMap[k]||0)/1e6).toFixed(1)),
-      borderColor:TEAL, backgroundColor:'rgba(13,95,115,.1)', fill:true, tension:.35, pointRadius:3,
-      pointBackgroundColor:TEAL, pointBorderColor:'#FFF', pointBorderWidth:1.5, borderWidth:2}]},
-    options:lineOpts(fmtM,'אשכול סוציו-אקונומי') });
+  // ─── 4. by socioeconomic — תקציב (אופקי), קבוצות, ספורטאים ───
+  const socioLabels = ['1','2','3','4','5','6','7','8','9','10'];
+  const socioKeys = [1,2,3,4,5,6,7,8,9,10];
+  const socioBudMap = srByCluster(r26, 'socioeconomic_cluster', 'total_budget');
+  mc('ba_bySocio', { type:'bar', data:{ labels:socioLabels,
+    datasets:[{data:socioKeys.map(k=>+((socioBudMap[k]||0)/1e6).toFixed(1)), backgroundColor:TEAL, borderRadius:2, barThickness:18}]}, options:hbarOpts(fmtM) });
+  const socioTeamsMap = authTeams(r26, 'socioeconomic_cluster');
+  mc('ba_bySocio_teams', { type:'bar', data:{ labels:socioLabels,
+    datasets:[{data:socioKeys.map(k=>socioTeamsMap[k]||0), backgroundColor:AMBER, borderRadius:2, barThickness:18}]}, options:hbarOpts(fmtN) });
+  const socioAthMap = authAthletes(r26, 'socioeconomic_cluster');
+  mc('ba_bySocio_athletes', { type:'bar', data:{ labels:socioLabels,
+    datasets:[{data:socioKeys.map(k=>socioAthMap[k]||0), backgroundColor:PURPLE, borderRadius:2, barThickness:18}]}, options:hbarOpts(fmtN) });
 
-  // by team
+  // ─── 5. by team — תקציב + ספורטאים (אין "מספר קבוצות" כי X = קבוצה) ───
   const byTm = grpSum(r26.filter(r=>r.team_name), 'team_name', 'total_budget');
   const tmT10 = byTm.slice(0,10);
-  mc('ba_byTeam', { type:'bar', data:{ labels:tmT10.map(e=>e[0]),
+  const tmNames = tmT10.map(e=>e[0]);
+  mc('ba_byTeam', { type:'bar', data:{ labels:tmNames,
     datasets:[{data:tmT10.map(e=>+(e[1]/1e6).toFixed(1)), backgroundColor:TEAL, borderRadius:2, barThickness:18}]}, options:hbarOpts(fmtM) });
+  const tmAth = grpAthletes(r26, 'team_name');
+  mc('ba_byTeam_athletes', { type:'bar', data:{ labels:tmNames,
+    datasets:[{data:tmNames.map(n=>tmAth[n]||0), backgroundColor:PURPLE, borderRadius:2, barThickness:18}]}, options:hbarOpts(fmtN) });
 
-  // תקציב לפי הישגיות (BA)
+  // ─── 6. by achievement (BA) — תקציב + ציון בתווית, קבוצות, ספורטאים ───
   const baAchBudget = {}, baAchScore = {};
   r26.forEach(r => {
     const nm = r.society_name || r.association_name;
@@ -441,6 +475,16 @@ function renderBA() {
       backgroundColor:AMBER, borderRadius:2, barThickness:18,
       dataLabels:{formatter:(v,idx)=>fmtM(v)+' | '+baAchScore[baAchNames[idx]].toFixed(0)+' נק\'  '}}]},
     options:hbarOpts(v=>fmtM(v)) });
+  const achTeams = {}, achAth = {};
+  r26.forEach(r => {
+    const nm = r.society_name || r.association_name;
+    if (r.team_code) (achTeams[nm] = achTeams[nm] || new Set()).add(r.team_code);
+    achAth[nm] = (achAth[nm] || 0) + (r.male_cnt||0) + (r.female_cnt||0);
+  });
+  mc('ba_byAchievement_teams', { type:'bar', data:{ labels:baAchNames,
+    datasets:[{data:baAchNames.map(n=>achTeams[n]?achTeams[n].size:0), backgroundColor:AMBER, borderRadius:2, barThickness:18}]}, options:hbarOpts(fmtN) });
+  mc('ba_byAchievement_athletes', { type:'bar', data:{ labels:baAchNames,
+    datasets:[{data:baAchNames.map(n=>achAth[n]||0), backgroundColor:PURPLE, borderRadius:2, barThickness:18}]}, options:hbarOpts(fmtN) });
 
   // YoY
   const m26 = Object.fromEntries(grpSum(r26,'society_name','total_budget'));
