@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ספורט נשים — כמות</title>
+<title>ספורט נשים — כמות ושימור</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -15,15 +15,14 @@
     --ink: #1A1A1A; --ink-muted: #6B6B6B; --ink-faint: #9A9A9A;
     --line: #E5E1D8; --line-soft: #EFEBE3;
     --women: #86198F; --women-soft: #F4E4F7;
+    --teal: #0D5F73; --teal-light: #B8DDE9;
     --radius: 6px; --radius-lg: 10px;
   }
   html { font-size: 15px; }
-  body {
-    font-family: 'Heebo', system-ui, sans-serif;
+  body { font-family: 'Heebo', system-ui, sans-serif;
     background: var(--bg); color: var(--ink); line-height: 1.55;
     min-height: 100vh; -webkit-font-smoothing: antialiased;
-    font-feature-settings: "tnum" 1;
-  }
+    font-feature-settings: "tnum" 1; }
   header { background: var(--surface); border-bottom: 1px solid var(--line);
     padding: 18px 32px; display: flex; align-items: baseline; gap: 14px; }
   header h1 { font-size: 18px; font-weight: 600; color: var(--ink); }
@@ -60,11 +59,11 @@
     border-radius: var(--radius-lg); padding: 16px 18px; }
   .kpi-label { font-size: 12px; color: var(--ink-muted); margin-bottom: 6px; font-weight: 400; }
   .kpi-value { font-size: 26px; font-weight: 600; color: var(--ink); letter-spacing: -0.01em; line-height: 1.1; }
+  .kpi-sub { font-size: 11px; color: var(--ink-faint); margin-top: 4px; }
   .section-title { font-size: 13px; font-weight: 600;
     letter-spacing: 0.04em; margin: 8px 0 10px; padding: 6px 12px;
     background: var(--women-soft); color: var(--women);
     border-radius: var(--radius); display: inline-block; }
-  .section-title:first-of-type { margin-top: 0; }
   .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 14px; margin-bottom: 18px; }
   .col-12 { grid-column: span 12; }
   .col-6 { grid-column: span 6; }
@@ -95,8 +94,8 @@
 </header>
 
 <nav class="page-tabs">
-  <a href="wg-scores.html"   class="ptab">ניקוד</a>
-  <a href="wg-athletes.html" class="ptab active">כמות</a>
+  <a href="wg-scores.html"   class="ptab">ניקוד ותקציב</a>
+  <a href="wg-athletes.html" class="ptab active">כמות ושימור</a>
   <a href="wg-roles.html"    class="ptab">בעלי תפקידים</a>
 </nav>
 
@@ -105,72 +104,55 @@
   <div class="filter-bar">
     <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
     <div class="filter"><label>איגוד</label><select><option>הכל</option></select></div>
-    <div class="filter"><label>אגודה</label><select><option>הכל</option></select></div>
     <div class="filter"><label>ענף</label><select><option>הכל</option></select></div>
+    <div class="filter"><label>גודל ענף</label><select><option>הכל</option><option>גדול</option><option>בינוני</option><option>קטן</option></select></div>
+    <div class="filter"><label>פריפריאליות</label><select><option>הכל</option><option>1 — פריפריאלי</option><option>2</option><option>3</option><option>4</option><option>5 — מרכז</option></select></div>
     <button class="filter-reset">איפוס פילטרים</button>
   </div>
 
   <div class="kpis">
-    <div class="kpi"><div class="kpi-label">סה"כ ספורטאיות</div><div class="kpi-value">49,830</div></div>
-    <div class="kpi"><div class="kpi-label">סה"כ קבוצות נשים</div><div class="kpi-value">1,825</div></div>
-    <div class="kpi"><div class="kpi-label">אחוז ספורטאיות מהסך</div><div class="kpi-value">38.2%</div></div>
-    <div class="kpi"><div class="kpi-label">אחוז קבוצות נשים מהסך</div><div class="kpi-value">37.8%</div></div>
+    <div class="kpi"><div class="kpi-label">ספורטאיות פעילות</div><div class="kpi-value">49,830</div><div class="kpi-sub">מתוך 130,400 סה"כ</div></div>
+    <div class="kpi"><div class="kpi-label">שיעור ספורטאיות</div><div class="kpi-value">38.2%</div><div class="kpi-sub">+1.4% משנה קודמת</div></div>
+    <div class="kpi"><div class="kpi-label">שימור ספורטאיות (YoY)</div><div class="kpi-value">72%</div><div class="kpi-sub">ת.ז. חוזרות 25→26</div></div>
+    <div class="kpi"><div class="kpi-label">מאמנות</div><div class="kpi-value">1,045</div><div class="kpi-sub">24% מכלל המאמנים</div></div>
   </div>
 
-  <div class="section-title">חיתוכים לפי איגוד ואגודה</div>
+  <!-- ===== מגמה לאורך שנים ===== -->
+  <div class="grid">
+    <div class="card col-6">
+      <div class="card-head"><span class="card-title">כמות ספורטאיות לאורך שנים</span><span class="card-meta">2024–2026</span></div>
+      <div class="card-canvas-wrap h-320"><canvas id="c_trendCount"></canvas></div>
+    </div>
+    <div class="card col-6">
+      <div class="card-head"><span class="card-title">שיעור ספורטאיות לאורך שנים</span><span class="card-meta">2024–2026 · % מסך הספורטאים</span></div>
+      <div class="card-canvas-wrap h-320"><canvas id="c_trendPct"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ===== לפי איגוד ===== -->
+  <div class="section-title">ספורטאים לפי איגוד</div>
   <div class="grid">
     <div class="card col-12">
-      <div class="card-head"><span class="card-title">ספורטאים לפי איגוד</span><span class="card-meta">10 איגודים מובילים · זכר מול נקבה</span></div>
+      <div class="card-head"><span class="card-title">כמות ספורטאים לפי איגוד</span><span class="card-meta">10 איגודים מובילים · זכר מול נקבה</span></div>
       <div class="card-canvas-wrap h-380"><canvas id="c_athByFed"></canvas></div>
     </div>
     <div class="card col-12">
-      <div class="card-head"><span class="card-title">ספורטאים לפי אגודה</span><span class="card-meta">10 אגודות מובילות · זכר מול נקבה</span></div>
-      <div class="card-canvas-wrap h-380"><canvas id="c_athBySoc"></canvas></div>
-    </div>
-    <div class="card col-12">
-      <div class="card-head"><span class="card-title">קבוצות לפי איגוד</span><span class="card-meta">10 איגודים מובילים · זכר מול נקבה</span></div>
-      <div class="card-canvas-wrap h-380"><canvas id="c_teamByFed"></canvas></div>
-    </div>
-    <div class="card col-12">
-      <div class="card-head"><span class="card-title">קבוצות לפי אגודה</span><span class="card-meta">10 אגודות מובילות · זכר מול נקבה</span></div>
-      <div class="card-canvas-wrap h-380"><canvas id="c_teamBySoc"></canvas></div>
+      <div class="card-head"><span class="card-title">שיעור ספורטאיות לפי איגוד</span><span class="card-meta">10 איגודים · % נשים מסך הספורטאים</span></div>
+      <div class="card-canvas-wrap h-380"><canvas id="c_pctByFed"></canvas></div>
     </div>
   </div>
 
-  <div class="section-title">ספורטאים — חיתוכים גיאוגרפיים</div>
+  <!-- ===== שימור והמשכיות ===== -->
+  <div class="section-title">שימור והמשכיות</div>
   <div class="grid">
     <div class="card col-12">
-      <div class="card-head"><span class="card-title">ספורטאים לפי רשות מקומית</span><span class="card-meta">10 רשויות מובילות · זכר מול נקבה</span></div>
-      <div class="card-canvas-wrap h-380"><canvas id="c_athByCity"></canvas></div>
-    </div>
-    <div class="card col-6">
-      <div class="card-head"><span class="card-title">ספורטאים לפי מדד סוציו-אקונומי</span><span class="card-meta">אשכולות 1–10</span></div>
-      <div class="card-canvas-wrap h-320"><canvas id="c_athBySocio"></canvas></div>
-    </div>
-    <div class="card col-6">
-      <div class="card-head"><span class="card-title">ספורטאים לפי רמת פריפריאליות</span><span class="card-meta">אשכולות 1–5 · 1 = פריפריאלי · 5 = מרכז</span></div>
-      <div class="card-canvas-wrap h-320"><canvas id="c_athByPeriph"></canvas></div>
-    </div>
-  </div>
-
-  <div class="section-title">קבוצות — חיתוכים גיאוגרפיים</div>
-  <div class="grid">
-    <div class="card col-12">
-      <div class="card-head"><span class="card-title">קבוצות לפי רשות מקומית</span><span class="card-meta">10 רשויות מובילות · זכר מול נקבה</span></div>
-      <div class="card-canvas-wrap h-380"><canvas id="c_teamByCity"></canvas></div>
-    </div>
-    <div class="card col-6">
-      <div class="card-head"><span class="card-title">קבוצות לפי מדד סוציו-אקונומי</span><span class="card-meta">אשכולות 1–10</span></div>
-      <div class="card-canvas-wrap h-320"><canvas id="c_teamBySocio"></canvas></div>
-    </div>
-    <div class="card col-6">
-      <div class="card-head"><span class="card-title">קבוצות לפי רמת פריפריאליות</span><span class="card-meta">אשכולות 1–5 · 1 = פריפריאלי · 5 = מרכז</span></div>
-      <div class="card-canvas-wrap h-320"><canvas id="c_teamByPeriph"></canvas></div>
+      <div class="card-head"><span class="card-title">מדד המשכיות לפי איגוד</span><span class="card-meta">% ספורטאיות שחזרו 25→26 (לפי ת.ז.)</span></div>
+      <div class="card-canvas-wrap h-380"><canvas id="c_retention"></canvas></div>
     </div>
   </div>
 
   <div class="footer-note">
-    <strong>הערה:</strong> מסך כמות — 3 סקציות. עליונה: חיתוכים לפי איגוד ואגודה (ספורטאים + קבוצות). אמצעית: ספורטאים — גיאוגרפיים. תחתונה: קבוצות — גיאוגרפיים. כל גרף מציג זכר מול נקבה.
+    <strong>הערה:</strong> שימור מחושב לפי ת.ז. חוזרות בין שנים. שיעור = ספורטאיות / סך ספורטאים בכל חיתוך.
   </div>
 
 </main>
@@ -183,98 +165,106 @@
 
   const M_COLOR = '#B8DDE9', M_BORDER = '#7FB8CC';
   const F_COLOR = '#E8C8ED', F_BORDER = '#C99AD2';
+  const WOMEN = '#86198F', TEAL = '#0D5F73';
   const fmtN = v => v.toLocaleString('he-IL');
 
-  function vGrpOpts(rotate) {
+  const FEDS = ['התאחדות הכדורגל','איגוד הכדורסל','איגוד השחייה','איגוד האתלטיקה','איגוד הטניס','איגוד הכדורעף','איגוד ההתעמלות',"איגוד הג'ודו",'איגוד החתירה','איגוד האופניים'];
+
+  function grpOpts(rotate) {
     return {
       responsive: true, maintainAspectRatio: false,
       plugins: {
         legend: { display: true, position: 'top', align: 'start', rtl: true,
-          labels: { font: { size: 12 }, color: '#1A1A1A', boxWidth: 14, boxHeight: 14, padding: 14 } },
+          labels: { font: { size: 12 }, boxWidth: 14, boxHeight: 14, padding: 14 } },
         tooltip: { rtl: true, callbacks: { label: c => c.dataset.label + ': ' + fmtN(c.parsed.y) } }
       },
       scales: {
-        x: { ticks: { font: { size: 11 }, color: '#1A1A1A',
-                      maxRotation: rotate ? 45 : 0, minRotation: rotate ? 30 : 0, autoSkip: false },
-             grid: { display: false, drawBorder: false } },
-        y: { beginAtZero: true,
-             ticks: { callback: fmtN, font: { size: 11 }, color: '#9A9A9A' },
-             grid: { color: '#EFEBE3', drawBorder: false } }
-      },
-      layout: { padding: { top: 6, bottom: 4 } }
+        x: { ticks: { font: { size: 11 }, maxRotation: rotate ? 45 : 0, minRotation: rotate ? 30 : 0, autoSkip: false }, grid: { display: false } },
+        y: { beginAtZero: true, ticks: { callback: fmtN, font: { size: 11 }, color: '#9A9A9A' }, grid: { color: '#EFEBE3' } }
+      }
     };
   }
 
-  function makeGrouped(canvasId, labels, men, women, rotate) {
-    new Chart(document.getElementById(canvasId), {
-      type: 'bar',
-      data: { labels: labels,
-        datasets: [
-          { label: 'זכר',  data: men,   backgroundColor: M_COLOR, borderColor: M_BORDER, borderWidth: 1, borderRadius: 2 },
-          { label: 'נקבה', data: women, backgroundColor: F_COLOR, borderColor: F_BORDER, borderWidth: 1, borderRadius: 2 }
-        ]
-      },
-      options: vGrpOpts(!!rotate)
-    });
-  }
+  // ── Trend: count ──
+  new Chart(document.getElementById('c_trendCount'), {
+    type: 'line', data: { labels: ['2024','2025','2026'],
+      datasets: [
+        { label: 'ספורטאיות', data: [42100, 46200, 49830], borderColor: WOMEN, fill: false, tension: .3, pointRadius: 5, borderWidth: 2 },
+        { label: 'ספורטאים',  data: [78500, 80300, 80570], borderColor: TEAL,  fill: false, tension: .3, pointRadius: 5, borderWidth: 2 }
+      ]
+    }, options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: true, position: 'top', align: 'start', rtl: true,
+        labels: { font: { size: 11 }, boxWidth: 14, padding: 12 } },
+        tooltip: { rtl: true, callbacks: { label: c => c.dataset.label + ': ' + fmtN(c.parsed.y) } } },
+      scales: {
+        x: { grid: { display: false } },
+        y: { beginAtZero: false, ticks: { callback: fmtN, font: { size: 11 }, color: '#9A9A9A' }, grid: { color: '#EFEBE3' } }
+      }
+    }
+  });
 
-  // ── DATA ──
-  const FEDS = ['התאחדות הכדורגל','איגוד הכדורסל','איגוד השחייה','איגוד האתלטיקה','איגוד הטניס','איגוד הכדורעף','איגוד ההתעמלות',"איגוד הג'ודו",'איגוד החתירה','איגוד האופניים'];
-  const SOCS = ['מכבי תל אביב','הפועל ירושלים','מכבי חיפה','הפועל באר שבע','בית"ר ירושלים','הפועל תל אביב','מכבי נתניה','מכבי פתח תקווה','הפועל חיפה','מכבי ירושלים'];
-  const CITIES = ['תל אביב-יפו','ירושלים','חיפה','ראשון לציון','פתח תקווה','באר שבע','נתניה','אשדוד','חולון','רמת גן'];
+  // ── Trend: % ──
+  new Chart(document.getElementById('c_trendPct'), {
+    type: 'line', data: { labels: ['2024','2025','2026'],
+      datasets: [{ label: '% ספורטאיות', data: [34.9, 36.5, 38.2], borderColor: WOMEN, backgroundColor: 'rgba(134,25,143,0.08)',
+        fill: true, tension: .3, pointRadius: 5, borderWidth: 2 }]
+    }, options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false },
+        tooltip: { rtl: true, callbacks: { label: c => c.parsed.y + '%' } } },
+      scales: {
+        x: { grid: { display: false } },
+        y: { min: 30, max: 45, ticks: { callback: v => v + '%', font: { size: 11 }, color: '#9A9A9A' }, grid: { color: '#EFEBE3' } }
+      }
+    }
+  });
 
-  // ── SECTION 1: by federation + society ──
-  makeGrouped('c_athByFed', FEDS,
-    [15000, 10000, 8500, 7800, 5200, 4500, 3500, 4200, 2800, 3500],
-    [ 2500,  4200, 5800, 5200, 3800, 4800, 11000, 2100, 1500, 1200],
-    true);
+  // ── Athletes by fed ──
+  new Chart(document.getElementById('c_athByFed'), {
+    type: 'bar', data: { labels: FEDS,
+      datasets: [
+        { label: 'זכר',  data: [15000,10000,8500,7800,5200,4500,3500,4200,2800,3500], backgroundColor: M_COLOR, borderColor: M_BORDER, borderWidth: 1, borderRadius: 2 },
+        { label: 'נקבה', data: [2500,4200,5800,5200,3800,4800,11000,2100,1500,1200],  backgroundColor: F_COLOR, borderColor: F_BORDER, borderWidth: 1, borderRadius: 2 }
+      ]
+    }, options: grpOpts(true)
+  });
 
-  makeGrouped('c_athBySoc', SOCS,
-    [8500, 7200, 6800, 5500, 4800, 4200, 3800, 3400, 3100, 2700],
-    [3200, 2800, 2600, 2400, 1900, 1800, 1500, 1400, 1300, 1100],
-    true);
+  // ── % women by fed ──
+  const menByFed =  [15000,10000,8500,7800,5200,4500,3500,4200,2800,3500];
+  const womByFed =  [2500,4200,5800,5200,3800,4800,11000,2100,1500,1200];
+  const pctByFed = menByFed.map((m,i) => +(womByFed[i]/(m+womByFed[i])*100).toFixed(1));
+  new Chart(document.getElementById('c_pctByFed'), {
+    type: 'bar', data: { labels: FEDS,
+      datasets: [{ label: '% ספורטאיות', data: pctByFed, backgroundColor: WOMEN, borderRadius: 2 }]
+    }, options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { rtl: true, callbacks: { label: c => c.parsed.y + '%' } } },
+      scales: {
+        x: { ticks: { font: { size: 10 }, maxRotation: 45, minRotation: 30, autoSkip: false }, grid: { display: false } },
+        y: { beginAtZero: true, max: 80, ticks: { callback: v => v + '%', font: { size: 11 }, color: '#9A9A9A' }, grid: { color: '#EFEBE3' } }
+      }
+    }
+  });
 
-  makeGrouped('c_teamByFed', FEDS,
-    [320, 240, 140, 110, 85, 68, 42, 78, 52, 62],
-    [ 68,  92,  98,  75, 58, 72,155, 42, 28, 22],
-    true);
-
-  makeGrouped('c_teamBySoc', SOCS,
-    [85, 72, 68, 58, 50, 44, 40, 36, 32, 28],
-    [42, 38, 35, 30, 24, 22, 19, 18, 16, 14],
-    true);
-
-  // ── SECTION 2: athletes — geographic ──
-  makeGrouped('c_athByCity', CITIES,
-    [12000, 10500, 8200, 7100, 6500, 6200, 5800, 5400, 4800, 4200],
-    [ 7500,  6200, 5400, 4500, 4000, 3800, 3500, 3200, 2900, 2600],
-    true);
-
-  makeGrouped('c_athBySocio', ['1','2','3','4','5','6','7','8','9','10'],
-    [1500, 2800, 4200, 5500, 7000, 8500, 10000, 11000, 9500, 7000],
-    [ 800, 1500, 2400, 3200, 4100, 5300,  6200,  7000, 6500, 5000],
-    false);
-
-  makeGrouped('c_athByPeriph', ['1 — פריפריאלי','2','3','4','5 — מרכז'],
-    [3500, 6200, 10500, 18000, 28000],
-    [1800, 3500,  6200, 11000, 18000],
-    false);
-
-  // ── SECTION 3: teams — geographic ──
-  makeGrouped('c_teamByCity', CITIES,
-    [420, 380, 320, 270, 240, 220, 210, 190, 170, 150],
-    [240, 200, 190, 160, 150, 130, 125, 115, 100,  95],
-    true);
-
-  makeGrouped('c_teamBySocio', ['1','2','3','4','5','6','7','8','9','10'],
-    [ 50,  95, 140, 180, 230, 280, 330, 360, 315, 235],
-    [ 25,  50,  80, 105, 135, 175, 205, 230, 215, 165],
-    false);
-
-  makeGrouped('c_teamByPeriph', ['1 — פריפריאלי','2','3','4','5 — מרכז'],
-    [115, 205, 345, 595, 925],
-    [ 60, 115, 205, 365, 595],
-    false);
+  // ── Retention by fed ──
+  const retData = [
+    ['איגוד ההתעמלות', 82],['איגוד השחייה', 78],['איגוד הכדורעף', 76],['איגוד האתלטיקה', 74],
+    ['איגוד הטניס', 72],['איגוד הכדורסל', 70],["איגוד הג'ודו", 68],['איגוד האופניים', 65],
+    ['התאחדות הכדורגל', 62],['איגוד החתירה', 58]
+  ];
+  new Chart(document.getElementById('c_retention'), {
+    type: 'bar', data: { labels: retData.map(r=>r[0]),
+      datasets: [{ label: '% שימור', data: retData.map(r=>r[1]), backgroundColor: WOMEN, borderRadius: 2, barThickness: 20 }]
+    }, options: {
+      responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+      plugins: { legend: { display: false }, tooltip: { rtl: true, callbacks: { label: c => c.parsed.x + '%' } } },
+      scales: {
+        x: { beginAtZero: true, max: 100, ticks: { callback: v => v + '%', font: { size: 11 }, color: '#9A9A9A' }, grid: { color: '#EFEBE3' } },
+        y: { position: 'right', ticks: { font: { size: 11 }, color: '#1A1A1A' }, grid: { display: false } }
+      }
+    }
+  });
 </script>
 
 </body>
