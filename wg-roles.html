@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ספורט נשים — בעלי תפקיד</title>
+<title>ספורט נשים — בעלי תפקידים</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -53,7 +53,7 @@
     border-radius: var(--radius); padding: 7px 14px; font-family: inherit; font-size: 12px;
     color: var(--ink-muted); cursor: pointer; transition: background .15s; }
   .filter-reset:hover { background: var(--surface-soft); color: var(--ink); }
-  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 18px; }
+  .kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 18px; }
   .kpi { background: var(--surface); border: 1px solid var(--line);
     border-radius: var(--radius-lg); padding: 16px 18px; }
   .kpi-label { font-size: 12px; color: var(--ink-muted); margin-bottom: 6px; font-weight: 400; }
@@ -95,7 +95,7 @@
 <nav class="page-tabs">
   <a href="wg-scores.html"   class="ptab">ניקוד</a>
   <a href="wg-athletes.html" class="ptab">כמות</a>
-  <a href="wg-roles.html"    class="ptab active">בעלי תפקיד</a>
+  <a href="wg-roles.html"    class="ptab active">בעלי תפקידים</a>
 </nav>
 
 <main>
@@ -109,95 +109,43 @@
   </div>
 
   <div class="kpis">
-    <div class="kpi"><div class="kpi-label">סה"כ מאמנים</div><div class="kpi-value">3,420</div></div>
-    <div class="kpi"><div class="kpi-label">סה"כ מדריכים</div><div class="kpi-value">2,180</div></div>
-    <div class="kpi"><div class="kpi-label">מאמנים לאומיים</div><div class="kpi-value">28</div></div>
-    <div class="kpi"><div class="kpi-label">חברי הנהלה</div><div class="kpi-value">412</div></div>
+    <div class="kpi"><div class="kpi-label">נשים בהנהלה</div><div class="kpi-value">412</div></div>
+    <div class="kpi"><div class="kpi-label">% ממוצע נשים בהנהלה</div><div class="kpi-value">33%</div></div>
+    <div class="kpi"><div class="kpi-label">ענפים מעל 30%</div><div class="kpi-value">19 / 21</div></div>
   </div>
 
-  <div class="section-title">חיתוכים לפי איגוד וסוג תפקיד</div>
   <div class="grid">
     <div class="card col-12">
-      <div class="card-head"><span class="card-title">מאמנים, מדריכים ומאמנים לאומיים לפי איגוד</span><span class="card-meta">10 איגודים מובילים · 3 סוגי תפקיד × זכר/נקבה</span></div>
-      <div class="card-canvas-wrap h-420"><canvas id="c_coachesByFed"></canvas></div>
+      <div class="card-head"><span class="card-title">ייצוג לפי סוג תפקיד</span><span class="card-meta">7 תפקידים · זכר מול נקבה</span></div>
+      <div class="card-canvas-wrap h-420"><canvas id="c_byRole"></canvas></div>
     </div>
     <div class="card col-12">
       <div class="card-head"><span class="card-title">חברי הנהלה לפי איגוד</span><span class="card-meta">10 איגודים מובילים · זכר מול נקבה</span></div>
       <div class="card-canvas-wrap h-380"><canvas id="c_mgmtByFed"></canvas></div>
     </div>
+  </div>
+
+  <div class="section-title">מאמנות</div>
+  <div class="grid">
     <div class="card col-12">
-      <div class="card-head"><span class="card-title">בעלי תפקיד לפי סוג תפקיד</span><span class="card-meta">7 תפקידים · זכר מול נקבה</span></div>
-      <div class="card-canvas-wrap h-420"><canvas id="c_byRole"></canvas></div>
+      <div class="card-head"><span class="card-title">מאמנים, מדריכים ומאמנים לאומיים לפי איגוד</span><span class="card-meta">10 איגודים מובילים · 3 סוגי תפקיד × זכר/נקבה</span></div>
+      <div class="card-canvas-wrap h-420"><canvas id="c_coachesByFed"></canvas></div>
     </div>
   </div>
 
-  <div class="section-title">בעלי תפקיד — חיתוכים גיאוגרפיים</div>
+  <div class="section-title">נשים בהנהלה — לפי ענף</div>
   <div class="grid">
     <div class="card col-12">
-      <div class="card-head"><span class="card-title">בעלי תפקיד לפי רשות מקומית</span><span class="card-meta">10 רשויות מובילות · זכר מול נקבה</span></div>
-      <div class="card-canvas-wrap h-380"><canvas id="c_byCity"></canvas></div>
-    </div>
-    <div class="card col-6">
-      <div class="card-head"><span class="card-title">בעלי תפקיד לפי מדד סוציו-אקונומי</span><span class="card-meta">אשכולות 1–10</span></div>
-      <div class="card-canvas-wrap h-320"><canvas id="c_bySocio"></canvas></div>
-    </div>
-    <div class="card col-6">
-      <div class="card-head"><span class="card-title">בעלי תפקיד לפי רמת פריפריאליות</span><span class="card-meta">אשכולות 1–5 · 1 = פריפריאלי · 5 = מרכז</span></div>
-      <div class="card-canvas-wrap h-320"><canvas id="c_byPeriph"></canvas></div>
-    </div>
-  </div>
-
-  <div class="section-title">מאמנים — חיתוכים גיאוגרפיים</div>
-  <div class="grid">
-    <div class="card col-12">
-      <div class="card-head"><span class="card-title">מאמנים, מדריכים ומאמנים לאומיים לפי רשות מקומית</span><span class="card-meta">10 רשויות מובילות · 3 סוגי תפקיד × זכר/נקבה</span></div>
-      <div class="card-canvas-wrap h-420"><canvas id="c_coachByCity"></canvas></div>
-    </div>
-    <div class="card col-6">
-      <div class="card-head"><span class="card-title">מאמנים לפי מדד סוציו-אקונומי</span><span class="card-meta">אשכולות 1–10 · 3 סוגי תפקיד × זכר/נקבה</span></div>
-      <div class="card-canvas-wrap h-380"><canvas id="c_coachBySocio"></canvas></div>
-    </div>
-    <div class="card col-6">
-      <div class="card-head"><span class="card-title">מאמנים לפי רמת פריפריאליות</span><span class="card-meta">אשכולות 1–5 · 3 סוגי תפקיד × זכר/נקבה</span></div>
-      <div class="card-canvas-wrap h-380"><canvas id="c_coachByPeriph"></canvas></div>
-    </div>
-  </div>
-
-
-  <div class="section-title">עמידה בתנאי סף — אחוז נשים בהנהלה</div>
-  <div class="grid">
-    <div class="card col-6">
       <div class="card-head">
-        <span class="card-title">לפי ענף</span>
-        <span class="card-meta">תנאי סף 30% · ממוין לפי אחוז עולה</span>
+        <span class="card-title">% נשים בהנהלה</span>
+        <span class="card-meta">21 ענפים · ממוין לפי אחוז עולה</span>
       </div>
       <div class="card-canvas-wrap h-320"><canvas id="c_mgmtPct"></canvas></div>
-    </div>
-    <div class="card col-6">
-      <div class="card-head">
-        <span class="card-title">לפי רשות מקומית</span>
-        <span class="card-meta">תנאי סף 30% · 10 רשויות מובילות</span>
-      </div>
-      <div class="card-canvas-wrap h-320"><canvas id="c_mgmtPctCity"></canvas></div>
-    </div>
-    <div class="card col-6">
-      <div class="card-head">
-        <span class="card-title">לפי מדד סוציו-אקונומי</span>
-        <span class="card-meta">תנאי סף 30% · אשכולות 1–10</span>
-      </div>
-      <div class="card-canvas-wrap h-320"><canvas id="c_mgmtPctSocio"></canvas></div>
-    </div>
-    <div class="card col-6">
-      <div class="card-head">
-        <span class="card-title">לפי רמת פריפריאליות</span>
-        <span class="card-meta">תנאי סף 30% · 1 = פריפריאלי · 5 = מרכז</span>
-      </div>
-      <div class="card-canvas-wrap h-320"><canvas id="c_mgmtPctPeriph"></canvas></div>
     </div>
   </div>
 
   <div class="footer-note">
-    <strong>הערה:</strong> סקציית המאמנים מציגה 6 סדרות בזוגות M/F לכל סוג תפקיד — מאמנים/מאמנות, מדריכים/מדריכות, מאמנים לאומיים/מאמנות לאומיות. צבעי הטורקיז לזכר, סגול לנקבה; עצמת הצבע מסמלת את סוג התפקיד (בהיר = מאמן/ת, בינוני = מדריך/ה, כהה = לאומי/ת).
+    <strong>הערה:</strong> נתונים להמחשה בלבד. גרפי המאמנות מציגים 6 סדרות בזוגות לכל סוג תפקיד — מאמנים/ות, מדריכים/ות, מאמנים/ות לאומיים/ות. טורקיז = זכר, סגול = נקבה; עצמת הצבע = סוג התפקיד.
   </div>
 
 </main>
@@ -339,49 +287,6 @@
     true);
 
   // SECTION 2: role holders — geographic
-  makeGrouped('c_byCity', CITIES,
-    [420, 380, 320, 270, 240, 220, 210, 190, 170, 150],
-    [180, 160, 140, 115, 105,  95,  90,  82,  75,  68],
-    true);
-
-  makeGrouped('c_bySocio', ['1','2','3','4','5','6','7','8','9','10'],
-    [ 80, 145, 215, 280, 360, 440, 520, 580, 510, 380],
-    [ 30,  55,  90, 120, 160, 200, 240, 275, 245, 180],
-    false);
-
-  makeGrouped('c_byPeriph', ['1 — פריפריאלי','2','3','4','5 — מרכז'],
-    [120, 220, 360, 620, 1100],
-    [ 50,  95, 160, 280,  480],
-    false);
-
-  // SECTION 3: coaches — geographic (6 series)
-  makeCoach6('c_coachByCity', CITIES,
-    /* מאמנים  M */          [350, 290, 260, 210, 185, 170, 160, 145, 130, 115],
-    /* מאמנות  F */          [ 85,  75,  68,  55,  48,  44,  42,  38,  34,  30],
-    /* מדריכים M */          [180, 160, 140, 115, 100,  90,  85,  75,  68,  60],
-    /* מדריכות F */          [110,  95,  80,  65,  55,  50,  48,  42,  38,  34],
-    /* לאומיים M */          [  5,   4,   3,   3,   2,   2,   2,   1,   1,   1],
-    /* לאומיות F */          [  3,   2,   2,   2,   1,   1,   1,   1,   0,   1],
-    true);
-
-  makeCoach6('c_coachBySocio', ['1','2','3','4','5','6','7','8','9','10'],
-    /* מאמנים  M */          [ 60, 120, 180, 240, 310, 380, 460, 510, 440, 320],
-    /* מאמנות  F */          [ 18,  35,  55,  78, 100, 125, 155, 180, 155, 115],
-    /* מדריכים M */          [ 25,  55,  95, 145, 195, 250, 320, 360, 310, 230],
-    /* מדריכות F */          [ 10,  25,  45,  70,  95, 130, 170, 195, 165, 120],
-    /* לאומיים M */          [  1,   1,   2,   3,   4,   5,   6,   7,   5,   4],
-    /* לאומיות F */          [  0,   1,   1,   2,   2,   3,   3,   4,   3,   2],
-    false);
-
-  makeCoach6('c_coachByPeriph', ['1 — פריפריאלי','2','3','4','5 — מרכז'],
-    /* מאמנים  M */          [ 95, 180, 305, 540, 970],
-    /* מאמנות  F */          [ 25,  50,  85, 160, 295],
-    /* מדריכים M */          [ 45,  90, 155, 295, 520],
-    /* מדריכות F */          [ 20,  45,  80, 165, 320],
-    /* לאומיים M */          [  2,   3,   5,   8,  14],
-    /* לאומיות F */          [  1,   1,   2,   4,   8],
-    false);
-
   // ── Threshold-line plugin (draws a vertical line at a specific x value) ──
   Chart.register({
     id: 'thresholdLine',
@@ -390,23 +295,23 @@
       const xScale = chart.scales.x;
       const yScale = chart.scales.y;
       if (!xScale || !yScale) return;
-      const xPos = xScale.getPixelForValue(opts.value);
+      const yPos = yScale.getPixelForValue(opts.value);
       const ctx = chart.ctx;
       ctx.save();
       ctx.beginPath();
       ctx.setLineDash([6, 4]);
       ctx.strokeStyle = opts.color || '#9A9A9A';
       ctx.lineWidth = 1.5;
-      ctx.moveTo(xPos, yScale.top);
-      ctx.lineTo(xPos, yScale.bottom);
+      ctx.moveTo(xScale.left, yPos);
+      ctx.lineTo(xScale.right, yPos);
       ctx.stroke();
       // Label
       if (opts.label) {
         ctx.setLineDash([]);
         ctx.fillStyle = opts.color || '#9A9A9A';
         ctx.font = '600 11px Heebo, sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText(opts.label, xPos, yScale.top - 6);
+        ctx.textAlign = 'left';
+        ctx.fillText(opts.label, xScale.right + 4, yPos + 4);
       }
       ctx.restore();
     }
@@ -426,32 +331,30 @@
         type: 'bar',
         data: { labels: labels,
           datasets: [{
-            label: 'אחוז נשים בהנהלה',
+            label: '% נשים בהנהלה',
             data: data,
             backgroundColor: colors,
             borderColor: borders,
-            borderWidth: 1, borderRadius: 2,
-            barThickness: opts.barThickness || 12
+            borderWidth: 1, borderRadius: 2
           }]
         },
         options: {
-          responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+          responsive: true, maintainAspectRatio: false,
           plugins: {
             legend: { display: false },
             tooltip: { rtl: true, callbacks: {
-              label: c => c.parsed.x + '% ' + (c.parsed.x >= THRESHOLD ? '(עובר/ת)' : '(לא עובר/ת)')
+              label: c => c.parsed.y + '%'
             }},
-            thresholdLine: { value: THRESHOLD, color: '#6B6B6B', label: opts.showLabel === false ? '' : 'סף 30%' }
+            thresholdLine: { value: THRESHOLD, color: '#6B6B6B', label: '30%' }
           },
           scales: {
-            x: { beginAtZero: true, max: 50,
+            y: { beginAtZero: true, max: 50,
                  ticks: { callback: v => v + '%', font: { size: 10 }, color: '#9A9A9A' },
                  grid: { color: '#EFEBE3', drawBorder: false } },
-            y: { position: 'right',
-                 ticks: { font: { size: opts.ySize || 11 }, color: '#1A1A1A', autoSkip: false },
+            x: { ticks: { font: { size: 9 }, color: '#1A1A1A', autoSkip: false, maxRotation: 45, minRotation: 30 },
                  grid: { display: false, drawBorder: false } }
           },
-          layout: { padding: { top: 22, bottom: 6 } }
+          layout: { padding: { top: 22, bottom: 4 } }
         }
       });
     }
@@ -465,29 +368,8 @@
       ['כדורעף חופים', 34], ['שחייה', 35], ['ברידג\'', 35], ['כדורשת', 36],
       ['לקרוס', 38], ['דאיה צניחה גלישה', 40], ['התעמלות', 45]
     ].sort((a, b) => a[1] - b[1]);
-    mgmtPctChart('c_mgmtPct', branchRows.map(r => r[0]), branchRows.map(r => r[1]),
-      { barThickness: 8, ySize: 9 });
+    mgmtPctChart('c_mgmtPct', branchRows.map(r => r[0]), branchRows.map(r => r[1]));
 
-    // 2. By local authority (10 cities sorted ascending)
-    const cityRows = [
-      ['חולון', 29], ['אשדוד', 32], ['ירושלים', 33], ['ראשון לציון', 34],
-      ['פתח תקווה', 35], ['נתניה', 36], ['תל אביב-יפו', 37], ['באר שבע', 38],
-      ['חיפה', 39], ['רמת גן', 41]
-    ];
-    mgmtPctChart('c_mgmtPctCity', cityRows.map(r => r[0]), cityRows.map(r => r[1]),
-      { barThickness: 16 });
-
-    // 3. By socio-economic cluster (1-10)
-    mgmtPctChart('c_mgmtPctSocio',
-      ['1','2','3','4','5','6','7','8','9','10'],
-      [32, 35, 31, 33, 29, 34, 36, 33, 38, 35],
-      { barThickness: 16 });
-
-    // 4. By peripherality (1-5)
-    mgmtPctChart('c_mgmtPctPeriph',
-      ['1 — פריפריאלי','2','3','4','5 — מרכז'],
-      [34, 31, 36, 33, 38],
-      { barThickness: 22 });
   })();
 
 </script>

@@ -196,7 +196,7 @@
   .card-title { font-size: 14px; font-weight: 500; color: var(--ink); }
   .card-meta { font-size: 11px; color: var(--ink-faint); letter-spacing: 0.02em; white-space: nowrap; }
   .card-canvas-wrap { position: relative; width: 100%; }
-  .h-220 { height: 220px; } .h-240 { height: 240px; } .h-260 { height: 260px; } .h-280 { height: 280px; } .h-300 { height: 300px; } .h-320 { height: 320px; } .h-360 { height: 360px; } .h-420 { height: 420px; } .h-500 { height: 500px; }
+  .h-130 { height: 130px; } .h-160 { height: 160px; } .h-180 { height: 180px; } .h-200 { height: 200px; } .h-220 { height: 220px; } .h-240 { height: 240px; } .h-260 { height: 260px; } .h-280 { height: 280px; } .h-300 { height: 300px; } .h-320 { height: 320px; } .h-360 { height: 360px; } .h-420 { height: 420px; } .h-500 { height: 500px; }
 
   .three-col {
     display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
@@ -232,6 +232,43 @@
     letter-spacing: 0.02em; font-weight: 500;
   }
   .yoy-totals-chart-wrap { flex: 1; position: relative; min-height: 0; }
+
+  /* ── data-bar tables ── */
+  .db-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+  .db-table th {
+    font-size: 11px; font-weight: 500; color: var(--ink-muted);
+    padding: 8px 10px; border-bottom: 2px solid var(--line);
+    text-align: right; white-space: nowrap;
+  }
+  .db-table td {
+    padding: 7px 10px; border-bottom: 1px solid var(--line-soft);
+    font-size: 13px; vertical-align: middle;
+  }
+  .db-table tbody tr:nth-child(even) td { background: var(--surface-soft); }
+  .db-table tbody tr:hover td { background: var(--primary-soft); transition: background 0.1s; }
+  .db-table tr:last-child td { border-bottom: none; }
+  .db-table .db-rank {
+    font-size: 11px; font-weight: 600; color: var(--ink-faint);
+    width: 26px; text-align: center;
+  }
+  .db-table .db-name { font-weight: 500; }
+  .db-cell {
+    position: relative; min-width: 100px; text-align: left; direction: ltr;
+  }
+  .db-cell .db-bar {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    left: 10px; height: 16px; border-radius: 2px; opacity: 0.15;
+    pointer-events: none;
+    animation: barGrow 0.5s ease-out both;
+  }
+  @keyframes barGrow { from { width: 0 !important; } }
+  .db-table tbody tr.db-top3 td:first-child {
+    box-shadow: inset 3px 0 0 var(--primary);
+  }
+  .db-cell .db-val {
+    position: relative; font-weight: 600; font-size: 12px;
+    font-feature-settings: "tnum" 1;
+  }
 
   .footer-note {
     margin-top: 22px;
@@ -392,108 +429,59 @@
     </div>
 
     <div class="grid">
+      <div class="card col-6">
+        <div class="card-head"><span class="card-title">לפי אגודה</span><span class="card-meta">10 מובילות לפי תקציב</span></div>
+        <div id="ba_tbl_assoc"></div>
+      </div>
+
+      <div class="card col-6">
+        <div class="card-head"><span class="card-title">לפי רשות מקומית</span><span class="card-meta">10 מובילות לפי תקציב</span></div>
+        <div id="ba_tbl_city"></div>
+      </div>
+
       <div class="card col-12">
-        <div class="card-head"><span class="card-title">לפי אגודה — תקציב, קבוצות וספורטאים</span><span class="card-meta">10 מובילות לפי תקציב · מקלות אופקיים · אותה רשימת אגודות בשלושת הגרפים</span></div>
+        <div class="card-head"><span class="card-title">לפי רמת פריפריאליות — תקציב, קבוצות וספורטאים</span><span class="card-meta">אשכולות 1–5 (1 = פריפריאלי, 5 = מרכז)</span></div>
         <div class="three-col">
           <div class="sub-card">
             <div class="sub-title">תקציב</div>
-            <div class="card-canvas-wrap h-360"><canvas id="ba_byAssoc"></canvas></div>
+            <div class="card-canvas-wrap h-200"><canvas id="ba_byPeriphery"></canvas></div>
           </div>
           <div class="sub-card">
             <div class="sub-title">מספר קבוצות</div>
-            <div class="card-canvas-wrap h-360"><canvas id="ba_byAssoc_teams"></canvas></div>
+            <div class="card-canvas-wrap h-200"><canvas id="ba_byPeriphery_teams"></canvas></div>
           </div>
           <div class="sub-card">
             <div class="sub-title">מספר ספורטאים</div>
-            <div class="card-canvas-wrap h-360"><canvas id="ba_byAssoc_athletes"></canvas></div>
+            <div class="card-canvas-wrap h-200"><canvas id="ba_byPeriphery_athletes"></canvas></div>
           </div>
         </div>
       </div>
 
       <div class="card col-12">
-        <div class="card-head"><span class="card-title">לפי רשות מקומית — תקציב, קבוצות וספורטאים</span><span class="card-meta">10 מובילות לפי תקציב · מקלות אופקיים</span></div>
-        <div class="three-col">
+        <div class="card-head"><span class="card-title">לפי מדד סוציו-אקונומי — תקציב, קבוצות וספורטאים</span><span class="card-meta">אשכולות 1–10 (1 = נמוך, 10 = גבוה)</span></div>
+        <div style="display:flex;flex-direction:column;gap:14px;">
           <div class="sub-card">
             <div class="sub-title">תקציב</div>
-            <div class="card-canvas-wrap h-360"><canvas id="ba_byCity"></canvas></div>
+            <div class="card-canvas-wrap h-130"><canvas id="ba_bySocio"></canvas></div>
           </div>
           <div class="sub-card">
             <div class="sub-title">מספר קבוצות</div>
-            <div class="card-canvas-wrap h-360"><canvas id="ba_byCity_teams"></canvas></div>
+            <div class="card-canvas-wrap h-130"><canvas id="ba_bySocio_teams"></canvas></div>
           </div>
           <div class="sub-card">
             <div class="sub-title">מספר ספורטאים</div>
-            <div class="card-canvas-wrap h-360"><canvas id="ba_byCity_athletes"></canvas></div>
+            <div class="card-canvas-wrap h-130"><canvas id="ba_bySocio_athletes"></canvas></div>
           </div>
         </div>
       </div>
 
-      <div class="card col-12">
-        <div class="card-head"><span class="card-title">לפי רמת פריפריאליות — תקציב, קבוצות וספורטאים</span><span class="card-meta">אשכולות 1–5 · מקלות אופקיים</span></div>
-        <div class="three-col">
-          <div class="sub-card">
-            <div class="sub-title">תקציב</div>
-            <div class="card-canvas-wrap h-280"><canvas id="ba_byPeriphery"></canvas></div>
-          </div>
-          <div class="sub-card">
-            <div class="sub-title">מספר קבוצות</div>
-            <div class="card-canvas-wrap h-280"><canvas id="ba_byPeriphery_teams"></canvas></div>
-          </div>
-          <div class="sub-card">
-            <div class="sub-title">מספר ספורטאים</div>
-            <div class="card-canvas-wrap h-280"><canvas id="ba_byPeriphery_athletes"></canvas></div>
-          </div>
-        </div>
+      <div class="card col-6">
+        <div class="card-head"><span class="card-title">לפי קבוצה — תקציב</span><span class="card-meta">10 מובילות</span></div>
+        <div class="card-canvas-wrap h-420"><canvas id="ba_byTeam"></canvas></div>
       </div>
-
-      <div class="card col-12">
-        <div class="card-head"><span class="card-title">לפי מדד סוציו-אקונומי — תקציב, קבוצות וספורטאים</span><span class="card-meta">אשכולות 1–10 (1 = נמוך, 10 = גבוה) · מקלות אופקיים</span></div>
-        <div class="three-col">
-          <div class="sub-card">
-            <div class="sub-title">תקציב</div>
-            <div class="card-canvas-wrap h-360"><canvas id="ba_bySocio"></canvas></div>
-          </div>
-          <div class="sub-card">
-            <div class="sub-title">מספר קבוצות</div>
-            <div class="card-canvas-wrap h-360"><canvas id="ba_bySocio_teams"></canvas></div>
-          </div>
-          <div class="sub-card">
-            <div class="sub-title">מספר ספורטאים</div>
-            <div class="card-canvas-wrap h-360"><canvas id="ba_bySocio_athletes"></canvas></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card col-12">
-        <div class="card-head"><span class="card-title">לפי קבוצה — תקציב וספורטאים</span><span class="card-meta">10 קבוצות מובילות לפי תקציב · מקלות אופקיים · (מספר קבוצות לא רלוונטי כאן — X = קבוצה)</span></div>
-        <div class="two-col">
-          <div class="sub-card">
-            <div class="sub-title">תקציב</div>
-            <div class="card-canvas-wrap h-360"><canvas id="ba_byTeam"></canvas></div>
-          </div>
-          <div class="sub-card">
-            <div class="sub-title">מספר ספורטאים</div>
-            <div class="card-canvas-wrap h-360"><canvas id="ba_byTeam_athletes"></canvas></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card col-12">
-        <div class="card-head"><span class="card-title">לפי הישגיות — תקציב, קבוצות וספורטאים</span><span class="card-meta">10 מובילות לפי ציון הישגיות · מקלות אופקיים · תקציב כולל ציון הישגיות בתווית</span></div>
-        <div class="three-col">
-          <div class="sub-card">
-            <div class="sub-title">תקציב · ציון בתווית</div>
-            <div class="card-canvas-wrap h-360"><canvas id="ba_byAchievement"></canvas></div>
-          </div>
-          <div class="sub-card">
-            <div class="sub-title">מספר קבוצות</div>
-            <div class="card-canvas-wrap h-360"><canvas id="ba_byAchievement_teams"></canvas></div>
-          </div>
-          <div class="sub-card">
-            <div class="sub-title">מספר ספורטאים</div>
-            <div class="card-canvas-wrap h-360"><canvas id="ba_byAchievement_athletes"></canvas></div>
-          </div>
-        </div>
+      <div class="card col-6">
+        <div class="card-head"><span class="card-title">לפי קבוצה — ספורטאים</span><span class="card-meta">10 מובילות</span></div>
+        <div class="card-canvas-wrap h-420"><canvas id="ba_byTeam_athletes"></canvas></div>
       </div>
 
       <div class="card col-12">

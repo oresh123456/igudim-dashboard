@@ -68,6 +68,23 @@ Chart.register({
   }
 });
 
+Chart.register({
+  id: 'centerText',
+  beforeDraw(chart) {
+    const opts = chart.options.plugins.centerText;
+    if (!opts || !opts.text) return;
+    const {ctx, chartArea:{left,right,top,bottom}} = chart;
+    const cx = (left+right)/2, cy = (top+bottom)/2;
+    ctx.save();
+    ctx.font = '600 13px Heebo, sans-serif';
+    ctx.fillStyle = '#1A1A1A';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(opts.text, cx, cy);
+    ctx.restore();
+  }
+});
+
 // ── Option factories ──
 function hbarOpts(fmt) {
   return { responsive:true, maintainAspectRatio:false, indexAxis:'y',
@@ -387,7 +404,7 @@ function renderBF() {
 function renderBA() {
   const p = pg('ba');
   const all = MOCK.fact_support_request_spo.filter(r => r.request_type_filter === 'אגודה');
-  const f = fSR(all, p, 'איגוד');  // BA page has no 'איגוד' filter; it has 'אגודה'
+  const f = fSR(all, p, 'איגוד');
   const r26 = f.filter(r => r.support_request_year === 2026);
   const r25 = f.filter(r => r.support_request_year === 2025);
 
@@ -399,59 +416,78 @@ function renderBA() {
 
   const PURPLE = '#534AB7';
 
-  // ─── 1. by society — תקציב (חד-צבעי), קבוצות, ספורטאים ───
+  // ─── 1. by society — table ───
   const bySoc = grpSum(r26, 'society_name', 'total_budget');
   const t10 = bySoc.slice(0,10);
   const socNames = t10.map(e=>e[0]);
-  mc('ba_byAssoc', { type:'bar', data:{ labels:socNames,
-    datasets:[{data:t10.map(e=>+(e[1]/1e6).toFixed(1)), backgroundColor:TEAL, borderRadius:2, barThickness:22}]}, options:hbarOpts(fmtM) });
   const socTeams = grpTeams(r26, 'society_name');
-  mc('ba_byAssoc_teams', { type:'bar', data:{ labels:socNames,
-    datasets:[{data:socNames.map(n=>socTeams[n]||0), backgroundColor:AMBER, borderRadius:2, barThickness:22}]}, options:hbarOpts(fmtN) });
   const socAth = grpAthletes(r26, 'society_name');
-  mc('ba_byAssoc_athletes', { type:'bar', data:{ labels:socNames,
-    datasets:[{data:socNames.map(n=>socAth[n]||0), backgroundColor:PURPLE, borderRadius:2, barThickness:22}]}, options:hbarOpts(fmtN) });
+  dbTable('ba_tbl_assoc', ['#','אגודה','תקציב (₪M)','קבוצות','ספורטאים'],
+    socNames.map((n,i) => [i+1, n,
+      {v:+(t10[i][1]/1e6).toFixed(2), fmt:fmtM, color:TEAL},
+      {v:socTeams[n]||0, fmt:fmtN, color:AMBER},
+      {v:socAth[n]||0, fmt:fmtN, color:PURPLE}]));
 
-  // ─── 2. by city (authority) — תקציב, קבוצות, ספורטאים ───
+  // ─── 2. by city — table ───
   const byCity = grpSum(r26, 'authority_name', 'total_budget');
   const cT10 = byCity.filter(e=>e[0]!=='לא ידוע').slice(0,10);
   const cityNames = cT10.map(e=>e[0]);
-  mc('ba_byCity', { type:'bar', data:{ labels:cityNames,
-    datasets:[{data:cT10.map(e=>+(e[1]/1e6).toFixed(1)), backgroundColor:TEAL, borderRadius:2, barThickness:18}]}, options:hbarOpts(fmtM) });
   const cityTeams = grpTeams(r26, 'authority_name');
-  mc('ba_byCity_teams', { type:'bar', data:{ labels:cityNames,
-    datasets:[{data:cityNames.map(n=>cityTeams[n]||0), backgroundColor:AMBER, borderRadius:2, barThickness:18}]}, options:hbarOpts(fmtN) });
   const cityAth = grpAthletes(r26, 'authority_name');
-  mc('ba_byCity_athletes', { type:'bar', data:{ labels:cityNames,
-    datasets:[{data:cityNames.map(n=>cityAth[n]||0), backgroundColor:PURPLE, borderRadius:2, barThickness:18}]}, options:hbarOpts(fmtN) });
+  dbTable('ba_tbl_city', ['#','רשות','תקציב (₪M)','קבוצות','ספורטאים'],
+    cityNames.map((n,i) => [i+1, n,
+      {v:+(cT10[i][1]/1e6).toFixed(2), fmt:fmtM, color:TEAL},
+      {v:cityTeams[n]||0, fmt:fmtN, color:AMBER},
+      {v:cityAth[n]||0, fmt:fmtN, color:PURPLE}]));
 
-  // ─── 3. by peripherality — תקציב, קבוצות, ספורטאים ───
+  // ─── 3. by peripherality — donuts ───
   const periLabels = ['1 - פריפריאלי','2','3','4','5 - מרכז'];
   const periKeys = [1,2,3,4,5];
   const periBudMap = srByCluster(r26, 'peripherality_cluster', 'total_budget');
-  mc('ba_byPeriphery', { type:'bar', data:{ labels:periLabels,
-    datasets:[{data:periKeys.map(k=>+((periBudMap[k]||0)/1e6).toFixed(1)), backgroundColor:TEAL, borderRadius:2, barThickness:22}]}, options:hbarOpts(fmtM) });
   const periTeamsMap = authTeams(r26, 'peripherality_cluster');
-  mc('ba_byPeriphery_teams', { type:'bar', data:{ labels:periLabels,
-    datasets:[{data:periKeys.map(k=>periTeamsMap[k]||0), backgroundColor:AMBER, borderRadius:2, barThickness:22}]}, options:hbarOpts(fmtN) });
   const periAthMap = authAthletes(r26, 'peripherality_cluster');
-  mc('ba_byPeriphery_athletes', { type:'bar', data:{ labels:periLabels,
-    datasets:[{data:periKeys.map(k=>periAthMap[k]||0), backgroundColor:PURPLE, borderRadius:2, barThickness:22}]}, options:hbarOpts(fmtN) });
+  const periBudArr = periKeys.map(k => periBudMap[k]||0);
+  const periTmArr = periKeys.map(k => periTeamsMap[k]||0);
+  const periAthArr = periKeys.map(k => periAthMap[k]||0);
+  const tealShades = ['#073D4A','#0A4D5E','#0D5F73','#2A8FA8','#5BB1C7'];
+  const amberShades = ['#6B2D00','#8B4000','#B45309','#D4890D','#EBA75C'];
+  const purpleShades = ['#2B2080','#3B30A0','#534AB7','#7B70E0','#ABA5E3'];
+  function toPct(arr) { const s = arr.reduce((a,b)=>a+b,0); return arr.map(v => s ? Math.round(v/s*100) : 0); }
+  function donutOpts(centerTxt) {
+    const base = pieOpts();
+    base.plugins.legend = { display: false };
+    base.plugins.centerText = { text: centerTxt };
+    return base;
+  }
+  const periBudTotal = '₪'+(periBudArr.reduce((a,b)=>a+b,0)/1e6).toFixed(1)+'M';
+  const periTmTotal = fmtN(periTmArr.reduce((a,b)=>a+b,0));
+  const periAthTotal = fmtN(periAthArr.reduce((a,b)=>a+b,0));
+  mc('ba_byPeriphery', { type:'doughnut', data:{ labels:periLabels,
+    datasets:[{data:toPct(periBudArr), backgroundColor:tealShades, borderWidth:1}]}, options:donutOpts(periBudTotal) });
+  mc('ba_byPeriphery_teams', { type:'doughnut', data:{ labels:periLabels,
+    datasets:[{data:toPct(periTmArr), backgroundColor:amberShades, borderWidth:1}]}, options:donutOpts(periTmTotal) });
+  mc('ba_byPeriphery_athletes', { type:'doughnut', data:{ labels:periLabels,
+    datasets:[{data:toPct(periAthArr), backgroundColor:purpleShades, borderWidth:1}]}, options:donutOpts(periAthTotal) });
 
-  // ─── 4. by socioeconomic — תקציב (אופקי), קבוצות, ספורטאים ───
-  const socioLabels = ['1','2','3','4','5','6','7','8','9','10'];
+  // ─── 4. by socioeconomic — vbars ───
+  const socioLabels = ['1 (נמוך)','2','3','4','5','6','7','8','9','10 (גבוה)'];
   const socioKeys = [1,2,3,4,5,6,7,8,9,10];
   const socioBudMap = srByCluster(r26, 'socioeconomic_cluster', 'total_budget');
-  mc('ba_bySocio', { type:'bar', data:{ labels:socioLabels,
-    datasets:[{data:socioKeys.map(k=>+((socioBudMap[k]||0)/1e6).toFixed(1)), backgroundColor:TEAL, borderRadius:2, barThickness:18}]}, options:hbarOpts(fmtM) });
   const socioTeamsMap = authTeams(r26, 'socioeconomic_cluster');
-  mc('ba_bySocio_teams', { type:'bar', data:{ labels:socioLabels,
-    datasets:[{data:socioKeys.map(k=>socioTeamsMap[k]||0), backgroundColor:AMBER, borderRadius:2, barThickness:18}]}, options:hbarOpts(fmtN) });
   const socioAthMap = authAthletes(r26, 'socioeconomic_cluster');
+  const vbOpts = (fmt) => ({ responsive:true, maintainAspectRatio:false,
+    plugins:{ legend:{display:false}, tooltip:{rtl:true}, dataLabels:{formatter:fmt} },
+    layout:{padding:{top:16}},
+    scales:{ y:{ticks:{callback:fmt,font:{size:10},color:'#9A9A9A'},grid:{color:'#EFEBE3',drawBorder:false},beginAtZero:true,grace:'10%'},
+             x:{grid:{display:false},ticks:{font:{size:11},color:'#1A1A1A'}} } });
+  mc('ba_bySocio', { type:'bar', data:{ labels:socioLabels,
+    datasets:[{data:socioKeys.map(k=>+((socioBudMap[k]||0)/1e6).toFixed(1)), backgroundColor:TEAL, borderRadius:2}]}, options:vbOpts(fmtM) });
+  mc('ba_bySocio_teams', { type:'bar', data:{ labels:socioLabels,
+    datasets:[{data:socioKeys.map(k=>socioTeamsMap[k]||0), backgroundColor:AMBER, borderRadius:2}]}, options:vbOpts(fmtN) });
   mc('ba_bySocio_athletes', { type:'bar', data:{ labels:socioLabels,
-    datasets:[{data:socioKeys.map(k=>socioAthMap[k]||0), backgroundColor:PURPLE, borderRadius:2, barThickness:18}]}, options:hbarOpts(fmtN) });
+    datasets:[{data:socioKeys.map(k=>socioAthMap[k]||0), backgroundColor:PURPLE, borderRadius:2}]}, options:vbOpts(fmtN) });
 
-  // ─── 5. by team — תקציב + ספורטאים (אין "מספר קבוצות" כי X = קבוצה) ───
+  // ─── 5. by team — side-by-side hbars ───
   const byTm = grpSum(r26.filter(r=>r.team_name), 'team_name', 'total_budget');
   const tmT10 = byTm.slice(0,10);
   const tmNames = tmT10.map(e=>e[0]);
@@ -461,32 +497,7 @@ function renderBA() {
   mc('ba_byTeam_athletes', { type:'bar', data:{ labels:tmNames,
     datasets:[{data:tmNames.map(n=>tmAth[n]||0), backgroundColor:PURPLE, borderRadius:2, barThickness:18}]}, options:hbarOpts(fmtN) });
 
-  // ─── 6. by achievement (BA) — תקציב + ציון בתווית, קבוצות, ספורטאים ───
-  const baAchBudget = {}, baAchScore = {};
-  r26.forEach(r => {
-    const nm = r.society_name || r.association_name;
-    baAchBudget[nm] = (baAchBudget[nm]||0) + (r.total_budget||0);
-    baAchScore[nm] = (baAchScore[nm]||0) + (r.male_achievement_score||0) + (r.female_achievement_score||0);
-  });
-  const baAchSorted = Object.entries(baAchScore).sort((a,b)=>b[1]-a[1]).slice(0,10);
-  const baAchNames = baAchSorted.map(e=>e[0]);
-  mc('ba_byAchievement', { type:'bar', data:{ labels:baAchNames,
-    datasets:[{data:baAchNames.map(n=>+((baAchBudget[n]||0)/1e6).toFixed(1)),
-      backgroundColor:AMBER, borderRadius:2, barThickness:18,
-      dataLabels:{formatter:(v,idx)=>fmtM(v)+' | '+baAchScore[baAchNames[idx]].toFixed(0)+' נק\'  '}}]},
-    options:hbarOpts(v=>fmtM(v)) });
-  const achTeams = {}, achAth = {};
-  r26.forEach(r => {
-    const nm = r.society_name || r.association_name;
-    if (r.team_code) (achTeams[nm] = achTeams[nm] || new Set()).add(r.team_code);
-    achAth[nm] = (achAth[nm] || 0) + (r.male_cnt||0) + (r.female_cnt||0);
-  });
-  mc('ba_byAchievement_teams', { type:'bar', data:{ labels:baAchNames,
-    datasets:[{data:baAchNames.map(n=>achTeams[n]?achTeams[n].size:0), backgroundColor:AMBER, borderRadius:2, barThickness:18}]}, options:hbarOpts(fmtN) });
-  mc('ba_byAchievement_athletes', { type:'bar', data:{ labels:baAchNames,
-    datasets:[{data:baAchNames.map(n=>achAth[n]||0), backgroundColor:PURPLE, borderRadius:2, barThickness:18}]}, options:hbarOpts(fmtN) });
-
-  // YoY
+  // ─── 7. YoY — grouped hbar ───
   const m26 = Object.fromEntries(grpSum(r26,'society_name','total_budget'));
   const m25 = Object.fromEntries(grpSum(r25,'society_name','total_budget'));
   const names = bySoc.slice(0,10).map(e=>e[0]);
@@ -499,6 +510,45 @@ function renderBA() {
   mc('ba_yoyTotal', { type:'bar', data:{ labels:['2025','2026'],
     datasets:[{data:[+(t25/1e6).toFixed(1),+(tot/1e6).toFixed(1)], backgroundColor:[TEAL_L,TEAL], borderRadius:3, barThickness:32}]},
     options:yoyTotOpts(fmtM) });
+}
+
+/* ── data-bar table builder ── */
+function dbTable(containerId, headers, rows) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  // find max per data-bar column
+  const colMaxes = {};
+  rows.forEach(row => row.forEach((cell, ci) => {
+    if (cell && typeof cell === 'object' && cell.v != null) {
+      const abs = Math.abs(cell.v);
+      colMaxes[ci] = Math.max(colMaxes[ci]||0, abs);
+    }
+  }));
+  let html = '<table class="db-table"><thead><tr>';
+  headers.forEach(h => { html += '<th>' + h + '</th>'; });
+  html += '</tr></thead><tbody>';
+  rows.forEach((row, ri) => {
+    const isLast = ri === rows.length - 1;
+    const isTotalsRow = row[0] === '' && row[1] === 'סה"כ';
+    const top3 = !isTotalsRow && typeof row[0] === 'number' && row[0] <= 3;
+    html += isTotalsRow ? '<tr style="border-top:2px solid var(--line);font-weight:600;">' : top3 ? '<tr class="db-top3">' : '<tr>';
+    row.forEach((cell, ci) => {
+      if (cell && typeof cell === 'object' && cell.v != null) {
+        const max = colMaxes[ci] || 1;
+        const pct = Math.min(Math.abs(cell.v) / max * 100, 100);
+        const txt = cell.fmt ? cell.fmt(cell.v) : cell.v;
+        const delay = (ri * 0.04).toFixed(2);
+        html += '<td class="db-cell"><span class="db-bar" style="width:'+pct.toFixed(0)+'%;background:'+cell.color+';animation-delay:'+delay+'s;"></span><span class="db-val" style="color:'+cell.color+';">'+txt+'</span></td>';
+      } else if (ci === 0 && typeof cell === 'number') {
+        html += '<td class="db-rank">' + cell + '</td>';
+      } else {
+        html += '<td class="db-name">' + (cell||'') + '</td>';
+      }
+    });
+    html += '</tr>';
+  });
+  html += '</tbody></table>';
+  el.innerHTML = html;
 }
 
 
