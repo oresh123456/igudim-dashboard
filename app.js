@@ -616,11 +616,6 @@ function renderAA() {
       pointBackgroundColor:AMBER, pointBorderColor:'#FFF', pointBorderWidth:1.5, borderWidth:2}]},
     options:lineOpts(fmtN,'אשכול סוציו-אקונומי') });
 
-  // by team
-  const byTm = grpCnt(a26.filter(a=>a.team_name), 'team_name');
-  mc('aa_byTeam', { type:'bar', data:{ labels:byTm.slice(0,10).map(e=>e[0]),
-    datasets:[{data:byTm.slice(0,10).map(e=>e[1]), backgroundColor:AMBER, borderRadius:2, barThickness:16}]}, options:hbarOpts(fmtN) });
-
   // age distribution (line by individual age)
   const mAge = ageDist(a26,'זכר'), fAge = ageDist(a26,'נקבה');
   mc('aa_byAge', { type:'line', data:{ labels:mAge.labels,
