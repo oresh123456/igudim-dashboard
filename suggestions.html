@@ -43,7 +43,7 @@
   .ptab:hover { color: var(--ink); }
   .ptab.active { color: var(--women); font-weight: 500; border-bottom-color: var(--women); }
 
-  main { padding: 24px 32px 60px; }
+  main { padding: 24px 32px 80px; }
   .tab-content { display: none; }
   .tab-content.active { display: block; }
 
@@ -210,6 +210,29 @@
     .col-6, .col-4 { grid-column: span 12; }
     .sub-cards-3, .sub-cards-2, .auth-compare { grid-template-columns: 1fr; }
   }
+
+  /* ── editable mode ── */
+  [contenteditable] { outline: none; border-radius: 3px; transition: background .15s; }
+  [contenteditable]:hover { background: rgba(134,25,143,0.06); }
+  [contenteditable]:focus { background: rgba(134,25,143,0.10); box-shadow: 0 0 0 2px var(--women-soft); }
+
+  .comment-box { margin-top: 8px; padding: 10px 12px; background: var(--surface-soft);
+    border: 1px dashed var(--line); border-radius: var(--radius); font-size: 12px;
+    color: var(--ink-muted); font-family: inherit; line-height: 1.5;
+    min-height: 36px; outline: none; direction: rtl; }
+  .comment-box:empty::before { content: "הערות..."; color: var(--ink-faint); pointer-events: none; }
+  .comment-box:focus { border-color: var(--women); background: #fff; }
+  .comment-label { font-size: 10px; color: var(--ink-faint); margin-top: 10px; letter-spacing: 0.04em; }
+
+  .edit-toolbar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 999;
+    background: var(--surface); border-top: 2px solid var(--women); padding: 10px 32px;
+    display: flex; align-items: center; gap: 12px; justify-content: flex-end;
+    box-shadow: 0 -4px 16px rgba(0,0,0,0.08); }
+  .edit-toolbar .tb-label { margin-inline-end: auto; font-size: 12px; color: var(--ink-muted); }
+  .edit-toolbar button { font-family: inherit; font-size: 13px; padding: 8px 18px;
+    border-radius: var(--radius); cursor: pointer; border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
+  .edit-toolbar button.primary { background: var(--women); color: #fff; border-color: var(--women); font-weight: 500; }
+  .edit-toolbar button:hover { opacity: 0.85; }
 </style>
 </head>
 <body>
@@ -1150,7 +1173,14 @@
 
 </main>
 
+<div class="edit-toolbar">
+  <span class="tb-label">מצב עריכה — כל הטקסטים ניתנים לעריכה, הערות נשמרות אוטומטית</span>
+  <button onclick="resetAll()">איפוס הכל</button>
+  <button class="primary" onclick="exportHTML()">ייצוא HTML</button>
+</div>
+
 <script>
+  // ── tab switching ──
   document.querySelectorAll('.ptab').forEach(t => {
     t.addEventListener('click', e => {
       e.preventDefault();
@@ -1160,6 +1190,124 @@
       document.getElementById(t.dataset.target).classList.add('active');
     });
   });
+
+  // ── make everything editable ──
+  const EDITABLE = [
+    'h1', '.meta', '.meta-badge',
+    '.ptab',
+    '.kpi-label', '.kpi-value', '.kpi-sub', '.kpi-delta',
+    '.card-title', '.card-meta',
+    '.section-title', '.sub-title',
+    '.hbar-label', '.hbar-val',
+    '.donut-cap', '.donut-center .pct', '.donut-center .sub',
+    '.legend-item',
+    '.vb-cap', '.vb-val',
+    '.auth-name', '.auth-stat .lbl', '.auth-stat .val',
+    '.filter-bar-label',
+    '.stbl th', '.stbl td'
+  ];
+  EDITABLE.forEach(sel => {
+    document.querySelectorAll(sel).forEach(el => {
+      el.setAttribute('contenteditable', 'true');
+    });
+  });
+
+  // ── assign stable IDs for persistence ──
+  const allEditable = document.querySelectorAll('[contenteditable]');
+  allEditable.forEach((el, i) => { el.dataset.eid = 'e' + i; });
+
+  // ── inject comment boxes after each card ──
+  document.querySelectorAll('.card').forEach((card, i) => {
+    const lbl = document.createElement('div');
+    lbl.className = 'comment-label';
+    lbl.textContent = 'הערות לתרשים ▾';
+    const box = document.createElement('div');
+    box.className = 'comment-box';
+    box.contentEditable = 'true';
+    box.dataset.cid = 'c' + i;
+    card.appendChild(lbl);
+    card.appendChild(box);
+  });
+
+  // ── localStorage persistence ──
+  const STORAGE_KEY = 'suggestions_edits';
+
+  function saveAll() {
+    const data = { edits: {}, comments: {} };
+    allEditable.forEach(el => {
+      const id = el.dataset.eid;
+      if (id && el.dataset.original !== undefined && el.innerHTML !== el.dataset.original) {
+        data.edits[id] = el.innerHTML;
+      }
+    });
+    document.querySelectorAll('.comment-box').forEach(box => {
+      if (box.innerHTML.trim()) data.comments[box.dataset.cid] = box.innerHTML;
+    });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }
+
+  function loadAll() {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    try {
+      const data = JSON.parse(raw);
+      if (data.edits) {
+        allEditable.forEach(el => {
+          const id = el.dataset.eid;
+          if (id && data.edits[id]) el.innerHTML = data.edits[id];
+        });
+      }
+      if (data.comments) {
+        document.querySelectorAll('.comment-box').forEach(box => {
+          if (data.comments[box.dataset.cid]) box.innerHTML = data.comments[box.dataset.cid];
+        });
+      }
+    } catch(e) {}
+  }
+
+  // store originals for diff
+  allEditable.forEach(el => { el.dataset.original = el.innerHTML; });
+
+  // auto-save on any edit
+  document.addEventListener('input', e => {
+    if (e.target.hasAttribute('contenteditable')) saveAll();
+  });
+
+  // ── export edited HTML ──
+  function exportHTML() {
+    // remove toolbar temporarily
+    const toolbar = document.querySelector('.edit-toolbar');
+    toolbar.style.display = 'none';
+    // remove contenteditable attrs
+    document.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
+    // remove empty comment boxes, keep ones with content
+    document.querySelectorAll('.comment-box').forEach(box => {
+      if (!box.innerHTML.trim()) { box.previousElementSibling.remove(); box.remove(); }
+    });
+    const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+    // restore
+    EDITABLE.forEach(sel => {
+      document.querySelectorAll(sel).forEach(el => el.setAttribute('contenteditable', 'true'));
+    });
+    document.querySelectorAll('.comment-box').forEach(box => box.contentEditable = 'true');
+    toolbar.style.display = '';
+    // download
+    const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'suggestions_edited.html';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  function resetAll() {
+    if (!confirm('לאפס את כל העריכות וההערות?')) return;
+    localStorage.removeItem(STORAGE_KEY);
+    location.reload();
+  }
+
+  // restore on load
+  loadAll();
 </script>
 
 </body>
