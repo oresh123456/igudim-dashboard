@@ -211,6 +211,14 @@
     .sub-cards-3, .sub-cards-2, .auth-compare { grid-template-columns: 1fr; }
   }
 
+  /* ── client demands banner (פגישת לקוח 1.6.26) ── */
+  .client-demands { background: #FCF3FD; border: 1px solid var(--women-soft);
+    border-right: 4px solid var(--women); border-radius: var(--radius-lg);
+    padding: 14px 18px; margin-bottom: 18px; }
+  .client-demands .cd-head { font-size: 13px; font-weight: 600; color: var(--women); margin-bottom: 8px; }
+  .client-demands ul { padding-inline-start: 20px; margin: 0; }
+  .client-demands li { font-size: 12.5px; color: var(--ink); margin-bottom: 6px; line-height: 1.5; }
+
   /* ── editable mode ── */
   [contenteditable] { outline: none; border-radius: 3px; transition: background .15s; }
   [contenteditable]:hover { background: rgba(134,25,143,0.06); }
@@ -275,6 +283,16 @@
     <div class="filter"><label>מחוז פיקוח</label><select><option>הכל</option></select></div>
     <div class="filter"><label>תנאי סף</label><select><option>הכל</option><option>עברו תנאי סף</option><option>לא עברו</option></select></div>
     <button class="filter-reset">איפוס</button>
+  </div>
+
+  <div class="client-demands">
+    <div class="cd-head">הערות לקוח — פגישת אפיון 1.6.26 (טובה קניגסברג, משרד התרבות והספורט) · נושאים רוחביים</div>
+    <ul>
+      <li><strong>נתונים מתוקצבים (ברירת מחדל):</strong> להציג כברירת מחדל רק ישויות שעברו תנאי סף לאורך כל ההיררכיה (ספורטאי ← אגודה/קבוצה ← איגוד), עם מתג למעבר לכלל הנתונים. ממתין לאישור הלקוח, ולהחלטה על המונח שיוצג למשתמש (נתונים מתוקצבים / כלל הנתונים). לאוכלוסייה שלא עברה תנאי סף אין נתוני ניקוד.</li>
+      <li><strong>סינונים נדרשים:</strong> רשות מקומית (דרישה משמעותית — עבודה מול רשויות), מחוז משרד הפנים, מחוז פיקוח (סל ספורט), איגוד, סיווג אולימפי, אישי/קבוצתי, גיל נומרי — נוספו לסרגל הפילטרים מעלה.</li>
+      <li><strong>כותרות:</strong> להציג במפורש ספורטאים/ספורטאיות למניעת בלבול בעת שימוש בסינונים (במסכי נשים — לביצוע). יופץ קובץ כותרות לעריכה.</li>
+      <li><strong>תקציב נשים בעקבות מקצועיות:</strong> לבדוק היתכנות להצגת רכיב תקציב נשים הנובע מתוספת מקצועיות (ראו מבחן תמיכה, עמ 18).</li>
+    </ul>
   </div>
 
   <div class="kpis">
@@ -1288,6 +1306,32 @@
   const allEditable = document.querySelectorAll('[contenteditable]');
   allEditable.forEach((el, i) => { el.dataset.eid = 'e' + i; });
 
+  // ── client demands per chart (פגישת לקוח 1.6.26) — seeded into comment boxes ──
+  const SEED_COMMENTS = {
+    'שיעור נשים ברכיבי התקציב לפי ענף':
+      '<strong>הערת לקוח · 1.6.26:</strong><br>להרחיב כך שיכלול את כל אמות המידה של התקציב, ולא רק את שיעור ניקוד ההישגיות/ספורטאיות.<br>לשנות את הכותרת שתתייחס למיקום/שיעור נשים בענף — לא רק לניקוד. יופץ קובץ כותרות לעריכה.',
+    'בזכות הנשים':
+      '<strong>הערת לקוח · 1.6.26:</strong><br>לתקן/לדייק כותרות בהתאם לקובץ הכותרות שיופץ.',
+    'שיעור ספורטאיות — 4 חיתוכים':
+      '<strong>הערת לקוח · 1.6.26:</strong><br>בחיתוך לפי רשות/פריפריאליות — לתקן לסקאלה 1–10 ולשנות ל"מדד סוציו-אקונומי – אחוז נשים".<br>להוריד חיתוכים/גרפים שאינם נדרשים.',
+    'חלוקת ניקוד לפי רכיבי מבחן התמיכה':
+      '<strong>הערת לקוח · 1.6.26:</strong><br>לבדוק היתכנות להצגת רכיב תקציב נשים הנובע מתוספת מקצועיות (ראו מבחן תמיכה, עמ 18).',
+    'ניקוד לפי איגוד — תרומת נשים':
+      '<strong>הערת לקוח · 1.6.26:</strong><br>לשנות כותרת ל"שיעור הישגיות נשים מתוך סך ההישגיות" (טקסט: סך ניקוד ההישגיות, ואז אחוז הישגיות נשים מול גברים).<br>בגרף שיעור גברים/נשים מסך הניקוד — מיון לפי סך ניקוד יורד.',
+    'ספורטאים/ות מול ספורטאיות — לפי איגוד':
+      '<strong>הערת לקוח · 1.6.26 (יושם):</strong><br>הקו מחולק למתחת/מעל גיל 18 כפי שהתבקש — לאימות מול הלקוח.',
+    'ספורטאיות לפי קטגוריית גיל':
+      '<strong>הערת לקוח · 1.6.26 (יושם):</strong><br>נוספו נתוני ספורט נשים לפי קטגוריית גיל.',
+    'מעבר ספורטאיות בין ענפים':
+      '<strong>הערת לקוח · 1.6.26:</strong><br>להוסיף יכולת לזהות מעבר ספורטאיות בין ענפים — טעון בדיקת היתכנות בדאטה.',
+    'קבוצות גברים מול קבוצות נשים — לפי ענף':
+      '<strong>הערת לקוח · 1.6.26 (יושם):</strong><br>חלוקה לקבוצות גיל ולפי ענף כפי שהתבקש.',
+    'שיעור מאמנות מול מדריכות — ברמת איגודים':
+      '<strong>הערת לקוח · 1.6.26 (שרון):</strong><br>גרף שיעור מאמנות מול מדריכות ברמת איגוד — מעניין את שרון בשל פוטנציאל המעבר ממדריכה למאמנת. טעון בדיקת היתכנות בדאטה. פורמט: מקלות אופקי מוערם (מדריכות/מדריכים/מאמנות/מאמנים).',
+    'השוואת רשויות — תמונה מצרפית':
+      '<strong>הערת לקוח · 1.6.26:</strong><br>סינון לפי רשות מקומית הוא דרישה משמעותית (עבודה מול רשויות). חשובים גם סינוני מחוז ואיגוד — ככלי למפקחי מחוז. (נוספו לסרגל הפילטרים)'
+  };
+
   // ── inject comment boxes after each card ──
   document.querySelectorAll('.card').forEach((card, i) => {
     const lbl = document.createElement('div');
@@ -1297,6 +1341,11 @@
     box.className = 'comment-box';
     box.contentEditable = 'true';
     box.dataset.cid = 'c' + i;
+    const titleEl = card.querySelector('.card-title');
+    const title = titleEl ? titleEl.textContent.trim() : '';
+    for (const key in SEED_COMMENTS) {
+      if (title.indexOf(key) !== -1) { box.innerHTML = SEED_COMMENTS[key]; break; }
+    }
     card.appendChild(lbl);
     card.appendChild(box);
   });
@@ -1347,27 +1396,22 @@
 
   // ── export edited HTML ──
   function exportHTML() {
-    // remove toolbar temporarily
     const toolbar = document.querySelector('.edit-toolbar');
     toolbar.style.display = 'none';
-    // remove contenteditable attrs
     document.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
-    // remove empty comment boxes, keep ones with content
     document.querySelectorAll('.comment-box').forEach(box => {
       if (!box.innerHTML.trim()) { box.previousElementSibling.remove(); box.remove(); }
     });
     const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
-    // restore
     EDITABLE.forEach(sel => {
       document.querySelectorAll(sel).forEach(el => el.setAttribute('contenteditable', 'true'));
     });
     document.querySelectorAll('.comment-box').forEach(box => box.contentEditable = 'true');
     toolbar.style.display = '';
-    // download
     const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = 'suggestions_edited.html';
+    a.download = 'wg-women_edited.html';
     a.click();
     URL.revokeObjectURL(a.href);
   }
@@ -1378,7 +1422,6 @@
     location.reload();
   }
 
-  // restore on load
   loadAll();
 </script>
 
