@@ -256,7 +256,7 @@
     <div class="filter"><label>איגוד</label><select><option>הכל</option></select></div>
     <div class="filter"><label>ענף</label><select id="f-branch"><option>הכל</option></select></div>
     <div class="filter"><label>סיווג ענף</label><select><option>הכל</option><option>אולימפי</option><option>לא אולימפי</option><option>ענפי חשיבה</option></select></div>
-    <div class="filter"><label>שכבת גיל</label><select><option>הכל</option><option>בוגרים</option><option>מתחת 23</option><option>נוער</option><option>קדטים</option></select></div>
+    <div class="filter"><label>שכבת גיל</label><select><option>הכל</option><option>בוגרים</option><option>מתחת 23</option><option>נוער</option><option>נערות</option><option>קדטים</option><option>קדטיות</option></select></div>
     <div class="filter"><label>מין</label><select><option>הכל</option><option>נשים</option><option>גברים</option></select></div>
     <div class="filter"><label>סוג אליפות</label><select><option>הכל</option><option>משחקים אולימפיים</option><option>אליפות עולם</option><option>אליפות אירופה</option><option>משחקי עולם</option><option>אליפות חלופית מוכרת</option></select></div>
     <div class="filter"><label>שנה</label><select><option>2026</option><option>2025</option><option>2024</option></select></div>
@@ -294,7 +294,7 @@
   <div class="grid">
     <div class="card col-6">
       <div class="card-head">
-        <span class="card-title editable" data-edit="t4">שכבת גיל × מין — מפולח לפי מיקום (1-3 / 4-8 / 9-16+)</span>
+        <span class="card-title editable" data-edit="t4">פילוח מספר המשתתפים לפי מיקום, שכבת גיל ומגדר</span>
         <span class="card-meta">QuickSight · Stacked + Clustered Bar</span>
       </div>
       <div class="card-canvas-wrap h-440"><canvas id="c_age"></canvas></div>
@@ -306,7 +306,7 @@
     <div class="col-6 stack-col">
       <div class="card">
         <div class="card-head">
-          <span class="card-title editable" data-edit="t2">התפלגות לפי רמת תחרות</span>
+          <span class="card-title editable" data-edit="t2">התפלגות לפי סוג תחרות</span>
           <span class="card-meta">QuickSight · Donut</span>
         </div>
         <div class="card-canvas-wrap h-180"><canvas id="c_tier"></canvas></div>
@@ -322,12 +322,12 @@
   </div>
 
   <!-- Section: success rate — high places out of competitions attended -->
-  <div class="section-title">שיעור הצלחה · סיומים גבוהים מתוך ההשתתפויות</div>
+  <div class="section-title">שיעור הצלחה · מיקומים גבוהים מתוך ההשתתפויות</div>
   <div class="card-meta" style="margin:-6px 0 12px;">כמה תחרויות הסתיימו במקום גבוה (≤8) מתוך כלל ההשתתפויות בדרג א' — מדד יעילות, לא נפח. ממוין מהגבוה לנמוך.</div>
   <div class="grid">
     <div class="card col-6">
       <div class="card-head">
-        <span class="card-title editable" data-edit="t13">שיעור סיומים גבוהים (1-3 / 4-8) · לפי ענף</span>
+        <span class="card-title editable" data-edit="t13">שיעור מיקומים גבוהים (1-3 / 4-8) · לפי ענף</span>
         <span class="card-meta">QuickSight · Bar (אחוז)</span>
       </div>
       <div class="card-canvas-wrap h-360"><canvas id="c_success"></canvas></div>
@@ -338,7 +338,7 @@
     </div>
     <div class="card col-6">
       <div class="card-head">
-        <span class="card-title editable" data-edit="t13b">שיעור סיומים גבוהים (1-3 / 4-8) · לפי רמת תחרות</span>
+        <span class="card-title editable" data-edit="t13b">שיעור מיקומים גבוהים (1-3 / 4-8) · לפי רמת תחרות</span>
         <span class="card-meta">QuickSight · Bar (אחוז)</span>
       </div>
       <div class="card-canvas-wrap h-360"><canvas id="c_success_tier"></canvas></div>
@@ -452,14 +452,14 @@
     </div>
     <div class="card col-6">
       <div class="card-head">
-        <span class="card-title editable" data-edit="t11">סיומים במקומות גבוהים (1–8) לפי איגוד</span>
+        <span class="card-title editable" data-edit="t11">מיקומים גבוהים (1–8) לפי איגוד</span>
         <span class="card-meta">QuickSight · Bar</span>
       </div>
       <div class="card-canvas-wrap h-320"><canvas id="c_union_top8"></canvas></div>
       <div class="card-meta" style="margin-top:8px;">מקום בדירוג ≤ 8 · ניתן לשנות את הסף ב-<code>CONFIG</code>.</div>
       <div class="comment-block">
-        <label class="comment-label">💬 הערה — סיומים גבוהים לפי איגוד</label>
-        <textarea class="comment" data-key="c_union_top8" data-label="סיומים גבוהים לפי איגוד" placeholder="כתבו כאן הערה..."></textarea>
+        <label class="comment-label">💬 הערה — מיקומים גבוהים לפי איגוד</label>
+        <textarea class="comment" data-key="c_union_top8" data-label="מיקומים גבוהים לפי איגוד" placeholder="כתבו כאן הערה..."></textarea>
       </div>
     </div>
   </div>
@@ -535,12 +535,13 @@
 const CONFIG = {
   // ענפים מובילים — לגרף "ניקוד לפי ענף"
   branches: ["התעמלות","שחייה","סיוף","שייט","ג'יו ג'יטסו","קשתות","ג'ודו","אתלטיקה","טיפוס ספורטיבי","קיקבוקס","ספורט הריקוד","אופניים"],
-  // דירוגים לפי מיקום — מספר ספורטאים, מיקומים 1 / 2 / 3 / 4-8 / 9-16+ (פגישה 2)
+  // דירוגים לפי מיקום — מספר ספורטאים, מיקומים 1 / 2 / 3 / 4-8 / 9-16 / 17+ (פגישה 2)
   pts_p1:     [29, 19, 13, 15,  8,  7,  7,  7,  6,  9,  5,  5],
   pts_p2:     [35, 23, 16, 19, 10,  9,  9,  8,  8, 11,  7,  6],
   pts_p3:     [31, 20, 15, 16, 10,  8,  8,  7,  7, 10,  6,  5],
   pts_4_8:    [110, 72, 51, 58, 33, 28, 28, 26, 24, 35, 21, 19],
-  pts_9_16:   [130, 85, 60, 68, 39, 33, 33, 31, 29, 41, 25, 22],
+  pts_9_16:   [80, 53, 37, 42, 24, 20, 20, 19, 18, 25, 15, 14],
+  pts_17:     [50, 32, 23, 26, 15, 13, 13, 12, 11, 16, 10,  8],
 
   // שיעור סיומים במקומות גבוהים מתוך סך ההשתתפויות — מפוצל 1-3 / 4-8
   branchTotal:  [550, 310, 221, 200, 141, 122, 121, 111, 104, 101, 92, 81],
@@ -555,18 +556,20 @@ const CONFIG = {
   tierVals:   [1825, 1214, 131, 36, 60],
 
   // חלוקת ספורטאים לפי מיקום (Donut) — אותה חלוקה כמו "דירוגים לפי ענף"
-  bands:      ["מיקום 1","מיקום 2","מיקום 3","מיקום 4-8","מיקום 9-16+"],
-  bandVals:   [130, 161, 143, 505, 596],
+  bands:      ["מיקום 1","מיקום 2","מיקום 3","מיקום 4-8","מיקום 9-16","מיקום 17+"],
+  bandVals:   [130, 161, 143, 505, 372, 224],
 
   // שכבת גיל × מין (Clustered)
-  ages:       ["בוגרים","מתחת 23","נוער","קדטים"],
-  // מפוצל לפי 3 הבאקטים של "דירוגים לפי ענף": מיקום 1-3 / 4-8 / 9-16+
-  ageMen_p13:   [252, 32, 177,  95],
-  ageMen_p48:   [265, 33, 186, 100],
-  ageMen_p916:  [323, 40, 227, 123],
-  ageWomen_p13: [190, 23, 128,  65],
-  ageWomen_p48: [199, 24, 134,  69],
-  ageWomen_p916:[244, 29, 164,  84],
+  ages:       ["בוגרים","מתחת 23","נוער","נערות","קדטים","קדטיות"],
+  // מפוצל לפי הבאקטים של "דירוגים לפי ענף": מיקום 1-3 / 4-8 / 9-16 / 17+
+  ageMen_p13:   [252, 32, 177,   0,  95,   0],
+  ageMen_p48:   [265, 33, 186,   0, 100,   0],
+  ageMen_p916:  [200, 25, 141,   0,  76,   0],
+  ageMen_p17:   [123, 15,  86,   0,  47,   0],
+  ageWomen_p13: [190, 23, 128, 138,  65,  71],
+  ageWomen_p48: [199, 24, 134, 145,  69,  74],
+  ageWomen_p916:[151, 18, 102, 110,  52,  56],
+  ageWomen_p17: [ 93, 11,  62,  68,  32,  35],
 
   // איגוד לאורך השנים (Line) — מפוצל לזכיות ולמשתתפים
   years:      ["2022","2023","2024","2025","2026"],
@@ -611,6 +614,7 @@ const CONFIG = {
 
   // ספורטאים מובילים בניקוד (Bar)
   topAthletes: ["אוסיד גודה","יוליה סצ׳קוב","פולינה גרוסמן","לואי סקס","קרם אסעד","מיה ברק","רוני לוי","עדן כהן","תמר אבני","דנה גולן"],
+  topBranches: ["קיקבוקס","קיקבוקס","קיקבוקס","ג'ודו","ג'ו ג'יטסו","התעמלות","שחייה","אתלטיקה","סיוף","שייט"],
   topScores:   [128, 122, 116, 110, 98, 92, 86, 80, 74, 68],
 
   // טבלת זוכי מדליות (Table)
@@ -673,7 +677,8 @@ new Chart(document.getElementById('c_branch'), {
     { label: 'מיקום 2',     data: CONFIG.pts_p2,   backgroundColor: SILVER, stack: 'a' },
     { label: 'מיקום 3',     data: CONFIG.pts_p3,   backgroundColor: BRONZE, stack: 'a' },
     { label: 'מיקום 4-8',   data: CONFIG.pts_4_8,  backgroundColor: TEAL,   stack: 'a' },
-    { label: 'מיקום 9-16+', data: CONFIG.pts_9_16, backgroundColor: TEAL_L, stack: 'a' },
+    { label: 'מיקום 9-16', data: CONFIG.pts_9_16, backgroundColor: TEAL_L, stack: 'a' },
+    { label: 'מיקום 17+', data: CONFIG.pts_17, backgroundColor: GRAY_L, stack: 'a' },
   ]},
   options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y',
     plugins: {
@@ -700,7 +705,7 @@ new Chart(document.getElementById('c_tier'), {
 /* ---- Card 3: score-band donut ---- */
 new Chart(document.getElementById('c_bands'), {
   type: 'doughnut',
-  data: { labels: CONFIG.bands, datasets: [{ data: CONFIG.bandVals, backgroundColor: [GOLD, SILVER, BRONZE, TEAL, TEAL_L], borderColor: '#fff', borderWidth: 2 }] },
+  data: { labels: CONFIG.bands, datasets: [{ data: CONFIG.bandVals, backgroundColor: [GOLD, SILVER, BRONZE, TEAL, TEAL_L, GRAY_L], borderColor: '#fff', borderWidth: 2 }] },
   options: { responsive: true, maintainAspectRatio: false, cutout: '58%',
     plugins: { legend: { position: 'right', rtl: true, labels: { font: { size: 11 }, boxWidth: 12, boxHeight: 12, padding: 9 } },
       tooltip: { rtl: true, callbacks: { label: c => c.label + ': ' + fmtN(c.parsed) } }, datalabels: DL_DONUT } }
@@ -735,17 +740,19 @@ successRateChart('c_success',      CONFIG.branches, CONFIG.branchTotal, CONFIG.b
 successRateChart('c_success_tier', CONFIG.tiers,    CONFIG.tierVals,    CONFIG.tierHigh13,   CONFIG.tierHigh48);
 
 /* ---- Card 4: age x gender — clustered by gender, stacked by 3 place buckets ---- */
-const NAVY_60 = 'rgba(31,63,109,0.6)', NAVY_30 = 'rgba(31,63,109,0.3)';
-const SKY_60 = 'rgba(45,156,219,0.6)', SKY_30 = 'rgba(45,156,219,0.3)';
+const NAVY_60 = 'rgba(31,63,109,0.6)', NAVY_30 = 'rgba(31,63,109,0.3)', NAVY_15 = 'rgba(31,63,109,0.15)';
+const SKY_60 = 'rgba(45,156,219,0.6)', SKY_30 = 'rgba(45,156,219,0.3)', SKY_15 = 'rgba(45,156,219,0.15)';
 new Chart(document.getElementById('c_age'), {
   type: 'bar',
   data: { labels: CONFIG.ages, datasets: [
     { label: 'גברים · 1-3',   data: CONFIG.ageMen_p13,  backgroundColor: NAVY,    stack: 'men',   borderRadius: 2 },
     { label: 'גברים · 4-8',   data: CONFIG.ageMen_p48,  backgroundColor: NAVY_60, stack: 'men',   borderRadius: 2 },
-    { label: 'גברים · 9-16+', data: CONFIG.ageMen_p916, backgroundColor: NAVY_30, stack: 'men',   borderRadius: 2 },
+    { label: 'גברים · 9-16', data: CONFIG.ageMen_p916, backgroundColor: NAVY_30, stack: 'men',   borderRadius: 2 },
+    { label: 'גברים · 17+', data: CONFIG.ageMen_p17, backgroundColor: NAVY_15, stack: 'men',   borderRadius: 2 },
     { label: 'נשים · 1-3',    data: CONFIG.ageWomen_p13,  backgroundColor: SKY,    stack: 'women', borderRadius: 2 },
     { label: 'נשים · 4-8',    data: CONFIG.ageWomen_p48,  backgroundColor: SKY_60, stack: 'women', borderRadius: 2 },
-    { label: 'נשים · 9-16+',  data: CONFIG.ageWomen_p916, backgroundColor: SKY_30, stack: 'women', borderRadius: 2 },
+    { label: 'נשים · 9-16',  data: CONFIG.ageWomen_p916, backgroundColor: SKY_30, stack: 'women', borderRadius: 2 },
+    { label: 'נשים · 17+',  data: CONFIG.ageWomen_p17, backgroundColor: SKY_15, stack: 'women', borderRadius: 2 },
   ]},
   options: { responsive: true, maintainAspectRatio: false,
     plugins: { legend: { position: 'top', align: 'start', rtl: true, labels: { font: { size: 11 }, boxWidth: 12, boxHeight: 12, padding: 8 } },
@@ -859,7 +866,7 @@ new Chart(document.getElementById('c_union_top8'), {
   data: { labels: CONFIG.unions, datasets: [{ data: CONFIG.unionTop8,
     backgroundColor: CONFIG.unions.map((_, i) => unionGray(i) ? GRAY_L : TEAL), borderRadius: 3, barThickness: 16 }] },
   options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y',
-    plugins: { legend: { display: false }, tooltip: { rtl: true, callbacks: { label: c => 'סיומים 1–8: ' + fmtN(c.parsed.x) } } },
+    plugins: { legend: { display: false }, tooltip: { rtl: true, callbacks: { label: c => 'מיקומים 1–8: ' + fmtN(c.parsed.x) } } },
     scales: { x: { beginAtZero: true, ticks: { callback: fmtN, font: { size: 10 }, color: '#9A9A9A' }, grid: { color: '#EFEBE3' } },
       y: { position: 'right', ticks: { font: { size: 12, weight: '500' } }, grid: { display: false } } }
   }
@@ -868,9 +875,9 @@ new Chart(document.getElementById('c_union_top8'), {
 /* ---- Card 6: top athletes (bar, horizontal) ---- */
 new Chart(document.getElementById('c_top'), {
   type: 'bar',
-  data: { labels: CONFIG.topAthletes, datasets: [{ data: CONFIG.topScores, backgroundColor: GOLD, borderRadius: 2, barThickness: 15 }] },
+  data: { labels: CONFIG.topAthletes.map((n,i) => n + ' · ' + CONFIG.topBranches[i]), datasets: [{ data: CONFIG.topScores, backgroundColor: GOLD, borderRadius: 2, barThickness: 15 }] },
   options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y',
-    plugins: { legend: { display: false }, tooltip: { rtl: true, callbacks: { label: c => fmtN(c.parsed.x) } } },
+    plugins: { legend: { display: false }, tooltip: { rtl: true, callbacks: { title: items => CONFIG.topAthletes[items[0].dataIndex] + ' · ' + CONFIG.topBranches[items[0].dataIndex], label: c => fmtN(c.parsed.x) } } },
     scales: { x: { beginAtZero: true, ticks: { callback: fmtN, font: { size: 10 }, color: '#9A9A9A' }, grid: { color: '#EFEBE3' } },
       y: { position: 'right', ticks: { font: { size: 11 } }, grid: { display: false } } }
   }
@@ -895,6 +902,17 @@ new Chart(document.getElementById('c_top'), {
    EDIT MODE + COMMENTS  (persisted in localStorage)
    ============================================================================ */
 const LS = 'ach_prod_v1_';
+
+// ── איפוס עריכות-טקסט ישנות כשהכותרות/התוויות בקובץ מתעדכנות ──
+// בכל שינוי כותרות/תוויות בקובץ המקור, העלו את המספר. זה מנקה רק את
+// override-ים של הטקסט (e_) שנשמרו בדפדפן — וההערות (c_) נשמרות.
+const SCHEMA = '2026-06-09';
+if (localStorage.getItem(LS + 'schema') !== SCHEMA) {
+  Object.keys(localStorage)
+    .filter(k => k.startsWith(LS + 'e_'))
+    .forEach(k => localStorage.removeItem(k));
+  localStorage.setItem(LS + 'schema', SCHEMA);
+}
 
 // restore + autosave comments
 document.querySelectorAll('textarea.comment').forEach(t => {

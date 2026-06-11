@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>הצעה: KPI עם YoY</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #F5F1EB; --surface: #FFFFFF; --surface-soft: #FBF8F2;
+    --ink: #1A1A1A; --ink-muted: #6B6B6B; --ink-faint: #9A9A9A;
+    --line: #E5E1D8; --line-soft: #EFEBE3;
+    --primary: #0D5F73; --primary-soft: #E3EEF1;
+    --success: #2F7D5B; --danger: #B23A3A;
+    --radius: 6px; --radius-lg: 10px;
+  }
+  html { font-size: 15px; }
+  body {
+    font-family: 'Heebo', system-ui, sans-serif;
+    background: var(--bg); color: var(--ink); line-height: 1.55;
+    padding: 32px; font-feature-settings: "tnum" 1;
+  }
+  h1 { font-size: 22px; font-weight: 600; margin-bottom: 8px; }
+  .page-desc { font-size: 13px; color: var(--ink-muted); margin-bottom: 32px; max-width: 700px; line-height: 1.7; }
+
+  .section {
+    margin-bottom: 48px; background: var(--surface);
+    border: 1px solid var(--line); border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .section-header {
+    padding: 16px 20px; border-bottom: 1px solid var(--line);
+    font-size: 15px; font-weight: 600;
+  }
+  .section-body { padding: 20px; }
+  .label { font-size: 11px; font-weight: 600; color: var(--ink-muted); margin-bottom: 14px; letter-spacing: 0.05em; }
+
+  /* ── KPI demos ── */
+  .kpis-demo {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 12px; margin-bottom: 20px;
+  }
+  .kpi {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 14px 18px; position: relative; overflow: hidden;
+  }
+  .kpi::before {
+    content: ''; position: absolute;
+    top: 0; right: 0; bottom: 0; width: 3px;
+    background: var(--primary);
+  }
+  .kpi-label { font-size: 12px; color: var(--ink-muted); margin-bottom: 6px; }
+  .kpi-value { font-size: 26px; font-weight: 600; color: var(--ink); letter-spacing: -0.01em; line-height: 1.1; }
+
+  /* ── YoY additions ── */
+  .kpi-delta {
+    display: inline-flex; align-items: center; gap: 3px;
+    font-size: 12px; font-weight: 600;
+    margin-top: 6px;
+  }
+  .kpi-delta.up { color: var(--success); }
+  .kpi-delta.down { color: var(--danger); }
+  .kpi-delta .arrow { font-size: 10px; }
+  .kpi-prev {
+    font-size: 11px; color: var(--ink-faint); margin-top: 2px;
+  }
+
+  /* option A: inline delta */
+  .kpi-value-row {
+    display: flex; align-items: baseline; gap: 8px;
+  }
+  .kpi-value-row .kpi-delta {
+    margin-top: 0; font-size: 13px;
+  }
+
+  /* option C: mini bar */
+  .kpi-minibar-wrap {
+    margin-top: 8px; display: flex; align-items: center; gap: 8px;
+  }
+  .kpi-minibar-track {
+    flex: 1; height: 6px; background: var(--line-soft); border-radius: 3px;
+    overflow: hidden; position: relative;
+  }
+  .kpi-minibar-fill {
+    height: 100%; border-radius: 3px;
+    transition: width 0.4s ease;
+  }
+  .kpi-minibar-labels {
+    display: flex; justify-content: space-between;
+    font-size: 10px; color: var(--ink-faint); margin-top: 3px;
+  }
+
+  .note {
+    font-size: 12px; color: var(--ink-muted); line-height: 1.6;
+    padding: 12px 16px; background: var(--surface-soft);
+    border-radius: var(--radius); margin-top: 14px;
+  }
+  .note strong { color: var(--ink); }
+
+  .vs-label {
+    text-align: center; font-size: 12px; color: var(--ink-faint);
+    padding: 12px 0; font-weight: 500;
+  }
+</style>
+</head>
+<body>
+
+<h1>הצעה: KPI עם השוואת YoY</h1>
+<p class="page-desc">
+  ה-KPIs הנוכחיים מציגים מספר יבש. הוספת YoY delta נותנת הקשר מיידי — הלקוח רואה לא רק "כמה" אלא "לאיפה".
+  <br>3 אופציות מ-simple ל-rich.
+</p>
+
+<!-- ── CURRENT ── -->
+<div class="section">
+  <div class="section-header">מצב נוכחי</div>
+  <div class="section-body">
+    <div class="kpis-demo">
+      <div class="kpi">
+        <div class="kpi-label">סך תקציב לאגודות</div>
+        <div class="kpi-value">₪63.6M</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">אגודות מתוקצבות</div>
+        <div class="kpi-value">412</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">תקציב ממוצע לאגודה</div>
+        <div class="kpi-value">₪154K</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">מספר קבוצות</div>
+        <div class="kpi-value">1,247</div>
+      </div>
+    </div>
+    <div class="note">מספרים בלבד — אין הקשר, אין כיוון. הלקוח לא יודע אם 63.6M זה עלייה או ירידה.</div>
+  </div>
+</div>
+
+<!-- ── OPTION A: inline delta ── -->
+<div class="section">
+  <div class="section-header">אופציה A — delta באותה שורה</div>
+  <div class="section-body">
+    <div class="label">מינימלי · שורה אחת נוספת · QuickSight KPI visual תומך בזה natively</div>
+    <div class="kpis-demo">
+      <div class="kpi">
+        <div class="kpi-label">סך תקציב לאגודות</div>
+        <div class="kpi-value-row">
+          <span class="kpi-value">₪63.6M</span>
+          <span class="kpi-delta up"><span class="arrow">▲</span> 12%</span>
+        </div>
+        <div class="kpi-prev">2025: ₪56.8M</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">אגודות מתוקצבות</div>
+        <div class="kpi-value-row">
+          <span class="kpi-value">412</span>
+          <span class="kpi-delta up"><span class="arrow">▲</span> 5%</span>
+        </div>
+        <div class="kpi-prev">2025: 392</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">תקציב ממוצע לאגודה</div>
+        <div class="kpi-value-row">
+          <span class="kpi-value">₪154K</span>
+          <span class="kpi-delta up"><span class="arrow">▲</span> 6.2%</span>
+        </div>
+        <div class="kpi-prev">2025: ₪145K</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">מספר קבוצות</div>
+        <div class="kpi-value-row">
+          <span class="kpi-value">1,247</span>
+          <span class="kpi-delta down"><span class="arrow">▼</span> 2%</span>
+        </div>
+        <div class="kpi-prev">2025: 1,272</div>
+      </div>
+    </div>
+    <div class="note"><strong>יתרון:</strong> מינימום שינוי, QuickSight KPI visual מציג comparison בדיוק ככה. <strong>חיסרון:</strong> הערך הקודם (2025) קטן ואפשר לפספס.</div>
+  </div>
+</div>
+
+<!-- ── OPTION B: delta + progress bar ── -->
+<div class="section">
+  <div class="section-header">אופציה B — delta + מיני-בר (2025 → 2026)</div>
+  <div class="section-body">
+    <div class="label">ויזואלי · מציג את השינוי גרפית · צריך custom ב-HTML (לא native ב-QS KPI)</div>
+    <div class="kpis-demo">
+      <div class="kpi">
+        <div class="kpi-label">סך תקציב לאגודות</div>
+        <div class="kpi-value-row">
+          <span class="kpi-value">₪63.6M</span>
+          <span class="kpi-delta up"><span class="arrow">▲</span> 12%</span>
+        </div>
+        <div class="kpi-minibar-wrap">
+          <div class="kpi-minibar-track">
+            <div class="kpi-minibar-fill" style="width:89%;background:var(--primary);opacity:0.3;position:absolute;"></div>
+            <div class="kpi-minibar-fill" style="width:100%;background:var(--primary);"></div>
+          </div>
+        </div>
+        <div class="kpi-minibar-labels"><span>2025: ₪56.8M</span><span>2026: ₪63.6M</span></div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">אגודות מתוקצבות</div>
+        <div class="kpi-value-row">
+          <span class="kpi-value">412</span>
+          <span class="kpi-delta up"><span class="arrow">▲</span> 5%</span>
+        </div>
+        <div class="kpi-minibar-wrap">
+          <div class="kpi-minibar-track">
+            <div class="kpi-minibar-fill" style="width:95%;background:var(--primary);opacity:0.3;position:absolute;"></div>
+            <div class="kpi-minibar-fill" style="width:100%;background:var(--primary);"></div>
+          </div>
+        </div>
+        <div class="kpi-minibar-labels"><span>2025: 392</span><span>2026: 412</span></div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">תקציב ממוצע לאגודה</div>
+        <div class="kpi-value-row">
+          <span class="kpi-value">₪154K</span>
+          <span class="kpi-delta up"><span class="arrow">▲</span> 6.2%</span>
+        </div>
+        <div class="kpi-minibar-wrap">
+          <div class="kpi-minibar-track">
+            <div class="kpi-minibar-fill" style="width:94%;background:var(--primary);opacity:0.3;position:absolute;"></div>
+            <div class="kpi-minibar-fill" style="width:100%;background:var(--primary);"></div>
+          </div>
+        </div>
+        <div class="kpi-minibar-labels"><span>2025: ₪145K</span><span>2026: ₪154K</span></div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">מספר קבוצות</div>
+        <div class="kpi-value-row">
+          <span class="kpi-value">1,247</span>
+          <span class="kpi-delta down"><span class="arrow">▼</span> 2%</span>
+        </div>
+        <div class="kpi-minibar-wrap">
+          <div class="kpi-minibar-track">
+            <div class="kpi-minibar-fill" style="width:100%;background:var(--danger);opacity:0.3;position:absolute;"></div>
+            <div class="kpi-minibar-fill" style="width:98%;background:var(--danger);"></div>
+          </div>
+        </div>
+        <div class="kpi-minibar-labels"><span>2025: 1,272</span><span>2026: 1,247</span></div>
+      </div>
+    </div>
+    <div class="note"><strong>יתרון:</strong> הכי ויזואלי, רואים את הפער בין שנים. <strong>חיסרון:</strong> לא native ב-QuickSight KPI — צריך לבנות ב-HTML mockup בלבד, או להשתמש ב-gauge visual.</div>
+  </div>
+</div>
+
+<!-- ── OPTION C: just delta, no prev value ── -->
+<div class="section">
+  <div class="section-header">אופציה C — delta בלבד (בלי ערך 2025)</div>
+  <div class="section-body">
+    <div class="label">הכי נקי · רק מספר + חץ + אחוז · מתאים אם הלקוח לא צריך לדעת את הערך של 2025</div>
+    <div class="kpis-demo">
+      <div class="kpi">
+        <div class="kpi-label">סך תקציב לאגודות</div>
+        <div class="kpi-value">₪63.6M</div>
+        <div class="kpi-delta up" style="margin-top:8px;"><span class="arrow">▲</span> 12% מ-2025</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">אגודות מתוקצבות</div>
+        <div class="kpi-value">412</div>
+        <div class="kpi-delta up" style="margin-top:8px;"><span class="arrow">▲</span> 5% מ-2025</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">תקציב ממוצע לאגודה</div>
+        <div class="kpi-value">₪154K</div>
+        <div class="kpi-delta up" style="margin-top:8px;"><span class="arrow">▲</span> 6.2% מ-2025</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">מספר קבוצות</div>
+        <div class="kpi-value">1,247</div>
+        <div class="kpi-delta down" style="margin-top:8px;"><span class="arrow">▼</span> 2% מ-2025</div>
+      </div>
+    </div>
+    <div class="note"><strong>יתרון:</strong> הכי נקי, מינימום רעש. Native ב-QS KPI visual. <strong>חיסרון:</strong> אם הלקוח רוצה לדעת מה היה ב-2025, צריך ללחוץ.</div>
+  </div>
+</div>
+
+<!-- ── SUMMARY ── -->
+<div style="background:var(--surface);border:2px solid var(--success);border-radius:var(--radius-lg);padding:20px;margin-top:20px;">
+  <div style="font-size:15px;font-weight:600;margin-bottom:10px;color:var(--success);">המלצה</div>
+  <p style="font-size:13px;color:var(--ink-muted);line-height:1.6;">
+    <strong>אופציה A</strong> — delta + ערך קודם. מאזנת בין מידע לניקיון, ו-<strong>native לחלוטין ב-QuickSight KPI visual</strong> (comparison field + secondary value).
+    <br>אם הלקוח לא צריך ערך 2025 → אופציה C (עוד יותר נקי).
+    <br>אופציה B יפה אבל דורשת HTML custom — לא מתורגמת ל-QuickSight.
+  </p>
+</div>
+
+</body>
+</html>
