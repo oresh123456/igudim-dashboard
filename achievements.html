@@ -268,11 +268,12 @@
 
   <!-- KPIs -->
   <div class="kpis">
-    <div class="kpi"><div class="kpi-label editable" data-edit="k1l">סך ספורטאים/ות כללי בענפים</div><div class="kpi-value editable" data-edit="k1v">1,247</div></div>
+    <div class="kpi"><div class="kpi-label editable" data-edit="k1l">ספורטאים/ות שהשתתפו באליפויות דרג א׳ (% מתוך ספורטאים בענף)</div><div class="kpi-value editable" data-edit="k1v">3,206</div><div class="kpi-sub editable" data-edit="k1s">6%</div></div>
     <div class="kpi medal"><div class="kpi-label editable" data-edit="k2l">מספר מדליות</div><div class="kpi-value editable" data-edit="k2v">542</div></div>
-    <div class="kpi"><div class="kpi-label editable" data-edit="k3l">ספורטאים/ות שהשתתפו באליפויות דרג א׳ מתוך ספורטאים בענף</div><div class="kpi-value editable" data-edit="k3v">80</div><div class="kpi-sub editable" data-edit="k3s">24%</div></div>
-    <div class="kpi medal"><div class="kpi-label editable" data-edit="k4l">מס׳ ענפים שזכו (משתתפים) בתחרויות דרג א׳</div><div class="kpi-value editable" data-edit="k4v">10 (30)</div></div>
-    <div class="kpi"><div class="kpi-label editable" data-edit="k5l">כמות תחרויות</div><div class="kpi-value editable" data-edit="k5v">8</div></div>
+    <div class="kpi"><div class="kpi-label editable" data-edit="k3l">מס׳ ענפים שזכו (משתתפים) בתחרויות דרג א׳</div><div class="kpi-value editable" data-edit="k3v">10 (30)</div></div>
+    <div class="kpi medal"><div class="kpi-label editable" data-edit="k4l">כמות תחרויות (להפריד לפי אירועים - מועד ומדינה מערכת)</div><div class="kpi-value editable" data-edit="k4v">8</div></div>
+    <div class="kpi"><div class="kpi-label editable" data-edit="k5l">מספר מדינות משתתפות בתחרויות שנבחרו</div><div class="kpi-value editable" data-edit="k5v">2</div></div>
+    <div class="kpi"><div class="kpi-label editable" data-edit="k6l">מספר ספורטאים משתתפים בתחרויות שנבחרו</div><div class="kpi-value editable" data-edit="k6v">35</div></div>
   </div>
 
   <!-- Card 1: points by branch, split by placement -->
@@ -894,7 +895,7 @@ const LS = 'ach_prod_v1_';
 // ── איפוס עריכות-טקסט ישנות כשהכותרות/התוויות בקובץ מתעדכנות ──
 // בכל שינוי כותרות/תוויות בקובץ המקור, העלו את המספר. זה מנקה רק את
 // override-ים של הטקסט (e_) שנשמרו בדפדפן — וההערות (c_) נשמרות.
-const SCHEMA = '2026-06-09';
+const SCHEMA = '2026-06-16';
 if (localStorage.getItem(LS + 'schema') !== SCHEMA) {
   Object.keys(localStorage)
     .filter(k => k.startsWith(LS + 'e_'))
