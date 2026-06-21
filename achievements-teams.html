@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>הישגיות — ענפים קבוצתיים · משרד התרבות והספורט</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root{
+    --navy:#1F3F6D; --green:#248A3D; --red:#DA3439;
+    --sky:#2D9CDB; --purple:#6B4FA0; --orange:#E07B39; --slate:#7A8FA6; --gold:#F8C33E;
+    --bg:#F2F4F7; --surface:#FFFFFF; --border:#E5E9F0;
+    --ink:#1A1A2E; --ink-muted:#6B7280;
+    --radius:8px; --radius-lg:12px;
+    /* aliases matching the personal-achievements dashboard */
+    --line:#E5E9F0; --line-soft:#EEF1F6; --surface-soft:#F2F4F7; --ink-faint:#8A94A6;
+    --gold-soft:#E9EFF7; --gold-deep:#1F3F6D;
+  }
+  html{ font-size:15px; }
+  body{ font-family:"Amazon Ember","Heebo",system-ui,sans-serif;
+    background:var(--bg); color:var(--ink); line-height:1.55; min-height:100vh;
+    -webkit-font-smoothing:antialiased; font-feature-settings:"tnum" 1; }
+
+  /* header / brand */
+  header{ background:var(--surface); border-bottom:1px solid var(--border);
+    padding:16px 32px; display:flex; align-items:center; gap:16px; }
+  .logo{ display:flex; align-items:center; gap:11px; }
+  .logo-mark{ width:42px; height:42px; border-radius:10px;
+    background:linear-gradient(135deg,var(--navy),#2c5797); color:#fff;
+    display:flex; align-items:center; justify-content:center; font-weight:800; font-size:19px; }
+  .logo-txt b{ display:block; font-size:14px; font-weight:700; color:var(--navy); line-height:1.2; }
+  .logo-txt span{ font-size:11px; color:var(--ink-muted); }
+  header h1{ font-size:18px; font-weight:700; color:var(--navy); border-right:1px solid var(--border);
+    padding-right:16px; }
+  .badge{ margin-inline-start:auto; background:#FEF3C7; color:#92600A;
+    padding:5px 12px; border-radius:14px; font-size:11px; font-weight:600; }
+
+  main{ padding:22px 32px 70px; max-width:1480px; margin:0 auto; }
+
+  /* filter bar */
+  .filter-bar{ background:var(--surface); border:1px solid var(--border);
+    border-radius:var(--radius-lg); padding:13px 16px; margin-bottom:18px;
+    display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+  .filter-bar-label{ font-size:11px; color:var(--ink-muted); letter-spacing:.03em;
+    border-left:1px solid var(--border); padding-left:14px; align-self:stretch;
+    display:flex; align-items:center; gap:4px; }
+  .filter-bar-label strong{ color:var(--ink); }
+  .filter{ display:flex; flex-direction:column; gap:4px; }
+  .filter label{ font-size:11px; color:var(--ink-muted); font-weight:600; }
+  .filter select{ font-family:inherit; font-size:13px; padding:6px 10px;
+    border:1px solid var(--border); border-radius:var(--radius); background:var(--surface);
+    color:var(--ink); cursor:pointer; min-width:120px; outline:none; }
+  .filter select:focus{ border-color:var(--navy); }
+  .filter-reset{ margin-inline-start:auto; background:transparent; border:1px solid var(--border);
+    border-radius:var(--radius); padding:8px 16px; font-family:inherit; font-size:12px;
+    color:var(--ink-muted); cursor:pointer; transition:.15s; }
+  .filter-reset:hover{ background:var(--bg); color:var(--ink); }
+
+  /* KPIs */
+  .kpis{ display:grid; grid-template-columns:repeat(5,1fr); gap:12px; margin-bottom:18px; }
+  .kpi{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-lg);
+    padding:15px 18px; position:relative; overflow:hidden; }
+  .kpi::before{ content:""; position:absolute; top:0; right:0; width:4px; height:100%; background:var(--navy); }
+  .kpi.k-green::before{ background:var(--green); }
+  .kpi.k-sky::before{ background:var(--sky); }
+  .kpi.k-gold::before{ background:var(--gold); }
+  .kpi.k-purple::before{ background:var(--purple); }
+  .kpi-label{ font-size:12px; color:var(--ink-muted); margin-bottom:6px; }
+  .kpi-value{ font-size:25px; font-weight:700; letter-spacing:-.01em; line-height:1.1; color:var(--navy); }
+  .kpi-sub{ font-size:11px; color:var(--ink-muted); margin-top:4px; }
+  .kpi .mock-tag{ font-size:9px; background:#FEF3C7; color:#92600A; padding:1px 6px;
+    border-radius:8px; font-weight:600; margin-inline-start:6px; }
+
+  /* sections / grid */
+  .section-title{ font-size:13px; font-weight:700; letter-spacing:.03em; margin:6px 0 11px;
+    padding:6px 13px; background:#E9EEF6; color:var(--navy); border-radius:var(--radius); display:inline-block; }
+  .grid{ display:grid; grid-template-columns:repeat(12,1fr); gap:14px; margin-bottom:16px; }
+  .col-12{ grid-column:span 12; } .col-8{ grid-column:span 8; }
+  .col-6{ grid-column:span 6; } .col-4{ grid-column:span 4; }
+  .card{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-lg);
+    padding:15px 18px 18px; display:flex; flex-direction:column; }
+  .card-head{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:13px; gap:10px; }
+  .card-title{ font-size:14px; font-weight:600; }
+  .card-meta{ font-size:11px; color:var(--ink-muted); white-space:nowrap; }
+  .card-canvas-wrap{ position:relative; width:100%; }
+  .h-260{ height:260px; } .h-300{ height:300px; } .h-340{ height:340px; } .h-440{ height:440px; }
+
+  /* table */
+  table{ width:100%; border-collapse:collapse; font-size:12.5px; }
+  thead th{ text-align:right; padding:9px 10px; color:var(--ink-muted); font-weight:600;
+    border-bottom:2px solid var(--border); white-space:nowrap; font-size:11.5px; }
+  thead th.num{ text-align:left; }
+  tbody td{ padding:8px 10px; border-bottom:1px solid var(--border); }
+  tbody td.num{ text-align:left; font-variant-numeric:tabular-nums; }
+  tbody tr:hover{ background:#F8FAFC; }
+  .sport-dot{ display:inline-block; width:8px; height:8px; border-radius:50%;
+    background:var(--navy); margin-inline-start:7px; vertical-align:middle; }
+  .eff-pill{ display:inline-block; padding:2px 9px; border-radius:11px; font-weight:600; font-size:11.5px; }
+
+  .footer-note{ margin-top:20px; padding:14px 18px; background:#FBFCFE;
+    border:1px dashed var(--border); border-radius:var(--radius-lg);
+    font-size:12px; color:var(--ink-muted); line-height:1.75; }
+  .footer-note strong{ color:var(--ink); }
+  /* ---- page tabs ---- */
+  .page-tabs{ background:var(--surface); border-bottom:1px solid var(--line);
+    padding:0 32px; display:flex; gap:0; }
+  .ptab{ padding:13px 22px; text-decoration:none; color:var(--ink-muted); background:none;
+    font-family:inherit; font-size:14px; font-weight:400; border:none; border-bottom:2px solid transparent;
+    cursor:pointer; transition:color .15s; margin-bottom:-1px; }
+  .ptab:hover{ color:var(--ink); }
+  .ptab.active{ color:var(--gold-deep); font-weight:600; border-bottom-color:var(--gold); }
+  .ptab .tag{ font-size:10px; color:var(--ink-faint); background:var(--surface-soft);
+    border:1px solid var(--line); border-radius:8px; padding:1px 7px; margin-inline-start:6px; }
+
+  /* ---- editor toolbar ---- */
+  .editor-toolbar{ position:sticky; top:0; z-index:50; background:#2B2620; color:#F5F1EB;
+    padding:9px 32px; display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+    box-shadow:0 1px 6px rgba(0,0,0,.18); }
+  .editor-toolbar .tb-title{ font-size:12px; font-weight:600; letter-spacing:.03em;
+    color:var(--gold); margin-inline-end:4px; }
+  .editor-toolbar .tb-hint{ font-size:11px; color:#C9C2B6; margin-inline-start:auto; }
+  .tb-btn{ font-family:inherit; font-size:12px; font-weight:500; cursor:pointer;
+    background:#3C362D; color:#F5F1EB; border:1px solid #544D40; border-radius:var(--radius);
+    padding:6px 13px; transition:background .15s,border-color .15s; }
+  .tb-btn:hover{ background:#4A4338; }
+  .tb-btn.primary{ background:var(--gold); color:#2B2620; border-color:var(--gold); font-weight:600; }
+  .tb-btn.primary:hover{ background:#DCB73A; }
+
+  /* ---- comments ---- */
+  .comment-block{ margin-top:12px; border-top:1px dashed var(--line); padding-top:10px; }
+  .comment-label{ font-size:11px; color:var(--ink-muted); font-weight:500; display:block; margin-bottom:5px; }
+  textarea.comment{ width:100%; font-family:inherit; font-size:12.5px; color:var(--ink);
+    background:var(--surface-soft); border:1px solid var(--line); border-radius:var(--radius);
+    padding:8px 10px; resize:vertical; min-height:38px; line-height:1.5; outline:none;
+    transition:border-color .15s,background .15s; }
+  textarea.comment::placeholder{ color:var(--ink-faint); }
+  textarea.comment:focus{ border-color:var(--gold); background:#fff; }
+  textarea.comment:not(:placeholder-shown){ background:#FFFDF6; border-color:var(--gold); }
+
+  /* ---- editable (all texts editable in the working file) ---- */
+  [contenteditable="true"]{ border-radius:4px; cursor:text; transition:background .12s,box-shadow .12s; }
+  [contenteditable="true"]:hover{ background:#EEF3FA; }
+  [contenteditable="true"]:focus{ background:#fff; box-shadow:0 0 0 2px var(--navy) inset; outline:none; }
+
+  @media (max-width:1180px){
+    .kpis{ grid-template-columns:repeat(2,1fr); }
+    .col-8,.col-6,.col-4{ grid-column:span 12; }
+  }
+  @media print{
+    .editor-toolbar, .filter-bar, .filter-reset, .page-tabs{ display:none !important; }
+    body{ background:#fff; }
+    .card, .kpi{ break-inside:avoid; }
+    .comment-block{ break-inside:avoid; }
+    textarea.comment{ background:#fff; border:1px solid #bbb; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-mark">ת</div>
+    <div class="logo-txt"><b>משרד התרבות והספורט</b><span>אגף הספורט · לוגו (מציין מקום)</span></div>
+  </div>
+  <h1>הישגיות — ענפים קבוצתיים</h1>
+  <span class="meta">דשבורד QuickSight</span>
+  <span class="meta-badge">מוקאפ סטטי · תקציב/ספורטאים להמחשה</span>
+</header>
+
+<nav class="page-tabs">
+  <a class="ptab" href="achievements.html">אישי</a>
+  <span class="ptab active">קבוצתי</span>
+</nav>
+
+<div class="editor-toolbar">
+  <span class="tb-title">עריכה</span>
+  <button class="tb-btn primary" id="btnSaveHTML">💾 שמירת הקובץ לשליחה (HTML)</button>
+  <span class="tb-hint">הכותרות וההערות ניתנות לעריכה ישירות · לחצו לשמירת קובץ עם השינויים</span>
+</div>
+
+<main>
+
+  <!-- ===== Global filters ===== -->
+  <div class="filter-bar">
+    <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
+    <div class="filter"><label>שנת תמיכה</label>
+      <select id="f-year"><option value="">הכל</option><option>2025</option><option>2026</option></select></div>
+    <div class="filter"><label>ענף</label><select id="f-sport"><option value="">הכל</option></select></div>
+    <div class="filter"><label>סוג אליפות</label>
+      <select id="f-champ"><option value="">הכל</option><option value="eu">אליפות אירופה</option><option value="world">אליפות עולם</option><option value="oly">משחקים אולימפיים</option><option value="wg">משחקי עולם</option></select></div>
+    <div class="filter"><label>שכבת גיל</label>
+      <select id="f-tier"><option value="">הכל</option><option value="senior">בוגרים</option><option value="u1">עתודה</option><option value="u2">נוער</option><option value="u3">נערים/קדטים</option></select></div>
+    <div class="filter"><label>מין</label>
+      <select id="f-sex"><option value="">הכל</option><option value="m">גברים</option><option value="f">נשים</option></select></div>
+    <div class="filter"><label>גודל תחרות</label>
+      <select id="f-size"><option value="">הכל</option><option value="s">קטנה (≤16)</option><option value="m">בינונית (17–48)</option><option value="l">גדולה (49–96)</option><option value="xl">ענקית (97+)</option></select></div>
+    <button class="filter-reset" id="reset">איפוס פילטרים</button>
+  </div>
+
+  <!-- ===== KPIs ===== -->
+  <div class="kpis">
+    <div class="kpi"><div class="kpi-label">מיקום ממוצע</div><div class="kpi-value" id="k-place">—</div><div class="kpi-sub">נמוך = טוב יותר</div></div>
+    <div class="kpi k-sky"><div class="kpi-label">רשומות הישג</div><div class="kpi-value" id="k-recs">—</div><div class="kpi-sub" id="k-sports-sub">&nbsp;</div></div>
+    <div class="kpi k-green"><div class="kpi-label">הגעות לפודיום</div><div class="kpi-value" id="k-podium">—</div><div class="kpi-sub" id="k-podium-sub">מקומות 1–3</div></div>
+    <div class="kpi k-purple"><div class="kpi-label">הגעות ל-8 הראשונים</div><div class="kpi-value" id="k-top8">—</div><div class="kpi-sub" id="k-top8-sub">מקומות 1–8</div></div>
+    <div class="kpi k-gold"><div class="kpi-label">תקציב<span class="mock-tag">מוקאפ</span></div><div class="kpi-value" id="k-budget">—</div><div class="kpi-sub" id="k-ath-sub">בענפים שבתצוגה</div></div>
+  </div>
+
+  <!-- ===== RELATIONS: three aligned Bar charts (approved types only) ===== -->
+  <div class="section-title">קשר תקציב · ספורטאים · מיקום בתחרות</div>
+  <div class="grid">
+    <div class="card col-4">
+      <div class="card-head"><span class="card-title">תקציב לפי ענף<span class="mock-tag" style="margin-inline-start:8px">מוקאפ</span></span><span class="card-meta">QuickSight · Bar</span></div>
+      <div class="card-canvas-wrap h-440"><canvas id="c_budgetBar"></canvas></div>
+    </div>
+    <div class="card col-4">
+      <div class="card-head"><span class="card-title">מספר ספורטאים לפי ענף<span class="mock-tag" style="margin-inline-start:8px">מוקאפ</span></span><span class="card-meta">QuickSight · Bar</span></div>
+      <div class="card-canvas-wrap h-440"><canvas id="c_athBar"></canvas></div>
+    </div>
+    <div class="card col-4">
+      <div class="card-head"><span class="card-title">מיקום ממוצע לפי ענף</span><span class="card-meta">QuickSight · Bar · נמוך = טוב</span></div>
+      <div class="card-canvas-wrap h-440"><canvas id="c_placeBar"></canvas></div>
+    </div>
+  </div>
+  <div class="footer-note" style="margin-top:0;margin-bottom:16px">
+    שלושת הגרפים ממוינים <strong>באותו סדר ענפים</strong> (לפי תקציב, מהגבוה לנמוך) — קריאה לרוחב באותה שורה חושפת את הקשר בין תקציב, מספר ספורטאים ומיקום בתחרות, ללא צורך בתרשים בועות.
+  </div>
+
+  <!-- ===== Placement distribution ===== -->
+  <div class="section-title">התפלגות מיקומים בתחרות</div>
+  <div class="grid">
+    <div class="card col-8">
+      <div class="card-head">
+        <span class="card-title">קבוצות מיקום לפי ענף</span>
+        <span class="card-meta">פודיום (1–3) · גמר 8 (4–8) · 9–16 · 17+</span>
+      </div>
+      <div class="card-canvas-wrap h-340"><canvas id="c_bandSport"></canvas></div>
+    </div>
+    <div class="card col-4">
+      <div class="card-head"><span class="card-title">התפלגות כלל המיקומים</span></div>
+      <div class="card-canvas-wrap h-340"><canvas id="c_bandDonut"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ===== Comparability by competition size ===== -->
+  <div class="grid">
+    <div class="card col-6">
+      <div class="card-head">
+        <span class="card-title">מיקום ממוצע לפי גודל תחרות</span>
+        <span class="card-meta">השוואה הוגנת בתוך שדות בגודל דומה</span>
+      </div>
+      <div class="card-canvas-wrap h-300"><canvas id="c_placeBySize"></canvas></div>
+    </div>
+    <div class="card col-6">
+      <div class="card-head">
+        <span class="card-title">קבוצות מיקום לפי גודל תחרות</span>
+        <span class="card-meta">פודיומים מתרכזים בשדות קטנים</span>
+      </div>
+      <div class="card-canvas-wrap h-300"><canvas id="c_bandSize"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ===== Splits: championship & sex ===== -->
+  <div class="grid">
+    <div class="card col-6">
+      <div class="card-head">
+        <span class="card-title">קבוצות מיקום לפי סוג אליפות</span>
+        <span class="card-meta">אירופה · עולם · אולימפי · משחקי עולם</span>
+      </div>
+      <div class="card-canvas-wrap h-300"><canvas id="c_bandChamp"></canvas></div>
+    </div>
+    <div class="card col-6">
+      <div class="card-head">
+        <span class="card-title">קבוצות מיקום לפי מין</span>
+        <span class="card-meta">גברים · נשים</span>
+      </div>
+      <div class="card-canvas-wrap h-300"><canvas id="c_bandSex"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ===== Age tiers ===== -->
+  <div class="section-title">שכבות גיל</div>
+  <div class="grid">
+    <div class="card col-4">
+      <div class="card-head">
+        <span class="card-title">קבוצות מיקום לפי שכבת גיל</span>
+        <span class="card-meta">QuickSight · Stacked Bar</span>
+      </div>
+      <div class="card-canvas-wrap h-300"><canvas id="c_bandTier"></canvas></div>
+    </div>
+    <div class="card col-4">
+      <div class="card-head">
+        <span class="card-title">מיקום ממוצע לפי שכבת גיל</span>
+        <span class="card-meta">QuickSight · Bar · נמוך = טוב</span>
+      </div>
+      <div class="card-canvas-wrap h-300"><canvas id="c_placeTier"></canvas></div>
+    </div>
+    <div class="card col-4">
+      <div class="card-head">
+        <span class="card-title">ספורטאים לפי שכבת גיל<span class="mock-tag" style="margin-inline-start:8px">מוקאפ</span></span>
+        <span class="card-meta">QuickSight · Bar</span>
+      </div>
+      <div class="card-canvas-wrap h-300"><canvas id="c_athTier"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ===== Seasonality ===== -->
+  <div class="section-title">עונתיות — מועד האליפות</div>
+  <div class="grid">
+    <div class="card col-12">
+      <div class="card-head">
+        <span class="card-title">מספר ההישגים לפי חודש האליפות · מפולח לפי סוג אליפות</span>
+        <span class="card-meta">QuickSight · Stacked Bar · ריכוז בקיץ (יולי–אוגוסט)</span>
+      </div>
+      <div class="card-canvas-wrap h-340"><canvas id="c_season"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ===== Detail table ===== -->
+  <div class="section-title">טבלת פירוט לפי ענף</div>
+  <div class="grid">
+    <div class="card col-12">
+      <div class="card-head"><span class="card-title">ענף · ספורטאים · תקציב · מיקום · פודיום</span>
+        <span class="card-meta">מיון לפי מיקום ממוצע (הטוב ביותר ראשון)</span></div>
+      <div style="overflow-x:auto">
+        <table id="tbl">
+          <thead><tr>
+            <th>ענף</th>
+            <th class="num">רשומות הישג</th>
+            <th class="num">ספורטאים</th>
+            <th class="num">תקציב ₪M</th>
+            <th class="num">מיקום ממוצע</th>
+            <th class="num">מיקום מיטבי</th>
+            <th class="num">פודיום (1–3)</th>
+            <th class="num">8 ראשונים (1–8)</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Global meeting notes ===== -->
+  <div class="section-title">הערות כלליות לפגישה</div>
+  <div class="grid">
+    <div class="card col-12">
+      <textarea class="comment" data-key="global" data-label="כללי" placeholder="הערות כלליות, נושאים פתוחים, החלטות שהתקבלו בפגישה..." style="min-height:90px;"></textarea>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    <strong>על הנתונים:</strong> המיקום בתחרות (<em>מיקום משוקלל באליפות</em>), גודל התחרות (<em>מספר מדינות כולל מוקדמות</em>),
+    מספר הרשומות, סוג האליפות, שכבת הגיל והמין — נתוני אמת מתוך <em>תצוגת חיפוש מתקדם של אא-הישגיות לענף קבוצתי</em>
+    (258 רשומות, שנות תמיכה 2025–2026). <strong>במקום "ניקוד" — המדד המרכזי הוא המיקום בפועל</strong>, כי הניקוד מערבב
+    משקלים של סוג אליפות ושכבת גיל ואינו בר־השוואה בין נבחרות. כדי שמיקום יהיה בר־השוואה, התחרויות מחולקות לבאקטים לפי גודל
+    השדה (קטנה ≤16 · בינונית 17–48 · גדולה 49–96 · ענקית 97+) — מיקום 50 מתוך 200 שונה ממיקום 50 מתוך 60.
+    <strong>מספר הספורטאים והתקציב הם נתוני מוקאפ להמחשה בלבד</strong> ויוחלפו בנתוני אמת בהפקה.
+    <strong>סוג האליפות</strong> מוצג ב-4 קטגוריות: אליפות אירופה · אליפות עולם · משחקים אולימפיים · משחקי עולם. בנתוני הגלם שתי האחרונות מאוחדות תחת תווית אחת,
+    ובמוקאפ פוצלו להמחשה לפי השתייכות הענף לתוכנית האולימפית — בהפקה הפיצול ייעשה בעיבוד הנתונים.
+    <strong>כל הוויזואלים במסך הם מסוגים מאושרים בלבד</strong> מתוך מסמך העיצוב: KPI · Bar · Stacked Bar · Donut · Table — ללא תרשים בועות/Scatter.
+  </div>
+
+</main>
+
+<script>
+/* ===== Data ===== */
+const RECS = [["2025","כדוריד","eu","גברים","m",40,29,10,1],["2025","כדוריד","world","גברים","m",80,55,40,2],["2025","כדוריד","oly","גברים","m",80,55,80,8],["2025","כדורמים","eu","גברים","m",30,16,20,1],["2025","כדורמים","world","גברים","m",60,28,80,2],["2025","כדורמים","oly","גברים","m",60,28,160,11],["2025","כדורסל","eu","גברים","m",50,17,20,9],["2025","כדורסל","oly","גברים","m",160,41,240,8],["2025","כדורסל","world","גברים","m",160,45,120,9],["2025","כדורעף","world","גברים","m",144,65,80,8],["2025","כדורעף","oly","גברים","m",144,43,240,7],["2025","כדורעף","eu","גברים","m",37,18,20,8],["2025","כדורגל","world","גברים","m",211,67,120,12],["2025","כדורגל","eu","גברים","m",55,30,20,7],["2025","כדורגל","oly","גברים","m",211,15,240,8],["2025","ספורט נכים אישי","eu","גברים","m",11,4,0,12],["2025","בייסבול","eu","גברים","m",26,6,40,10],["2025","לקרוס","oly","גברים","m",8,8,0,7],["2025","לקרוס","world","גברים","m",30,7,0,6],["2025","משיכת חבל","world","גברים","m",12,12,40,9],["2025","סופטבול","world","גברים","m",33,22,80,6],["2025","סופטבול","eu","גברים","m",12,5,40,7],["2025","פלאג","oly","גברים","m",21,9,160,12],["2025","פלאג","world","גברים","m",32,9,120,8],["2025","פלאג","eu","גברים","m",19,3,60,8],["2025","תאקל","eu","גברים","m",17,13,10,8],["2025","קריקט","world","גברים","m",108,73,40,6],["2025","פריסבי","eu","גברים","m",15,9,20,7],["2025","רוגבי שביעיות","oly","גברים","m",120,96,80,6],["2025","רוגבי שביעיות","world","גברים","m",120,72,80,6],["2025","רוגבי שביעיות","eu","גברים","m",40,24,20,6],["2025","ספורט נכים קבוצתי","eu","גברים","m",11,4,40,12],["2025","הוקי קרח","world","גברים","m",58,32,0,4],["2026","פריסבי","eu","גברים","m",9,9,10,7],["2026","סופטבול","world","גברים","m",36,16,80,7],["2026","סופטבול","eu","גברים","m",12,5,40,7],["2026","סופטבול","oly","גברים","m",41,16,160,8],["2026","הוקי קרח","world","גברים","m",20,27,40,9],["2026","בייסבול","eu","גברים","m",8,8,40,8],["2026","בייסבול","world","גברים","m",20,13,80,3],["2026","משיכת חבל","world","גברים","m",16,15,0,9],["2026","כדורגל","world","גברים","m",207,52,120,12],["2026","כדורגל","oly","גברים","m",180,15,240,8],["2026","כדורגל","eu","גברים","m",55,30,20,7],["2026","כדוריד","oly","גברים","m",117,33,240,8],["2026","כדוריד","world","גברים","m",83,46,80,2],["2026","כדוריד","eu","גברים","m",40,27,10,1],["2026","כדורמים","oly","גברים","m",44,21,160,8],["2026","כדורמים","world","גברים","m",44,32,40,7],["2026","כדורמים","eu","גברים","m",25,16,20,1],["2026","כדורסל","oly","גברים","m",114,41,160,8],["2026","כדורסל","world","גברים","m",114,45,80,9],["2026","כדורסל","eu","גברים","m",41,17,20,9],["2026","רוגבי","oly","גברים","m",95,76,80,7],["2026","רוגבי","world","גברים","m",95,72,40,9],["2026","רוגבי","eu","גברים","m",33,24,10,3],["2026","קריקט","world","גברים","m",28,24,40,6],["2026","פוטסל","world","גברים","m",118,85,40,10],["2026","פוטסל","eu","גברים","m",50,26,20,2],["2026","ספורט נכים קבוצתי","eu","גברים","m",8,4,40,12],["2026","לקרוס","eu","גברים","m",24,1,0,7],["2026","לקרוס","world","גברים","m",28,5,0,9],["2026","לקרוס","world","גברים","m",30,7,0,7],["2026","פוטבול","eu","גברים","m",19,3,60,8],["2026","פוטבול","world","גברים","m",32,9,120,8],["2026","פוטבול","oly","גברים","m",32,9,240,12],["2026","פוטבול","eu","גברים","m",17,13,10,8],["2026","רוגבי","world","גברים","m",100,46,80,10],["2026","רוגבי","eu","גברים","m",37,21,20,5],["2026","כדורעף","oly","גברים","m",86,36,160,8],["2026","כדורעף","world","גברים","m",86,60,40,9],["2026","כדורעף","eu","גברים","m",33,17,20,9],["2025","כדורמים","eu","גיל אחד מתחת לבוגרות","f",25,7,20,8],["2025","כדורמים","world","גיל אחד מתחת לבוגרות","f",60,7,80,9],["2025","כדורסל","eu","גיל אחד מתחת לבוגרות","f",46,9,15,7],["2025","כדורסל","world","גיל אחד מתחת לבוגרות","f",104,35,40,7],["2025","כדורעף","world","גיל אחד מתחת לבוגרות","f",126,22,60,8],["2025","כדורעף","eu","גיל אחד מתחת לבוגרות","f",16,7,20,7],["2025","כדורגל","world","גיל אחד מתחת לבוגרות","f",211,73,40,9],["2025","כדורגל","eu","גיל אחד מתחת לבוגרות","f",55,38,5,7],["2025","לקרוס","world","גיל אחד מתחת לבוגרות","f",20,13,0,8],["2025","לקרוס","eu","גיל אחד מתחת לבוגרות","f",11,10,0,7],["2025","סופטבול","eu","גיל אחד מתחת לבוגרות","f",16,6,20,8],["2026","כדורגל","world","גיל אחד מתחת לבוגרות","f",170,139,20,9],["2026","כדורגל","eu","גיל אחד מתחת לבוגרות","f",53,44,5,11],["2026","כדוריד","world","גיל אחד מתחת לבוגרות","f",73,44,40,6],["2026","כדוריד","eu","גיל אחד מתחת לבוגרות","f",34,31,5,7],["2026","כדורמים","world","גיל אחד מתחת לבוגרות","f",34,12,40,8],["2026","כדורמים","eu","גיל אחד מתחת לבוגרות","f",17,7,20,8],["2026","כדורסל","world","גיל אחד מתחת לבוגרות","f",95,10,60,7],["2026","כדורסל","eu","גיל אחד מתחת לבוגרות","f",41,6,20,8],["2026","פוטבול","eu","גיל אחד מתחת לבוגרות","f",6,5,20,8],["2026","כדורעף","world","גיל אחד מתחת לבוגרות","f",67,50,20,8],["2026","כדורעף","eu","גיל אחד מתחת לבוגרות","f",15,7,20,7],["2025","כדוריד","eu","גיל אחד מתחת לבוגרים - נבחרת עתודה","m",33,21,10,7],["2025","כדוריד","world","גיל אחד מתחת לבוגרים - נבחרת עתודה","m",111,33,60,6],["2025","כדוריד","eu","גיל אחד מתחת לבוגרים - נבחרת עתודה","f",33,22,10,7],["2025","כדוריד","world","גיל אחד מתחת לבוגרים - נבחרת עתודה","f",73,44,40,6],["2025","כדורסל","eu","גיל אחד מתחת לבוגרים - נבחרת עתודה","m",48,10,15,7],["2025","כדורסל","world","גיל אחד מתחת לבוגרים - נבחרת עתודה","m",108,21,60,7],["2025","כדורעף","world","גיל אחד מתחת לבוגרים - נבחרת עתודה","m",135,29,60,7],["2025","כדורעף","eu","גיל אחד מתחת לבוגרים - נבחרת עתודה","m",20,9,10,7],["2025","כדורגל","eu","גיל אחד מתחת לבוגרים - נבחרת עתודה","m",55,3,30,7],["2025","כדורגל","world","גיל אחד מתחת לבוגרים - נבחרת עתודה","m",211,3,120,6],["2025","בייסבול","eu","גיל אחד מתחת לבוגרים - נבחרת עתודה","m",22,12,10,8],["2025","לקרוס","world","גיל אחד מתחת לבוגרים - נבחרת עתודה","m",23,10,0,8],["2025","לקרוס","eu","גיל אחד מתחת לבוגרים - נבחרת עתודה","m",13,7,0,7],["2025","סופטבול","world","גיל אחד מתחת לבוגרים - נבחרת עתודה","m",19,10,40,4],["2025","פלאג","eu","גיל אחד מתחת לבוגרים - נבחרת עתודה","m",11,1,50,8],["2026","סופטבול","eu","גיל אחד מתחת לבוגרים - נבחרת עתודה","f",16,6,20,8],["2026","סופטבול","world","גיל אחד מתחת לבוגרים - נבחרת עתודה","m",19,10,40,4],["2026","סופטבול","eu","גיל אחד מתחת לבוגרים - נבחרת עתודה","m",4,3,30,7],["2026","בייסבול","eu","גיל אחד מתחת לבוגרים - נבחרת עתודה","m",10,1,50,9],["2026","כדורגל","eu","גיל אחד מתחת לבוגרים - נבחרת עתודה","m",53,45,5,11],["2026","כדוריד","world","גיל אחד מתחת לבוגרים - נבחרת עתודה","m",80,37,40,6],["2026","כדוריד","eu","גיל אחד מתחת לבוגרים - נבחרת עתודה","m",39,21,10,7],["2026","כדורסל","world","גיל אחד מתחת לבוגרים - נבחרת עתודה","m",101,7,80,7],["2026","כדורסל","eu","גיל אחד מתחת לבוגרים - נבחרת עתודה","m",37,6,20,7],["2026","לקרוס","eu","גיל אחד מתחת לבוגרים - נבחרת עתודה","m",13,7,0,7],["2026","לקרוס","world","גיל אחד מתחת לבוגרים - נבחרת עתודה","m",19,13,0,8],["2026","פוטבול","eu","גיל אחד מתחת לבוגרים - נבחרת עתודה","m",10,1,50,9],["2026","כדורעף","world","גיל אחד מתחת לבוגרים - נבחרת עתודה","m",74,25,40,8],["2026","כדורעף","eu","גיל אחד מתחת לבוגרים - נבחרת עתודה","m",21,9,10,7],["2025","כדוריד","eu","נשים","f",36,29,10,12],["2025","כדוריד","world","נשים","f",73,54,40,11],["2025","כדוריד","oly","נשים","f",70,54,80,8],["2025","כדורמים","eu","נשים","f",25,9,20,1],["2025","כדורמים","world","נשים","f",60,17,120,2],["2025","כדורמים","oly","נשים","f",60,21,160,8],["2025","כדורסל","eu","נשים","f",46,16,20,6],["2025","כדורסל","oly","נשים","f",118,38,240,8],["2025","כדורסל","world","נשים","f",118,57,80,10],["2025","כדורעף","world","נשים","f",144,60,80,10],["2025","כדורעף","oly","נשים","f",144,50,160,7],["2025","כדורעף","eu","נשים","f",35,25,10,8],["2025","כדורגל","world","נשים","f",211,143,40,8],["2025","כדורגל","eu","נשים","f",55,37,20,7],["2025","כדורגל","oly","נשים","f",211,140,160,8],["2025","ספורט נכים קבוצתי","eu","נשים","f",9,2,80,12],["2025","ספורט נכים קבוצתי","oly","נשים","f",8,2,640,9],["2025","לקרוס","oly","נשים","f",8,5,0,7],["2025","לקרוס","world","נשים","f",29,6,0,6],["2025","לקרוס","eu","נשים","f",19,2,0,7],["2025","סופטבול","eu","נשים","f",20,8,40,8],["2025","סופטבול","world","נשים","f",49,20,80,7],["2025","סופטבול","oly","נשים","f",65,17,240,7],["2025","פלאג","oly","נשים","f",19,12,160,12],["2025","פלאג","world","נשים","f",23,10,80,8],["2025","רוגבי שביעיות","oly","נשים","f",77,96,80,6],["2025","רוגבי שביעיות","world","נשים","f",77,77,40,6],["2025","רוגבי שביעיות","eu","נשים","f",33,24,10,6],["2025","הוקי קרח","world","נשים","f",45,44,40,3],["2026","סופטבול","eu","נשים","f",22,9,20,9],["2026","סופטבול","oly","נשים","f",65,14,240,8],["2026","סופטבול","world","נשים","f",53,22,80,7],["2026","כדורגל","world","נשים","f",173,98,80,8],["2026","כדורגל","eu","נשים","f",51,31,20,7],["2026","כדורגל","oly","נשים","f",160,143,80,8],["2026","כדוריד","oly","נשים","f",98,45,160,8],["2026","כדוריד","world","נשים","f",71,51,40,12],["2026","כדוריד","eu","נשים","f",35,29,10,12],["2026","כדורמים","oly","נשים","f",45,15,240,8],["2026","כדורמים","world","נשים","f",42,18,80,7],["2026","כדורמים","eu","נשים","f",22,9,20,1],["2026","כדורסל","oly","נשים","f",89,50,160,8],["2026","כדורסל","world","נשים","f",89,63,40,10],["2026","כדורסל","eu","נשים","f",36,21,20,6],["2026","רוגבי","oly","נשים","f",71,58,80,7],["2026","רוגבי","world","נשים","f",71,58,40,9],["2026","רוגבי","eu","נשים","f",31,22,10,7],["2026","ספורט נכים קבוצתי","oly","נשים","f",8,2,640,9],["2026","לקרוס","eu","נשים","f",12,3,0,3],["2026","לקרוס","world","נשים","f",29,6,0,7],["2026","פוטבול","world","נשים","f",23,14,80,8],["2026","פוטבול","oly","נשים","f",19,12,160,8],["2026","כדורעף","oly","נשים","f",72,51,80,8],["2026","כדורעף","world","נשים","f",72,45,80,10],["2026","כדורעף","eu","נשים","f",36,25,10,9],["2025","כדורמים","world","שלושה גילים מתחת לבוגרות - נבחרת נערות/קדטיות","f",60,10,15,7],["2025","כדורמים","eu","שלושה גילים מתחת לבוגרות - נבחרת נערות/קדטיות","f",25,9,2.5,6],["2025","כדורסל","eu","שלושה גילים מתחת לבוגרות - נבחרת נערות/קדטיות","f",46,12,3.75,8],["2025","כדורעף","world","שלושה גילים מתחת לבוגרות - נבחרת נערות/קדטיות","f",53,36,6,8],["2025","כדורעף","eu","שלושה גילים מתחת לבוגרות - נבחרת נערות/קדטיות","f",35,35,1.5,8],["2026","כדורמים","world","שלושה גילים מתחת לבוגרות - נבחרת נערות/קדטיות","f",13,10,6,8],["2026","כדורמים","eu","שלושה גילים מתחת לבוגרות - נבחרת נערות/קדטיות","f",15,9,2.5,8],["2026","כדורסל","eu","שלושה גילים מתחת לבוגרות - נבחרת נערות/קדטיות","f",43,11,3.75,8],["2026","כדורעף","world","שלושה גילים מתחת לבוגרות - נבחרת נערות/קדטיות","f",65,57,6,8],["2026","כדורעף","eu","שלושה גילים מתחת לבוגרות - נבחרת נערות/קדטיות","f",35,31,1.5,7],["2025","כדורמים","world","שלושה גילים מתחת לבוגרים - נבחרת נערים/קדטים","m",60,18,15,7],["2025","כדורמים","eu","שלושה גילים מתחת לבוגרים - נבחרת נערים/קדטים","m",30,13,2.5,7],["2025","כדורסל","eu","שלושה גילים מתחת לבוגרים - נבחרת נערים/קדטים","m",48,6,5,8],["2025","כדורעף","world","שלושה גילים מתחת לבוגרים - נבחרת נערים/קדטים","m",55,36,10,8],["2025","כדורעף","eu","שלושה גילים מתחת לבוגרים - נבחרת נערים/קדטים","m",33,17,2.5,8],["2025","כדורגל","world","שלושה גילים מתחת לבוגרים - נבחרת נערים/קדטים","m",211,41,15,12],["2025","כדורגל","eu","שלושה גילים מתחת לבוגרים - נבחרת נערים/קדטים","m",55,26,2.5,6],["2025","בייסבול","eu","שלושה גילים מתחת לבוגרים - נבחרת נערים/קדטים","m",16,4,5,7],["2026","סופטבול","eu","שלושה גילים מתחת לבוגרים - נבחרת נערים/קדטים","m",4,3,7.5,7],["2026","סופטבול","eu","שלושה גילים מתחת לבוגרים - נבחרת נערים/קדטים","f",13,12,1.5,7],["2026","כדורגל","world","שלושה גילים מתחת לבוגרים - נבחרת נערים/קדטים","m",206,113,10,12],["2026","כדורגל","eu","שלושה גילים מתחת לבוגרים - נבחרת נערים/קדטים","m",54,15,3.75,6],["2026","כדורמים","world","שלושה גילים מתחת לבוגרים - נבחרת נערים/קדטים","m",32,18,10,6],["2026","כדורמים","eu","שלושה גילים מתחת לבוגרים - נבחרת נערים/קדטים","m",25,14,2.5,7],["2026","כדורסל","eu","שלושה גילים מתחת לבוגרים - נבחרת נערים/קדטים","m",47,13,3.75,8],["2026","כדורעף","world","שלושה גילים מתחת לבוגרים - נבחרת נערים/קדטים","m",55,48,6,8],["2026","כדורעף","eu","שלושה גילים מתחת לבוגרים - נבחרת נערים/קדטים","m",33,17,2.5,7],["2025","כדוריד","eu","שני גילים מתחת לבוגרות","f",36,22,5,8],["2025","כדוריד","world","שני גילים מתחת לבוגרות","f",73,42,20,8],["2025","כדורמים","world","שני גילים מתחת לבוגרות","f",60,10,30,9],["2025","כדורמים","eu","שני גילים מתחת לבוגרות","f",25,6,10,8],["2025","כדורסל","eu","שני גילים מתחת לבוגרות","f",46,4,10,8],["2025","כדורסל","world","שני גילים מתחת לבוגרות","f",104,38,20,7],["2025","כדורעף","world","שני גילים מתחת לבוגרות","f",121,87,10,8],["2025","כדורעף","eu","שני גילים מתחת לבוגרות","f",36,33,2.5,8],["2025","כדורגל","world","שני גילים מתחת לבוגרות","f",211,86,20,11],["2025","כדורגל","eu","שני גילים מתחת לבוגרות","f",55,37,5,5],["2025","סופטבול","eu","שני גילים מתחת לבוגרות","f",20,8,10,8],["2025","סופטבול","world","שני גילים מתחת לבוגרות","f",50,47,10,7],["2025","פלאג","eu","שני גילים מתחת לבוגרות","f",10,6,10,8],["2026","סופטבול","eu","שני גילים מתחת לבוגרות","f",17,11,5,7],["2026","סופטבול","world","שני גילים מתחת לבוגרות","f",50,47,10,12],["2026","כדורגל","world","שני גילים מתחת לבוגרות","f",155,137,10,11],["2026","כדורגל","eu","שני גילים מתחת לבוגרות","f",51,22,5,4],["2026","כדוריד","world","שני גילים מתחת לבוגרות","f",69,62,10,8],["2026","כדוריד","eu","שני גילים מתחת לבוגרות","f",32,29,2.5,8],["2026","כדורמים","world","שני גילים מתחת לבוגרות","f",29,11,20,9],["2026","כדורמים","eu","שני גילים מתחת לבוגרות","f",19,8,10,8],["2026","כדורסל","world","שני גילים מתחת לבוגרות","f",89,38,20,7],["2026","כדורסל","eu","שני גילים מתחת לבוגרות","f",44,16,5,7],["2026","לקרוס","world","שני גילים מתחת לבוגרות","f",20,13,0,8],["2026","פוטבול","eu","שני גילים מתחת לבוגרות","f",10,6,10,8],["2026","כדורעף","world","שני גילים מתחת לבוגרות","f",65,61,10,7],["2026","כדורעף","eu","שני גילים מתחת לבוגרות","f",35,18,5,8],["2025","כדוריד","eu","שני גילים מתחת לבוגרים - נבחרת נוער","m",39,17,5,8],["2025","כדוריד","world","שני גילים מתחת לבוגרים - נבחרת נוער","m",112,35,30,8],["2025","כדורסל","eu","שני גילים מתחת לבוגרים - נבחרת נוער","m",48,4,10,8],["2025","כדורסל","world","שני גילים מתחת לבוגרים - נבחרת נוער","m",108,35,30,7],["2025","כדורעף","world","שני גילים מתחת לבוגרים - נבחרת נוער","m",133,57,20,8],["2025","כדורעף","eu","שני גילים מתחת לבוגרים - נבחרת נוער","m",39,7,10,8],["2025","כדורגל","eu","שני גילים מתחת לבוגרים - נבחרת נוער","m",55,24,5,7],["2025","בייסבול","eu","שני גילים מתחת לבוגרים - נבחרת נוער","m",19,9,5,7],["2025","סופטבול","world","שני גילים מתחת לבוגרים - נבחרת נוער","m",21,12,20,11],["2025","פריסבי","eu","שני גילים מתחת לבוגרים - נבחרת נוער","m",12,12,2.5,8],["2025","רוגבי שביעיות","eu","שני גילים מתחת לבוגרים - נבחרת נוער","m",30,15,5,7],["2025","רוגבי שביעיות","world","שני גילים מתחת לבוגרים - נבחרת נוער","m",120,36,30,7],["2026","פריסבי","eu","שני גילים מתחת לבוגרים - נבחרת נוער","m",8,5,10,8],["2026","סופטבול","eu","שני גילים מתחת לבוגרים - נבחרת נוער","m",5,2,20,7],["2026","סופטבול","world","שני גילים מתחת לבוגרים - נבחרת נוער","m",21,12,20,11],["2026","בייסבול","eu","שני גילים מתחת לבוגרים - נבחרת נוער","m",12,9,2.5,7],["2026","כדורגל","world","שני גילים מתחת לבוגרים - נבחרת נוער","m",202,3,60,6],["2026","כדורגל","eu","שני גילים מתחת לבוגרים - נבחרת נוער","m",54,23,5,3],["2026","כדוריד","world","שני גילים מתחת לבוגרים - נבחרת נוער","m",87,32,20,8],["2026","כדוריד","eu","שני גילים מתחת לבוגרים - נבחרת נוער","m",39,17,5,8],["2026","כדורמים","eu","שני גילים מתחת לבוגרים - נבחרת נוער","m",29,17,5,8],["2026","כדורסל","world","שני גילים מתחת לבוגרים - נבחרת נוער","m",109,34,30,7],["2026","כדורסל","eu","שני גילים מתחת לבוגרים - נבחרת נוער","m",48,10,7.5,8],["2026","רוגבי","eu","שני גילים מתחת לבוגרים - נבחרת נוער","m",25,15,5,7],["2026","כדורעף","world","שני גילים מתחת לבוגרים - נבחרת נוער","m",68,51,10,8],["2026","כדורעף","eu","שני גילים מתחת לבוגרים - נבחרת נוער","m",39,7,10,9]];
+
+/* index map */
+const Y=0,SPORT=1,CHAMP=2,AGE=3,SEX=4,CTR=5,PLACE=6,SCORE=7,MONTH=8;
+
+/* per-sport mock budget(₪M) + athletes */
+const META = {
+ "כדורסל":{b:17.36,a:384}, "כדורגל":{b:19.44,a:600}, "ספורט נכים קבוצתי":{b:5.60,a:50},
+ "כדורמים":{b:7.42,a:377}, "סופטבול":{b:6.17,a:375}, "כדורעף":{b:8.83,a:432},
+ "כדוריד":{b:6.49,a:392}, "פוטבול":{b:5.81,a:405}, "פלאג":{b:3.44,a:63},
+ "רוגבי":{b:3.30,a:207}, "רוגבי שביעיות":{b:2.34,a:96}, "בייסבול":{b:1.52,a:144},
+ "קריקט":{b:0.97,a:28}, "הוקי קרח":{b:1.34,a:60}, "פוטסל":{b:0.93,a:20},
+ "פריסבי":{b:0.78,a:36}, "משיכת חבל":{b:0.75,a:16}, "תאקל":{b:0.66,a:45},
+ "ספורט נכים אישי":{b:0.60,a:6}, "לקרוס":{b:0.60,a:306}
+};
+
+/* palette */
+const C={navy:"#1F3F6D",green:"#248A3D",red:"#DA3439",sky:"#2D9CDB",purple:"#6B4FA0",
+  orange:"#E07B39",slate:"#7A8FA6",gold:"#F8C33E",ink:"#1A1A2E",muted:"#6B7280",border:"#E5E9F0"};
+const CHAMP_COL={eu:C.slate, world:C.navy, oly:C.gold, wg:C.orange};
+const CHAMP_LBL={eu:"אליפות אירופה", world:"אליפות עולם", oly:"משחקים אולימפיים", wg:"משחקי עולם"};
+/* בנתוני הגלם, "משחקים אולימפיים" ו"משחקי עולם" חולקים תווית אחת ("משחקים אולימפיים/ עולם").
+   בהפקה הם מופרדים בעיבוד הנתונים. במוקאפ זה — פיצול להמחשה לפי השתייכות הענף לתוכנית
+   האולימפית (ניתן להחלפה בלוגיקת ההפקה האמיתית). */
+const OLY_SPORTS=new Set(["כדורסל","כדורגל","כדוריד","כדורעף","כדורמים","רוגבי שביעיות","הוקי קרח","בייסבול","סופטבול","ספורט נכים קבוצתי"]);
+function champOf(r){ return r[CHAMP]==="oly" ? (OLY_SPORTS.has(r[SPORT])?"oly":"wg") : r[CHAMP]; }
+
+const fmt=v=>Math.round(v).toLocaleString("he-IL");
+const fmt1=v=>(Math.round(v*10)/10).toLocaleString("he-IL");
+
+function tier(age){
+  if(age==="גברים"||age==="נשים") return "senior";
+  if(age.indexOf("גיל אחד")===0) return "u1";
+  if(age.indexOf("שני גילים")===0) return "u2";
+  if(age.indexOf("שלושה גילים")===0) return "u3";
+  return "other";
+}
+/* competition-size bucket by field size (countries incl. qualifiers) */
+function sizeBucket(c){ if(c<=16) return "s"; if(c<=48) return "m"; if(c<=96) return "l"; return "xl"; }
+const SIZE_ORDER=["s","m","l","xl"];
+const SIZE_LBL={s:"קטנה ≤16", m:"בינונית 17–48", l:"גדולה 49–96", xl:"ענקית 97+"};
+/* absolute placement bands */
+function band(p){ if(p<=3) return "pod"; if(p<=8) return "t8"; if(p<=16) return "t16"; return "rest"; }
+const BAND_ORDER=["pod","t8","t16","rest"];
+const BAND_LBL={pod:"פודיום (1–3)", t8:"גמר 8 (4–8)", t16:"9–16", rest:"17+"};
+const BAND_COL={pod:C.green, t8:C.navy, t16:C.sky, rest:C.slate};
+/* age tiers */
+const TIER_ORDER=["senior","u1","u2","u3"];
+const TIER_LBL={senior:"בוגרים", u1:"עתודה", u2:"נוער", u3:"נערים/קדטים"};
+
+/* ===== Chart.js defaults ===== */
+Chart.register(ChartDataLabels);
+Chart.defaults.font.family = "'Amazon Ember','Heebo',sans-serif";
+Chart.defaults.font.size = 12;
+Chart.defaults.color = C.ink;
+Chart.defaults.borderColor = C.border;
+Chart.defaults.plugins.datalabels.display = false; // opt-in per chart
+const HALO = { color:"#1A1A2E", textStrokeColor:"#FFFFFF", textStrokeWidth:3, font:{weight:600} };
+
+const charts = {};
+function mk(id,cfg){ if(charts[id]) charts[id].destroy(); charts[id]=new Chart(document.getElementById(id),cfg); }
+
+/* populate sport filter */
+(function(){
+  const sel=document.getElementById("f-sport");
+  Object.keys(META).forEach(s=>{ const o=document.createElement("option"); o.value=s; o.textContent=s; sel.appendChild(o); });
+})();
+
+/* ===== Aggregation per current filters ===== */
+function getFilters(){
+  return { year:val("f-year"), sport:val("f-sport"), champ:val("f-champ"),
+           tier:val("f-tier"), sex:val("f-sex"), size:val("f-size") };
+}
+function val(id){ return document.getElementById(id).value; }
+
+function filtered(){
+  const f=getFilters();
+  return RECS.filter(r=>
+    (!f.year  || r[Y]===f.year) &&
+    (!f.sport || r[SPORT]===f.sport) &&
+    (!f.champ || champOf(r)===f.champ) &&
+    (!f.tier  || tier(r[AGE])===f.tier) &&
+    (!f.sex   || r[SEX]===f.sex) &&
+    (!f.size  || sizeBucket(r[CTR])===f.size)
+  );
+}
+
+function render(){
+  const rows = filtered();
+
+  /* per-sport aggregation (placement-based) */
+  const agg={};
+  rows.forEach(r=>{
+    const s=r[SPORT];
+    if(!agg[s]) agg[s]={n:0, placeSum:0, best:Infinity, pod:0, t8:0,
+                        bands:{pod:0,t8:0,t16:0,rest:0}};
+    const a=agg[s]; const p=r[PLACE];
+    a.n++; a.placeSum+=p; a.best=Math.min(a.best,p);
+    if(p<=3) a.pod++; if(p<=8) a.t8++;
+    a.bands[band(p)]++;
+  });
+  const sports=Object.keys(agg);
+  const avgP=s=>agg[s].placeSum/agg[s].n;
+  /* default order: best average placement first */
+  sports.sort((x,y)=>avgP(x)-avgP(y));
+
+  /* ---- KPIs ---- */
+  const totRecs=rows.length;
+  const totPlaceAvg = totRecs ? rows.reduce((s,r)=>s+r[PLACE],0)/totRecs : 0;
+  const totPod = rows.filter(r=>r[PLACE]<=3).length;
+  const totT8  = rows.filter(r=>r[PLACE]<=8).length;
+  const totBudget=sports.reduce((s,x)=>s+META[x].b,0);
+  const totAth=sports.reduce((s,x)=>s+META[x].a,0);
+  const pct=v=>totRecs?Math.round(v/totRecs*100):0;
+
+  document.getElementById("k-place").textContent = totRecs ? fmt1(totPlaceAvg) : "—";
+  document.getElementById("k-recs").textContent=fmt(totRecs);
+  document.getElementById("k-sports-sub").textContent=sports.length+" ענפים בתצוגה";
+  document.getElementById("k-podium").textContent=fmt(totPod);
+  document.getElementById("k-podium-sub").textContent="מקומות 1–3 · "+pct(totPod)+"% מהרשומות";
+  document.getElementById("k-top8").textContent=fmt(totT8);
+  document.getElementById("k-top8-sub").textContent="מקומות 1–8 · "+pct(totT8)+"% מהרשומות";
+  document.getElementById("k-budget").textContent="₪"+fmt1(totBudget)+"M";
+  document.getElementById("k-ath-sub").textContent=fmt(totAth)+" ספורטאים · "+sports.length+" ענפים";
+
+  /* ---- RELATIONS: three Bar charts sharing one sport order (by budget desc) ----
+     QuickSight-approved only (Bar). Reading the same row across the three charts
+     reveals the budget / athletes / placement relationship.                     */
+  const byBudget = sports.slice().sort((x,y)=>META[y].b-META[x].b);
+  const hBar = (axisTitle)=>({ responsive:true, maintainAspectRatio:false, indexAxis:"y",
+    layout:{padding:{left:6,right:30}},
+    plugins:{ legend:{display:false} },
+    scales:{ x:{beginAtZero:true,grid:{color:"#EEF1F6"},ticks:{color:C.muted,font:{size:10}}},
+             y:{position:"right",grid:{display:false},ticks:{font:{size:9.5},color:C.ink,autoSkip:false}} } });
+
+  /* budget by sport (Bar) */
+  let o=hBar();
+  o.plugins.datalabels={ display:true, anchor:"end", align:"end", offset:2,
+    formatter:v=>"₪"+fmt1(v)+"M", color:"#B58A0A", textStrokeColor:"#FFFFFF", textStrokeWidth:3, font:{size:9,weight:600} };
+  o.plugins.tooltip={rtl:true, callbacks:{label:c=>"תקציב: ₪"+fmt1(c.parsed.x)+"M"}};
+  mk("c_budgetBar",{ type:"bar",
+    data:{ labels:byBudget, datasets:[{ data:byBudget.map(s=>META[s].b), backgroundColor:C.gold, borderRadius:3, barThickness:13 }] },
+    options:o });
+
+  /* athletes by sport (Bar) — same order */
+  o=hBar();
+  o.plugins.datalabels={ display:true, anchor:"end", align:"end", offset:2,
+    formatter:fmt, color:C.purple, textStrokeColor:"#FFFFFF", textStrokeWidth:3, font:{size:9,weight:600} };
+  o.plugins.tooltip={rtl:true, callbacks:{label:c=>fmt(c.parsed.x)+" ספורטאים"}};
+  mk("c_athBar",{ type:"bar",
+    data:{ labels:byBudget, datasets:[{ data:byBudget.map(s=>META[s].a), backgroundColor:C.purple, borderRadius:3, barThickness:13 }] },
+    options:o });
+
+  /* avg placement by sport (Bar) — same order, colored by value */
+  const placeColor=v=> v<=12?C.green : v<=35?C.gold : C.slate;
+  o=hBar();
+  o.plugins.datalabels={ display:true, anchor:"end", align:"end", offset:2,
+    formatter:v=>fmt1(v), color:C.ink, textStrokeColor:"#FFFFFF", textStrokeWidth:3, font:{size:9,weight:600} };
+  o.plugins.tooltip={rtl:true, callbacks:{label:c=>"מיקום ממוצע: "+fmt1(c.parsed.x)+" (נמוך=טוב)"}};
+  mk("c_placeBar",{ type:"bar",
+    data:{ labels:byBudget, datasets:[{ data:byBudget.map(s=>avgP(s)),
+      backgroundColor:byBudget.map(s=>placeColor(avgP(s))), borderRadius:3, barThickness:13 }] },
+    options:o });
+
+  /* ---- placement bands by sport (stacked counts) ---- */
+  mk("c_bandSport",{ type:"bar",
+    data:{ labels:sports, datasets:BAND_ORDER.map(k=>({
+      label:BAND_LBL[k], data:sports.map(s=>agg[s].bands[k]), backgroundColor:BAND_COL[k], stack:"a" })) },
+    options:{ responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:true,position:"top",align:"start",rtl:true,labels:{boxWidth:12,boxHeight:12,padding:8,font:{size:11}}},
+        datalabels:{display:false},
+        tooltip:{rtl:true, callbacks:{label:c=>c.dataset.label+": "+fmt(c.parsed.y)}} },
+      scales:{ x:{stacked:true,grid:{display:false},ticks:{font:{size:10},color:C.ink,maxRotation:60,minRotation:45}},
+               y:{stacked:true,beginAtZero:true,position:"right",grid:{color:"#EEF1F6"},ticks:{callback:fmt,color:C.muted,font:{size:10},precision:0}} } }
+  });
+
+  /* ---- band donut (all records) ---- */
+  const bandTot=BAND_ORDER.map(k=>rows.filter(r=>band(r[PLACE])===k).length);
+  mk("c_bandDonut",{ type:"doughnut",
+    data:{ labels:BAND_ORDER.map(k=>BAND_LBL[k]), datasets:[{ data:bandTot,
+      backgroundColor:BAND_ORDER.map(k=>BAND_COL[k]), borderColor:"#fff", borderWidth:2 }] },
+    options:{ responsive:true, maintainAspectRatio:false, cutout:"58%",
+      plugins:{ legend:{display:true,position:"bottom",rtl:true,labels:{boxWidth:12,boxHeight:12,padding:9,font:{size:11}}},
+        datalabels:{ display:c=>c.dataset.data[c.dataIndex]>0, formatter:(v,c)=>{const t=c.dataset.data.reduce((a,b)=>a+b,0); return t?Math.round(v/t*100)+"%":"";},
+          color:"#fff", textStrokeColor:"rgba(0,0,0,0.35)", textStrokeWidth:3, font:{size:12,weight:700} },
+        tooltip:{rtl:true, callbacks:{label:c=>c.label+": "+fmt(c.parsed)+" רשומות"}} } }
+  });
+
+  /* ---- avg placement by competition size ---- */
+  const sizeAgg={}; SIZE_ORDER.forEach(k=>sizeAgg[k]={sum:0,n:0});
+  rows.forEach(r=>{ const k=sizeBucket(r[CTR]); sizeAgg[k].sum+=r[PLACE]; sizeAgg[k].n++; });
+  mk("c_placeBySize",{ type:"bar",
+    data:{ labels:SIZE_ORDER.map(k=>SIZE_LBL[k]),
+      datasets:[{ data:SIZE_ORDER.map(k=>sizeAgg[k].n? sizeAgg[k].sum/sizeAgg[k].n : 0),
+        backgroundColor:C.navy, borderRadius:3, barThickness:42 }] },
+    options:{ responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:false}, datalabels:{ display:true, anchor:"end", align:"top", offset:0,
+        formatter:(v,c)=>{const k=SIZE_ORDER[c.dataIndex]; return sizeAgg[k].n? fmt1(v) : "";},
+        color:C.navy, textStrokeColor:"#FFFFFF", textStrokeWidth:3, font:{size:12,weight:700} },
+        tooltip:{rtl:true, callbacks:{label:c=>{const k=SIZE_ORDER[c.dataIndex];
+          return ["מיקום ממוצע: "+fmt1(c.parsed.y), "רשומות: "+fmt(sizeAgg[k].n)];}}} },
+      scales:{ x:{grid:{display:false},ticks:{font:{size:11},color:C.ink}},
+               y:{beginAtZero:true,position:"right",grid:{color:"#EEF1F6"},ticks:{color:C.muted,font:{size:10}},
+                  title:{display:true,text:"מיקום ממוצע (נמוך = טוב)",color:C.muted,font:{size:10}}} } }
+  });
+
+  /* ---- bands by competition size (stacked %) ---- */
+  const sizeBands={}; SIZE_ORDER.forEach(k=>sizeBands[k]={pod:0,t8:0,t16:0,rest:0,n:0});
+  rows.forEach(r=>{ const k=sizeBucket(r[CTR]); sizeBands[k][band(r[PLACE])]++; sizeBands[k].n++; });
+  mk("c_bandSize",{ type:"bar",
+    data:{ labels:SIZE_ORDER.map(k=>SIZE_LBL[k]), datasets:BAND_ORDER.map(b=>({
+      label:BAND_LBL[b], stack:"a", backgroundColor:BAND_COL[b],
+      data:SIZE_ORDER.map(k=> sizeBands[k].n ? sizeBands[k][b]/sizeBands[k].n*100 : 0) })) },
+    options:{ responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:true,position:"top",align:"start",rtl:true,labels:{boxWidth:12,boxHeight:12,padding:8,font:{size:11}}},
+        datalabels:{display:false},
+        tooltip:{rtl:true, callbacks:{label:c=>c.dataset.label+": "+Math.round(c.parsed.y)+"%"}} },
+      scales:{ x:{stacked:true,grid:{display:false},ticks:{font:{size:11},color:C.ink}},
+               y:{stacked:true,beginAtZero:true,max:100,position:"right",grid:{color:"#EEF1F6"},ticks:{callback:v=>v+"%",color:C.muted,font:{size:10}}} } }
+  });
+
+  /* ---- bands by championship (stacked counts) ---- */
+  const champKeys=["eu","world","oly","wg"];
+  const champBands={}; champKeys.forEach(k=>champBands[k]={pod:0,t8:0,t16:0,rest:0});
+  rows.forEach(r=>{ champBands[champOf(r)][band(r[PLACE])]++; });
+  mk("c_bandChamp",{ type:"bar",
+    data:{ labels:champKeys.map(k=>CHAMP_LBL[k]), datasets:BAND_ORDER.map(b=>({
+      label:BAND_LBL[b], stack:"a", backgroundColor:BAND_COL[b], data:champKeys.map(k=>champBands[k][b]) })) },
+    options:{ responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:true,position:"top",align:"start",rtl:true,labels:{boxWidth:12,boxHeight:12,padding:8,font:{size:11}}},
+        datalabels:{display:false},
+        tooltip:{rtl:true, callbacks:{label:c=>c.dataset.label+": "+fmt(c.parsed.y)}} },
+      scales:{ x:{stacked:true,grid:{display:false},ticks:{font:{size:11},color:C.ink}},
+               y:{stacked:true,beginAtZero:true,position:"right",grid:{color:"#EEF1F6"},ticks:{callback:fmt,color:C.muted,font:{size:10},precision:0}} } }
+  });
+
+  /* ---- bands by sex (stacked counts) ---- */
+  const sexKeys=["m","f"]; const sexLbl={m:"גברים",f:"נשים"};
+  const sexBands={}; sexKeys.forEach(k=>sexBands[k]={pod:0,t8:0,t16:0,rest:0});
+  rows.forEach(r=>{ sexBands[r[SEX]][band(r[PLACE])]++; });
+  mk("c_bandSex",{ type:"bar",
+    data:{ labels:sexKeys.map(k=>sexLbl[k]), datasets:BAND_ORDER.map(b=>({
+      label:BAND_LBL[b], stack:"a", backgroundColor:BAND_COL[b], data:sexKeys.map(k=>sexBands[k][b]) })) },
+    options:{ responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:true,position:"top",align:"start",rtl:true,labels:{boxWidth:12,boxHeight:12,padding:8,font:{size:11}}},
+        datalabels:{display:false},
+        tooltip:{rtl:true, callbacks:{label:c=>c.dataset.label+": "+fmt(c.parsed.y)}} },
+      scales:{ x:{stacked:true,grid:{display:false},ticks:{font:{size:11},color:C.ink}},
+               y:{stacked:true,beginAtZero:true,position:"right",grid:{color:"#EEF1F6"},ticks:{callback:fmt,color:C.muted,font:{size:10},precision:0}} } }
+  });
+
+  /* ---- bands by age tier (stacked counts) ---- */
+  const tierBands={}; TIER_ORDER.forEach(k=>tierBands[k]={pod:0,t8:0,t16:0,rest:0,sum:0,n:0});
+  rows.forEach(r=>{ const k=tier(r[AGE]); if(!tierBands[k])return; tierBands[k][band(r[PLACE])]++; tierBands[k].sum+=r[PLACE]; tierBands[k].n++; });
+  mk("c_bandTier",{ type:"bar",
+    data:{ labels:TIER_ORDER.map(k=>TIER_LBL[k]), datasets:BAND_ORDER.map(b=>({
+      label:BAND_LBL[b], stack:"a", backgroundColor:BAND_COL[b], data:TIER_ORDER.map(k=>tierBands[k][b]) })) },
+    options:{ responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:true,position:"top",align:"start",rtl:true,labels:{boxWidth:12,boxHeight:12,padding:8,font:{size:11}}},
+        datalabels:{display:false},
+        tooltip:{rtl:true, callbacks:{label:c=>c.dataset.label+": "+fmt(c.parsed.y)}} },
+      scales:{ x:{stacked:true,grid:{display:false},ticks:{font:{size:11},color:C.ink}},
+               y:{stacked:true,beginAtZero:true,position:"right",grid:{color:"#EEF1F6"},ticks:{callback:fmt,color:C.muted,font:{size:10},precision:0}} } }
+  });
+
+  /* ---- avg placement by age tier (Bar) ---- */
+  mk("c_placeTier",{ type:"bar",
+    data:{ labels:TIER_ORDER.map(k=>TIER_LBL[k]),
+      datasets:[{ data:TIER_ORDER.map(k=>tierBands[k].n? tierBands[k].sum/tierBands[k].n : 0),
+        backgroundColor:C.navy, borderRadius:3, barThickness:42 }] },
+    options:{ responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:false}, datalabels:{ display:true, anchor:"end", align:"top", offset:0,
+        formatter:(v,c)=>{const k=TIER_ORDER[c.dataIndex]; return tierBands[k].n? fmt1(v) : "";},
+        color:C.navy, textStrokeColor:"#FFFFFF", textStrokeWidth:3, font:{size:12,weight:700} },
+        tooltip:{rtl:true, callbacks:{label:c=>{const k=TIER_ORDER[c.dataIndex];
+          return ["מיקום ממוצע: "+fmt1(c.parsed.y), "רשומות: "+fmt(tierBands[k].n)];}}} },
+      scales:{ x:{grid:{display:false},ticks:{font:{size:11},color:C.ink}},
+               y:{beginAtZero:true,position:"right",grid:{color:"#EEF1F6"},ticks:{color:C.muted,font:{size:10}},
+                  title:{display:true,text:"מיקום ממוצע (נמוך = טוב)",color:C.muted,font:{size:10}}} } }
+  });
+
+  /* ---- athletes by age tier (Bar) ---- *
+     mock athletes split: distribute each sport's athletes across the tiers it
+     actually competes in, weighted by its share of records per tier.            */
+  const tierAth={}; TIER_ORDER.forEach(k=>tierAth[k]=0);
+  const sportTier={};
+  rows.forEach(r=>{ const s=r[SPORT], k=tier(r[AGE]);
+    if(!sportTier[s]) sportTier[s]={total:0};
+    sportTier[s][k]=(sportTier[s][k]||0)+1; sportTier[s].total++; });
+  Object.keys(sportTier).forEach(s=>{ const st=sportTier[s]; if(!st.total||!META[s])return;
+    TIER_ORDER.forEach(k=>{ if(st[k]) tierAth[k]+= META[s].a * st[k]/st.total; }); });
+  mk("c_athTier",{ type:"bar",
+    data:{ labels:TIER_ORDER.map(k=>TIER_LBL[k]),
+      datasets:[{ data:TIER_ORDER.map(k=>Math.round(tierAth[k])), backgroundColor:C.purple, borderRadius:3, barThickness:42 }] },
+    options:{ responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:false}, datalabels:{ display:true, anchor:"end", align:"top", offset:0,
+        formatter:v=>v? fmt(v):"", color:C.purple, textStrokeColor:"#FFFFFF", textStrokeWidth:3, font:{size:12,weight:700} },
+        tooltip:{rtl:true, callbacks:{label:c=>fmt(c.parsed.y)+" ספורטאים (מוקאפ)"}} },
+      scales:{ x:{grid:{display:false},ticks:{font:{size:11},color:C.ink}},
+               y:{beginAtZero:true,position:"right",grid:{color:"#EEF1F6"},ticks:{color:C.muted,font:{size:10}}} } }
+  });
+
+  /* ---- seasonality: records by month, stacked by championship ---- */
+  const MONTHS=["","ינו׳","פבר׳","מרץ","אפר׳","מאי","יוני","יולי","אוג׳","ספט׳","אוק׳","נוב׳","דצמ׳"];
+  const MM=[1,2,3,4,5,6,7,8,9,10,11,12];
+  const monthCh={}; MM.forEach(m=>monthCh[m]={eu:0,world:0,oly:0,wg:0});
+  rows.forEach(r=>{ const m=r[MONTH]; if(m && monthCh[m]) monthCh[m][champOf(r)]++; });
+  const seasonChamp=["oly","wg","world","eu"];
+  mk("c_season",{ type:"bar",
+    data:{ labels:MM.map(m=>MONTHS[m]), datasets:seasonChamp.map(k=>({
+      label:CHAMP_LBL[k], stack:"a", backgroundColor:CHAMP_COL[k], data:MM.map(m=>monthCh[m][k]) })) },
+    options:{ responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:true,position:"top",align:"start",rtl:true,labels:{boxWidth:12,boxHeight:12,padding:8,font:{size:11}}},
+        datalabels:{display:false},
+        tooltip:{rtl:true, callbacks:{label:c=>c.dataset.label+": "+fmt(c.parsed.y)}} },
+      scales:{ x:{stacked:true,grid:{display:false},ticks:{font:{size:10},color:C.ink}},
+               y:{stacked:true,beginAtZero:true,position:"right",grid:{color:"#EEF1F6"},ticks:{callback:fmt,color:C.muted,font:{size:10},precision:0}} } }
+  });
+
+  /* ---- table ---- */
+  const tb=document.querySelector("#tbl tbody"); tb.innerHTML="";
+  sports.forEach(s=>{
+    const a=agg[s], b=META[s].b, ath=META[s].a, ap=avgP(s);
+    const pColor = ap<=12?C.green : ap<=35?C.gold : C.slate;
+    const pBg = ap<=12?"#E7F3EA" : ap<=35?"#FEF7E0" : "#EEF1F5";
+    const tr=document.createElement("tr");
+    tr.innerHTML=
+      '<td><span class="sport-dot"></span>'+s+'</td>'+
+      '<td class="num">'+fmt(a.n)+'</td>'+
+      '<td class="num">'+fmt(ath)+'</td>'+
+      '<td class="num">₪'+fmt1(b)+'M</td>'+
+      '<td class="num"><span class="eff-pill" style="color:'+pColor+';background:'+pBg+'">'+fmt1(ap)+'</span></td>'+
+      '<td class="num">'+fmt(a.best)+'</td>'+
+      '<td class="num"><b>'+fmt(a.pod)+'</b></td>'+
+      '<td class="num">'+fmt(a.t8)+'</td>';
+    tb.appendChild(tr);
+  });
+}
+
+/* wire filters */
+["f-year","f-sport","f-champ","f-tier","f-sex","f-size"].forEach(id=>document.getElementById(id).addEventListener("change",render));
+document.getElementById("reset").addEventListener("click",()=>{
+  ["f-year","f-sport","f-champ","f-tier","f-sex","f-size"].forEach(id=>document.getElementById(id).value="");
+  render();
+});
+
+render();
+
+/* ===========================================================================
+   NOTES + INLINE EDITING  (same mechanism as the personal-achievements dashboard)
+   - per-card comment box, autosaved to localStorage
+   - titles/labels editable inline
+   - "save HTML" bakes edits + notes into a clean file to send
+   =========================================================================== */
+(function(){
+  const LS='ach_team_v1_';
+  const SCHEMA='2026-06-16';
+  if(localStorage.getItem(LS+'schema')!==SCHEMA){
+    Object.keys(localStorage).filter(k=>k.startsWith(LS+'e_')).forEach(k=>localStorage.removeItem(k));
+    localStorage.setItem(LS+'schema',SCHEMA);
+  }
+  /* inject a comment box under each chart/table card that lacks one */
+  document.querySelectorAll('main .card').forEach((card,i)=>{
+    if(card.querySelector('textarea.comment')) return;
+    const canvas=card.querySelector('canvas');
+    const titleEl=card.querySelector('.card-title');
+    const label=(titleEl?titleEl.textContent:'סעיף '+(i+1)).trim().replace(/\s+/g,' ');
+    const key=canvas?canvas.id.replace(/^c_/,''):'card'+i;
+    const block=document.createElement('div'); block.className='comment-block';
+    const lab=document.createElement('label'); lab.className='comment-label'; lab.textContent='💬 הערה — '+label;
+    const ta=document.createElement('textarea'); ta.className='comment'; ta.dataset.key=key; ta.dataset.label=label;
+    ta.placeholder='כתבו כאן הערה לסעיף זה...';
+    block.appendChild(lab); block.appendChild(ta); card.appendChild(block);
+  });
+  /* restore + autosave comments */
+  document.querySelectorAll('textarea.comment').forEach(t=>{
+    const k=LS+'c_'+t.dataset.key;
+    const v=localStorage.getItem(k); if(v) t.value=v;
+    t.addEventListener('input',()=>localStorage.setItem(k,t.value));
+  });
+  /* make static texts editable */
+  const EDITABLE_SEL=['header h1','header .meta','header .meta-badge',
+    '.filter-bar-label','.card-title','.card-meta','.section-title','.comment-label','.footer-note'].join(',');
+  const editEls=Array.from(document.querySelectorAll(EDITABLE_SEL));
+  editEls.forEach((el,i)=>{ el.dataset.eid='e'+i; });
+  editEls.forEach(el=>{
+    const k=LS+'e_'+el.dataset.eid;
+    const v=localStorage.getItem(k); if(v!==null) el.innerHTML=v;
+    el.addEventListener('input',()=>localStorage.setItem(k,el.innerHTML));
+  });
+  /* working file = editable; exported file (data-exported) = clean static view */
+  if(!document.body.hasAttribute('data-exported')){
+    editEls.forEach(el=>el.setAttribute('contenteditable','true'));
+    const btn=document.getElementById('btnSaveHTML');
+    if(btn) btn.addEventListener('click',()=>{
+      document.querySelectorAll('textarea.comment').forEach(t=>{ t.textContent=t.value; });
+      document.body.setAttribute('data-exported','1');
+      editEls.forEach(el=>el.removeAttribute('contenteditable'));
+      const toolbar=document.querySelector('.editor-toolbar');
+      const p=toolbar.parentNode, n=toolbar.nextSibling; toolbar.remove();
+      const html='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
+      p.insertBefore(toolbar,n);
+      document.body.removeAttribute('data-exported');
+      editEls.forEach(el=>el.setAttribute('contenteditable','true'));
+      const blob=new Blob([html],{type:'text/html;charset=utf-8'});
+      const a=document.createElement('a');
+      a.href=URL.createObjectURL(blob); a.download='הישגיות-קבוצתי-ערוך.html'; a.click();
+      URL.revokeObjectURL(a.href);
+    });
+  }
+})();
+</script>
+</body>
+</html>
