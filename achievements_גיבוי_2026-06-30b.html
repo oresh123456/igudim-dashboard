@@ -375,7 +375,7 @@
   </div>
 
   <!-- ===== לפי ענף (כל גרפי הענף יחד) ===== -->
-  <div class="section-title">לפי ענף</div>
+  <div class="section-title">לפי ענף <span style="font-weight:400;">(שיוך דרך הספורטאי · Path B)</span></div>
   <div class="grid">
     <div class="card col-6">
       <div class="card-head">
@@ -741,7 +741,7 @@ new Chart(document.getElementById('c_season'), {
 });
 
 /* ---- Card: medals per association (stacked, horizontal) ---- */
-const unionGray = i => CONFIG.unions[i] === 'ללא שיוך לענף';
+const unionGray = i => CONFIG.unions[i] === 'ללא שיוך לאיגוד';
 new Chart(document.getElementById('c_union_medals'), {
   type: 'bar',
   data: { labels: CONFIG.unions, datasets: [
@@ -926,8 +926,8 @@ if (!document.body.hasAttribute('data-exported')) {
 
 // CSV export of medals table
 document.getElementById('btnCSV').addEventListener('click', () => {
-  const head = ['ספורטאי/ית', 'ענף', 'אגודה', 'רשות', 'מספר עמותה', 'רמת פריפריאליות', 'שכבת גיל תחרות', 'גיל נומרי', 'אליפות', 'מיקום', 'ניקוד'];
-  const rows = [head].concat(CONFIG.medals.map(r => [r.name, r.branch, r.club, r.authority, r.ngo, r.periphery, r.ageGroup, r.ageNum, r.champ, r.place, r.score]));
+  const head = ['ספורטאי/ית', 'ענף', 'אגודה', 'רשות', 'מספר עמותה', 'רמת פריפריאליות', 'שכבת גיל תחרות', 'גיל נומרי', 'אליפות', 'מיקום', 'מדליה', 'ניקוד'];
+  const rows = [head].concat(CONFIG.medals.map(r => [r.name, r.branch, r.club, r.authority, r.ngo, r.periphery, r.ageGroup, r.ageNum, r.champ, r.place, r.medal, r.score]));
   const csv = '﻿' + rows.map(r => r.map(c => '"' + String(c).replace(/"/g, '""') + '"').join(',')).join('\n');
   const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
   const a = document.createElement('a');

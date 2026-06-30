@@ -232,18 +232,30 @@
 
 <!-- ===================== TAB: אישי ===================== -->
 <div id="tab-personal" class="tab-content active">
+<!-- Size controls (QuickSight parameters) -->
+<div class="size-controls" dir="rtl" style="background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:0 0 16px;">
+  <div style="font-size:13px;font-weight:600;color:var(--navy);margin-bottom:10px;">בקרת גודל תחרות — פרמטרים (QuickSight · Controls)</div>
+  <div style="display:flex;flex-wrap:wrap;gap:16px 26px;align-items:flex-end;">
+    <div style="display:flex;flex-direction:column;gap:6px;min-width:170px;"><label style="font-size:11px;color:var(--ink-muted);">בקט 1 — מינ׳</label><div style="display:flex;align-items:center;gap:8px;"><input type="number" value="0" min="0" max="200" style="width:60px;padding:4px 6px;border:1px solid var(--line);border-radius:6px;text-align:center;font:inherit;"><input type="range" min="0" max="200" value="0" style="flex:1;accent-color:var(--navy);"></div></div>
+    <div style="display:flex;flex-direction:column;gap:6px;min-width:170px;"><label style="font-size:11px;color:var(--ink-muted);">בקט 1 — מקס׳</label><div style="display:flex;align-items:center;gap:8px;"><input type="number" value="10" min="0" max="200" style="width:60px;padding:4px 6px;border:1px solid var(--line);border-radius:6px;text-align:center;font:inherit;"><input type="range" min="0" max="200" value="10" style="flex:1;accent-color:var(--navy);"></div></div>
+    <div style="display:flex;flex-direction:column;gap:6px;min-width:170px;"><label style="font-size:11px;color:var(--ink-muted);">בקט 2 — מינ׳</label><div style="display:flex;align-items:center;gap:8px;"><input type="number" value="45" min="0" max="200" style="width:60px;padding:4px 6px;border:1px solid var(--line);border-radius:6px;text-align:center;font:inherit;"><input type="range" min="0" max="200" value="45" style="flex:1;accent-color:var(--sky);"></div></div>
+    <div style="display:flex;flex-direction:column;gap:6px;min-width:170px;"><label style="font-size:11px;color:var(--ink-muted);">בקט 2 — מקס׳</label><div style="display:flex;align-items:center;gap:8px;"><input type="number" value="90" min="0" max="200" style="width:60px;padding:4px 6px;border:1px solid var(--line);border-radius:6px;text-align:center;font:inherit;"><input type="range" min="0" max="200" value="90" style="flex:1;accent-color:var(--sky);"></div></div>
+  </div>
+  <div style="font-size:11px;color:var(--ink-muted);margin-top:10px;line-height:1.5;">הפרמטרים מגדירים את גבולות הבקטים לפי <strong>גודל תחרות</strong> (מספר מדינות כולל מוקדמות). שדה מחושב <code>בקט גודל</code> ממפה כל רשומה לבקט (בקט 1: ‏0–10‏ · בקט 2: ‏45–90‏); ערכים מחוץ לטווחים מוצגים כ<strong>״אחר״</strong>.</div>
+</div>
+
 
   <div class="filter-bar">
     <span class="filter-bar-label" data-eid="e5" data-orig="פילטרים על &lt;strong&gt;כל הדף&lt;/strong&gt;">פילטרים על <strong>כל הדף</strong></span>
-    <div class="filter"><label data-eid="e6" data-orig="איגוד">איגוד</label><select><option>הכל</option></select></div>
+    <div class="filter"><label data-eid="e6" data-orig="ענף">ענף</label><select><option>הכל</option></select></div>
     <div class="filter"><label data-eid="e7" data-orig="ענף">ענף</label><select id="f-branch"><option>הכל</option><option>התעמלות</option><option>שחייה</option><option>סיוף</option><option>שייט</option><option>ג'יו ג'יטסו</option><option>קשתות</option><option>ג'ודו</option><option>אתלטיקה</option><option>טיפוס ספורטיבי</option><option>קיקבוקס</option><option>ספורט הריקוד</option><option>אופניים</option></select></div>
     <div class="filter"><label data-eid="e8" data-orig="סיווג ענף">סיווג ענף</label><select><option>הכל</option><option>אולימפי</option><option>לא אולימפי</option><option>ענפי חשיבה</option></select></div>
     <div class="filter"><label data-eid="e9" data-orig="שכבת גיל">שכבת גיל</label><select><option>הכל</option><option>בוגרים</option><option>מתחת 23</option><option>נוער</option><option>נערות</option><option>קדטים</option><option>קדטיות</option></select></div>
     <div class="filter"><label data-eid="e10" data-orig="מין">מין</label><select><option>הכל</option><option>נשים</option><option>גברים</option></select></div>
     <div class="filter"><label data-eid="e11" data-orig="סוג אליפות">סוג אליפות</label><select><option>הכל</option><option>משחקים אולימפיים</option><option>אליפות עולם</option><option>אליפות אירופה</option><option>משחקי עולם</option><option>אליפות חלופית מוכרת</option></select></div>
     <div class="filter"><label data-eid="e12" data-orig="שנה">שנה</label><select><option>2026</option><option>2025</option><option>2024</option></select></div>
-    <div class="filter"><label data-eid="e13" data-orig="סף מס׳ מדינות">סף מס׳ מדינות</label><select><option>הכל</option><option>5+</option><option>8+</option><option>12+</option></select></div>
-    <div class="filter"><label data-eid="e14" data-orig="סה״כ משתתפים">סה״כ משתתפים</label><select><option>הכל</option><option>8+</option><option>16+</option><option>32+</option></select></div>
+    <div class="filter"><label data-eid="e13" data-orig="סף מס׳ מדינות">סף מס׳ מדינות</label><select><option>הכל</option><option>קבוצה 1</option><option>קבוצה 2</option><option>קבוצה 3</option><option>קבוצה 4</option></select></div>
+    
     <button class="filter-reset">איפוס פילטרים</button>
   </div>
 
@@ -265,10 +277,7 @@
         <span class="card-meta" data-eid="e29" data-orig="QuickSight · Stacked Bar">QuickSight · Stacked Bar</span>
       </div>
       <div class="card-canvas-wrap h-460"><canvas id="c_branch" width="1803" height="460" style="display: block; box-sizing: border-box; height: 460px; width: 1803px;"></canvas></div>
-      <div class="comment-block">
-        <label class="comment-label">💬 הערה — ניקוד לפי ענף</label>
-        <textarea class="comment" data-key="c_branch" data-label="ניקוד לפי ענף" placeholder="כתבו כאן הערה לסעיף זה..."></textarea>
-      </div>
+      
     </div>
   </div>
 
@@ -280,12 +289,7 @@
         <span class="card-meta" data-eid="e31" data-orig="QuickSight · Stacked + Clustered Bar">QuickSight · Stacked + Clustered Bar</span>
       </div>
       <div class="card-canvas-wrap h-440"><canvas id="c_age" width="875" height="440" style="display: block; box-sizing: border-box; height: 440px; width: 875px;"></canvas></div>
-      <div class="comment-block">
-        <label class="comment-label">💬 הערה — גיל ומגדר</label>
-        <textarea class="comment" data-key="c_age" data-label="גיל ומגדר" placeholder="כתבו כאן הערה...">בוגרים -&gt; נוער -&gt; קדטים\קדטיות.
-צבעים לפי מיקומים.
-</textarea>
-      </div>
+      
     </div>
     <div class="col-6 stack-col">
       <div class="card">
@@ -315,10 +319,7 @@
         <span class="card-meta" data-eid="e39" data-orig="QuickSight · Bar (אחוז)">QuickSight · Bar (אחוז)</span>
       </div>
       <div class="card-canvas-wrap h-360"><canvas id="c_success" width="875" height="360" style="display: block; box-sizing: border-box; height: 360px; width: 875px;"></canvas></div>
-      <div class="comment-block">
-        <label class="comment-label">💬 הערה — שיעור הצלחה לפי ענף</label>
-        <textarea class="comment" data-key="c_success" data-label="שיעור הצלחה לפי ענף" placeholder="כתבו כאן הערה..."></textarea>
-      </div>
+      
     </div>
     <div class="card col-6">
       <div class="card-head">
@@ -326,18 +327,14 @@
         <span class="card-meta" data-eid="e41" data-orig="QuickSight · Bar (אחוז)">QuickSight · Bar (אחוז)</span>
       </div>
       <div class="card-canvas-wrap h-360"><canvas id="c_success_tier" width="875" height="360" style="display: block; box-sizing: border-box; height: 360px; width: 875px;"></canvas></div>
-      <div class="comment-block">
-        <label class="comment-label">💬 הערה — שיעור הצלחה לפי רמת תחרות</label>
-        <textarea class="comment" data-key="c_success_tier" data-label="שיעור הצלחה לפי רמת תחרות" placeholder="כתבו כאן הערה..."></textarea>
-      </div>
+      
     </div>
   </div>
 
-  <div class="section-title" data-eid="e42" data-orig="למחוק">למחוק</div>
   <div class="grid">
     <div class="card col-12">
       <div class="card-head">
-        <span class="card-title editable" data-edit="t12" data-eid="e43" data-orig="למחוק">למחוק</span>
+        <span class="card-title editable" data-edit="t12" data-eid="e43" data-orig="עונתיות ההישגים לפי חודש וסוג אליפות">עונתיות ההישגים לפי חודש וסוג אליפות</span>
         <span class="card-meta" data-eid="e44" data-orig="QuickSight · Stacked Bar · מצרפי 2022–2025">QuickSight · Stacked Bar · מצרפי 2022–2025</span>
       </div>
       <div class="card-canvas-wrap h-320"><canvas id="c_season" width="1803" height="320" style="display: block; box-sizing: border-box; height: 320px; width: 1803px;"></canvas></div>
@@ -346,65 +343,48 @@
       ">
         כל הנתונים ישירות מקובץ ההישגיות (<code>מועד האליפות</code> + <code>סוג האליפות</code>), ללא צירוף. 2022–2025 · שיא בקיץ (יולי), שפל בדצמבר–ינואר.
       </div>
-      <div class="comment-block">
-        <label class="comment-label">💬 הערה — עונתיות</label>
-        <textarea class="comment" data-key="c_season" data-label="עונתיות" placeholder="כתבו כאן הערה..."></textarea>
-      </div>
+      
     </div>
   </div>
 
-  <!-- ===== לפי איגוד (כל גרפי האיגוד יחד) ===== -->
-  <div class="section-title" data-eid="e46" data-orig="למחוק">למחוק</div>
   <div class="grid">
     <div class="card col-6">
       <div class="card-head">
-        <span class="card-title editable" data-edit="t5a" data-eid="e47" data-orig="מספר זכיות לפי איגוד לאורך השנים">מספר זכיות לפי איגוד לאורך השנים</span>
+        <span class="card-title editable" data-edit="t5a" data-eid="e47" data-orig="מספר זכיות לפי ענף לאורך השנים">מספר זכיות לפי ענף לאורך השנים</span>
         <span class="card-meta" data-eid="e48" data-orig="QuickSight · Line">QuickSight · Line</span>
       </div>
       <div class="card-canvas-wrap h-280"><canvas id="c_years_wins" width="875" height="280" style="display: block; box-sizing: border-box; height: 280px; width: 875px;"></canvas></div>
-      <div class="comment-block">
-        <label class="comment-label">💬 הערה — זכיות לאורך השנים</label>
-        <textarea class="comment" data-key="c_years_wins" data-label="זכיות לאורך השנים" placeholder="כתבו כאן הערה..."></textarea>
-      </div>
+      
     </div>
     <div class="card col-6">
       <div class="card-head">
-        <span class="card-title editable" data-edit="t5b" data-eid="e49" data-orig="מספר משתתפים לפי איגוד לאורך השנים">מספר משתתפים לפי איגוד לאורך השנים</span>
+        <span class="card-title editable" data-edit="t5b" data-eid="e49" data-orig="מספר משתתפים לפי ענף לאורך השנים">מספר משתתפים לפי ענף לאורך השנים</span>
         <span class="card-meta" data-eid="e50" data-orig="QuickSight · Line">QuickSight · Line</span>
       </div>
       <div class="card-canvas-wrap h-280"><canvas id="c_years_part" width="875" height="280" style="display: block; box-sizing: border-box; height: 280px; width: 875px;"></canvas></div>
-      <div class="comment-block">
-        <label class="comment-label">💬 הערה — משתתפים לאורך השנים</label>
-        <textarea class="comment" data-key="c_years_part" data-label="משתתפים לאורך השנים" placeholder="כתבו כאן הערה..."></textarea>
-      </div>
+      
     </div>
   </div>
-  <div class="card-meta" style="margin:-6px 0 14px;" data-eid="e51" data-orig="התאמת &lt;code&gt;תז ↔ איגוד&lt;/code&gt;: &lt;strong&gt;92%&lt;/strong&gt; מהרשומות · &lt;strong&gt;8%&lt;/strong&gt; ללא שיוך (מוצג כקו מקווקו) · &lt;span style=&quot;color:var(--ink-faint);&quot;&gt;להמחשה — לאימות מול CRM&lt;/span&gt;">התאמת <code>תז ↔ איגוד</code>: <strong>92%</strong> מהרשומות · <strong>8%</strong> ללא שיוך (מוצג כקו מקווקו) · <span style="color:var(--ink-faint);">להמחשה — לאימות מול CRM</span></div>
+  
 
   <div class="grid">
     <div class="card col-6">
       <div class="card-head">
-        <span class="card-title editable" data-edit="t10" data-eid="e52" data-orig="כמות מדליות לפי איגוד">כמות מדליות לפי איגוד</span>
+        <span class="card-title editable" data-edit="t10" data-eid="e52" data-orig="כמות מדליות לפי ענף">כמות מדליות לפי ענף</span>
         <span class="card-meta" data-eid="e53" data-orig="לפי ענף">לפי ענף</span>
       </div>
       <div class="card-canvas-wrap h-320"><canvas id="c_union_medals" width="875" height="320" style="display: block; box-sizing: border-box; height: 320px; width: 875px;"></canvas></div>
-      <div class="card-meta" style="margin-top:8px;" data-eid="e54" data-orig="שיוך איגוד דרך &lt;code&gt;תז → ספורטאי → association_id&lt;/code&gt; · רשומות ללא שיוך מוצגות בנפרד.">שיוך איגוד דרך <code>תז → ספורטאי → association_id</code> · רשומות ללא שיוך מוצגות בנפרד.</div>
-      <div class="comment-block">
-        <label class="comment-label">💬 הערה — מדליות לפי איגוד</label>
-        <textarea class="comment" data-key="c_union_medals" data-label="מדליות לפי איגוד" placeholder="כתבו כאן הערה..."></textarea>
-      </div>
+      
+      
     </div>
     <div class="card col-6">
       <div class="card-head">
-        <span class="card-title editable" data-edit="t11" data-eid="e55" data-orig="מיקומים גבוהים (1–8) לפי איגוד">מיקומים גבוהים (1–8) לפי איגוד</span>
+        <span class="card-title editable" data-edit="t11" data-eid="e55" data-orig="מיקומים גבוהים (1–8) לפי ענף">מיקומים גבוהים (1–8) לפי ענף</span>
         <span class="card-meta" data-eid="e56" data-orig="מספר ענף">מספר ענף</span>
       </div>
       <div class="card-canvas-wrap h-320"><canvas id="c_union_top8" width="875" height="320" style="display: block; box-sizing: border-box; height: 320px; width: 875px;"></canvas></div>
-      <div class="card-meta" style="margin-top:8px;" data-eid="e57" data-orig="מקום בדירוג ≤ 8 · ניתן לשנות את הסף ב-&lt;code&gt;CONFIG&lt;/code&gt;.">מקום בדירוג ≤ 8 · ניתן לשנות את הסף ב-<code>CONFIG</code>.</div>
-      <div class="comment-block">
-        <label class="comment-label">💬 הערה — מיקומים גבוהים לפי איגוד</label>
-        <textarea class="comment" data-key="c_union_top8" data-label="מיקומים גבוהים לפי איגוד" placeholder="כתבו כאן הערה..."></textarea>
-      </div>
+      <div class="card-meta" style="margin-top:8px;" data-eid="e57" data-orig="מקום בדירוג ≤ 8 · ניתן לשנות את הסף ב-&lt;code&gt;CONFIG&lt;/code&gt;.">מקום בדירוג ≤ 8</div>
+      
     </div>
   </div>
 
@@ -416,11 +396,7 @@
         <span class="card-meta" data-eid="e59" data-orig="כמות מדליות לפי ענף">כמות מדליות לפי ענף</span>
       </div>
       <div class="card-canvas-wrap h-320"><canvas id="c_top" width="875" height="320" style="display: block; box-sizing: border-box; height: 320px; width: 875px;"></canvas></div>
-      <div class="comment-block">
-        <label class="comment-label">💬 הערה — ספורטאים מובילים</label>
-        <textarea class="comment" data-key="c_top" data-label="ספורטאים מובילים" placeholder="כתבו כאן הערה...">להוסיף אחד של ענפים מובילים בניקוד
-TOP10</textarea>
-      </div>
+      
     </div>
     <div class="card col-6">
       <div class="card-head">
@@ -429,29 +405,13 @@ TOP10</textarea>
       </div>
       <div style="max-height:300px;overflow:auto;"><table class="data" id="medalsTable"><thead><tr><th data-eid="e61" data-orig="ספורטאי/ית">ספורטאי/ית</th><th data-eid="e62" data-orig="מיקומים גבוהים (1–8) לפי ענף">מיקומים גבוהים (1–8) לפי ענף</th><th data-eid="e63" data-orig="אליפות">אליפות</th><th data-eid="e64" data-orig="מיקום">מיקום</th><th data-eid="e65" data-orig="10 ספורטאים מובילים בניקוד">10 ספורטאים מובילים בניקוד</th><th data-eid="e66" data-orig="ניקוד">ניקוד</th></tr></thead><tbody><tr><td data-eid="e67" data-orig="אוסיד גודה">אוסיד גודה</td><td data-eid="e68" data-orig="קיקבוקס">קיקבוקס</td><td data-eid="e69" data-orig="משחקי עולם">משחקי עולם</td><td data-eid="e70" data-orig="1">1</td><td class="medal-cell" data-eid="e71" data-orig="&lt;span class=&quot;pill g&quot;&gt;זהב&lt;/span&gt;"><span class="pill g">זהב</span></td><td data-eid="e72" data-orig="128">128</td></tr><tr><td data-eid="e73" data-orig="יוליה סצ׳קוב">יוליה סצ׳קוב</td><td data-eid="e74" data-orig="קיקבוקס">קיקבוקס</td><td data-eid="e75" data-orig="משחקי עולם">משחקי עולם</td><td data-eid="e76" data-orig="1">1</td><td class="medal-cell" data-eid="e77" data-orig="&lt;span class=&quot;pill g&quot;&gt;זהב&lt;/span&gt;"><span class="pill g">זהב</span></td><td data-eid="e78" data-orig="128">128</td></tr><tr><td data-eid="e79" data-orig="ליאור דוד">ליאור דוד</td><td data-eid="e80" data-orig="שייט">שייט</td><td data-eid="e81" data-orig="משחקים אולימפיים">משחקים אולימפיים</td><td data-eid="e82" data-orig="1">1</td><td class="medal-cell" data-eid="e83" data-orig="&lt;span class=&quot;pill g&quot;&gt;זהב&lt;/span&gt;"><span class="pill g">זהב</span></td><td data-eid="e84" data-orig="110">110</td></tr><tr><td data-eid="e85" data-orig="פולינה גרוסמן">פולינה גרוסמן</td><td data-eid="e86" data-orig="קיקבוקס">קיקבוקס</td><td data-eid="e87" data-orig="אליפות אירופה">אליפות אירופה</td><td data-eid="e88" data-orig="1">1</td><td class="medal-cell" data-eid="e89" data-orig="&lt;span class=&quot;pill g&quot;&gt;זהב&lt;/span&gt;"><span class="pill g">זהב</span></td><td data-eid="e90" data-orig="96">96</td></tr><tr><td data-eid="e91" data-orig="נועה כהן">נועה כהן</td><td data-eid="e92" data-orig="התעמלות">התעמלות</td><td data-eid="e93" data-orig="אליפות עולם">אליפות עולם</td><td data-eid="e94" data-orig="2">2</td><td class="medal-cell" data-eid="e95" data-orig="&lt;span class=&quot;pill s&quot;&gt;כסף&lt;/span&gt;"><span class="pill s">כסף</span></td><td data-eid="e96" data-orig="96">96</td></tr><tr><td data-eid="e97" data-orig="שירה לוי">שירה לוי</td><td data-eid="e98" data-orig="שחייה">שחייה</td><td data-eid="e99" data-orig="אליפות אירופה">אליפות אירופה</td><td data-eid="e100" data-orig="2">2</td><td class="medal-cell" data-eid="e101" data-orig="&lt;span class=&quot;pill s&quot;&gt;כסף&lt;/span&gt;"><span class="pill s">כסף</span></td><td data-eid="e102" data-orig="64">64</td></tr><tr><td data-eid="e103" data-orig="מיכל אברהם">מיכל אברהם</td><td data-eid="e104" data-orig="סיוף">סיוף</td><td data-eid="e105" data-orig="אליפות עולם">אליפות עולם</td><td data-eid="e106" data-orig="3">3</td><td class="medal-cell" data-eid="e107" data-orig="&lt;span class=&quot;pill b&quot;&gt;ארד&lt;/span&gt;"><span class="pill b">ארד</span></td><td data-eid="e108" data-orig="72">72</td></tr><tr><td data-eid="e109" data-orig="קרם אסעד">קרם אסעד</td><td data-eid="e110" data-orig="ג'ו ג'יטסו">ג'ו ג'יטסו</td><td data-eid="e111" data-orig="אליפות עולם">אליפות עולם</td><td data-eid="e112" data-orig="3">3</td><td class="medal-cell" data-eid="e113" data-orig="&lt;span class=&quot;pill b&quot;&gt;ארד&lt;/span&gt;"><span class="pill b">ארד</span></td><td data-eid="e114" data-orig="64">64</td></tr></tbody></table></div>
       <div class="card-meta" style="margin-top:8px;" data-eid="e115" data-orig="משמש גם כבסיס לרשימת הזוכים ללמ״ס">משמש גם כבסיס לרשימת הזוכים ללמ״ס</div>
-      <div class="comment-block">
-        <label class="comment-label">💬 הערה — טבלת זוכים</label>
-        <textarea class="comment" data-key="c_medals" data-label="טבלת זוכים" placeholder="כתבו כאן הערה...">לוודא סידור גמיש.
-להוסיף אגודה + רשות + מספר עמותה + רמת פרפריאליות  + גיל נומרי + שכבת גיל תחרות</textarea>
-      </div>
+      
     </div>
   </div>
 
-  <!-- Global comments -->
-  <div class="section-title" data-eid="e116" data-orig="הערות כלליות לפגישה">הערות כלליות לפגישה</div>
-  <div class="grid">
-    <div class="card col-12">
-      <textarea class="comment" data-key="c_global" data-label="כללי" placeholder="הערות כלליות, נושאים פתוחים, החלטות שהתקבלו בפגישה..." style="min-height:90px;">פילטר - שכבת גיל תחרות</textarea>
-    </div>
-  </div>
+  
 
-  <div class="footer-note" data-eid="e117" data-orig="
-    &lt;strong&gt;שיוך איגוד:&lt;/strong&gt; &lt;code&gt;איגוד&lt;/code&gt; אינו בקובץ ההישגיות, ונגזר בהצטרפות דרך הספורטאי — &lt;code&gt;תז → fact_athlete → association_id&lt;/code&gt; (Path B). &lt;strong&gt;לא&lt;/strong&gt; דרך הענף (ענף↔איגוד אינו 1:1 — מתפרק). תלוי בגשר &lt;code&gt;תז ↔ athlete_code&lt;/code&gt; ב-CRM · רשומות ללא התאמה מוצגות כקבוצת &lt;code&gt;ללא שיוך איגוד&lt;/code&gt; · אחוז ההתאמה מוצג על הכרטיס.&lt;br&gt;
-    &lt;strong&gt;לבירור:&lt;/strong&gt; מקור &lt;code&gt;סיווג ענף&lt;/code&gt; (איחוד עם &lt;code&gt;dim_branchs&lt;/code&gt;) · נתוני רב-שנתי (כיום קיים 2026 בלבד) · אימות אחוז התאמת &lt;code&gt;תז ↔ athlete_code&lt;/code&gt; מול CRM.
-  ">
-    <strong>שיוך איגוד:</strong> <code>איגוד</code> אינו בקובץ ההישגיות, ונגזר בהצטרפות דרך הספורטאי — <code>תז → fact_athlete → association_id</code> (Path B). <strong>לא</strong> דרך הענף (ענף↔איגוד אינו 1:1 — מתפרק). תלוי בגשר <code>תז ↔ athlete_code</code> ב-CRM · רשומות ללא התאמה מוצגות כקבוצת <code>ללא שיוך איגוד</code> · אחוז ההתאמה מוצג על הכרטיס.<br>
-    <strong>לבירור:</strong> מקור <code>סיווג ענף</code> (איחוד עם <code>dim_branchs</code>) · נתוני רב-שנתי (כיום קיים 2026 בלבד) · אימות אחוז התאמת <code>תז ↔ athlete_code</code> מול CRM.
-  </div>
+  
 
 </div>
 
