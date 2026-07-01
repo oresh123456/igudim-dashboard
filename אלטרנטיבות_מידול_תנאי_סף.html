@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>שתי אלטרנטיבות למידול תנאי סף משתנים</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --navy:#1F3F6D; --green:#248A3D; --red:#DA3439;
+    --sky:#2D9CDB; --purple:#6B4FA0; --orange:#E07B39;
+    --slate:#7A8FA6; --gold:#F8C33E;
+    --bg:#F2F4F7; --surface:#FFFFFF; --border:#E5E9F0;
+    --ink:#1A1A2E; --ink-muted:#6B7280;
+    --navy-soft:#EAF0F8; --green-soft:#E7F4EC; --red-soft:#FBE9EA;
+    --orange-soft:#FCEFE4;
+    --radius:14px;
+  }
+  html{font-size:15px}
+  body{
+    font-family:"Amazon Ember","Heebo",system-ui,sans-serif;
+    background:var(--bg); color:var(--ink); line-height:1.6;
+    -webkit-font-smoothing:antialiased; padding-bottom:60px;
+  }
+  header{
+    background:var(--surface); border-bottom:1px solid var(--border);
+    padding:20px 40px; display:flex; align-items:center; gap:16px;
+  }
+  .logo{
+    width:44px;height:44px;border-radius:10px;background:var(--navy);
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  .logo svg{width:26px;height:26px}
+  header .titles h1{font-size:19px;font-weight:700;color:var(--navy)}
+  header .titles p{font-size:12.5px;color:var(--ink-muted)}
+  main{max-width:1180px;margin:0 auto;padding:28px 32px}
+  .intro{
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:var(--radius); padding:22px 26px; margin-bottom:22px;
+  }
+  .intro h2{font-size:17px;color:var(--navy);margin-bottom:8px;font-weight:700}
+  .intro p{font-size:14px;color:var(--ink);margin-bottom:6px}
+  .intro .q{
+    margin-top:14px;padding:12px 16px;background:var(--orange-soft);
+    border-inline-start:4px solid var(--orange);border-radius:8px;
+    font-size:14px;font-weight:600;color:var(--ink);
+  }
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:22px}
+  @media(max-width:860px){.cols{grid-template-columns:1fr}}
+  .card{
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;
+  }
+  .card.optA{border-top:5px solid var(--slate)}
+  .card.optB{border-top:5px solid var(--navy)}
+  .card-head{padding:18px 22px 12px}
+  .tag{
+    display:inline-block;font-size:11px;font-weight:700;letter-spacing:.03em;
+    padding:3px 10px;border-radius:20px;margin-bottom:8px;
+  }
+  .optA .tag{background:#EEF1F4;color:var(--slate)}
+  .optB .tag{background:var(--navy-soft);color:var(--navy)}
+  .card-head h3{font-size:17px;font-weight:700;margin-bottom:4px}
+  .optA h3{color:var(--slate)}
+  .optB h3{color:var(--navy)}
+  .card-head .sub{font-size:12.5px;color:var(--ink-muted)}
+  .analogy{
+    margin:0 22px 14px;padding:12px 14px;border-radius:8px;
+    font-size:12.5px;background:var(--bg);color:var(--ink);
+    display:flex;gap:10px;align-items:flex-start;
+  }
+  .analogy .ic{font-size:18px;line-height:1.2}
+  .diagram{padding:6px 22px 18px}
+  .lists{padding:2px 22px 20px;margin-top:auto}
+  .lists h4{font-size:12px;color:var(--ink-muted);font-weight:700;margin:10px 0 6px;letter-spacing:.02em}
+  .lists ul{list-style:none}
+  .lists li{font-size:13px;padding:4px 0 4px 0;display:flex;gap:8px;align-items:flex-start}
+  .lists li .m{flex-shrink:0;font-weight:700;width:16px}
+  .pro .m{color:var(--green)}
+  .con .m{color:var(--red)}
+  .rec{
+    background:linear-gradient(135deg,var(--green-soft),#fff);
+    border:1px solid #BFE3CB;border-inline-start:6px solid var(--green);
+    border-radius:var(--radius);padding:22px 26px;
+  }
+  .rec h2{font-size:17px;color:var(--green);font-weight:800;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+  .rec p{font-size:14px;margin-bottom:8px}
+  .rec .why{font-size:13.5px;color:var(--ink)}
+  .rec strong{color:var(--navy)}
+  .caveat{margin-top:12px;font-size:12.5px;color:var(--ink-muted);padding-top:10px;border-top:1px solid var(--border)}
+  .tbl{border:1.5px solid var(--border);border-radius:8px;overflow:hidden;font-size:11.5px;background:#fff}
+  .tbl-title{font-size:11px;font-weight:700;padding:6px 10px;color:#fff;text-align:center}
+  .fact-t .tbl-title{background:var(--navy)}
+  .dim-t .tbl-title{background:var(--orange)}
+  .trow{display:grid;padding:5px 10px;border-top:1px solid var(--border);gap:6px}
+  .trow.head{background:var(--bg);font-weight:700;color:var(--ink-muted);border-top:none}
+  .cell.flag-hard{color:var(--slate);font-weight:700}
+  .cell.raw{color:var(--navy);font-weight:700}
+  .cell.rule{color:var(--orange);font-weight:700}
+  .flow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
+  .join-arrow{display:flex;flex-direction:column;align-items:center;color:var(--ink-muted);font-size:11px;font-weight:600}
+  .join-arrow .ln{font-size:20px;color:var(--orange)}
+  .baked{
+    display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-size:11.5px;
+    color:var(--slate);background:#EEF1F4;padding:5px 10px;border-radius:6px;font-weight:600;
+  }
+  .matrix{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px 28px;margin-bottom:22px}
+  .matrix h2{font-size:17px;color:var(--navy);font-weight:700;margin-bottom:4px}
+  .matrix .lead{font-size:13px;color:var(--ink-muted);margin-bottom:16px}
+  .mtbl{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+  .mrow{display:grid;grid-template-columns:2.4fr 1.3fr .9fr .6fr;gap:10px;padding:7px 14px;border-top:1px solid var(--border);font-size:13px;align-items:center}
+  .mrow.head{background:var(--navy);color:#fff;font-weight:700;border-top:none;font-size:12px}
+  .mrow .v{font-weight:700;color:var(--orange)}
+  .cat{background:var(--navy-soft);color:var(--navy);font-weight:700;font-size:12.5px;padding:8px 14px;border-top:1px solid var(--border)}
+  .mnote{font-size:11.5px;color:var(--ink-muted);margin-top:10px}
+  .dwwrap{border:1px solid var(--border);border-radius:12px;padding:16px;background:#fff;overflow-x:auto}
+  .dwleg{display:flex;flex-direction:column;gap:6px;margin-top:14px}
+  .dwleg .lg{font-size:12.5px;color:var(--ink);display:flex;align-items:center;gap:9px}
+  .dwleg .sw{width:14px;height:14px;border-radius:4px;flex-shrink:0}
+  code{font-family:monospace;font-size:.9em;background:var(--bg);padding:1px 5px;border-radius:4px;color:var(--navy);direction:ltr;unicode-bidi:embed}
+  .dwcall{margin-top:14px;padding:12px 15px;background:var(--orange-soft);border-inline-start:4px solid var(--orange);border-radius:8px;font-size:12.5px;color:var(--ink)}
+  .dwwrap svg,.dwwrap svg text{direction:ltr;text-anchor:start}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 21h18M5 21V10l7-5 7 5v11M9 21v-6h6v6"/>
+    </svg>
+  </div>
+  <div class="titles">
+    <h1>מידול תנאי סף משתנים — שתי אלטרנטיבות</h1>
+    <p>משרד התרבות והספורט · מבחן איגודים ואגודות 2026</p>
+  </div>
+</header>
+<main>
+  <section class="intro">
+    <h2>מה בכלל צריך להחליט?</h2>
+    <p>במבחן 2026 יש כללים שיכולים <b>להשתנות עם הזמן</b> לפי החלטות מדיניות של המשרד — למשל תנאי הסף של אחוז הנשים בהנהלה (היום 30%), או משקלי אמות המידה שלפיהם מתחלק סכום התמיכה — שנקבעים בנפרד ל"ענפי על" ולענפים הקבוצתיים ומשתנים לפי מדיניות.</p>
+    <p>אלה <b>לא רפורמות</b> אלא שימוש שוטף בכלי מדיניות. השאלה הקונקרטית שעל הפרק: כשמוסיפים את תנאי הסף של נשים בהנהלה — <b>להוסיף עוד שדה בוליאני</b> ל-FACT (עבר / לא-עבר), או <b>להוסיף מימד מדיניות</b> שמרכז את ערך הסף?</p>
+    <div class="q">שדה בוליאני נוסף מול מימד מדיניות — ואיזו דרך תשרת אותנו לאורך זמן?</div>
+  </section>
+  <div class="cols">
+    <div class="card optA">
+      <div class="card-head">
+        <span class="tag">אלטרנטיבה א׳</span>
+        <h3>להוסיף שדה בוליאני ל-FACT</h3>
+        <div class="sub">מוסיפים עמודה בוליאנית נוספת (למשל <code>is_pass_women_board_threshold</code>) לצד הדגלים הקיימים, כשה-30% צרוב בקוד ה-ETL.</div>
+      </div>
+      <div class="analogy">
+        <span class="ic">🖊️</span>
+        <span>כמו לכתוב את הציון הסופי <b>בטוש בלתי-מחיק</b> על כל טופס. מהיר לקריאה — אבל אם הכלל השתנה, צריך לכתוב מחדש על כל הטפסים.</span>
+      </div>
+      <div class="diagram">
+        <div class="tbl fact-t">
+          <div class="tbl-title">FACT — שורה לכל אגודה</div>
+          <div class="trow head" style="grid-template-columns:1.3fr .7fr .9fr 1fr">
+            <span>אגודה</span><span>שנה</span><span>% נשים</span><span>עבר סף?</span>
+          </div>
+          <div class="trow" style="grid-template-columns:1.3fr .7fr .9fr 1fr">
+            <span>מכבי</span><span>2026</span><span>34%</span><span class="cell flag-hard">✓ כן</span>
+          </div>
+          <div class="trow" style="grid-template-columns:1.3fr .7fr .9fr 1fr">
+            <span>הפועל</span><span>2026</span><span>27%</span><span class="cell flag-hard">✗ לא</span>
+          </div>
+        </div>
+        <div class="baked">🔒 עוד דגל בוליאני; ה-30% צרוב בקוד — כל שינוי מדיניות = שינוי קוד ETL</div>
+      </div>
+      <div class="lists">
+        <h4>יתרונות</h4>
+        <ul class="pro">
+          <li><span class="m">+</span><span>פשוט מאוד — הדשבורד רק קורא עמודה מוכנה, בלי חישובים.</span></li>
+          <li><span class="m">+</span><span>ביצועים מהירים, מתאים ישירות לרכיבי QuickSight.</span></li>
+          <li><span class="m">+</span><span>עם ETL <b>אינקרמנטלי לפי שנה</b> — כל שנה "מוקפאת" עם הסף שחל בה; אין עיבוד מחדש של שנים קודמות וההיסטוריה נשמרת נכון.</span></li>
+        </ul>
+        <h4>חסרונות</h4>
+        <ul class="con">
+          <li><span class="m">–</span><span>כל עדכון = <b>כניסה חוזרת ל-ETL</b>: נגיעה בקוד/צנרת דורשת זהירות, בדיקות והרצה — סיכון רגרסיה גם בשינוי קטן.</span></li>
+          <li><span class="m">–</span><span>ערך הסף "מוסתר" בקוד ה-ETL — אין מקור אמת אחד <b>גלוי ובר-תשאול</b>.</span></li>
+          <li><span class="m">–</span><span>אי אפשר לשאול "מה היה קורה אם הסף היה 35%?" בלי עיבוד מחדש.</span></li>
+          <li><span class="m">–</span><span>תיקון רטרואקטיבי של שנה שכבר עובדה דורש שינוי קוד + הרצה ממוקדת.</span></li>
+          <li><span class="m">–</span><span>פחות מתאים ל<b>ערכים מספריים</b> (כמו משקלי אמות המידה בענפי העל) שמזינים את חישוב חלוקת התמיכה.</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="card optB">
+      <div class="card-head">
+        <span class="tag">אלטרנטיבה ב׳</span>
+        <h3>להוסיף מימד מדיניות (DIM) · ההמלצה</h3>
+        <div class="sub">בעובדות נשמר רק הנתון הגולמי; כל ערכי המדיניות המשתנים יושבים בטבלה ייעודית לפי שנה.</div>
+      </div>
+      <div class="analogy">
+        <span class="ic">📖</span>
+        <span>כמו להחזיק <b>ספר חוקים נפרד</b>: על כל טופס כתוב רק הנתון האמיתי, וההכרעה נעשית מול הספר. רוצים לשנות כלל? מעדכנים שורה אחת בספר.</span>
+      </div>
+      <div class="diagram">
+        <div class="flow">
+          <div class="tbl fact-t" style="min-width:190px">
+            <div class="tbl-title">FACT</div>
+            <div class="trow head" style="grid-template-columns:1fr 1fr .6fr .8fr"><span>אגודה</span><span>תחום</span><span>שנה</span><span>% נשים</span></div>
+            <div class="trow" style="grid-template-columns:1fr 1fr .6fr .8fr"><span>מכבי</span><span>ענפי על</span><span>2026</span><span class="cell raw">34%</span></div>
+            <div class="trow" style="grid-template-columns:1fr 1fr .6fr .8fr"><span>הפועל</span><span>קבוצתי</span><span>2026</span><span class="cell raw">27%</span></div>
+          </div>
+          <div class="join-arrow"><span class="ln">⟷</span><span>הצלבה לפי שנה ותחום</span></div>
+          <div class="tbl dim-t" style="min-width:320px">
+            <div class="tbl-title">DIM מדיניות — ערכי מדיניות משתנים</div>
+            <div class="trow head" style="grid-template-columns:2fr 1fr .7fr .6fr"><span>פרמטר</span><span>תחום</span><span>ערך</span><span>שנה</span></div>
+            <div class="trow" style="grid-template-columns:2fr 1fr .7fr .6fr"><span>סף נשים בהנהלה</span><span>כל הענפים</span><span class="cell rule">30%</span><span>2026</span></div>
+            <div class="trow" style="grid-template-columns:2fr 1fr .7fr .6fr"><span>אמת מידה: ספורטאים</span><span>ענפי על</span><span class="cell rule">45%</span><span>2026</span></div>
+            <div class="trow" style="grid-template-columns:2fr 1fr .7fr .6fr"><span>אמת מידה: הישגיות</span><span>ענפי על</span><span class="cell rule">20%</span><span>2026</span></div>
+            <div class="trow" style="grid-template-columns:2fr 1fr .7fr .6fr"><span>אמת מידה: קידום ספורט נשים</span><span>ענפי על</span><span class="cell rule">2%</span><span>2026</span></div>
+            <div class="trow" style="grid-template-columns:2fr 1fr .7fr .6fr"><span>אמת מידה: קידום ספורט נשים</span><span>קבוצתי</span><span class="cell rule">3%</span><span>2026</span></div>
+          </div>
+        </div>
+        <div class="baked" style="color:var(--orange);background:var(--orange-soft)">📖 כל ערכי המדיניות במקום אחד, לפי שנה ותחום: תנאי הסף וגם משקלי אמות המידה — שקובעים כיצד מתחלק סכום התמיכה ונבדלים בין "ענפי על" לענפים קבוצתיים (המטריצה המלאה למטה)</div>
+      </div>
+      <div class="lists">
+        <h4>יתרונות</h4>
+        <ul class="pro">
+          <li><span class="m">+</span><span>שינוי מדיניות = <b>עדכון שורה בטבלה</b> (תחזוקת נתונים) — בלי כניסה חוזרת ל-ETL ובלי שינוי קוד.</span></li>
+          <li><span class="m">+</span><span>שומר היסטוריה: לכל שנה יודעים בדיוק איזה סף ואילו משקלי אמות מידה חלו.</span></li>
+          <li><span class="m">+</span><span>מקור אמת אחד, גלוי ושקוף — לא מוסתר בקוד.</span></li>
+          <li><span class="m">+</span><span>מאפשר תרחישי "מה אם" והשוואות בקלות.</span></li>
+        </ul>
+        <h4>חסרונות</h4>
+        <ul class="con">
+          <li><span class="m">–</span><span>מעט יותר מורכב לבנות בהתחלה (הצלבת טבלאות ב-ETL).</span></li>
+          <li><span class="m">–</span><span>דורש תחזוקה מסודרת של טבלת המדיניות.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <section class="matrix">
+    <h2>איך ייראה ה-DW (סכמת כוכב)</h2>
+    <p class="lead">הנתונים הגולמיים לחישוב <b>אחוז הנשים בהנהלה</b> מגיעים מנתוני בעלי התפקידים (<code>officials_dim</code>: <code>official_gender</code>, <code>official_desc</code>). מה שחסר הוא רק <b>ערך הסף</b> (30%): אלטרנטיבה א׳ מוסיפה עמודה בוליאנית ל-FACT (<code>is_pass_women_board_threshold</code>, ה-30% צרוב); אלטרנטיבה ב׳ מוסיפה <b>DIM מדיניות</b> אחד ומצליבה אליו.</p>
+    <div class="dwwrap"><svg viewBox="0 0 1160 660" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;direction:ltr" direction="ltr"><line x1="180" y1="127" x2="575" y2="247" stroke="var(--slate)" stroke-width="1.6"/><line x1="970" y1="127" x2="575" y2="247" stroke="var(--slate)" stroke-width="1.6"/><line x1="180" y1="282" x2="575" y2="247" stroke="var(--slate)" stroke-width="1.6"/><line x1="970" y1="282" x2="575" y2="247" stroke="var(--slate)" stroke-width="1.6"/><line x1="180" y1="437" x2="575" y2="247" stroke="var(--slate)" stroke-width="1.6"/><line x1="985" y1="452" x2="575" y2="247" stroke="var(--orange)" stroke-width="2.2" stroke-dasharray="7 5"/><line x1="575" y1="480" x2="575" y2="344" stroke="var(--green)" stroke-width="2"/><g><rect x="90" y="90" width="180" height="74" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><rect x="90" y="90" width="180" height="26" rx="8" fill="var(--navy)"/><rect x="90" y="108" width="180" height="8" fill="var(--navy)"/><text x="100" y="107" font-size="11" font-weight="700" fill="#fff" font-family="monospace">dwh_aa_dim_society</text><text x="101" y="131" font-size="10" fill="var(--navy)" font-weight="700" font-family="monospace">society_id</text><text x="101" y="151" font-size="10" fill="var(--ink)" font-weight="400" font-family="monospace">society_name</text></g><g><rect x="880" y="90" width="180" height="74" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><rect x="880" y="90" width="180" height="26" rx="8" fill="var(--navy)"/><rect x="880" y="108" width="180" height="8" fill="var(--navy)"/><text x="890" y="107" font-size="11" font-weight="700" fill="#fff" font-family="monospace">dwh_aa_dim_branchs</text><text x="891" y="131" font-size="10" fill="var(--navy)" font-weight="700" font-family="monospace">branch_id</text><text x="891" y="151" font-size="10" fill="var(--ink)" font-weight="400" font-family="monospace">branch_name</text></g><g><rect x="90" y="255" width="180" height="54" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><rect x="90" y="255" width="180" height="26" rx="8" fill="var(--navy)"/><rect x="90" y="273" width="180" height="8" fill="var(--navy)"/><text x="100" y="272" font-size="11" font-weight="700" fill="#fff" font-family="monospace">dwh_aa_dim_association</text><text x="101" y="296" font-size="10" fill="var(--navy)" font-weight="700" font-family="monospace">association_id</text></g><g><rect x="880" y="255" width="180" height="54" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><rect x="880" y="255" width="180" height="26" rx="8" fill="var(--navy)"/><rect x="880" y="273" width="180" height="8" fill="var(--navy)"/><text x="890" y="272" font-size="11" font-weight="700" fill="#fff" font-family="monospace">dwh_aa_dim_authority</text><text x="891" y="296" font-size="10" fill="var(--navy)" font-weight="700" font-family="monospace">authority_id</text></g><g><rect x="90" y="410" width="180" height="54" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><rect x="90" y="410" width="180" height="26" rx="8" fill="var(--navy)"/><rect x="90" y="428" width="180" height="8" fill="var(--navy)"/><text x="100" y="427" font-size="11" font-weight="700" fill="#fff" font-family="monospace">dwh_aa_dim_teams</text><text x="101" y="451" font-size="10" fill="var(--navy)" font-weight="700" font-family="monospace">team_id</text></g><g><rect x="880" y="395" width="210" height="114" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><rect x="880" y="395" width="210" height="26" rx="8" fill="var(--orange)"/><rect x="880" y="413" width="210" height="8" fill="var(--orange)"/><text x="890" y="412" font-size="11" font-weight="700" fill="#fff" font-family="monospace">dwh_aa_dim_policy (new)</text><text x="891" y="436" font-size="10" fill="var(--navy)" font-weight="700" font-family="monospace">param_name</text><text x="891" y="456" font-size="10" fill="var(--navy)" font-weight="700" font-family="monospace">techum</text><text x="891" y="476" font-size="10" fill="var(--navy)" font-weight="700" font-family="monospace">year</text><rect x="883" y="483" width="204" height="18" rx="4" fill="var(--orange-soft)"/><text x="891" y="496" font-size="10" fill="var(--orange)" font-weight="700" font-family="monospace">value</text></g><g><rect x="455" y="480" width="240" height="134" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><rect x="455" y="480" width="240" height="26" rx="8" fill="var(--green)"/><rect x="455" y="498" width="240" height="8" fill="var(--green)"/><text x="465" y="497" font-size="11" font-weight="700" fill="#fff" font-family="monospace">officials_dim</text><text x="466" y="521" font-size="10" fill="var(--navy)" font-weight="700" font-family="monospace">official_code</text><rect x="458" y="528" width="234" height="18" rx="4" fill="var(--green-soft)"/><text x="466" y="541" font-size="10" fill="var(--green)" font-weight="700" font-family="monospace">official_gender</text><rect x="458" y="548" width="234" height="18" rx="4" fill="var(--green-soft)"/><text x="466" y="561" font-size="10" fill="var(--green)" font-weight="700" font-family="monospace">official_desc</text><text x="466" y="581" font-size="10" fill="var(--sky)" font-weight="700" font-family="monospace">association_id</text><text x="466" y="601" font-size="10" fill="var(--ink)" font-weight="400" font-family="monospace">support_request_year</text></g><g><rect x="430" y="150" width="290" height="194" rx="8" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/><rect x="430" y="150" width="290" height="26" rx="8" fill="var(--navy)"/><rect x="430" y="168" width="290" height="8" fill="var(--navy)"/><text x="440" y="167" font-size="11" font-weight="700" fill="#fff" font-family="monospace">dwh_aa_fact_support_request_sport</text><text x="441" y="191" font-size="10" fill="var(--sky)" font-weight="700" font-family="monospace">society_id</text><text x="441" y="211" font-size="10" fill="var(--sky)" font-weight="700" font-family="monospace">branch_id</text><text x="441" y="231" font-size="10" fill="var(--sky)" font-weight="700" font-family="monospace">association_id</text><text x="441" y="251" font-size="10" fill="var(--ink)" font-weight="400" font-family="monospace">approved_amount</text><text x="441" y="271" font-size="10" fill="var(--ink)" font-weight="400" font-family="monospace">women_promotion_score</text><text x="441" y="291" font-size="10" fill="var(--ink)" font-weight="400" font-family="monospace">is_pass_threshold_condition</text><rect x="433" y="298" width="284" height="18" rx="4" fill="#EEF1F4"/><text x="441" y="311" font-size="10" fill="var(--slate)" font-weight="700" font-family="monospace">is_pass_women_board_threshold</text><rect x="433" y="318" width="284" height="18" rx="4" fill="var(--orange-soft)"/><text x="441" y="331" font-size="10" fill="var(--orange)" font-weight="700" font-family="monospace">policy_ref (year, techum)</text></g></svg></div>
+    <div class="dwleg">
+      <div class="lg"><span class="sw" style="background:var(--navy)"></span> מימדי המבנה הקיימים (society / branch / …) — ללא שינוי</div>
+      <div class="lg"><span class="sw" style="background:var(--green)"></span> <code>officials_dim</code> — נתוני בעלי התפקידים (<code>official_gender</code>/<code>official_desc</code>), שמהם נגזר אחוז הנשים בהנהלה</div>
+      <div class="lg"><span class="sw" style="background:var(--slate)"></span> <b>אלטרנטיבה א׳:</b> עמודה בוליאנית <code>is_pass_women_board_threshold</code> — ה-30% צרוב, אין DIM</div>
+      <div class="lg"><span class="sw" style="background:var(--orange)"></span> <b>אלטרנטיבה ב׳:</b> DIM מדיניות (קו כתום מקווקו) — ערך הסף גלוי, וגם כל שאר הערכים המשתנים</div>
+    </div>
+    <div class="dwcall">💡 הנתון הגולמי לאחוז הנשים בהנהלה מגיע מ-<code>officials_dim</code> — כך שעוד דגל בוליאני רק <b>משכפל מדיניות אל תוך הנתונים</b>. אותו DIM מדיניות שמחזיק את ה-30% מחזיק גם את כל 5 הקטגוריות מהמבחן, כך שלא צריך דגל (וכניסת ETL) לכל כלל בנפרד.</div>
+    <p class="mnote">ה-DIM מדיניות מרכז את כל 5 הקטגוריות שאותרו במבחן: משקלי אמות המידה (45%/20%/…), חלוקת התקציב בין הרצועות (ענפי על 37.85%), יחסי איגוד–אגודות (35/65, 60/40, נכים 50%), מפתח החלוקה בין ענפי העל, ותנאי הסף הכמותיים (נשים 30%, מינ׳ 200 ספורטאים ועוד) — כל שורה נושאת param, techum ו-year.</p>
+  </section>
+
+  <section class="rec">
+    <h2>✔ ההמלצה: מימד מדיניות (DIM), לא עוד שדה בוליאני</h2>
+    <p class="why"><b>נכון להעיר:</b> עם ETL אינקרמנטלי, אלטרנטיבה א׳ קלה יותר משנדמה — העדכון רץ רק בעיבוד השנים החדשות, שנים קודמות "מוקפאות" עם הסף שחל בהן, וההיסטוריה נשמרת נכון בלי בנייה מחדש. זה מבטל את החשש מ"עיבוד מלא מחדש".</p>
+    <p class="why"><b>אבל</b> כל עדכון כזה הוא עדיין <strong>כניסה חוזרת ל-ETL</strong> — נגיעה בקוד/צנרת שדורשת זהירות, בדיקות ופריסה, גם כשהשינוי עצמו קטן. אלטרנטיבה ב׳ מוציאה את השינוי מהצנרת אל <strong>תחזוקת נתונים פשוטה</strong>: מעדכנים שורה בטבלה, בלי לגעת ב-ETL שוב ושוב.</p>
+    <p class="why">מעבר לכך, ב׳ שומרת את ערכי המדיניות במקום <strong>גלוי ובר-תשאול</strong> (מי צריך לדעת איזה סף ואילו משקלי אמות מידה חלו ב-2026 — קורא שורה, לא קוד) ומאפשרת תרחישי "מה אם" בזמן שאילתה.</p>
+    <p class="why"><b>לגבי ההחלטה הקונקרטית:</b> שדה בוליאני חדש נראה זול, אבל הוא <strong>צורב את ה-30% אל תוך הנתונים</strong> ומאבד את הערך עצמו. הנתונים הגולמיים לחישוב אחוז הנשים בהנהלה מגיעים מנתוני בעלי התפקידים (<code>officials_dim</code>: <code>official_gender</code>, <code>official_desc</code>); מה שחסר הוא רק היכן נשמר <strong>ערך הסף</strong>. מימד מדיניות שומר אותו במקום גלוי ומאפשר לגזור עבר/לא-עבר בהצלבה — בלי לשכפל מדיניות אל תוך דגל, ובלי כניסת ETL בכל עדכון.</p>
+    <p class="why"><b>וזה לא פרמטר בודד:</b> כפי שמראה המטריצה למעלה, מדובר ב<strong>עשרות ערכי מדיניות</strong> (משקלים, חלוקות רצועה, יחסי איגוד-אגודות, תנאי סף). לנהל את כולם כהיגיון קשיח פירושו עשרות כניסות ETL חוזרות; DIM אחד מרכז את כולם.</p>
+    <p class="caveat">הגבול הפרקטי: <b>ערך מספרי שמזין חישוב, או כל דבר שתרצו לתשאל/לבקר/לדמות — יישמר ב-DIM. דגל בוליאני קבוע שלא צריך "מה אם" — אפשר להשאיר צרוב ב-FACT.</b></p>
+  </section>
+</main>
+</body>
+</html>

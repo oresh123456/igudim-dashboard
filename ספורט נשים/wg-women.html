@@ -1,0 +1,1746 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ספורט נשים — דשבורד</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #F5F1EB; --surface: #FFFFFF; --surface-soft: #FBF8F2;
+    --ink: #1A1A1A; --ink-muted: #6B6B6B; --ink-faint: #9A9A9A;
+    --line: #E5E1D8; --line-soft: #EFEBE3;
+    --women: #86198F; --women-soft: #E8C8ED; --women-mid: #B85EC0;
+    --teal: #0D5F73; --teal-soft: #B8DDE9; --teal-mid: #4A8FA3;
+    --neutral: #B0AB9F; --neutral-soft: #D8D4C9;
+    --prof: #6E7E91;
+    --warn: #B45309; --warn-soft: #FEF3C7;
+    --gap:  #991B1B; --gap-soft: #FEE2E2;
+    --good: #166534; --good-soft: #DCFCE7;
+    --radius: 6px; --radius-lg: 10px;
+  }
+  html { font-size: 15px; }
+  body { font-family: 'Heebo', system-ui, sans-serif;
+    background: var(--bg); color: var(--ink); line-height: 1.55;
+    min-height: 100vh; -webkit-font-smoothing: antialiased;
+    font-feature-settings: "tnum" 1; }
+
+  header { background: var(--surface); border-bottom: 1px solid var(--line);
+    padding: 18px 32px; display: flex; align-items: baseline; gap: 14px; }
+  header h1 { font-size: 18px; font-weight: 600; color: var(--ink); }
+  header .meta { font-size: 12px; color: var(--ink-faint); letter-spacing: 0.04em; }
+  header .meta-badge { display: inline-block; background: var(--women-soft); color: var(--women);
+    padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 500; margin-inline-start: 10px; }
+
+  .page-tabs { background: var(--surface); border-bottom: 1px solid var(--line);
+    padding: 0 32px; display: flex; gap: 0; overflow-x: auto; }
+  .ptab { padding: 14px 22px; background: none; border: 0;
+    border-bottom: 2px solid transparent; color: var(--ink-muted);
+    font-size: 14px; font-weight: 400; font-family: inherit;
+    cursor: pointer; transition: color .15s; margin-bottom: -1px; white-space: nowrap; }
+  .ptab:hover { color: var(--ink); }
+  .ptab.active { color: var(--women); font-weight: 500; border-bottom-color: var(--women); }
+
+  main { padding: 24px 32px 80px; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  .filter-bar { background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--radius-lg); padding: 14px 16px; margin-bottom: 18px;
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .filter-bar-label { font-size: 11px; color: var(--ink-muted); letter-spacing: 0.04em;
+    border-left: 1px solid var(--line); padding-left: 14px; margin-left: 4px;
+    align-self: stretch; display: flex; align-items: center; gap: 4px; font-weight: 400; }
+  .filter-bar-label strong { font-weight: 600; color: var(--ink); }
+  .filter { display: flex; flex-direction: column; gap: 4px; }
+  .filter label { font-size: 11px; color: var(--ink-muted); font-weight: 500; }
+  .filter select { font-family: inherit; font-size: 13px; padding: 6px 10px;
+    border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface);
+    color: var(--ink); cursor: pointer; min-width: 130px; outline: none; }
+  /* פילטר גיל נומרי — זהה למסכי איגודים-אגודות (טווח מ–עד) */
+  .age-range { display: flex; align-items: center; gap: 6px;
+    background: var(--surface-soft); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 5px 10px; min-width: 130px;
+    transition: border-color 0.15s; }
+  .age-range:hover { border-color: var(--ink-muted); }
+  .age-range:focus-within { outline: 2px solid var(--women-soft); outline-offset: 1px; border-color: var(--women); }
+  .age-num { width: 100%; border: none; background: transparent;
+    font-family: inherit; font-size: 13px; color: var(--ink);
+    text-align: center; outline: none; padding: 1px 0;
+    appearance: textfield; -moz-appearance: textfield; font-feature-settings: "tnum" 1; }
+  .age-num::-webkit-outer-spin-button,
+  .age-num::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  .age-range .sep { color: var(--ink-faint); font-size: 12px; user-select: none; }
+  .filter-reset { margin-inline-start: auto; background: transparent; border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 7px 14px; font-family: inherit; font-size: 12px;
+    color: var(--ink-muted); cursor: pointer; }
+
+  .kpis { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 18px; }
+  .kpis.k4 { grid-template-columns: repeat(4, 1fr); }
+  .kpi { background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--radius-lg); padding: 14px 16px; }
+  .kpi-label { font-size: 12px; color: var(--ink-muted); margin-bottom: 6px; font-weight: 400;
+    display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .kpi-value { font-size: 24px; font-weight: 600; color: var(--ink); letter-spacing: -0.01em; line-height: 1.15; }
+  .kpi-sub { font-size: 11px; color: var(--ink-faint); margin-top: 4px; }
+  .kpi-delta { font-size: 11px; margin-top: 4px; font-weight: 500; }
+  .kpi-delta.up   { color: var(--good); }
+  .kpi-delta.down { color: var(--gap); }
+
+  .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 14px; margin-bottom: 18px; }
+  .col-12 { grid-column: span 12; }
+  .col-6  { grid-column: span 6; }
+  .col-4  { grid-column: span 4; }
+
+  .card { background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--radius-lg); padding: 14px 16px 16px; display: flex; flex-direction: column; }
+  .card-head { display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 12px; gap: 10px; flex-wrap: wrap; }
+  .card-title { font-size: 14px; font-weight: 500; color: var(--ink); }
+  .card-meta { font-size: 11px; color: var(--ink-faint); letter-spacing: 0.02em;
+    display: flex; align-items: center; gap: 8px; }
+
+
+  /* ── chart primitives ── */
+
+  /* horizontal bars (single color) */
+  .hbar { display: flex; flex-direction: column; gap: 8px; }
+  .hbar-row { display: grid; grid-template-columns: 120px 1fr 64px; align-items: center; gap: 10px; font-size: 12px; }
+  .hbar-label { color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .hbar-track { height: 14px; background: var(--line-soft); border-radius: 3px; overflow: hidden; display: flex; }
+  .hbar-fill { height: 100%; background: var(--women); }
+  .hbar-fill.teal { background: var(--teal); }
+  .hbar-fill.below { background: var(--gap); }
+  .hbar-fill.muted { background: var(--neutral); }
+  .hbar-val { text-align: start; color: var(--ink-muted); font-feature-settings: "tnum"; }
+  /* כותרת עמודה מעל גרף מוערם 100% — שם העמודה הצדדית (כמו "סה״כ ניקוד הישגיות") */
+  .hbar-head { display: flex; justify-content: space-between; align-items: baseline;
+    margin: 0 2px 6px; gap: 8px; }
+  .hbar-head .hh-label, .hbar-head .hh-val { font-size: 10px; font-weight: 600;
+    letter-spacing: .02em; white-space: nowrap; }
+  .hbar-head .hh-label { color: var(--ink-muted); }
+  .hbar-head .hh-val { color: var(--ink); }
+  .hbar-head .hh-end { display: flex; align-items: center; gap: 8px; }
+  .hbar-head .hh-sort { font-family: inherit; font-size: 10px; color: var(--ink-muted);
+    border: 1px solid var(--line); border-radius: 4px; background: var(--surface);
+    padding: 1px 5px; cursor: pointer; outline: none; }
+  .hbar-head .hh-sort:hover { border-color: var(--women); color: var(--women); }
+
+  /* segment (used inside stacked tracks) */
+  .seg { height: 100%; }
+  .seg-f  { background: var(--women); }
+  .seg-fs { background: var(--women-soft); }
+  .seg-fp { background: var(--women-mid); }
+  .seg-m  { background: var(--teal); }
+  .seg-ms { background: var(--teal-soft); }
+  .seg-mp { background: var(--teal-mid); }
+  .seg-prof { background: var(--prof); }  /* מקצועיות — ערך אחד, לא מגדרי */
+  /* גרף מקלות אנכי מוערם — כמות מאמנים/מדריכים אל מול מאמנות/מדריכות (פלטה זהה לגרף המקורי) */
+  .vstack-chart { display: flex; align-items: flex-end; justify-content: space-between; gap: 6px;
+    height: 250px; padding: 8px 4px 0; border-bottom: 1px solid var(--line); margin-bottom: 6px; }
+  .vstack-group { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; }
+  .vstack-bars { display: flex; align-items: flex-end; justify-content: center; gap: 5px; height: 228px; }
+  .vstack-bar { width: 24px; display: flex; flex-direction: column-reverse;
+    border-radius: 3px 3px 0 0; overflow: hidden; }
+  .vstack-seg { width: 100%; display: flex; align-items: center; justify-content: center; }
+  .vstack-seg span { font-size: 9px; font-weight: 600; color: #fff; text-shadow: 0 0 2px rgba(0,0,0,0.55);
+    font-feature-settings: "tnum" 1; }
+  .vstack-cap { font-size: 11px; color: var(--ink-muted); text-align: center; line-height: 1.25; }
+  .seg-wc { background: var(--women); }      /* מאמנות */
+  .seg-wi { background: var(--women-mid); }  /* מדריכות */
+  .seg-mc { background: var(--teal); }       /* מאמנים */
+  .seg-mi { background: var(--teal-mid); }   /* מדריכים */
+  .seg-n  { background: var(--neutral); }
+  .seg-na { background: var(--ink-faint); }
+
+  /* taller stacked bar (used for hero composition) */
+  .hbar-tall .hbar-row { grid-template-columns: 100px 1fr 70px; }
+  .hbar-tall .hbar-track { height: 22px; border-radius: 3px; }
+
+  /* vertical bars (single color) */
+  .vbar-chart { display: flex; align-items: flex-end; gap: 8px; height: 200px;
+    padding: 6px 4px 22px; border-bottom: 1px solid var(--line-soft); position: relative; }
+  .vbar-chart .vb-col { flex: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: flex-end; height: 100%; position: relative; min-width: 0; }
+  .vbar-chart .vb-fill { width: 100%; background: var(--women); border-radius: 2px 2px 0 0; min-height: 3px; }
+  .vbar-chart .vb-fill.teal { background: var(--teal); }
+  .vbar-chart .vb-fill.muted { background: var(--neutral); }
+  .vbar-chart .vb-fill.below { background: var(--gap); }
+  .vbar-chart .vb-cap { position: absolute; bottom: -20px; font-size: 10px; color: var(--ink-muted); white-space: nowrap; text-align: center; }
+  .vbar-chart .vb-val { font-size: 10px; color: var(--ink-muted); font-feature-settings: "tnum"; margin-bottom: 2px; white-space: nowrap; }
+
+  /* grouped vbar (M+F pair per category) */
+  .vbar-chart.grouped .vb-col .vb-pair { display: flex; align-items: flex-end; height: 100%; width: 100%; gap: 2px; }
+  .vbar-chart.grouped .vb-pair > div { flex: 1; border-radius: 2px 2px 0 0; min-height: 3px; }
+  .vbar-chart.grouped .vb-pair > .vbm { background: var(--teal); }
+  .vbar-chart.grouped .vb-pair > .vbf { background: var(--women); }
+
+  /* simple donut */
+  .donut-row { display: flex; justify-content: space-around; align-items: center; gap: 14px; flex-wrap: wrap; padding: 4px 0; }
+  .donut-wrap { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .donut { width: 130px; height: 130px; border-radius: 50%;
+    background: conic-gradient(var(--women) 0 calc(var(--pct) * 1%), var(--women-soft) calc(var(--pct) * 1%) 100%); position: relative; }
+  .donut::before { content: ""; position: absolute; inset: 24%; background: var(--surface); border-radius: 50%; }
+  .donut-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .donut-center .pct { font-size: 22px; font-weight: 700; color: var(--women); line-height: 1; }
+  .donut-center .sub { font-size: 10px; color: var(--ink-muted); margin-top: 2px; letter-spacing: 0.02em; }
+  .donut-cap { font-size: 12px; color: var(--ink); text-align: center; max-width: 170px; line-height: 1.4; }
+
+  /* line chart */
+  .line-svg { width: 100%; height: 220px; display: block; }
+
+  /* legend */
+  .legend-row { display: flex; gap: 14px; margin-top: 10px; flex-wrap: wrap; }
+  .legend-item { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; color: var(--ink-muted); }
+  .legend-swatch { width: 12px; height: 10px; border-radius: 2px; }
+  /* מקרא מוגדל — לבקשת הלקוח (גרף "שיעור נשים ברכיבי התקציב") */
+  .legend-row.lg { gap: 22px; }
+  .legend-row.lg .legend-item { font-size: 13.5px; }
+  .legend-row.lg .legend-swatch { width: 16px; height: 13px; }
+
+  /* sub-cards */
+  .sub-cards-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .sub-cards-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .sub-card { background: var(--surface-soft); border: 1px solid var(--line-soft);
+    border-radius: var(--radius); padding: 12px 12px 14px; display: flex; flex-direction: column; gap: 10px; }
+  .sub-title { font-size: 12px; font-weight: 500; color: var(--ink); text-align: center;
+    letter-spacing: 0.02em; padding-bottom: 6px; border-bottom: 1px solid var(--line-soft); }
+  .sub-card .hbar-row { grid-template-columns: 96px 1fr 48px; }
+
+  /* authority comparison panel */
+  .auth-compare { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .auth-col { background: var(--surface-soft); border: 1px solid var(--line-soft);
+    border-radius: var(--radius); padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+  .auth-name { font-size: 14px; font-weight: 600; color: var(--women); text-align: center;
+    padding-bottom: 8px; border-bottom: 1px solid var(--line-soft); }
+  .auth-name .auth-meta { display: block; font-size: 10px; color: var(--ink-muted); font-weight: 400; margin-top: 2px; letter-spacing: 0.04em; }
+  .auth-stat { display: flex; justify-content: space-between; align-items: baseline;
+    padding: 6px 0; border-bottom: 1px dashed var(--line-soft); font-size: 12px; }
+  .auth-stat:last-child { border-bottom: 0; }
+  .auth-stat .lbl { color: var(--ink-muted); }
+  .auth-stat .val { font-size: 16px; font-weight: 600; color: var(--ink); font-feature-settings: "tnum"; }
+  .auth-stat .delta { font-size: 10px; margin-inline-start: 4px; }
+  .auth-stat .delta.up   { color: var(--good); }
+  .auth-stat .delta.down { color: var(--gap); }
+  .auth-stat .delta.flat { color: var(--ink-faint); }
+
+  /* section heading */
+  .section-title { font-size: 12px; font-weight: 600; letter-spacing: 0.04em;
+    margin: 18px 0 10px; padding: 6px 12px; background: var(--women-soft); color: var(--women);
+    border-radius: var(--radius); display: inline-block; }
+
+  /* simple table */
+  .stbl { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .stbl th, .stbl td { padding: 8px 10px; text-align: start; border-bottom: 1px solid var(--line-soft); }
+  .stbl th { font-weight: 500; color: var(--ink-muted); font-size: 11px; letter-spacing: 0.04em; }
+  .stbl td { color: var(--ink); }
+  .stbl td.num { font-feature-settings: "tnum"; color: var(--ink-muted); text-align: end; }
+
+  /* footer */
+  .footer-note { margin-top: 26px; padding: 18px 22px; background: var(--surface-soft);
+    border: 1px dashed var(--line); border-radius: var(--radius-lg);
+    font-size: 12px; color: var(--ink-muted); line-height: 1.7; }
+  .footer-note h3 { font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 6px; margin-top: 14px; }
+  .footer-note h3:first-child { margin-top: 0; }
+  .footer-note ul { padding-inline-start: 20px; margin: 4px 0; }
+  .footer-note li { margin-bottom: 3px; }
+  .footer-note code { font-family: 'SF Mono', Monaco, monospace; font-size: 11px;
+    background: var(--surface); padding: 1px 5px; border-radius: 3px; color: var(--women); }
+  .legend-strip { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 6px; }
+
+  /* ── chart hover tooltip (הצגת אחוז + כמות על מקטע בעמידה עליו) ── */
+  .chart-tip { position: fixed; z-index: 1000; pointer-events: none;
+    background: var(--ink); color: #fff; font-family: inherit; font-size: 12px;
+    line-height: 1.45; padding: 7px 10px; border-radius: var(--radius);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.18); max-width: 260px;
+    opacity: 0; transition: opacity .12s; direction: rtl; }
+  .chart-tip.show { opacity: 1; }
+  .chart-tip .tt-t { font-weight: 600; margin-bottom: 2px; }
+  .chart-tip .tt-r { color: #EDEDED; font-feature-settings: "tnum" 1; }
+  .hbar-track .seg, .hbar-track .hbar-fill,
+  .vbar-chart .vb-fill, .vstack-seg { cursor: default; }
+
+  @media (max-width: 1100px) {
+    .kpis { grid-template-columns: repeat(3, 1fr); }
+    .kpis.k4 { grid-template-columns: repeat(2, 1fr); }
+    .col-6, .col-4 { grid-column: span 12; }
+    .sub-cards-3, .sub-cards-2, .auth-compare { grid-template-columns: 1fr; }
+  }
+
+  /* ── client demands banner (פגישת לקוח 1.6.26) ── */
+  .client-demands { background: #FCF3FD; border: 1px solid var(--women-soft);
+    border-right: 4px solid var(--women); border-radius: var(--radius-lg);
+    padding: 14px 18px; margin-bottom: 18px; }
+  .client-demands .cd-head { font-size: 13px; font-weight: 600; color: var(--women); margin-bottom: 8px; }
+  .client-demands ul { padding-inline-start: 20px; margin: 0; }
+  .client-demands li { font-size: 12.5px; color: var(--ink); margin-bottom: 6px; line-height: 1.5; }
+
+  /* ── editable mode ── */
+  [contenteditable] { outline: none; border-radius: 3px; transition: background .15s; }
+  [contenteditable]:hover { background: rgba(134,25,143,0.06); }
+  [contenteditable]:focus { background: rgba(134,25,143,0.10); box-shadow: 0 0 0 2px var(--women-soft); }
+
+  .comment-box { margin-top: 8px; padding: 10px 12px; background: var(--surface-soft);
+    border: 1px dashed var(--line); border-radius: var(--radius); font-size: 12px;
+    color: var(--ink-muted); font-family: inherit; line-height: 1.5;
+    min-height: 36px; outline: none; direction: rtl; }
+  .comment-box:empty::before { content: "הערות..."; color: var(--ink-faint); pointer-events: none; }
+  .comment-box:focus { border-color: var(--women); background: #fff; }
+  .comment-label { font-size: 10px; color: var(--ink-faint); margin-top: 10px; letter-spacing: 0.04em; }
+
+  .edit-toolbar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 999;
+    background: var(--surface); border-top: 2px solid var(--women); padding: 10px 32px;
+    display: flex; align-items: center; gap: 12px; justify-content: flex-end;
+    box-shadow: 0 -4px 16px rgba(0,0,0,0.08); }
+  .edit-toolbar .tb-label { margin-inline-end: auto; font-size: 12px; color: var(--ink-muted); }
+  .edit-toolbar button { font-family: inherit; font-size: 13px; padding: 8px 18px;
+    border-radius: var(--radius); cursor: pointer; border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
+  .edit-toolbar button.primary { background: var(--women); color: #fff; border-color: var(--women); font-weight: 500; }
+  .edit-toolbar button:hover { opacity: 0.85; }
+  .edit-toolbar .tb-status { font-size: 12px; font-weight: 500; padding: 4px 12px;
+    border-radius: 999px; border: 1px solid var(--line); color: var(--ink-muted); background: var(--surface-soft); white-space: nowrap; }
+  .edit-toolbar .tb-status.dirty { color: var(--warn); border-color: var(--warn); background: var(--warn-soft); }
+  .restore-banner { position: sticky; top: 0; z-index: 998; display: none;
+    align-items: center; gap: 14px; background: var(--warn-soft);
+    border-bottom: 1px solid var(--warn); padding: 10px 32px; font-size: 13px; color: var(--warn); }
+  .restore-banner.show { display: flex; }
+  .restore-banner .rb-text { margin-inline-end: auto; }
+  .restore-banner button { font-family: inherit; font-size: 12px; padding: 5px 14px;
+    border-radius: var(--radius); cursor: pointer; border: 1px solid var(--warn);
+    background: #fff; color: var(--warn); font-weight: 500; }
+  .restore-banner button:hover { opacity: 0.85; }
+  body.embedded header, body.embedded .page-tabs { display: none; }
+  body.embedded main { padding-top: 12px; }
+
+  /* filter chips for STT weights per band */
+  .stt-bands { display:flex; gap:4px; margin:2px 0 10px; flex-wrap:wrap; }
+  .stt-band { font:inherit; font-size:11px; padding:2px 10px; border-radius:999px;
+    border:1px solid var(--line); background:var(--surface-soft); color:var(--ink-muted); cursor:pointer; transition:background .12s,border-color .12s; }
+  .stt-band:hover { border-color:var(--women-mid); }
+  .stt-band.active { border-color:var(--women); background:var(--women-soft); color:var(--women); font-weight:600; }
+</style>
+</head>
+<body>
+
+<div class="restore-banner" id="restoreBanner">
+  <span class="rb-text">מוצגות הערות/עריכות שטרם נשמרו לקובץ (שוחזרו אוטומטית מהדפדפן).</span>
+  <button onclick="clearDraft()">נקה והצג מקור</button>
+</div>
+
+<header>
+  <h1>ספורט נשים — דשבורד</h1>
+  <span class="meta">משרד התרבות והספורט · אגף הספורט</span>
+  <span class="meta-badge">ספורט נשים</span>
+</header>
+
+<nav class="page-tabs">
+  <button class="ptab active" data-target="tab-overview">תמונה כללית</button>
+  <button class="ptab" data-target="tab-budget">תקציב וניקוד</button>
+  <button class="ptab" data-target="tab-athletes">ספורטאיות ושימור</button>
+  <button class="ptab" data-target="tab-roles">מאמנות ובעלות תפקיד</button>
+  <button class="ptab" data-target="tab-visit">השוואת רשויות</button>
+</nav>
+
+<main>
+
+<!-- ════════════════════════════════════════════════════════════════
+     TAB 1 — תמונה כללית
+══════════════════════════════════════════════════════════════════ -->
+<section class="tab-content active" id="tab-overview">
+
+  <div class="filter-bar">
+    <span class="filter-bar-label">פילטרים על <strong>הדף</strong></span>
+    <div class="filter"><label>שנה</label><select><option>2026</option><option>2025</option></select></div>
+    <div class="filter"><label>רשות מקומית</label><select><option>הכל</option></select></div>
+    <div class="filter"><label>מדד סוציו-אקונומי</label><select><option>הכל</option></select></div>
+    <div class="filter"><label>איגוד</label><select><option>הכל</option></select></div>
+    <div class="filter"><label>אגודה</label><select><option>הכל</option></select></div>
+    <div class="filter"><label>קבוצה</label><select><option>הכל</option></select></div>
+    <div class="filter"><label>ענף</label><select><option>הכל</option><option>כדורגל</option><option>כדורסל</option><option>שחייה</option><option>אתלטיקה</option><option>טניס</option><option>כדורעף</option><option>התעמלות</option><option>ג'ודו</option></select></div>
+    <div class="filter"><label>סיווג אולימפי</label><select><option>הכל</option><option>אולימפי</option><option>פרה-אולימפי</option><option>לא אולימפי</option></select></div>
+    <div class="filter"><label>סוג ענף</label><select><option>הכל</option><option>אישי</option><option>קבוצתי</option></select></div>
+    <div class="filter"><label>תחרויות</label><select><option>הכל</option><option>אליפות אירופה</option><option>שום תחרות</option></select></div>
+    <div class="filter"><label>טווח גיל</label>
+      <div class="age-range">
+        <input type="number" class="age-num" min="0" max="120" value="6" aria-label="גיל מינימלי">
+        <span class="sep">–</span>
+        <input type="number" class="age-num" min="0" max="120" value="50" aria-label="גיל מקסימלי">
+      </div>
+    </div>
+    <div class="filter"><label>תנאי סף</label><select><option>הכל</option><option>עברו תנאי סף</option><option>לא עברו</option></select></div>
+    <button class="filter-reset">איפוס</button>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="kpi-label">ספורטאיות פעילות</div><div class="kpi-value">49,830</div><div class="kpi-delta up">▲ +3,630 משנה קודמת</div></div>
+    <div class="kpi"><div class="kpi-label">שיעור ספורטאיות</div><div class="kpi-value">38.2%</div><div class="kpi-delta up">▲ +1.4% (לעומת שנה קודמת)</div></div>
+    <div class="kpi"><div class="kpi-label">שימור ספורטאיות</div><div class="kpi-value">72%</div><div class="kpi-sub">ת.ז. חוזרות 25→26</div></div>
+    <div class="kpi"><div class="kpi-label">מאמנות ומדריכות</div><div class="kpi-value">1,045 / 1,310</div><div class="kpi-sub">מאמנות / מדריכות · 24% מהמאמנים</div></div>
+    <div class="kpi"><div class="kpi-label">נשים בהנהלה</div><div class="kpi-value">24%</div><div class="kpi-sub">186 נשים / 590 גברים</div></div>
+    <div class="kpi"><div class="kpi-label">איגודים עם 30%+ נשים בהנהלה</div><div class="kpi-value">14 / 22</div><div class="kpi-delta up">▲ +2 משנה קודמת</div></div>
+  </div>
+
+  <div class="grid">
+    <div class="card col-12">
+      <div class="card-head">
+        <span class="card-title">חלקן של הנשים — ספורטאיות וניקוד</span>
+        <span class="card-meta">3 × Donut · שיעור מצרפי</span>
+      </div>
+      <div class="donut-row">
+        <div class="donut-wrap">
+          <div style="position:relative;">
+            <div class="donut" style="--pct:38;"></div>
+            <div class="donut-center"><span class="pct">38%</span><span class="sub">מהספורטאים</span></div>
+          </div>
+          <div class="donut-cap">ספורטאיות מכלל הספורטאים הפעילים</div>
+        </div>
+        <div class="donut-wrap">
+          <div style="position:relative;">
+            <div class="donut" style="--pct:31;"></div>
+            <div class="donut-center"><span class="pct">31%</span></div>
+          </div>
+          <div class="donut-cap">שיעור ניקוד הישגיות ספורטאיות<span style="display:block;font-size:10px;color:var(--ink-muted);font-weight:400;margin-top:3px;letter-spacing:0.02em;">מתוך כלל ניקוד הישגיות</span></div>
+        </div>
+        <div class="donut-wrap">
+          <div style="position:relative;">
+            <div class="donut" style="--pct:36;"></div>
+            <div class="donut-center"><span class="pct">36%</span></div>
+          </div>
+          <div class="donut-cap">שיעור ניקוד ספורטאיות<span style="display:block;font-size:10px;color:var(--ink-muted);font-weight:400;margin-top:3px;letter-spacing:0.02em;">מתוך כלל ניקוד ספורטאים</span></div>
+        </div>
+      </div>
+    </div>
+
+        <div class="card col-12">
+      <div class="card-head">
+        <span class="card-title">שיעור תקציב הנשים ברכיבי התקציב הכולל לפי רצועות</span>
+        <span class="card-meta">Stacked Bar · 12 ענפים · כלל אמות המידה</span>
+      </div>
+      <div class="hbar hbar-tall">
+        <div class="hbar-row"><span class="hbar-label">התעמלות</span><div class="hbar-track" title="ספורטאיות 28% · הישגיות נ׳ 17% · מקצועיות 12% · ספורטאים 10% · הישגיות ז׳ 5% · אחר 28%"><div class="seg seg-ms" style="width:10%"></div><div class="seg seg-fs" style="width:28%"></div><div class="seg seg-m" style="width:5%"></div><div class="seg seg-f" style="width:17%"></div><div class="seg seg-prof" style="width:12%"></div><div class="seg seg-n" style="width:28%"></div></div><span class="hbar-val">12,500</span></div>
+        <div class="hbar-row"><span class="hbar-label">שחייה</span><div class="hbar-track" title="ספורטאיות 17% · הישגיות נ׳ 8% · מקצועיות 9% · ספורטאים 22% · הישגיות ז׳ 11% · אחר 33%"><div class="seg seg-ms" style="width:22%"></div><div class="seg seg-fs" style="width:17%"></div><div class="seg seg-m" style="width:11%"></div><div class="seg seg-f" style="width:8%"></div><div class="seg seg-prof" style="width:9%"></div><div class="seg seg-n" style="width:33%"></div></div><span class="hbar-val">14,100</span></div>
+        <div class="hbar-row"><span class="hbar-label">כדורסל</span><div class="hbar-track" title="ספורטאיות 13% · הישגיות נ׳ 6% · מקצועיות 9% · ספורטאים 28% · הישגיות ז׳ 12% · אחר 32%"><div class="seg seg-ms" style="width:28%"></div><div class="seg seg-fs" style="width:13%"></div><div class="seg seg-m" style="width:12%"></div><div class="seg seg-f" style="width:6%"></div><div class="seg seg-prof" style="width:9%"></div><div class="seg seg-n" style="width:32%"></div></div><span class="hbar-val">15,400</span></div>
+        <div class="hbar-row"><span class="hbar-label">אתלטיקה</span><div class="hbar-track" title="ספורטאיות 14% · הישגיות נ׳ 7% · מקצועיות 9% · ספורטאים 24% · הישגיות ז׳ 13% · אחר 33%"><div class="seg seg-ms" style="width:24%"></div><div class="seg seg-fs" style="width:14%"></div><div class="seg seg-m" style="width:13%"></div><div class="seg seg-f" style="width:7%"></div><div class="seg seg-prof" style="width:9%"></div><div class="seg seg-n" style="width:33%"></div></div><span class="hbar-val">10,300</span></div>
+        <div class="hbar-row"><span class="hbar-label">כדורעף</span><div class="hbar-track" title="ספורטאיות 18% · הישגיות נ׳ 10% · מקצועיות 9% · ספורטאים 20% · הישגיות ז׳ 10% · אחר 33%"><div class="seg seg-ms" style="width:20%"></div><div class="seg seg-fs" style="width:18%"></div><div class="seg seg-m" style="width:10%"></div><div class="seg seg-f" style="width:10%"></div><div class="seg seg-prof" style="width:9%"></div><div class="seg seg-n" style="width:33%"></div></div><span class="hbar-val">6,200</span></div>
+        <div class="hbar-row"><span class="hbar-label">כדורגל</span><div class="hbar-track" title="ספורטאיות 4% · הישגיות נ׳ 2% · מקצועיות 8% · ספורטאים 44% · הישגיות ז׳ 8% · אחר 34%"><div class="seg seg-ms" style="width:44%"></div><div class="seg seg-fs" style="width:4%"></div><div class="seg seg-m" style="width:8%"></div><div class="seg seg-f" style="width:2%"></div><div class="seg seg-prof" style="width:8%"></div><div class="seg seg-n" style="width:34%"></div></div><span class="hbar-val">9,400</span></div>
+        <div class="hbar-row"><span class="hbar-label">טניס</span><div class="hbar-track" title="ספורטאיות 14% · הישגיות נ׳ 6% · מקצועיות 9% · ספורטאים 26% · הישגיות ז׳ 12% · אחר 33%"><div class="seg seg-ms" style="width:26%"></div><div class="seg seg-fs" style="width:14%"></div><div class="seg seg-m" style="width:12%"></div><div class="seg seg-f" style="width:6%"></div><div class="seg seg-prof" style="width:9%"></div><div class="seg seg-n" style="width:33%"></div></div><span class="hbar-val">7,700</span></div>
+        <div class="hbar-row"><span class="hbar-label">ג'ודו</span><div class="hbar-track" title="ספורטאיות 12% · הישגיות נ׳ 5% · מקצועיות 9% · ספורטאים 28% · הישגיות ז׳ 13% · אחר 33%"><div class="seg seg-ms" style="width:28%"></div><div class="seg seg-fs" style="width:12%"></div><div class="seg seg-m" style="width:13%"></div><div class="seg seg-f" style="width:5%"></div><div class="seg seg-prof" style="width:9%"></div><div class="seg seg-n" style="width:33%"></div></div><span class="hbar-val">4,500</span></div>
+        <div class="hbar-row"><span class="hbar-label">קראטה</span><div class="hbar-track" title="ספורטאיות 13% · הישגיות נ׳ 5% · מקצועיות 8% · ספורטאים 28% · הישגיות ז׳ 13% · אחר 33%"><div class="seg seg-ms" style="width:28%"></div><div class="seg seg-fs" style="width:13%"></div><div class="seg seg-m" style="width:13%"></div><div class="seg seg-f" style="width:5%"></div><div class="seg seg-prof" style="width:8%"></div><div class="seg seg-n" style="width:33%"></div></div><span class="hbar-val">3,800</span></div>
+        <div class="hbar-row"><span class="hbar-label">סיוף</span><div class="hbar-track" title="ספורטאיות 15% · הישגיות נ׳ 7% · מקצועיות 9% · ספורטאים 24% · הישגיות ז׳ 12% · אחר 33%"><div class="seg seg-ms" style="width:24%"></div><div class="seg seg-fs" style="width:15%"></div><div class="seg seg-m" style="width:12%"></div><div class="seg seg-f" style="width:7%"></div><div class="seg seg-prof" style="width:9%"></div><div class="seg seg-n" style="width:33%"></div></div><span class="hbar-val">2,900</span></div>
+        <div class="hbar-row"><span class="hbar-label">חתירה</span><div class="hbar-track" title="ספורטאיות 10% · הישגיות נ׳ 5% · מקצועיות 8% · ספורטאים 31% · הישגיות ז׳ 12% · אחר 34%"><div class="seg seg-ms" style="width:31%"></div><div class="seg seg-fs" style="width:10%"></div><div class="seg seg-m" style="width:12%"></div><div class="seg seg-f" style="width:5%"></div><div class="seg seg-prof" style="width:8%"></div><div class="seg seg-n" style="width:34%"></div></div><span class="hbar-val">2,200</span></div>
+        <div class="hbar-row"><span class="hbar-label">איגרוף</span><div class="hbar-track" title="ספורטאיות 2% · הישגיות נ׳ 1% · מקצועיות 8% · ספורטאים 46% · הישגיות ז׳ 8% · אחר 35%"><div class="seg seg-ms" style="width:46%"></div><div class="seg seg-fs" style="width:2%"></div><div class="seg seg-m" style="width:8%"></div><div class="seg seg-f" style="width:1%"></div><div class="seg seg-prof" style="width:8%"></div><div class="seg seg-n" style="width:35%"></div></div><span class="hbar-val">1,400</span></div>
+      </div>
+      <div class="legend-row lg">
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--teal-soft)"></span>ספורטאים</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--women-soft)"></span>ספורטאיות</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--teal)"></span>הישגיות — גברים</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--women)"></span>הישגיות — נשים</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--prof)"></span>מקצועיות</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--neutral)"></span>ליווי מאמנים · עלות ענף · מרכזי מצוינות · קידום נשים</span>
+      </div>
+    </div>
+
+    <div class="card col-12">
+      <div class="card-head">
+        <span class="card-title">שיעור ספורטאיות — 4 חיתוכים</span>
+        <span class="card-meta">Bar · קו ייחוס: ממוצע ארצי 38%</span>
+      </div>
+      <div class="sub-cards-2">
+        <div class="sub-card">
+          <div class="sub-title">לפי איגוד</div>
+          <div class="hbar">
+            <div class="hbar-row"><span class="hbar-label">איגוד ההתעמלות</span><div class="hbar-track" title="שיעור ספורטאיות 86% · ≈2,408 ספורטאיות"><div class="hbar-fill" style="width:88%"></div></div><span class="hbar-val">86%</span></div>
+            <div class="hbar-row"><span class="hbar-label">איגוד השחייה</span><div class="hbar-track" title="שיעור ספורטאיות 60% · ≈1,680 ספורטאיות"><div class="hbar-fill" style="width:62%"></div></div><span class="hbar-val">60%</span></div>
+            <div class="hbar-row"><span class="hbar-label">איגוד הכדורעף</span><div class="hbar-track" title="שיעור ספורטאיות 52% · ≈1,456 ספורטאיות"><div class="hbar-fill" style="width:54%"></div></div><span class="hbar-val">52%</span></div>
+            <div class="hbar-row"><span class="hbar-label">איגוד הסיוף</span><div class="hbar-track" title="שיעור ספורטאיות 46% · ≈1,288 ספורטאיות"><div class="hbar-fill" style="width:48%"></div></div><span class="hbar-val">46%</span></div>
+            <div class="hbar-row"><span class="hbar-label">איגוד הטניס</span><div class="hbar-track" title="שיעור ספורטאיות 40% · ≈1,120 ספורטאיות"><div class="hbar-fill" style="width:42%"></div></div><span class="hbar-val">40%</span></div>
+            <div class="hbar-row"><span class="hbar-label">איגוד האתלטיקה</span><div class="hbar-track" title="שיעור ספורטאיות 36% · ≈1,008 ספורטאיות"><div class="hbar-fill muted" style="width:38%"></div></div><span class="hbar-val">36%</span></div>
+            <div class="hbar-row"><span class="hbar-label">איגוד הג'ודו</span><div class="hbar-track" title="שיעור ספורטאיות 22% · ≈616 ספורטאיות"><div class="hbar-fill muted" style="width:24%"></div></div><span class="hbar-val">22%</span></div>
+            <div class="hbar-row"><span class="hbar-label">התאחדות הכדורגל</span><div class="hbar-track" title="שיעור ספורטאיות 9% · ≈252 ספורטאיות"><div class="hbar-fill muted" style="width:10%"></div></div><span class="hbar-val">9%</span></div>
+          </div>
+        </div>
+        <div class="sub-card">
+          <div class="sub-title">לפי רשות מקומית</div>
+          <div class="hbar">
+            <div class="hbar-row"><span class="hbar-label">רעננה</span><div class="hbar-track" title="שיעור ספורטאיות 54% · ≈1,512 ספורטאיות"><div class="hbar-fill" style="width:96%"></div></div><span class="hbar-val">54%</span></div>
+            <div class="hbar-row"><span class="hbar-label">כפר סבא</span><div class="hbar-track" title="שיעור ספורטאיות 52% · ≈1,456 ספורטאיות"><div class="hbar-fill" style="width:92%"></div></div><span class="hbar-val">52%</span></div>
+            <div class="hbar-row"><span class="hbar-label">הרצליה</span><div class="hbar-track" title="שיעור ספורטאיות 50% · ≈1,400 ספורטאיות"><div class="hbar-fill" style="width:88%"></div></div><span class="hbar-val">50%</span></div>
+            <div class="hbar-row"><span class="hbar-label">רמת השרון</span><div class="hbar-track" title="שיעור ספורטאיות 47% · ≈1,316 ספורטאיות"><div class="hbar-fill" style="width:82%"></div></div><span class="hbar-val">47%</span></div>
+            <div class="hbar-row"><span class="hbar-label">חיפה</span><div class="hbar-track" title="שיעור ספורטאיות 41% · ≈1,148 ספורטאיות"><div class="hbar-fill" style="width:72%"></div></div><span class="hbar-val">41%</span></div>
+            <div class="hbar-row"><span class="hbar-label">רמת גן</span><div class="hbar-track" title="שיעור ספורטאיות 40% · ≈1,120 ספורטאיות"><div class="hbar-fill" style="width:70%"></div></div><span class="hbar-val">40%</span></div>
+            <div class="hbar-row"><span class="hbar-label">תל אביב</span><div class="hbar-track" title="שיעור ספורטאיות 36.5% · ≈1,022 ספורטאיות"><div class="hbar-fill muted" style="width:66%"></div></div><span class="hbar-val">36.5%</span></div>
+            <div class="hbar-row"><span class="hbar-label">פתח תקווה</span><div class="hbar-track" title="שיעור ספורטאיות 34% · ≈952 ספורטאיות"><div class="hbar-fill muted" style="width:62%"></div></div><span class="hbar-val">34%</span></div>
+          </div>
+        </div>
+        <div class="sub-card">
+          <div class="sub-title">לפי מדד סוציו-אקונומי</div>
+          <div class="vbar-chart">
+            <div class="vb-col" title="שיעור ספורטאיות 22% · ≈660 ספורטאיות"><span class="vb-val">22%</span><div class="vb-fill muted" style="height:22%"></div><span class="vb-cap">1</span></div>
+            <div class="vb-col" title="שיעור ספורטאיות 28% · ≈840 ספורטאיות"><span class="vb-val">28%</span><div class="vb-fill muted" style="height:28%"></div><span class="vb-cap">2</span></div>
+            <div class="vb-col" title="שיעור ספורטאיות 32% · ≈960 ספורטאיות"><span class="vb-val">32%</span><div class="vb-fill muted" style="height:32%"></div><span class="vb-cap">3</span></div>
+            <div class="vb-col" title="שיעור ספורטאיות 35% · ≈1,050 ספורטאיות"><span class="vb-val">35%</span><div class="vb-fill muted" style="height:35%"></div><span class="vb-cap">4</span></div>
+            <div class="vb-col" title="שיעור ספורטאיות 38% · ≈1,140 ספורטאיות"><span class="vb-val">38%</span><div class="vb-fill" style="height:38%"></div><span class="vb-cap">5</span></div>
+            <div class="vb-col" title="שיעור ספורטאיות 41% · ≈1,230 ספורטאיות"><span class="vb-val">41%</span><div class="vb-fill" style="height:41%"></div><span class="vb-cap">6</span></div>
+            <div class="vb-col" title="שיעור ספורטאיות 44% · ≈1,320 ספורטאיות"><span class="vb-val">44%</span><div class="vb-fill" style="height:44%"></div><span class="vb-cap">7</span></div>
+            <div class="vb-col" title="שיעור ספורטאיות 48% · ≈1,440 ספורטאיות"><span class="vb-val">48%</span><div class="vb-fill" style="height:48%"></div><span class="vb-cap">8</span></div>
+            <div class="vb-col" title="שיעור ספורטאיות 50% · ≈1,500 ספורטאיות"><span class="vb-val">50%</span><div class="vb-fill" style="height:50%"></div><span class="vb-cap">9</span></div>
+            <div class="vb-col" title="שיעור ספורטאיות 46% · ≈1,380 ספורטאיות"><span class="vb-val">46%</span><div class="vb-fill" style="height:46%"></div><span class="vb-cap">10</span></div>
+          </div>
+        </div>
+        <div class="sub-card">
+          <div class="sub-title">לפי מדד פריפריאליות</div>
+          <div class="vbar-chart">
+            <div class="vb-col" title="שיעור ספורטאיות 28% · ≈840 ספורטאיות"><span class="vb-val">28%</span><div class="vb-fill muted" style="height:28%"></div><span class="vb-cap">1</span></div>
+            <div class="vb-col" title="שיעור ספורטאיות 31% · ≈930 ספורטאיות"><span class="vb-val">31%</span><div class="vb-fill muted" style="height:31%"></div><span class="vb-cap">2</span></div>
+            <div class="vb-col" title="שיעור ספורטאיות 33% · ≈990 ספורטאיות"><span class="vb-val">33%</span><div class="vb-fill muted" style="height:33%"></div><span class="vb-cap">3</span></div>
+            <div class="vb-col" title="שיעור ספורטאיות 35% · ≈1,050 ספורטאיות"><span class="vb-val">35%</span><div class="vb-fill muted" style="height:35%"></div><span class="vb-cap">4</span></div>
+            <div class="vb-col" title="שיעור ספורטאיות 37% · ≈1,110 ספורטאיות"><span class="vb-val">37%</span><div class="vb-fill muted" style="height:37%"></div><span class="vb-cap">5</span></div>
+            <div class="vb-col" title="שיעור ספורטאיות 39% · ≈1,170 ספורטאיות"><span class="vb-val">39%</span><div class="vb-fill" style="height:39%"></div><span class="vb-cap">6</span></div>
+            <div class="vb-col" title="שיעור ספורטאיות 41% · ≈1,230 ספורטאיות"><span class="vb-val">41%</span><div class="vb-fill" style="height:41%"></div><span class="vb-cap">7</span></div>
+            <div class="vb-col" title="שיעור ספורטאיות 43% · ≈1,290 ספורטאיות"><span class="vb-val">43%</span><div class="vb-fill" style="height:43%"></div><span class="vb-cap">8</span></div>
+            <div class="vb-col" title="שיעור ספורטאיות 45% · ≈1,350 ספורטאיות"><span class="vb-val">45%</span><div class="vb-fill" style="height:45%"></div><span class="vb-cap">9</span></div>
+            <div class="vb-col" title="שיעור ספורטאיות 44% · ≈1,320 ספורטאיות"><span class="vb-val">44%</span><div class="vb-fill" style="height:44%"></div><span class="vb-cap">10</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="legend-row">
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--women)"></span>מעל הממוצע הארצי 38%</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--neutral)"></span>מתחת לממוצע</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════
+     TAB 2 — תקציב וניקוד
+══════════════════════════════════════════════════════════════════ -->
+<section class="tab-content" id="tab-budget">
+
+  <div class="filter-bar">
+    <span class="filter-bar-label">פילטרים על <strong>הדף</strong></span>
+    <div class="filter"><label>שנה</label><select><option>2026</option><option>2025</option></select></div>
+    <div class="filter"><label>רשות מקומית</label><select><option>הכל</option></select></div>
+    <div class="filter"><label>מדד סוציו-אקונומי</label><select><option>הכל</option></select></div>
+    <div class="filter"><label>איגוד</label><select><option>הכל</option></select></div>
+    <div class="filter"><label>אגודה</label><select><option>הכל</option></select></div>
+    <div class="filter"><label>קבוצה</label><select><option>הכל</option></select></div>
+    <div class="filter"><label>ענף</label><select><option>הכל</option><option>כדורגל</option><option>כדורסל</option><option>שחייה</option><option>אתלטיקה</option><option>טניס</option><option>כדורעף</option><option>התעמלות</option><option>ג'ודו</option></select></div>
+    <div class="filter"><label>סיווג אולימפי</label><select><option>הכל</option><option>אולימפי</option><option>פרה-אולימפי</option><option>לא אולימפי</option></select></div>
+    <div class="filter"><label>סוג ענף</label><select><option>הכל</option><option>אישי</option><option>קבוצתי</option></select></div>
+    <div class="filter"><label>תחרויות</label><select><option>הכל</option><option>אליפות אירופה</option><option>שום תחרות</option></select></div>
+    <div class="filter"><label>תנאי סף</label><select><option>הכל</option><option>עברו תנאי סף</option><option>לא עברו</option></select></div>
+    <button class="filter-reset">איפוס</button>
+  </div>
+
+  <div class="kpis k4">
+    <div class="kpi"><div class="kpi-label">תקציב מספורטאים</div><div class="kpi-value">₪ 185M</div><div class="kpi-sub">משוערך לפי תעריפי מבחן התמיכה</div></div>
+    <div class="kpi"><div class="kpi-label">₪ לנקודת ספורטאים</div><div class="kpi-value">₪2,233</div><div class="kpi-sub">₪185M ÷ 82,890 נק' · 36% נשים</div></div>
+    <div class="kpi"><div class="kpi-label">תקציב מהישגיות</div><div class="kpi-value">₪ 82M</div><div class="kpi-sub">משוערך · 20% מהתקציב הכולל</div></div>
+    <div class="kpi"><div class="kpi-label">₪ לנקודת הישגיות</div><div class="kpi-value">₪2,226</div><div class="kpi-sub">₪82M ÷ 36,840 נק' · 31% נשים</div></div>
+  </div>
+
+  <div class="grid">
+    <div class="card col-6">
+      <div class="card-head">
+        <span class="card-title">חלוקת ניקוד לפי רכיבי מבחן התמיכה</span>
+        <span class="card-meta" id="sttMeta">Horizontal Bar · משקלי מבחן התמיכה · רצועה: ענפי על</span>
+      </div>
+      <div class="stt-bands" id="sttBands"><button class="stt-band active" data-band="ענפי על">ענפי על</button><button class="stt-band" data-band="קבוצתי">קבוצתי</button><button class="stt-band" data-band="אישי">אישי</button></div>
+      <div class="hbar" id="sttWeights">
+        <div class="hbar-row"><span class="hbar-label">ספורטאים</span><div class="hbar-track" title="שיעור ספורטאיות 45% · ≈1,260 ספורטאיות"><div class="hbar-fill" style="width:100%"></div></div><span class="hbar-val">45%</span></div>
+        <div class="hbar-row"><span class="hbar-label">הישגיות</span><div class="hbar-track" title="שיעור ספורטאיות 20% · ≈560 ספורטאיות"><div class="hbar-fill" style="width:44%"></div></div><span class="hbar-val">20%</span></div>
+        <div class="hbar-row"><span class="hbar-label">מקצועיות</span><div class="hbar-track" title="שיעור ספורטאיות 10% · ≈280 ספורטאיות"><div class="hbar-fill" style="width:22%"></div></div><span class="hbar-val">10%</span></div>
+        <div class="hbar-row"><span class="hbar-label">ליווי מאמנים</span><div class="hbar-track" title="שיעור ספורטאיות 10% · ≈280 ספורטאיות"><div class="hbar-fill" style="width:22%"></div></div><span class="hbar-val">10%</span></div>
+        <div class="hbar-row"><span class="hbar-label">עלות הפעלת ענף</span><div class="hbar-track" title="שיעור ספורטאיות 10% · ≈280 ספורטאיות"><div class="hbar-fill" style="width:22%"></div></div><span class="hbar-val">10%</span></div>
+        <div class="hbar-row"><span class="hbar-label">מרכזי מצוינות</span><div class="hbar-track" title="שיעור ספורטאיות 3% · ≈84 ספורטאיות"><div class="hbar-fill" style="width:7%"></div></div><span class="hbar-val">3%</span></div>
+        <div class="hbar-row"><span class="hbar-label">קידום ספורט נשים</span><div class="hbar-track" title="שיעור ספורטאיות 2% · ≈56 ספורטאיות"><div class="hbar-fill" style="width:4%"></div></div><span class="hbar-val">2%</span></div>
+      </div>
+    </div>
+
+    <div class="card col-6">
+      <div class="card-head">
+        <span class="card-title">חלוקה לפי מגדר בכל רכיב ניקוד</span>
+        <span class="card-meta">Stacked Bar (100%)</span>
+      </div>
+      <div class="hbar">
+        <div class="hbar-row"><span class="hbar-label">ספורטאים</span><div class="hbar-track" title="נשים 38% · גברים 62%"><div class="seg seg-f" style="width:38%"></div><div class="seg seg-m" style="width:62%"></div></div><span class="hbar-val">38% נ · 62% ז</span></div>
+        <div class="hbar-row"><span class="hbar-label">הישגיות</span><div class="hbar-track" title="נשים 31% · גברים 69%"><div class="seg seg-f" style="width:31%"></div><div class="seg seg-m" style="width:69%"></div></div><span class="hbar-val">31% נ · 69% ז</span></div>
+        <div class="hbar-row"><span class="hbar-label">קידום נשים</span><div class="hbar-track"><div class="seg seg-f" style="width:100%"></div></div><span class="hbar-val">100% נ</span></div>
+        <div class="hbar-row"><span class="hbar-label">מקצועיות</span><div class="hbar-track" title="רכיב לא־מגדרי — מוצג כערך אחד"><div class="seg seg-na" style="width:100%"></div></div><span class="hbar-val">—</span></div>
+        <div class="hbar-row"><span class="hbar-label">ליווי מאמנים</span><div class="hbar-track"><div class="seg seg-na" style="width:100%"></div></div><span class="hbar-val">—</span></div>
+        <div class="hbar-row"><span class="hbar-label">עלות ענף</span><div class="hbar-track"><div class="seg seg-na" style="width:100%"></div></div><span class="hbar-val">—</span></div>
+      </div>
+      <div class="legend-row">
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--women)"></span>נשים</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--teal)"></span>גברים</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--ink-faint)"></span>רכיב לא־מגדרי</span>
+      </div>
+    </div>
+
+    <div class="card col-12">
+      <div class="card-head">
+        <span class="card-title">ניקוד לפי איגוד — חלוקה לפי מגדר</span>
+        <span class="card-meta">Stacked Bar (100%) · 10 איגודים מובילים · ז אל מול נ</span>
+      </div>
+      <div class="sub-cards-2">
+        <div class="sub-card">
+          <div class="sub-title">שיעור של גברים ונשים מסה״כ ניקוד — מיון לפי סה״כ ניקוד יורד</div>
+          <div class="hbar">
+            <div class="hbar-row"><span class="hbar-label">כדורגל</span><div class="hbar-track" title="נשים 9% · גברים 91% · סה״כ 15,400"><div class="seg seg-f" style="width:9%"></div><div class="seg seg-m" style="width:91%"></div></div><span class="hbar-val">15,400 · 9% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">כדורסל</span><div class="hbar-track" title="נשים 32% · גברים 68% · סה״כ 12,800"><div class="seg seg-f" style="width:32%"></div><div class="seg seg-m" style="width:68%"></div></div><span class="hbar-val">12,800 · 32% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">שחייה</span><div class="hbar-track" title="נשים 48% · גברים 52% · סה״כ 10,200"><div class="seg seg-f" style="width:48%"></div><div class="seg seg-m" style="width:52%"></div></div><span class="hbar-val">10,200 · 48% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">אתלטיקה</span><div class="hbar-track" title="נשים 38% · גברים 62% · סה״כ 8,700"><div class="seg seg-f" style="width:38%"></div><div class="seg seg-m" style="width:62%"></div></div><span class="hbar-val">8,700 · 38% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">טניס</span><div class="hbar-track" title="נשים 36% · גברים 64% · סה״כ 6,400"><div class="seg seg-f" style="width:36%"></div><div class="seg seg-m" style="width:64%"></div></div><span class="hbar-val">6,400 · 36% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">כדורעף</span><div class="hbar-track" title="נשים 52% · גברים 48% · סה״כ 5,600"><div class="seg seg-f" style="width:52%"></div><div class="seg seg-m" style="width:48%"></div></div><span class="hbar-val">5,600 · 52% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">התעמלות</span><div class="hbar-track" title="נשים 75% · גברים 25% · סה״כ 5,100"><div class="seg seg-f" style="width:75%"></div><div class="seg seg-m" style="width:25%"></div></div><span class="hbar-val">5,100 · 75% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">ג'ודו</span><div class="hbar-track" title="נשים 22% · גברים 78% · סה״כ 4,200"><div class="seg seg-f" style="width:22%"></div><div class="seg seg-m" style="width:78%"></div></div><span class="hbar-val">4,200 · 22% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">קראטה</span><div class="hbar-track" title="נשים 28% · גברים 72% · סה״כ 3,400"><div class="seg seg-f" style="width:28%"></div><div class="seg seg-m" style="width:72%"></div></div><span class="hbar-val">3,400 · 28% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">סיוף</span><div class="hbar-track" title="נשים 42% · גברים 58% · סה״כ 2,800"><div class="seg seg-f" style="width:42%"></div><div class="seg seg-m" style="width:58%"></div></div><span class="hbar-val">2,800 · 42% נ׳</span></div>
+          </div>
+        </div>
+        <div class="sub-card">
+          <div class="sub-title">שיעור הישגיות נשים מתוך סך ההישגיות</div>
+          <div class="hbar">
+            <div class="hbar-row"><span class="hbar-label">כדורסל</span><div class="hbar-track" title="נשים 35% · גברים 65% · סה״כ 4,800"><div class="seg seg-f" style="width:35%"></div><div class="seg seg-m" style="width:65%"></div></div><span class="hbar-val">4,800 · 35% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">שחייה</span><div class="hbar-track" title="נשים 50% · גברים 50% · סה״כ 4,200"><div class="seg seg-f" style="width:50%"></div><div class="seg seg-m" style="width:50%"></div></div><span class="hbar-val">4,200 · 50% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">אתלטיקה</span><div class="hbar-track" title="נשים 45% · גברים 55% · סה״כ 3,700"><div class="seg seg-f" style="width:45%"></div><div class="seg seg-m" style="width:55%"></div></div><span class="hbar-val">3,700 · 45% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">התעמלות</span><div class="hbar-track" title="נשים 72% · גברים 28% · סה״כ 3,400"><div class="seg seg-f" style="width:72%"></div><div class="seg seg-m" style="width:28%"></div></div><span class="hbar-val">3,400 · 72% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">כדורעף</span><div class="hbar-track" title="נשים 53% · גברים 47% · סה״כ 2,800"><div class="seg seg-f" style="width:53%"></div><div class="seg seg-m" style="width:47%"></div></div><span class="hbar-val">2,800 · 53% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">טניס</span><div class="hbar-track" title="נשים 40% · גברים 60% · סה״כ 2,500"><div class="seg seg-f" style="width:40%"></div><div class="seg seg-m" style="width:60%"></div></div><span class="hbar-val">2,500 · 40% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">כדורגל</span><div class="hbar-track" title="נשים 5% · גברים 95% · סה״כ 2,100"><div class="seg seg-f" style="width:5%"></div><div class="seg seg-m" style="width:95%"></div></div><span class="hbar-val">2,100 · 5% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">ג'ודו</span><div class="hbar-track" title="נשים 25% · גברים 75% · סה״כ 1,800"><div class="seg seg-f" style="width:25%"></div><div class="seg seg-m" style="width:75%"></div></div><span class="hbar-val">1,800 · 25% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">קראטה</span><div class="hbar-track" title="נשים 30% · גברים 70% · סה״כ 1,400"><div class="seg seg-f" style="width:30%"></div><div class="seg seg-m" style="width:70%"></div></div><span class="hbar-val">1,400 · 30% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">סיוף</span><div class="hbar-track" title="נשים 40% · גברים 60% · סה״כ 1,100"><div class="seg seg-f" style="width:40%"></div><div class="seg seg-m" style="width:60%"></div></div><span class="hbar-val">1,100 · 40% נ׳</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="legend-row">
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--women)"></span>נשים</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--teal)"></span>גברים</span>
+      </div>
+    </div>
+
+    <div class="card col-12">
+      <div class="card-head">
+        <span class="card-title">תקציב הישגיות ענף לפי מגדר</span>
+        <span class="card-meta">Stacked Bar · 12 ענפים · ₪ מצרפי משוערך · 20% מהתקציב לפי מבחן התמיכה</span>
+      </div>
+      <div class="hbar">
+        <div class="hbar-row"><span class="hbar-label">התעמלות</span><div class="hbar-track" title="נשים 72% · גברים 28% · סה״כ ₪3.4M"><div class="seg seg-f" style="width:72%"></div><div class="seg seg-m" style="width:28%"></div></div><span class="hbar-val">₪3.4M · 72% נ׳</span></div>
+        <div class="hbar-row"><span class="hbar-label">שחייה</span><div class="hbar-track" title="נשים 41% · גברים 41% · סה״כ ₪2.8M"><div class="seg seg-f" style="width:41%"></div><div class="seg seg-m" style="width:41%"></div></div><span class="hbar-val">₪2.8M · 41% נ׳</span></div>
+        <div class="hbar-row"><span class="hbar-label">אתלטיקה</span><div class="hbar-track" title="נשים 32% · גברים 39% · סה״כ ₪2.4M"><div class="seg seg-f" style="width:32%"></div><div class="seg seg-m" style="width:39%"></div></div><span class="hbar-val">₪2.4M · 32% נ׳</span></div>
+        <div class="hbar-row"><span class="hbar-label">כדורסל</span><div class="hbar-track" title="נשים 23% · גברים 42% · סה״כ ₪2.2M"><div class="seg seg-f" style="width:23%"></div><div class="seg seg-m" style="width:42%"></div></div><span class="hbar-val">₪2.2M · 23% נ׳</span></div>
+        <div class="hbar-row"><span class="hbar-label">כדורעף</span><div class="hbar-track" title="נשים 28% · גברים 25% · סה״כ ₪1.8M"><div class="seg seg-f" style="width:28%"></div><div class="seg seg-m" style="width:25%"></div></div><span class="hbar-val">₪1.8M · 28% נ׳</span></div>
+        <div class="hbar-row"><span class="hbar-label">טניס</span><div class="hbar-track" title="נשים 18% · גברים 26% · סה״כ ₪1.5M"><div class="seg seg-f" style="width:18%"></div><div class="seg seg-m" style="width:26%"></div></div><span class="hbar-val">₪1.5M · 18% נ׳</span></div>
+        <div class="hbar-row"><span class="hbar-label">ג'ודו</span><div class="hbar-track" title="נשים 9% · גברים 26% · סה״כ ₪1.2M"><div class="seg seg-f" style="width:9%"></div><div class="seg seg-m" style="width:26%"></div></div><span class="hbar-val">₪1.2M · 9% נ׳</span></div>
+        <div class="hbar-row"><span class="hbar-label">קראטה</span><div class="hbar-track" title="נשים 8% · גברים 19% · סה״כ ₪900K"><div class="seg seg-f" style="width:8%"></div><div class="seg seg-m" style="width:19%"></div></div><span class="hbar-val">₪900K · 8% נ׳</span></div>
+        <div class="hbar-row"><span class="hbar-label">סיוף</span><div class="hbar-track" title="נשים 8% · גברים 12% · סה״כ ₪700K"><div class="seg seg-f" style="width:8%"></div><div class="seg seg-m" style="width:12%"></div></div><span class="hbar-val">₪700K · 8% נ׳</span></div>
+        <div class="hbar-row"><span class="hbar-label">כדורגל</span><div class="hbar-track" title="נשים 1% · גברים 17% · סה״כ ₪600K"><div class="seg seg-f" style="width:1%"></div><div class="seg seg-m" style="width:17%"></div></div><span class="hbar-val">₪600K · 1% נ׳</span></div>
+        <div class="hbar-row"><span class="hbar-label">חתירה</span><div class="hbar-track" title="נשים 4% · גברים 11% · סה״כ ₪480K"><div class="seg seg-f" style="width:4%"></div><div class="seg seg-m" style="width:11%"></div></div><span class="hbar-val">₪480K · 4% נ׳</span></div>
+        <div class="hbar-row"><span class="hbar-label">איגרוף</span><div class="hbar-track" title="נשים 1% · גברים 8% · סה״כ ₪280K"><div class="seg seg-f" style="width:1%"></div><div class="seg seg-m" style="width:8%"></div></div><span class="hbar-val">₪280K · 1% נ׳</span></div>
+      </div>
+      <div class="legend-row">
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--women)"></span>נשים</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--teal)"></span>גברים</span>
+        <span class="legend-item" style="margin-inline-start:auto;color:var(--ink-faint);font-style:italic;">SUM(female_achievement_score · male_achievement_score) × תעריף תקציב</span>
+      </div>
+    </div>
+
+    <div class="card col-12">
+      <div class="card-head">
+        <span class="card-title">אחוז נשים בהנהלה — אל מול סף 30%</span>
+        <span class="card-meta">Bar · באדום = מתחת לסף 30%</span>
+      </div>
+      <div class="hbar">
+        <div class="hbar-row"><span class="hbar-label">איגוד ההתעמלות</span><div class="hbar-track"><div class="hbar-fill" style="width:62%"></div></div><span class="hbar-val">62%</span></div>
+        <div class="hbar-row"><span class="hbar-label">איגוד השחייה</span><div class="hbar-track"><div class="hbar-fill" style="width:52%"></div></div><span class="hbar-val">52%</span></div>
+        <div class="hbar-row"><span class="hbar-label">איגוד הכדורסל</span><div class="hbar-track"><div class="hbar-fill" style="width:44%"></div></div><span class="hbar-val">44%</span></div>
+        <div class="hbar-row"><span class="hbar-label">איגוד הטניס</span><div class="hbar-track"><div class="hbar-fill" style="width:38%"></div></div><span class="hbar-val">38%</span></div>
+        <div class="hbar-row"><span class="hbar-label">איגוד האתלטיקה</span><div class="hbar-track"><div class="hbar-fill" style="width:34%"></div></div><span class="hbar-val">34%</span></div>
+        <div class="hbar-row"><span class="hbar-label">איגוד הג'ודו</span><div class="hbar-track"><div class="hbar-fill below" style="width:26%"></div></div><span class="hbar-val">26%</span></div>
+        <div class="hbar-row"><span class="hbar-label">איגוד הכדורעף</span><div class="hbar-track"><div class="hbar-fill below" style="width:22%"></div></div><span class="hbar-val">22%</span></div>
+        <div class="hbar-row"><span class="hbar-label">התאחדות הכדורגל</span><div class="hbar-track"><div class="hbar-fill below" style="width:18%"></div></div><span class="hbar-val">18%</span></div>
+        <div class="hbar-row"><span class="hbar-label">איגוד הקליעה</span><div class="hbar-track"><div class="hbar-fill below" style="width:14%"></div></div><span class="hbar-val">14%</span></div>
+        <div class="hbar-row"><span class="hbar-label">איגוד האיגרוף</span><div class="hbar-track"><div class="hbar-fill below" style="width:8%"></div></div><span class="hbar-val">8%</span></div>
+      </div>
+      <div class="legend-row">
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--women)"></span>עומד בסף ≥ 30%</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--gap)"></span>מתחת לסף 30% — סעיף 9א לחוק הספורט</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════
+     TAB 3 — ספורטאיות ושימור
+══════════════════════════════════════════════════════════════════ -->
+<section class="tab-content" id="tab-athletes">
+
+  <div class="filter-bar">
+    <span class="filter-bar-label">פילטרים על <strong>הדף</strong></span>
+    <div class="filter"><label>שנה</label><select><option>2026</option><option>2025</option></select></div>
+    <div class="filter"><label>רשות מקומית</label><select><option>הכל</option></select></div>
+    <div class="filter"><label>מדד סוציו-אקונומי</label><select><option>הכל</option></select></div>
+    <div class="filter"><label>איגוד</label><select><option>הכל</option></select></div>
+    <div class="filter"><label>אגודה</label><select><option>הכל</option></select></div>
+    <div class="filter"><label>קבוצה</label><select><option>הכל</option></select></div>
+    <div class="filter"><label>ענף</label><select><option>הכל</option><option>כדורגל</option><option>כדורסל</option><option>שחייה</option><option>אתלטיקה</option><option>טניס</option><option>כדורעף</option><option>התעמלות</option><option>ג'ודו</option></select></div>
+    <div class="filter"><label>סיווג אולימפי</label><select><option>הכל</option><option>אולימפי</option><option>פרה-אולימפי</option><option>לא אולימפי</option></select></div>
+    <div class="filter"><label>סוג ענף</label><select><option>הכל</option><option>אישי</option><option>קבוצתי</option></select></div>
+    <div class="filter"><label>תחרויות</label><select><option>הכל</option><option>אליפות אירופה</option><option>שום תחרות</option></select></div>
+    <div class="filter"><label>טווח גיל</label>
+      <div class="age-range">
+        <input type="number" class="age-num" min="0" max="120" value="6" aria-label="גיל מינימלי">
+        <span class="sep">–</span>
+        <input type="number" class="age-num" min="0" max="120" value="50" aria-label="גיל מקסימלי">
+      </div>
+    </div>
+    <div class="filter"><label>תנאי סף</label><select><option>הכל</option><option>עברו תנאי סף</option><option>לא עברו</option></select></div>
+    <button class="filter-reset">איפוס</button>
+  </div>
+
+  <div class="kpis k4">
+    <div class="kpi"><div class="kpi-label">ספורטאיות פעילות</div><div class="kpi-value">49,830</div><div class="kpi-delta up">▲ +3,630 משנה קודמת</div></div>
+    <div class="kpi"><div class="kpi-label">שיעור ספורטאיות</div><div class="kpi-value">38.2%</div><div class="kpi-delta up">▲ +1.4% (לעומת שנה קודמת)</div></div>
+    <div class="kpi"><div class="kpi-label">שימור ספורטאיות</div><div class="kpi-value">72%</div><div class="kpi-sub">ת.ז. חוזרות בין שנים</div></div>
+    <div class="kpi"><div class="kpi-label">קבוצות נשים פעילות</div><div class="kpi-value">540</div><div class="kpi-sub">30% מסך 1,820 קבוצות</div></div>
+  </div>
+
+  <div class="grid">
+    <div class="card col-6">
+      <div class="card-head"><span class="card-title">ספורטאיות אל מול ספורטאים — מגמה רב-שנתית</span><span class="card-meta">Multi-line · 2020–2026 · כמות מצרפית</span></div>
+      <svg class="line-svg" viewBox="0 0 320 220" preserveAspectRatio="none">
+        <line x1="36" y1="180" x2="320" y2="180" stroke="#E5E1D8" stroke-width="1"/>
+        <line x1="36" y1="10"  x2="36"  y2="180" stroke="#E5E1D8" stroke-width="1"/>
+        <path d="M36,30 L84,32 L132,35 L180,40 L228,44 L276,46 L320,48" stroke="#0D5F73" stroke-width="2.5" fill="none"/>
+        <path d="M36,150 L84,142 L132,128 L180,112 L228,90 L276,72 L320,52" stroke="#86198F" stroke-width="2.5" fill="none"/>
+        <g fill="#9A9A9A" font-size="10" font-family="Heebo">
+          <text x="36"  y="198" text-anchor="middle">2020</text>
+          <text x="84"  y="198" text-anchor="middle">2021</text>
+          <text x="132" y="198" text-anchor="middle">2022</text>
+          <text x="180" y="198" text-anchor="middle">2023</text>
+          <text x="228" y="198" text-anchor="middle">2024</text>
+          <text x="276" y="198" text-anchor="middle">2025</text>
+          <text x="320" y="198" text-anchor="middle">2026</text>
+          <text x="30"  y="35"  text-anchor="end">80k</text>
+          <text x="30"  y="115" text-anchor="end">50k</text>
+          <text x="30"  y="180" text-anchor="end">30k</text>
+        </g>
+        <g font-size="11" font-family="Heebo">
+          <text x="314" y="44"  text-anchor="end" fill="#0D5F73">ספורטאים 80,570</text>
+          <text x="314" y="64"  text-anchor="end" fill="#86198F">ספורטאיות 49,830</text>
+        </g>
+      </svg>
+    </div>
+
+    <div class="card col-6">
+      <div class="card-head"><span class="card-title">שיעור ספורטאיות פעילות על פי שנים</span><span class="card-meta">Line · % מסך הספורטאים · גידול עקבי</span></div>
+      <svg class="line-svg" viewBox="0 0 320 220" preserveAspectRatio="none">
+        <line x1="36" y1="180" x2="320" y2="180" stroke="#E5E1D8" stroke-width="1"/>
+        <line x1="36" y1="10"  x2="36"  y2="180" stroke="#E5E1D8" stroke-width="1"/>
+        <path d="M36,150 L84,138 L132,122 L180,104 L228,86 L276,68 L320,48" stroke="#86198F" stroke-width="2.5" fill="none"/>
+        <path d="M36,150 L84,138 L132,122 L180,104 L228,86 L276,68 L320,48 L320,180 L36,180 Z" fill="rgba(134,25,143,0.08)"/>
+        <g fill="#9A9A9A" font-size="10" font-family="Heebo">
+          <text x="36"  y="198" text-anchor="middle">2020</text>
+          <text x="84"  y="198" text-anchor="middle">2021</text>
+          <text x="132" y="198" text-anchor="middle">2022</text>
+          <text x="180" y="198" text-anchor="middle">2023</text>
+          <text x="228" y="198" text-anchor="middle">2024</text>
+          <text x="276" y="198" text-anchor="middle">2025</text>
+          <text x="320" y="198" text-anchor="middle">2026</text>
+          <text x="30"  y="50"  text-anchor="end">42%</text>
+          <text x="30"  y="115" text-anchor="end">35%</text>
+          <text x="30"  y="180" text-anchor="end">28%</text>
+        </g>
+      </svg>
+    </div>
+
+    <div class="card col-12">
+      <div class="card-head">
+        <span class="card-title">ספורטאיות אל מול ספורטאים — לפי איגוד (מתחת/מעל גיל 18)</span>
+        <span class="card-meta">Clustered Bar · 10 איגודים · חלוקה לפי גיל ומגדר</span>
+      </div>
+      <div class="sub-cards-2">
+        <div class="sub-card">
+          <div class="sub-title">מתחת לגיל 18 (גילאי 6–17)</div>
+          <div class="hbar">
+            <div class="hbar-row"><span class="hbar-label">התעמלות</span><div class="hbar-track" title="נשים 81% · גברים 19%"><div class="seg seg-f" style="width:81%"></div><div class="seg seg-m" style="width:19%"></div></div><span class="hbar-val">81% נ · 19% ז</span></div>
+            <div class="hbar-row"><span class="hbar-label">כדורעף</span><div class="hbar-track" title="נשים 58% · גברים 42%"><div class="seg seg-f" style="width:58%"></div><div class="seg seg-m" style="width:42%"></div></div><span class="hbar-val">58% נ · 42% ז</span></div>
+            <div class="hbar-row"><span class="hbar-label">טניס</span><div class="hbar-track" title="נשים 53% · גברים 47%"><div class="seg seg-f" style="width:53%"></div><div class="seg seg-m" style="width:47%"></div></div><span class="hbar-val">53% נ · 47% ז</span></div>
+            <div class="hbar-row"><span class="hbar-label">שחייה</span><div class="hbar-track" title="נשים 51% · גברים 49%"><div class="seg seg-f" style="width:51%"></div><div class="seg seg-m" style="width:49%"></div></div><span class="hbar-val">51% נ · 49% ז</span></div>
+            <div class="hbar-row"><span class="hbar-label">אתלטיקה</span><div class="hbar-track" title="נשים 51% · גברים 49%"><div class="seg seg-f" style="width:51%"></div><div class="seg seg-m" style="width:49%"></div></div><span class="hbar-val">51% נ · 49% ז</span></div>
+            <div class="hbar-row"><span class="hbar-label">חתירה</span><div class="hbar-track" title="נשים 42% · גברים 58%"><div class="seg seg-f" style="width:42%"></div><div class="seg seg-m" style="width:58%"></div></div><span class="hbar-val">42% נ · 58% ז</span></div>
+            <div class="hbar-row"><span class="hbar-label">ג'ודו</span><div class="hbar-track" title="נשים 40% · גברים 60%"><div class="seg seg-f" style="width:40%"></div><div class="seg seg-m" style="width:60%"></div></div><span class="hbar-val">40% נ · 60% ז</span></div>
+            <div class="hbar-row"><span class="hbar-label">כדורסל</span><div class="hbar-track" title="נשים 38% · גברים 62%"><div class="seg seg-f" style="width:38%"></div><div class="seg seg-m" style="width:62%"></div></div><span class="hbar-val">38% נ · 62% ז</span></div>
+            <div class="hbar-row"><span class="hbar-label">אופניים</span><div class="hbar-track" title="נשים 31% · גברים 69%"><div class="seg seg-f" style="width:31%"></div><div class="seg seg-m" style="width:69%"></div></div><span class="hbar-val">31% נ · 69% ז</span></div>
+            <div class="hbar-row"><span class="hbar-label">כדורגל</span><div class="hbar-track" title="נשים 17% · גברים 83%"><div class="seg seg-f" style="width:17%"></div><div class="seg seg-m" style="width:83%"></div></div><span class="hbar-val">17% נ · 83% ז</span></div>
+          </div>
+        </div>
+        <div class="sub-card">
+          <div class="sub-title">מעל גיל 18 (18 ומעלה)</div>
+          <div class="hbar">
+            <div class="hbar-row"><span class="hbar-label">התעמלות</span><div class="hbar-track" title="נשים 72% · גברים 28%"><div class="seg seg-f" style="width:72%"></div><div class="seg seg-m" style="width:28%"></div></div><span class="hbar-val">72% נ · 28% ז</span></div>
+            <div class="hbar-row"><span class="hbar-label">כדורעף</span><div class="hbar-track" title="נשים 43% · גברים 57%"><div class="seg seg-f" style="width:43%"></div><div class="seg seg-m" style="width:57%"></div></div><span class="hbar-val">43% נ · 57% ז</span></div>
+            <div class="hbar-row"><span class="hbar-label">שחייה</span><div class="hbar-track" title="נשים 40% · גברים 60%"><div class="seg seg-f" style="width:40%"></div><div class="seg seg-m" style="width:60%"></div></div><span class="hbar-val">40% נ · 60% ז</span></div>
+            <div class="hbar-row"><span class="hbar-label">אתלטיקה</span><div class="hbar-track" title="נשים 39% · גברים 61%"><div class="seg seg-f" style="width:39%"></div><div class="seg seg-m" style="width:61%"></div></div><span class="hbar-val">39% נ · 61% ז</span></div>
+            <div class="hbar-row"><span class="hbar-label">טניס</span><div class="hbar-track" title="נשים 39% · גברים 61%"><div class="seg seg-f" style="width:39%"></div><div class="seg seg-m" style="width:61%"></div></div><span class="hbar-val">39% נ · 61% ז</span></div>
+            <div class="hbar-row"><span class="hbar-label">ג'ודו</span><div class="hbar-track" title="נשים 27% · גברים 73%"><div class="seg seg-f" style="width:27%"></div><div class="seg seg-m" style="width:73%"></div></div><span class="hbar-val">27% נ · 73% ז</span></div>
+            <div class="hbar-row"><span class="hbar-label">כדורסל</span><div class="hbar-track" title="נשים 27% · גברים 73%"><div class="seg seg-f" style="width:27%"></div><div class="seg seg-m" style="width:73%"></div></div><span class="hbar-val">27% נ · 73% ז</span></div>
+            <div class="hbar-row"><span class="hbar-label">חתירה</span><div class="hbar-track" title="נשים 27% · גברים 73%"><div class="seg seg-f" style="width:27%"></div><div class="seg seg-m" style="width:73%"></div></div><span class="hbar-val">27% נ · 73% ז</span></div>
+            <div class="hbar-row"><span class="hbar-label">אופניים</span><div class="hbar-track" title="נשים 19% · גברים 81%"><div class="seg seg-f" style="width:19%"></div><div class="seg seg-m" style="width:81%"></div></div><span class="hbar-val">19% נ · 81% ז</span></div>
+            <div class="hbar-row"><span class="hbar-label">כדורגל</span><div class="hbar-track" title="נשים 11% · גברים 89%"><div class="seg seg-f" style="width:11%"></div><div class="seg seg-m" style="width:89%"></div></div><span class="hbar-val">11% נ · 89% ז</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="legend-row">
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--teal)"></span>גברים</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--women)"></span>נשים</span>
+      </div>
+    </div>
+
+    <!-- D2: נתוני ספורט נשים לפי קטגוריית גיל -->
+    <div class="card col-6">
+      <div class="card-head">
+        <span class="card-title">ספורטאיות לפי קטגוריית גיל</span>
+        <span class="card-meta">Horizontal Bar · התפלגות גילאים · כלל הספורטאיות הפעילות (כולל גילי אוריינות)</span>
+      </div>
+      <div class="hbar">
+        <div class="hbar-row"><span class="hbar-label">עד 9</span><div class="hbar-track"><div class="hbar-fill" style="width:22%"></div></div><span class="hbar-val">4,600</span></div>
+        <div class="hbar-row"><span class="hbar-label">10–12</span><div class="hbar-track"><div class="hbar-fill" style="width:40%"></div></div><span class="hbar-val">8,240</span></div>
+        <div class="hbar-row"><span class="hbar-label">13–15</span><div class="hbar-track"><div class="hbar-fill" style="width:78%"></div></div><span class="hbar-val">16,120</span></div>
+        <div class="hbar-row"><span class="hbar-label">16–18</span><div class="hbar-track"><div class="hbar-fill" style="width:54%"></div></div><span class="hbar-val">11,200</span></div>
+        <div class="hbar-row"><span class="hbar-label">19–21</span><div class="hbar-track"><div class="hbar-fill" style="width:28%"></div></div><span class="hbar-val">5,780</span></div>
+        <div class="hbar-row"><span class="hbar-label">22+</span><div class="hbar-track"><div class="hbar-fill" style="width:19%"></div></div><span class="hbar-val">3,890</span></div>
+      </div>
+    </div>
+
+    <!-- D4: מעבר ספורטאיות בין ענפים -->
+    <div class="card col-6">
+      <div class="card-head"><span class="card-title">מעבר ספורטאיות בין ענפים</span><span class="card-meta">Flow · ת.ז. שהחליפו ענף בין שנים</span></div>
+      <div class="hbar">
+        <div class="hbar-row"><span class="hbar-label">התעמלות ← אתלטיקה</span><div class="hbar-track"><div class="hbar-fill" style="width:100%"></div></div><span class="hbar-val">245</span></div>
+        <div class="hbar-row"><span class="hbar-label">שחייה ← אתלטיקה</span><div class="hbar-track"><div class="hbar-fill" style="width:78%"></div></div><span class="hbar-val">192</span></div>
+        <div class="hbar-row"><span class="hbar-label">כדורעף ← כדורסל</span><div class="hbar-track"><div class="hbar-fill" style="width:62%"></div></div><span class="hbar-val">153</span></div>
+        <div class="hbar-row"><span class="hbar-label">טניס ← שחייה</span><div class="hbar-track"><div class="hbar-fill" style="width:45%"></div></div><span class="hbar-val">110</span></div>
+        <div class="hbar-row"><span class="hbar-label">ג'ודו ← קראטה</span><div class="hbar-track"><div class="hbar-fill" style="width:36%"></div></div><span class="hbar-val">88</span></div>
+        <div class="hbar-row"><span class="hbar-label">כדורסל ← כדורעף</span><div class="hbar-track"><div class="hbar-fill" style="width:28%"></div></div><span class="hbar-val">69</span></div>
+      </div>
+      <div class="legend-row">
+        <span class="legend-item" style="color:var(--ink-faint);font-style:italic;">ענף מקור ← ענף יעד · ספירת ת.ז. ייחודיות</span>
+      </div>
+    </div>
+
+    <span class="section-title">קבוצות</span>
+    <div class="card col-12">
+      <div class="card-head"><span class="card-title">קבוצות נשים אל מול גברים — 4 חיתוכים</span><span class="card-meta">Stacked Bar (100%) · ערך = סך קבוצות בקטגוריה</span></div>
+      <div class="sub-cards-2">
+        <div class="sub-card">
+          <div class="sub-title">לפי איגוד</div>
+          <div class="hbar">
+            <div class="hbar-row"><span class="hbar-label">התעמלות</span><div class="hbar-track" title="נשים 80% · גברים 20% · סה״כ 65"><div class="seg seg-f" style="width:80%"></div><div class="seg seg-m" style="width:20%"></div></div><span class="hbar-val">65 · 80% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">שחייה</span><div class="hbar-track" title="נשים 62% · גברים 38% · סה״כ 80"><div class="seg seg-f" style="width:62%"></div><div class="seg seg-m" style="width:38%"></div></div><span class="hbar-val">80 · 62% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">כדורעף</span><div class="hbar-track" title="נשים 49% · גברים 51% · סה״כ 120"><div class="seg seg-f" style="width:49%"></div><div class="seg seg-m" style="width:51%"></div></div><span class="hbar-val">120 · 49% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">סיוף</span><div class="hbar-track" title="נשים 47% · גברים 53% · סה״כ 30"><div class="seg seg-f" style="width:47%"></div><div class="seg seg-m" style="width:53%"></div></div><span class="hbar-val">30 · 47% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">טניס</span><div class="hbar-track" title="נשים 44% · גברים 56% · סה״כ 55"><div class="seg seg-f" style="width:44%"></div><div class="seg seg-m" style="width:56%"></div></div><span class="hbar-val">55 · 44% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">אתלטיקה</span><div class="hbar-track" title="נשים 43% · גברים 57% · סה״כ 90"><div class="seg seg-f" style="width:43%"></div><div class="seg seg-m" style="width:57%"></div></div><span class="hbar-val">90 · 43% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">קראטה</span><div class="hbar-track" title="נשים 38% · גברים 62% · סה״כ 42"><div class="seg seg-f" style="width:38%"></div><div class="seg seg-m" style="width:62%"></div></div><span class="hbar-val">42 · 38% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">ג'ודו</span><div class="hbar-track" title="נשים 35% · גברים 65% · סה״כ 60"><div class="seg seg-f" style="width:35%"></div><div class="seg seg-m" style="width:65%"></div></div><span class="hbar-val">60 · 35% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">כדורסל</span><div class="hbar-track" title="נשים 32% · גברים 68% · סה״כ 160"><div class="seg seg-f" style="width:32%"></div><div class="seg seg-m" style="width:68%"></div></div><span class="hbar-val">160 · 32% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">כדורגל</span><div class="hbar-track" title="נשים 8% · גברים 92% · סה״כ 280"><div class="seg seg-f" style="width:8%"></div><div class="seg seg-m" style="width:92%"></div></div><span class="hbar-val">280 · 8% נ׳</span></div>
+          </div>
+        </div>
+        <div class="sub-card">
+          <div class="sub-title">לפי רשות מקומית</div>
+          <div class="hbar">
+            <div class="hbar-row"><span class="hbar-label">רעננה</span><div class="hbar-track" title="נשים 46% · גברים 54% · סה״כ 85"><div class="seg seg-f" style="width:46%"></div><div class="seg seg-m" style="width:54%"></div></div><span class="hbar-val">85 · 46% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">רמת גן</span><div class="hbar-track" title="נשים 42% · גברים 58% · סה״כ 95"><div class="seg seg-f" style="width:42%"></div><div class="seg seg-m" style="width:58%"></div></div><span class="hbar-val">95 · 42% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">נתניה</span><div class="hbar-track" title="נשים 40% · גברים 60% · סה״כ 140"><div class="seg seg-f" style="width:40%"></div><div class="seg seg-m" style="width:60%"></div></div><span class="hbar-val">140 · 40% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">ראשל"צ</span><div class="hbar-track" title="נשים 38% · גברים 62% · סה״כ 180"><div class="seg seg-f" style="width:38%"></div><div class="seg seg-m" style="width:62%"></div></div><span class="hbar-val">180 · 38% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">חיפה</span><div class="hbar-track" title="נשים 36% · גברים 64% · סה״כ 280"><div class="seg seg-f" style="width:36%"></div><div class="seg seg-m" style="width:64%"></div></div><span class="hbar-val">280 · 36% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">חולון</span><div class="hbar-track" title="נשים 35% · גברים 65% · סה״כ 120"><div class="seg seg-f" style="width:35%"></div><div class="seg seg-m" style="width:65%"></div></div><span class="hbar-val">120 · 35% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">פתח תקווה</span><div class="hbar-track" title="נשים 34% · גברים 66% · סה״כ 110"><div class="seg seg-f" style="width:34%"></div><div class="seg seg-m" style="width:66%"></div></div><span class="hbar-val">110 · 34% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">תל אביב</span><div class="hbar-track" title="נשים 32% · גברים 68% · סה״כ 380"><div class="seg seg-f" style="width:32%"></div><div class="seg seg-m" style="width:68%"></div></div><span class="hbar-val">380 · 32% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">באר שבע</span><div class="hbar-track" title="נשים 32% · גברים 68% · סה״כ 130"><div class="seg seg-f" style="width:32%"></div><div class="seg seg-m" style="width:68%"></div></div><span class="hbar-val">130 · 32% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">ירושלים</span><div class="hbar-track" title="נשים 28% · גברים 72% · סה״כ 230"><div class="seg seg-f" style="width:28%"></div><div class="seg seg-m" style="width:72%"></div></div><span class="hbar-val">230 · 28% נ׳</span></div>
+          </div>
+        </div>
+        <div class="sub-card">
+          <div class="sub-title">לפי מדד סוציו-אקונומי</div>
+          <div class="hbar">
+            <div class="hbar-row"><span class="hbar-label">9</span><div class="hbar-track" title="נשים 49% · גברים 51% · סה״כ 320"><div class="seg seg-f" style="width:49%"></div><div class="seg seg-m" style="width:51%"></div></div><span class="hbar-val">320 · 49% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">8</span><div class="hbar-track" title="נשים 47% · גברים 53% · סה״כ 340"><div class="seg seg-f" style="width:47%"></div><div class="seg seg-m" style="width:53%"></div></div><span class="hbar-val">340 · 47% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">10</span><div class="hbar-track" title="נשים 45% · גברים 55% · סה״כ 280"><div class="seg seg-f" style="width:45%"></div><div class="seg seg-m" style="width:55%"></div></div><span class="hbar-val">280 · 45% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">7</span><div class="hbar-track" title="נשים 43% · גברים 57% · סה״כ 290"><div class="seg seg-f" style="width:43%"></div><div class="seg seg-m" style="width:57%"></div></div><span class="hbar-val">290 · 43% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">6</span><div class="hbar-track" title="נשים 40% · גברים 60% · סה״כ 240"><div class="seg seg-f" style="width:40%"></div><div class="seg seg-m" style="width:60%"></div></div><span class="hbar-val">240 · 40% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">5</span><div class="hbar-track" title="נשים 36% · גברים 64% · סה״כ 195"><div class="seg seg-f" style="width:36%"></div><div class="seg seg-m" style="width:64%"></div></div><span class="hbar-val">195 · 36% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">4</span><div class="hbar-track" title="נשים 32% · גברים 68% · סה״כ 130"><div class="seg seg-f" style="width:32%"></div><div class="seg seg-m" style="width:68%"></div></div><span class="hbar-val">130 · 32% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">3</span><div class="hbar-track" title="נשים 28% · גברים 72% · סה״כ 78"><div class="seg seg-f" style="width:28%"></div><div class="seg seg-m" style="width:72%"></div></div><span class="hbar-val">78 · 28% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">2</span><div class="hbar-track" title="נשים 22% · גברים 78% · סה״כ 42"><div class="seg seg-f" style="width:22%"></div><div class="seg seg-m" style="width:78%"></div></div><span class="hbar-val">42 · 22% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">1</span><div class="hbar-track" title="נשים 15% · גברים 85% · סה״כ 18"><div class="seg seg-f" style="width:15%"></div><div class="seg seg-m" style="width:85%"></div></div><span class="hbar-val">18 · 15% נ׳</span></div>
+          </div>
+        </div>
+        <div class="sub-card">
+          <div class="sub-title">לפי מדד פריפריאליות</div>
+          <div class="hbar">
+            <div class="hbar-row"><span class="hbar-label">10 — מרכז</span><div class="hbar-track" title="נשים 46% · גברים 54% · סה״כ 680"><div class="seg seg-f" style="width:46%"></div><div class="seg seg-m" style="width:54%"></div></div><span class="hbar-val">680 · 46% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">9</span><div class="hbar-track" title="נשים 44% · גברים 56% · סה״כ 590"><div class="seg seg-f" style="width:44%"></div><div class="seg seg-m" style="width:56%"></div></div><span class="hbar-val">590 · 44% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">8</span><div class="hbar-track" title="נשים 42% · גברים 58% · סה״כ 520"><div class="seg seg-f" style="width:42%"></div><div class="seg seg-m" style="width:58%"></div></div><span class="hbar-val">520 · 42% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">7</span><div class="hbar-track" title="נשים 40% · גברים 60% · סה״כ 460"><div class="seg seg-f" style="width:40%"></div><div class="seg seg-m" style="width:60%"></div></div><span class="hbar-val">460 · 40% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">6</span><div class="hbar-track" title="נשים 37% · גברים 63% · סה״כ 390"><div class="seg seg-f" style="width:37%"></div><div class="seg seg-m" style="width:63%"></div></div><span class="hbar-val">390 · 37% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">5</span><div class="hbar-track" title="נשים 34% · גברים 66% · סה״כ 320"><div class="seg seg-f" style="width:34%"></div><div class="seg seg-m" style="width:66%"></div></div><span class="hbar-val">320 · 34% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">4</span><div class="hbar-track" title="נשים 31% · גברים 69% · סה״כ 250"><div class="seg seg-f" style="width:31%"></div><div class="seg seg-m" style="width:69%"></div></div><span class="hbar-val">250 · 31% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">3</span><div class="hbar-track" title="נשים 28% · גברים 72% · סה״כ 180"><div class="seg seg-f" style="width:28%"></div><div class="seg seg-m" style="width:72%"></div></div><span class="hbar-val">180 · 28% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">2</span><div class="hbar-track" title="נשים 24% · גברים 76% · סה״כ 120"><div class="seg seg-f" style="width:24%"></div><div class="seg seg-m" style="width:76%"></div></div><span class="hbar-val">120 · 24% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">1 — פריפריאלי</span><div class="hbar-track" title="נשים 20% · גברים 80% · סה״כ 70"><div class="seg seg-f" style="width:20%"></div><div class="seg seg-m" style="width:80%"></div></div><span class="hbar-val">70 · 20% נ׳</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="legend-row">
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--women)"></span>קבוצות נשים</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--teal)"></span>קבוצות גברים</span>
+      </div>
+    </div>
+
+    <div class="card col-12">
+      <div class="card-head"><span class="card-title">קבוצות נשים אל מול קבוצות גברים — לפי ענף וקבוצת גיל</span><span class="card-meta">Stacked Bar אופקי · חלוקה לפי ענף · קבוצות גיל · ענפים קבוצתיים בלבד</span></div>
+      <div class="sub-cards-2">
+        <div class="sub-card">
+          <div class="sub-title">קבוצות מתחת לגיל 18</div>
+          <div class="hbar">
+            <div class="hbar-row"><span class="hbar-label">כדורגל</span><div class="hbar-track" title="נשים 10% · גברים 90% · סה״כ 210"><div class="seg seg-f" style="width:10%"></div><div class="seg seg-m" style="width:90%"></div></div><span class="hbar-val">210 · 10% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">כדורסל</span><div class="hbar-track" title="נשים 38% · גברים 62% · סה״כ 130"><div class="seg seg-f" style="width:38%"></div><div class="seg seg-m" style="width:62%"></div></div><span class="hbar-val">130 · 38% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">כדורעף</span><div class="hbar-track" title="נשים 52% · גברים 48% · סה״כ 95"><div class="seg seg-f" style="width:52%"></div><div class="seg seg-m" style="width:48%"></div></div><span class="hbar-val">95 · 52% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">כדוריד</span><div class="hbar-track" title="נשים 45% · גברים 55% · סה״כ 88"><div class="seg seg-f" style="width:45%"></div><div class="seg seg-m" style="width:55%"></div></div><span class="hbar-val">88 · 45% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">הוקי</span><div class="hbar-track" title="נשים 42% · גברים 58% · סה״כ 36"><div class="seg seg-f" style="width:42%"></div><div class="seg seg-m" style="width:58%"></div></div><span class="hbar-val">36 · 42% נ׳</span></div>
+          </div>
+        </div>
+        <div class="sub-card">
+          <div class="sub-title">קבוצות מעל גיל 18</div>
+          <div class="hbar">
+            <div class="hbar-row"><span class="hbar-label">כדורגל</span><div class="hbar-track" title="נשים 5% · גברים 95% · סה״כ 70"><div class="seg seg-f" style="width:5%"></div><div class="seg seg-m" style="width:95%"></div></div><span class="hbar-val">70 · 5% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">כדורסל</span><div class="hbar-track" title="נשים 24% · גברים 76% · סה״כ 30"><div class="seg seg-f" style="width:24%"></div><div class="seg seg-m" style="width:76%"></div></div><span class="hbar-val">30 · 24% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">כדורעף</span><div class="hbar-track" title="נשים 44% · גברים 56% · סה״כ 25"><div class="seg seg-f" style="width:44%"></div><div class="seg seg-m" style="width:56%"></div></div><span class="hbar-val">25 · 44% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">כדוריד</span><div class="hbar-track" title="נשים 40% · גברים 60% · סה״כ 20"><div class="seg seg-f" style="width:40%"></div><div class="seg seg-m" style="width:60%"></div></div><span class="hbar-val">20 · 40% נ׳</span></div>
+            <div class="hbar-row"><span class="hbar-label">הוקי</span><div class="hbar-track" title="נשים 44% · גברים 56% · סה״כ 9"><div class="seg seg-f" style="width:44%"></div><div class="seg seg-m" style="width:56%"></div></div><span class="hbar-val">9 · 44% נ׳</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="legend-row">
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--women)"></span>קבוצות נשים</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--teal)"></span>קבוצות גברים</span>
+      </div>
+    </div>
+
+    <span class="section-title">שימור</span>
+    <div class="card col-12">
+      <div class="card-head"><span class="card-title">מדד שימור (% ת.ז. חוזרות משנה לשנה) — 4 חיתוכים</span><span class="card-meta">% ת.ז. חוזרות 25→26</span></div>
+      <div class="sub-cards-2">
+        <div class="sub-card">
+          <div class="sub-title">לפי איגוד</div>
+          <div class="hbar">
+            <div class="hbar-row"><span class="hbar-label">איגוד ההתעמלות</span><div class="hbar-track"><div class="hbar-fill" style="width:96%"></div></div><span class="hbar-val">82%</span></div>
+            <div class="hbar-row"><span class="hbar-label">איגוד השחייה</span><div class="hbar-track"><div class="hbar-fill" style="width:92%"></div></div><span class="hbar-val">78%</span></div>
+            <div class="hbar-row"><span class="hbar-label">איגוד הכדורעף</span><div class="hbar-track"><div class="hbar-fill" style="width:90%"></div></div><span class="hbar-val">76%</span></div>
+            <div class="hbar-row"><span class="hbar-label">איגוד האתלטיקה</span><div class="hbar-track"><div class="hbar-fill" style="width:87%"></div></div><span class="hbar-val">74%</span></div>
+            <div class="hbar-row"><span class="hbar-label">איגוד הטניס</span><div class="hbar-track"><div class="hbar-fill" style="width:85%"></div></div><span class="hbar-val">72%</span></div>
+            <div class="hbar-row"><span class="hbar-label">איגוד הכדורסל</span><div class="hbar-track"><div class="hbar-fill" style="width:82%"></div></div><span class="hbar-val">70%</span></div>
+            <div class="hbar-row"><span class="hbar-label">איגוד הג'ודו</span><div class="hbar-track"><div class="hbar-fill" style="width:80%"></div></div><span class="hbar-val">68%</span></div>
+            <div class="hbar-row"><span class="hbar-label">איגוד האופניים</span><div class="hbar-track"><div class="hbar-fill" style="width:76%"></div></div><span class="hbar-val">65%</span></div>
+            <div class="hbar-row"><span class="hbar-label">התאחדות הכדורגל</span><div class="hbar-track"><div class="hbar-fill" style="width:73%"></div></div><span class="hbar-val">62%</span></div>
+            <div class="hbar-row"><span class="hbar-label">איגוד החתירה</span><div class="hbar-track"><div class="hbar-fill" style="width:68%"></div></div><span class="hbar-val">58%</span></div>
+          </div>
+        </div>
+        <div class="sub-card">
+          <div class="sub-title">לפי רשות מקומית</div>
+          <div class="hbar">
+            <div class="hbar-row"><span class="hbar-label">רעננה</span><div class="hbar-track"><div class="hbar-fill" style="width:94%"></div></div><span class="hbar-val">80%</span></div>
+            <div class="hbar-row"><span class="hbar-label">תל אביב</span><div class="hbar-track"><div class="hbar-fill" style="width:91%"></div></div><span class="hbar-val">78%</span></div>
+            <div class="hbar-row"><span class="hbar-label">כפר סבא</span><div class="hbar-track"><div class="hbar-fill" style="width:88%"></div></div><span class="hbar-val">75%</span></div>
+            <div class="hbar-row"><span class="hbar-label">חיפה</span><div class="hbar-track"><div class="hbar-fill" style="width:87%"></div></div><span class="hbar-val">74%</span></div>
+            <div class="hbar-row"><span class="hbar-label">ירושלים</span><div class="hbar-track"><div class="hbar-fill" style="width:85%"></div></div><span class="hbar-val">72%</span></div>
+            <div class="hbar-row"><span class="hbar-label">ראשל"צ</span><div class="hbar-track"><div class="hbar-fill" style="width:82%"></div></div><span class="hbar-val">70%</span></div>
+            <div class="hbar-row"><span class="hbar-label">נתניה</span><div class="hbar-track"><div class="hbar-fill" style="width:80%"></div></div><span class="hbar-val">68%</span></div>
+            <div class="hbar-row"><span class="hbar-label">באר שבע</span><div class="hbar-track"><div class="hbar-fill" style="width:78%"></div></div><span class="hbar-val">66%</span></div>
+            <div class="hbar-row"><span class="hbar-label">חולון</span><div class="hbar-track"><div class="hbar-fill" style="width:75%"></div></div><span class="hbar-val">64%</span></div>
+            <div class="hbar-row"><span class="hbar-label">פתח תקווה</span><div class="hbar-track"><div class="hbar-fill" style="width:73%"></div></div><span class="hbar-val">62%</span></div>
+          </div>
+        </div>
+        <div class="sub-card">
+          <div class="sub-title">לפי מדד סוציו-אקונומי</div>
+          <div class="vbar-chart">
+            <div class="vb-col"><span class="vb-val">52%</span><div class="vb-fill" style="height:52%"></div><span class="vb-cap">1</span></div>
+            <div class="vb-col"><span class="vb-val">58%</span><div class="vb-fill" style="height:58%"></div><span class="vb-cap">2</span></div>
+            <div class="vb-col"><span class="vb-val">62%</span><div class="vb-fill" style="height:62%"></div><span class="vb-cap">3</span></div>
+            <div class="vb-col"><span class="vb-val">65%</span><div class="vb-fill" style="height:65%"></div><span class="vb-cap">4</span></div>
+            <div class="vb-col"><span class="vb-val">68%</span><div class="vb-fill" style="height:68%"></div><span class="vb-cap">5</span></div>
+            <div class="vb-col"><span class="vb-val">72%</span><div class="vb-fill" style="height:72%"></div><span class="vb-cap">6</span></div>
+            <div class="vb-col"><span class="vb-val">75%</span><div class="vb-fill" style="height:75%"></div><span class="vb-cap">7</span></div>
+            <div class="vb-col"><span class="vb-val">78%</span><div class="vb-fill" style="height:78%"></div><span class="vb-cap">8</span></div>
+            <div class="vb-col"><span class="vb-val">80%</span><div class="vb-fill" style="height:80%"></div><span class="vb-cap">9</span></div>
+            <div class="vb-col"><span class="vb-val">76%</span><div class="vb-fill" style="height:76%"></div><span class="vb-cap">10</span></div>
+          </div>
+        </div>
+        <div class="sub-card">
+          <div class="sub-title">לפי מדד פריפריאליות</div>
+          <div class="vbar-chart">
+            <div class="vb-col"><span class="vb-val">56%</span><div class="vb-fill" style="height:56%"></div><span class="vb-cap">1 — פריפריאלי</span></div>
+            <div class="vb-col"><span class="vb-val">60%</span><div class="vb-fill" style="height:60%"></div><span class="vb-cap">2</span></div>
+            <div class="vb-col"><span class="vb-val">63%</span><div class="vb-fill" style="height:63%"></div><span class="vb-cap">3</span></div>
+            <div class="vb-col"><span class="vb-val">66%</span><div class="vb-fill" style="height:66%"></div><span class="vb-cap">4</span></div>
+            <div class="vb-col"><span class="vb-val">69%</span><div class="vb-fill" style="height:69%"></div><span class="vb-cap">5</span></div>
+            <div class="vb-col"><span class="vb-val">72%</span><div class="vb-fill" style="height:72%"></div><span class="vb-cap">6</span></div>
+            <div class="vb-col"><span class="vb-val">74%</span><div class="vb-fill" style="height:74%"></div><span class="vb-cap">7</span></div>
+            <div class="vb-col"><span class="vb-val">77%</span><div class="vb-fill" style="height:77%"></div><span class="vb-cap">8</span></div>
+            <div class="vb-col"><span class="vb-val">79%</span><div class="vb-fill" style="height:79%"></div><span class="vb-cap">9</span></div>
+            <div class="vb-col"><span class="vb-val">80%</span><div class="vb-fill" style="height:80%"></div><span class="vb-cap">10 — מרכז</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card col-12">
+      <div class="card-head"><span class="card-title">שיעור שימור לאורך שנים</span><span class="card-meta">Line · מגמת שיפור</span></div>
+      <svg class="line-svg" viewBox="0 0 320 220" preserveAspectRatio="none">
+        <line x1="36" y1="180" x2="320" y2="180" stroke="#E5E1D8" stroke-width="1"/>
+        <line x1="36" y1="10"  x2="36"  y2="180" stroke="#E5E1D8" stroke-width="1"/>
+        <path d="M36,100 L94,92 L152,82 L210,72 L268,62 L320,52" stroke="#86198F" stroke-width="2.5" fill="none"/>
+        <g fill="#9A9A9A" font-size="10" font-family="Heebo">
+          <text x="36"  y="198" text-anchor="middle">21→22</text>
+          <text x="94"  y="198" text-anchor="middle">22→23</text>
+          <text x="152" y="198" text-anchor="middle">23→24</text>
+          <text x="210" y="198" text-anchor="middle">24→25</text>
+          <text x="268" y="198" text-anchor="middle">25→26</text>
+          <text x="30"  y="55"  text-anchor="end">75%</text>
+          <text x="30"  y="180" text-anchor="end">60%</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════
+     TAB 4 — מאמנות ובעלות תפקיד
+══════════════════════════════════════════════════════════════════ -->
+<section class="tab-content" id="tab-roles">
+
+  <div class="filter-bar">
+    <span class="filter-bar-label">פילטרים על <strong>הדף</strong> · מאמנים/ות ובעלי תפקיד הם ברמת איגוד</span>
+    <div class="filter"><label>שנה</label><select><option>2026</option><option>2025</option></select></div>
+    <div class="filter"><label>איגוד</label><select><option>הכל</option></select></div>
+    <div class="filter"><label>ענף</label><select><option>הכל</option><option>כדורגל</option><option>כדורסל</option><option>שחייה</option><option>אתלטיקה</option><option>טניס</option><option>כדורעף</option><option>התעמלות</option><option>ג'ודו</option></select></div>
+    <div class="filter"><label>סיווג אולימפי</label><select><option>הכל</option><option>אולימפי</option><option>פרה-אולימפי</option><option>לא אולימפי</option></select></div>
+    <div class="filter"><label>סוג ענף</label><select><option>הכל</option><option>אישי</option><option>קבוצתי</option></select></div>
+    <button class="filter-reset">איפוס</button>
+  </div>
+
+  <div class="kpis k4">
+    <div class="kpi"><div class="kpi-label">מאמנות</div><div class="kpi-value">1,045</div><div class="kpi-delta up">▲ +2% מ-2025</div></div>
+    <div class="kpi"><div class="kpi-label">% מאמנות</div><div class="kpi-value">24%</div><div class="kpi-sub">מכלל המאמנים</div></div>
+    <div class="kpi"><div class="kpi-label">נשים בהנהלה</div><div class="kpi-value">24%</div><div class="kpi-sub">186 נשים / 590 גברים</div></div>
+    <div class="kpi"><div class="kpi-label">איגודים עם 30%+ נשים בהנהלה</div><div class="kpi-value">14 / 22</div><div class="kpi-delta up">▲ +2 משנה קודמת</div></div>
+  </div>
+
+  <div class="grid">
+    <div class="card col-12">
+      <div class="card-head"><span class="card-title">מאמנות אל מול מאמנים — לפי איגוד</span><span class="card-meta">Stacked Bar (100%) · ערך = סך מאמנים · מאמנים/ות ברמת איגוד בלבד — אין פילוח גיאוגרפי</span></div>
+      <div class="hbar">
+        <div class="hbar-row"><span class="hbar-label">איגוד ההתעמלות</span><div class="hbar-track" title="נשים 60% · גברים 40% · סה״כ 240"><div class="seg seg-f" style="width:60%"></div><div class="seg seg-m" style="width:40%"></div></div><span class="hbar-val">240 · 60% נ׳</span></div>
+        <div class="hbar-row"><span class="hbar-label">איגוד השחייה</span><div class="hbar-track" title="נשים 42% · גברים 58% · סה״כ 320"><div class="seg seg-f" style="width:42%"></div><div class="seg seg-m" style="width:58%"></div></div><span class="hbar-val">320 · 42% נ׳</span></div>
+        <div class="hbar-row"><span class="hbar-label">איגוד הסיוף</span><div class="hbar-track" title="נשים 32% · גברים 68% · סה״כ 110"><div class="seg seg-f" style="width:32%"></div><div class="seg seg-m" style="width:68%"></div></div><span class="hbar-val">110 · 32% נ׳</span></div>
+        <div class="hbar-row"><span class="hbar-label">איגוד הכדורעף</span><div class="hbar-track" title="נשים 32% · גברים 68% · סה״כ 170"><div class="seg seg-f" style="width:32%"></div><div class="seg seg-m" style="width:68%"></div></div><span class="hbar-val">170 · 32% נ׳</span></div>
+        <div class="hbar-row"><span class="hbar-label">איגוד הכדורסל</span><div class="hbar-track" title="נשים 30% · גברים 70% · סה״כ 280"><div class="seg seg-f" style="width:30%"></div><div class="seg seg-m" style="width:70%"></div></div><span class="hbar-val">280 · 30% נ׳</span></div>
+        <div class="hbar-row"><span class="hbar-label">איגוד הטניס</span><div class="hbar-track" title="נשים 28% · גברים 72% · סה״כ 200"><div class="seg seg-f" style="width:28%"></div><div class="seg seg-m" style="width:72%"></div></div><span class="hbar-val">200 · 28% נ׳</span></div>
+        <div class="hbar-row"><span class="hbar-label">איגוד האתלטיקה</span><div class="hbar-track" title="נשים 25% · גברים 75% · סה״כ 220"><div class="seg seg-f" style="width:25%"></div><div class="seg seg-m" style="width:75%"></div></div><span class="hbar-val">220 · 25% נ׳</span></div>
+        <div class="hbar-row"><span class="hbar-label">איגוד הג'ודו</span><div class="hbar-track" title="נשים 22% · גברים 78% · סה״כ 130"><div class="seg seg-f" style="width:22%"></div><div class="seg seg-m" style="width:78%"></div></div><span class="hbar-val">130 · 22% נ׳</span></div>
+        <div class="hbar-row"><span class="hbar-label">איגוד הקראטה</span><div class="hbar-track" title="נשים 20% · גברים 80% · סה״כ 90"><div class="seg seg-f" style="width:20%"></div><div class="seg seg-m" style="width:80%"></div></div><span class="hbar-val">90 · 20% נ׳</span></div>
+        <div class="hbar-row"><span class="hbar-label">התאחדות הכדורגל</span><div class="hbar-track" title="נשים 8% · גברים 92% · סה״כ 430"><div class="seg seg-f" style="width:8%"></div><div class="seg seg-m" style="width:92%"></div></div><span class="hbar-val">430 · 8% נ׳</span></div>
+      </div>
+      <div class="legend-row">
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--women)"></span>מאמנות</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--teal)"></span>מאמנים</span>
+      </div>
+    </div>
+
+    <!-- E3: שיעור מאמנות אל מול מדריכות ברמת איגודים -->
+    <div class="card col-12">
+      <div class="card-head">
+        <span class="card-title">מספר המדריכים/מדריכות ומאמנים/מאמנות על פי איגוד</span>
+        <span class="card-meta">Stacked Bar אנכי · ערך = כמות · 2 מקלות לאיגוד: נשים (מדריכות+מאמנות) · גברים (מדריכים+מאמנים)</span>
+      </div>
+      <div class="vstack-chart">
+        <div class="vstack-group">
+          <div class="vstack-bars">
+            <div class="vstack-bar"><div class="vstack-seg seg-wi" style="height:41px"><span>72</span></div><div class="vstack-seg seg-wc" style="height:41px"><span>72</span></div></div>
+            <div class="vstack-bar"><div class="vstack-seg seg-mi" style="height:28px"><span>48</span></div><div class="vstack-seg seg-mc" style="height:28px"><span>48</span></div></div>
+          </div>
+          <div class="vstack-cap">התעמלות</div>
+        </div>
+        <div class="vstack-group">
+          <div class="vstack-bars">
+            <div class="vstack-bar"><div class="vstack-seg seg-wi" style="height:37px"><span>64</span></div><div class="vstack-seg seg-wc" style="height:40px"><span>70</span></div></div>
+            <div class="vstack-bar"><div class="vstack-seg seg-mi" style="height:52px"><span>90</span></div><div class="vstack-seg seg-mc" style="height:55px"><span>96</span></div></div>
+          </div>
+          <div class="vstack-cap">שחייה</div>
+        </div>
+        <div class="vstack-group">
+          <div class="vstack-bars">
+            <div class="vstack-bar"><div class="vstack-seg seg-wi" style="height:16px"><span>27</span></div><div class="vstack-seg seg-wc" style="height:16px"><span>27</span></div></div>
+            <div class="vstack-bar"><div class="vstack-seg seg-mi" style="height:33px"><span>58</span></div><div class="vstack-seg seg-mc" style="height:33px"><span>58</span></div></div>
+          </div>
+          <div class="vstack-cap">כדורעף</div>
+        </div>
+        <div class="vstack-group">
+          <div class="vstack-bars">
+            <div class="vstack-bar"><div class="vstack-seg seg-wi" style="height:25px"><span>44</span></div><div class="vstack-seg seg-wc" style="height:23px"><span>40</span></div></div>
+            <div class="vstack-bar"><div class="vstack-seg seg-mi" style="height:56px"><span>98</span></div><div class="vstack-seg seg-mc" style="height:56px"><span>98</span></div></div>
+          </div>
+          <div class="vstack-cap">כדורסל</div>
+        </div>
+        <div class="vstack-group">
+          <div class="vstack-bars">
+            <div class="vstack-bar"><div class="vstack-seg seg-wi" style="height:18px"><span>32</span></div><div class="vstack-seg seg-wc" style="height:14px"></div></div>
+            <div class="vstack-bar"><div class="vstack-seg seg-mi" style="height:41px"><span>72</span></div><div class="vstack-seg seg-mc" style="height:41px"><span>72</span></div></div>
+          </div>
+          <div class="vstack-cap">טניס</div>
+        </div>
+        <div class="vstack-group">
+          <div class="vstack-bars">
+            <div class="vstack-bar"><div class="vstack-seg seg-wi" style="height:19px"><span>33</span></div><div class="vstack-seg seg-wc" style="height:13px"></div></div>
+            <div class="vstack-bar"><div class="vstack-seg seg-mi" style="height:47px"><span>81</span></div><div class="vstack-seg seg-mc" style="height:48px"><span>84</span></div></div>
+          </div>
+          <div class="vstack-cap">אתלטיקה</div>
+        </div>
+        <div class="vstack-group">
+          <div class="vstack-bars">
+            <div class="vstack-bar"><div class="vstack-seg seg-wi" style="height:9px"></div><div class="vstack-seg seg-wc" style="height:7px"></div></div>
+            <div class="vstack-bar"><div class="vstack-seg seg-mi" style="height:28px"><span>49</span></div><div class="vstack-seg seg-mc" style="height:30px"><span>52</span></div></div>
+          </div>
+          <div class="vstack-cap">ג'ודו</div>
+        </div>
+        <div class="vstack-group">
+          <div class="vstack-bars">
+            <div class="vstack-bar"><div class="vstack-seg seg-wi" style="height:13px"></div><div class="vstack-seg seg-wc" style="height:7px"></div></div>
+            <div class="vstack-bar"><div class="vstack-seg seg-mi" style="height:114px"><span>198</span></div><div class="vstack-seg seg-mc" style="height:114px"><span>198</span></div></div>
+          </div>
+          <div class="vstack-cap">כדורגל</div>
+        </div>
+      </div>
+      <div class="legend-row">
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--women)"></span>מאמנות</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--women-mid)"></span>מדריכות</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--teal)"></span>מאמנים</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:var(--teal-mid)"></span>מדריכים</span>
+      </div>
+    </div>
+
+    <div class="card col-6">
+      <div class="card-head"><span class="card-title">מגמת שיעור מאמנות לאורך שנים</span><span class="card-meta">Line · 2020–2026</span></div>
+      <svg class="line-svg" viewBox="0 0 320 220" preserveAspectRatio="none">
+        <line x1="36" y1="180" x2="320" y2="180" stroke="#E5E1D8" stroke-width="1"/>
+        <line x1="36" y1="10"  x2="36"  y2="180" stroke="#E5E1D8" stroke-width="1"/>
+        <path d="M36,150 L84,140 L132,128 L180,116 L228,102 L276,88 L320,72"
+              stroke="#86198F" stroke-width="2.5" fill="none"/>
+        <g fill="#9A9A9A" font-size="10" font-family="Heebo">
+          <text x="36"  y="198" text-anchor="middle">2020</text>
+          <text x="84"  y="198" text-anchor="middle">2021</text>
+          <text x="132" y="198" text-anchor="middle">2022</text>
+          <text x="180" y="198" text-anchor="middle">2023</text>
+          <text x="228" y="198" text-anchor="middle">2024</text>
+          <text x="276" y="198" text-anchor="middle">2025</text>
+          <text x="320" y="198" text-anchor="middle">2026</text>
+          <text x="30"  y="75"  text-anchor="end">24%</text>
+          <text x="30"  y="155" text-anchor="end">15%</text>
+        </g>
+      </svg>
+    </div>
+
+    <div class="card col-6">
+      <div class="card-head"><span class="card-title">% נשים בהנהלת איגוד — אל מול סף 30%</span><span class="card-meta">Bar · באדום = מתחת לסף</span></div>
+      <div class="hbar">
+        <div class="hbar-row"><span class="hbar-label">איגוד ההתעמלות</span><div class="hbar-track"><div class="hbar-fill" style="width:62%"></div></div><span class="hbar-val">62%</span></div>
+        <div class="hbar-row"><span class="hbar-label">איגוד השחייה</span><div class="hbar-track"><div class="hbar-fill" style="width:52%"></div></div><span class="hbar-val">52%</span></div>
+        <div class="hbar-row"><span class="hbar-label">איגוד הכדורסל</span><div class="hbar-track"><div class="hbar-fill" style="width:44%"></div></div><span class="hbar-val">44%</span></div>
+        <div class="hbar-row"><span class="hbar-label">איגוד הטניס</span><div class="hbar-track"><div class="hbar-fill" style="width:38%"></div></div><span class="hbar-val">38%</span></div>
+        <div class="hbar-row"><span class="hbar-label">איגוד האתלטיקה</span><div class="hbar-track"><div class="hbar-fill" style="width:34%"></div></div><span class="hbar-val">34%</span></div>
+        <div class="hbar-row"><span class="hbar-label">איגוד הג'ודו</span><div class="hbar-track"><div class="hbar-fill below" style="width:26%"></div></div><span class="hbar-val">26%</span></div>
+        <div class="hbar-row"><span class="hbar-label">איגוד הכדורעף</span><div class="hbar-track"><div class="hbar-fill below" style="width:22%"></div></div><span class="hbar-val">22%</span></div>
+        <div class="hbar-row"><span class="hbar-label">התאחדות הכדורגל</span><div class="hbar-track"><div class="hbar-fill below" style="width:18%"></div></div><span class="hbar-val">18%</span></div>
+        <div class="hbar-row"><span class="hbar-label">איגוד הקליעה</span><div class="hbar-track"><div class="hbar-fill below" style="width:14%"></div></div><span class="hbar-val">14%</span></div>
+        <div class="hbar-row"><span class="hbar-label">איגוד האיגרוף</span><div class="hbar-track"><div class="hbar-fill below" style="width:8%"></div></div><span class="hbar-val">8%</span></div>
+      </div>
+    </div>
+
+    <div class="card col-12">
+      <div class="card-head">
+        <span class="card-title">נשים מנכ"ליות ומנהלות מקצועיות לפי איגוד</span>
+        <span class="card-meta">Table · נתוני אמת 2026 · ספירת נשים בתפקיד לפי איגוד · "תפקידים נוספים" — פירוט לפי תפקיד ושיעור הנשים מכלל בעלי אותו תפקיד</span>
+      </div>
+      <table class="stbl">
+        <thead>
+          <tr>
+            <th>איגוד</th>
+            <th class="num">מנכ"לית / מנהלת כללית</th>
+            <th class="num">רכזת לקידום ספורט נשים</th>
+            <th class="num">ממונת מוגנות בספורט</th>
+            <th style="min-width:240px">תפקידים נוספים</th>
+            <th class="num">סה"כ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>איגוד הכדורסל</td><td class="num">0</td><td class="num">2</td><td class="num">4</td><td style="font-size:11px; line-height:1.5; text-align:start">חברת ועד מנהל 18 (31%)<br>פיזיותרפיסטית 7 (50%)<br>אחר 6 (23%)<br>עוזרת למאמן 1 (20%)<br>מאמנת לאומית 1 (25%)</td><td class="num"><strong>39</strong></td></tr>
+          <tr><td>איגוד השחייה</td><td class="num">1</td><td class="num">0</td><td class="num">2</td><td style="font-size:11px; line-height:1.5; text-align:start">עוזרת למאמן 8 (53%)<br>חברת ועד מנהל 7 (44%)<br>מאמנת לאומית 2 (25%)<br>מנהלת מקצועית 2 (33%)<br>אחר 1 (100%)</td><td class="num"><strong>23</strong></td></tr>
+          <tr><td>אגוד הטניס</td><td class="num">0</td><td class="num">1</td><td class="num">1</td><td style="font-size:11px; line-height:1.5; text-align:start">חברת ועד מנהל 11 (32%)<br>אחר 5 (71%)</td><td class="num"><strong>18</strong></td></tr>
+          <tr><td>איגוד הג'ודו</td><td class="num">0</td><td class="num">1</td><td class="num">1</td><td style="font-size:11px; line-height:1.5; text-align:start">אחר 5 (71%)<br>חברת ועד מנהל 4 (36%)<br>מאמנת לאומית 2 (14%)<br>פיזיותרפיסטית 2 (29%)<br>מאמנת כושר 1 (50%)<br>תזונאית 1 (100%)</td><td class="num"><strong>17</strong></td></tr>
+          <tr><td>איגוד הכדורעף</td><td class="num">0</td><td class="num">0</td><td class="num">2</td><td style="font-size:11px; line-height:1.5; text-align:start">חברת ועד מנהל 12 (32%)<br>עוזרת למאמן 1 (17%)</td><td class="num"><strong>15</strong></td></tr>
+          <tr><td>איגוד ההתעמלות</td><td class="num">1</td><td class="num">1</td><td class="num">2</td><td style="font-size:11px; line-height:1.5; text-align:start">חברת ועד מנהל 6 (55%)<br>מנהלת מקצועית 4 (80%)</td><td class="num"><strong>14</strong></td></tr>
+          <tr><td>איגוד האתלטיקה</td><td class="num">0</td><td class="num">1</td><td class="num">2</td><td style="font-size:11px; line-height:1.5; text-align:start">חברת ועד מנהל 5 (38%)<br>אחר 2 (29%)</td><td class="num"><strong>10</strong></td></tr>
+        </tbody>
+        <tfoot>
+          <tr><td><strong>סה"כ</strong></td><td class="num"><strong>2</strong></td><td class="num"><strong>6</strong></td><td class="num"><strong>14</strong></td><td style="text-align:start"><strong>114 נשים</strong></td><td class="num"><strong>136</strong></td></tr>
+        </tfoot>
+      </table>
+      <div style="margin-top:10px; font-size:11px; color:var(--ink-muted); line-height:1.6;">בעמודת "תפקידים נוספים": לכל תפקיד מוצג מספר הנשים, ובסוגריים שיעורן מכלל בעלי אותו תפקיד באיגוד (נשים+גברים). נתוני אמת מתוך <strong>new_officials</strong> (שנת בקשה 2026), 7 איגודים נבחרים — קיים פילוח מלא לכל ~60 האיגודים.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════
+     TAB 5 — השוואת רשויות
+══════════════════════════════════════════════════════════════════ -->
+<section class="tab-content" id="tab-visit">
+
+  <div class="filter-bar">
+    <span class="filter-bar-label">בחירה ל<strong>השוואה</strong></span>
+    <div class="filter"><label>שנה</label><select><option>2026</option><option>2025</option></select></div>
+    <div class="filter"><label>רשות א</label><select><option>תל אביב-יפו</option></select></div>
+    <div class="filter"><label>רשות ב</label><select><option>חיפה</option></select></div>
+    <div class="filter"><label>רשות ג</label><select><option>ירושלים</option></select></div>
+    <div class="filter"><label>קו ייחוס</label><select><option>ממוצע רשויות שנבחרו</option><option>ממוצע אשכול סוציו-אקונומי דומה</option><option>ממוצע אשכול פריפריאלי דומה</option><option>שנה קודמת</option></select></div>
+    <button class="filter-reset">איפוס</button>
+  </div>
+
+  <div class="kpis k4">
+    <div class="kpi"><div class="kpi-label">ממוצע רשויות נבחרות — ספורטאיות</div><div class="kpi-value">3,710</div><div class="kpi-sub">תל אביב · חיפה · ירושלים</div></div>
+    <div class="kpi"><div class="kpi-label">ממוצע רשויות נבחרות — שיעור</div><div class="kpi-value">35.4%</div><div class="kpi-sub">נע בין 28.4% ל-41.2%</div></div>
+    <div class="kpi"><div class="kpi-label">פער שיעור בין רשויות נבחרות</div><div class="kpi-value">12.8 נק' אחוז</div><div class="kpi-sub">חיפה 41.2% פחות ירושלים 28.4%</div></div>
+    <div class="kpi"><div class="kpi-label">סך ספורטאיות ברשויות נבחרות</div><div class="kpi-value">11,130</div><div class="kpi-sub">3 רשויות נבחרות</div></div>
+  </div>
+
+  <span class="section-title">השוואה ישירה</span>
+  <div class="grid">
+    <div class="card col-12">
+      <div class="card-head"><span class="card-title">השוואת רשויות — תמונה מצרפית</span><span class="card-meta">3 הרשויות הנבחרות זו מול זו + קו ייחוס נבחר</span></div>
+      <div class="auth-compare">
+        <div class="auth-col">
+          <div class="auth-name">תל אביב-יפו <span class="auth-meta">פריפריאליות 10 · סוציו 8</span></div>
+          <div class="auth-stat"><span class="lbl">ספורטאיות</span><span class="val">4,320 <span class="delta up">+5%</span></span></div>
+          <div class="auth-stat"><span class="lbl">שיעור ספורטאיות</span><span class="val">36.5% <span class="delta down">−1.7%</span></span></div>
+          <div class="auth-stat"><span class="lbl">שינוי שנתי במספר הספורטאיות (לעומת שנה קודמת)</span><span class="val">+2.1% <span class="delta up">▲</span></span></div>
+          <div class="auth-stat"><span class="lbl">שימור</span><span class="val">68% <span class="delta down">−4%</span></span></div>
+          <div class="auth-stat"><span class="lbl">אגודות פעילות</span><span class="val">28</span></div>
+          <div class="auth-stat"><span class="lbl">ענפים פעילים</span><span class="val">22</span></div>
+        </div>
+        <div class="auth-col">
+          <div class="auth-name">חיפה <span class="auth-meta">פריפריאליות 8 · סוציו 6</span></div>
+          <div class="auth-stat"><span class="lbl">ספורטאיות</span><span class="val">3,590 <span class="delta down">−14%</span></span></div>
+          <div class="auth-stat"><span class="lbl">שיעור ספורטאיות</span><span class="val">41.2% <span class="delta up">+3.0%</span></span></div>
+          <div class="auth-stat"><span class="lbl">שינוי שנתי במספר הספורטאיות (לעומת שנה קודמת)</span><span class="val">+0.8% <span class="delta flat">→</span></span></div>
+          <div class="auth-stat"><span class="lbl">שימור</span><span class="val">74% <span class="delta up">+2%</span></span></div>
+          <div class="auth-stat"><span class="lbl">אגודות פעילות</span><span class="val">21</span></div>
+          <div class="auth-stat"><span class="lbl">ענפים פעילים</span><span class="val">18</span></div>
+        </div>
+        <div class="auth-col">
+          <div class="auth-name">ירושלים <span class="auth-meta">פריפריאליות 9 · סוציו 4</span></div>
+          <div class="auth-stat"><span class="lbl">ספורטאיות</span><span class="val">3,220 <span class="delta down">−23%</span></span></div>
+          <div class="auth-stat"><span class="lbl">שיעור ספורטאיות</span><span class="val">28.4% <span class="delta down">−9.8%</span></span></div>
+          <div class="auth-stat"><span class="lbl">שינוי שנתי במספר הספורטאיות (לעומת שנה קודמת)</span><span class="val">+3.2% <span class="delta up">▲</span></span></div>
+          <div class="auth-stat"><span class="lbl">שימור</span><span class="val">62% <span class="delta down">−10%</span></span></div>
+          <div class="auth-stat"><span class="lbl">אגודות פעילות</span><span class="val">19</span></div>
+          <div class="auth-stat"><span class="lbl">ענפים פעילים</span><span class="val">16</span></div>
+        </div>
+      </div>
+      <div class="legend-row">
+        <span class="legend-item">דלתא ירוקה = מעל הממוצע הארצי · אדומה = מתחת · אפורה = ≈</span>
+      </div>
+    </div>
+
+    <div class="card col-12">
+      <div class="card-head"><span class="card-title">מגמת שיעור ספורטאיות — רשויות שנבחרו</span><span class="card-meta">Multi-line · 2020–2026 · ממוצע רשויות שנבחרו כקו ייחוס</span></div>
+      <svg class="line-svg" viewBox="0 0 720 220" preserveAspectRatio="none">
+        <line x1="40" y1="180" x2="720" y2="180" stroke="#E5E1D8" stroke-width="1"/>
+        <line x1="40" y1="10"  x2="40"  y2="180" stroke="#E5E1D8" stroke-width="1"/>
+        <!-- ממוצע רשויות שנבחרו (קו דק רקע) -->
+        <path d="M40,150 L154,138 L268,124 L382,108 L496,90 L610,72 L720,56" stroke="#9A9A9A" stroke-width="1.5" stroke-dasharray="4 4" fill="none"/>
+        <!-- תל אביב (עולה מתון) -->
+        <path d="M40,155 L154,148 L268,138 L382,128 L496,118 L610,110 L720,104" stroke="#86198F" stroke-width="2.5" fill="none"/>
+        <!-- חיפה (עולה חזק) -->
+        <path d="M40,135 L154,124 L268,108 L382,92 L496,78 L610,66 L720,54" stroke="#0D5F73" stroke-width="2.5" fill="none"/>
+        <!-- ירושלים (עולה אבל מתחת לממוצע) -->
+        <path d="M40,170 L154,164 L268,156 L382,148 L496,140 L610,134 L720,126" stroke="#B45309" stroke-width="2.5" fill="none"/>
+        <g fill="#9A9A9A" font-size="10" font-family="Heebo">
+          <text x="40"  y="198" text-anchor="middle">2020</text>
+          <text x="154" y="198" text-anchor="middle">2021</text>
+          <text x="268" y="198" text-anchor="middle">2022</text>
+          <text x="382" y="198" text-anchor="middle">2023</text>
+          <text x="496" y="198" text-anchor="middle">2024</text>
+          <text x="610" y="198" text-anchor="middle">2025</text>
+          <text x="720" y="198" text-anchor="middle">2026</text>
+          <text x="34"  y="60"  text-anchor="end">45%</text>
+          <text x="34"  y="180" text-anchor="end">25%</text>
+        </g>
+        <g font-size="11" font-family="Heebo">
+          <text x="714" y="50"  text-anchor="end" fill="#0D5F73">חיפה 41.2%</text>
+          <text x="714" y="100" text-anchor="end" fill="#86198F">תל אביב 36.5%</text>
+          <text x="714" y="122" text-anchor="end" fill="#B45309">ירושלים 28.4%</text>
+          <text x="714" y="148" text-anchor="end" fill="#9A9A9A">ממוצע רשויות שנבחרו</text>
+        </g>
+      </svg>
+      <div class="legend-row">
+        <span class="legend-item">בחירת הרשויות נעשית במסננים שבראש הדף</span>
+      </div>
+    </div>
+
+    <span class="section-title">פירוט אגודות ברשות הנבחרת — תל אביב-יפו</span>
+    <div class="card col-12">
+      <div class="card-head"><span class="card-title">אגודות ברשות — תמונה מהירה</span><span class="card-meta">Table · שימושי לביקור בשטח</span></div>
+      <table class="stbl">
+        <thead>
+          <tr><th>אגודה</th><th>ענפים</th><th class="num">ספורטאים</th><th class="num">ספורטאיות</th><th class="num">% ספורטאיות</th><th class="num">שינוי שנתי</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>מכבי תל אביב</td><td>9</td><td class="num">1,745</td><td class="num">820</td><td class="num">47%</td><td class="num" style="color:var(--good)">+3%</td></tr>
+          <tr><td>הפועל תל אביב</td><td>7</td><td class="num">2,145</td><td class="num">665</td><td class="num">31%</td><td class="num" style="color:var(--good)">+1%</td></tr>
+          <tr><td>בני יהודה</td><td>5</td><td class="num">2,318</td><td class="num">510</td><td class="num">22%</td><td class="num" style="color:var(--gap)">−1%</td></tr>
+          <tr><td>מועדון השחייה ת"א</td><td>1</td><td class="num">526</td><td class="num">305</td><td class="num">58%</td><td class="num" style="color:var(--good)">+4%</td></tr>
+          <tr><td>בית ספר לבלט</td><td>1</td><td class="num">287</td><td class="num">270</td><td class="num">94%</td><td class="num" style="color:var(--good)">+2%</td></tr>
+          <tr><td>מועדון הטניס נמיר</td><td>1</td><td class="num">540</td><td class="num">220</td><td class="num">41%</td><td class="num">0%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <span class="section-title">פירוט ענפים ברשות הנבחרת — תל אביב-יפו</span>
+    <div class="card col-12">
+      <div class="card-head"><span class="card-title">ענפים ברשות — ספורט נשים</span><span class="card-meta">Table · קיבוץ לפי ענף</span></div>
+      <table class="stbl">
+        <thead>
+          <tr><th>ענף</th><th>אגודות</th><th class="num">ספורטאים</th><th class="num">ספורטאיות</th><th class="num">% ספורטאיות</th><th class="num">קבוצות נשים</th><th class="num">שינוי שנתי</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>כדורסל</td><td>6</td><td class="num">1,420</td><td class="num">540</td><td class="num">38%</td><td class="num">22</td><td class="num" style="color:var(--good)">+4%</td></tr>
+          <tr><td>שחייה</td><td>4</td><td class="num">880</td><td class="num">560</td><td class="num">64%</td><td class="num">18</td><td class="num" style="color:var(--good)">+6%</td></tr>
+          <tr><td>התעמלות</td><td>3</td><td class="num">410</td><td class="num">360</td><td class="num">88%</td><td class="num">14</td><td class="num" style="color:var(--good)">+9%</td></tr>
+          <tr><td>אתלטיקה</td><td>5</td><td class="num">690</td><td class="num">330</td><td class="num">48%</td><td class="num">16</td><td class="num" style="color:var(--good)">+2%</td></tr>
+          <tr><td>כדורעף</td><td>3</td><td class="num">520</td><td class="num">280</td><td class="num">54%</td><td class="num">13</td><td class="num" style="color:var(--good)">+5%</td></tr>
+          <tr><td>טניס</td><td>4</td><td class="num">470</td><td class="num">210</td><td class="num">45%</td><td class="num">9</td><td class="num">0%</td></tr>
+          <tr><td>כדורגל</td><td>7</td><td class="num">2,140</td><td class="num">290</td><td class="num">14%</td><td class="num">12</td><td class="num" style="color:var(--good)">+1%</td></tr>
+          <tr><td>ג'ודו</td><td>3</td><td class="num">360</td><td class="num">150</td><td class="num">42%</td><td class="num">8</td><td class="num" style="color:var(--gap)">−2%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+
+</main>
+
+<div class="edit-toolbar">
+  <span class="tb-label">מצב עריכה — כל הטקסטים וההערות ניתנים לעריכה; שינויים נשמרים אוטומטית. לשליחה/קבלת הערות: שמרו קובץ ושלחו במייל.</span>
+  <span class="tb-status" id="tbStatus">מקור</span>
+  <button onclick="resetAll()">איפוס הכל</button>
+  <button class="primary" onclick="exportHTML()">💾 שמירת הקובץ לשליחה (HTML)</button>
+</div>
+
+<script>
+  // hide header/tabs when inside iframe
+  if (window !== window.top) document.body.classList.add('embedded');
+
+  // ── tab switching ──
+  function switchTab(id) {
+    document.querySelectorAll('.ptab').forEach(x => x.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(x => x.classList.remove('active'));
+    const btn = document.querySelector('.ptab[data-target="'+id+'"]');
+    if (btn) btn.classList.add('active');
+    const sec = document.getElementById(id);
+    if (sec) sec.classList.add('active');
+  }
+  document.querySelectorAll('.ptab').forEach(t => {
+    t.addEventListener('click', e => {
+      e.preventDefault();
+      switchTab(t.dataset.target);
+    });
+  });
+  // hash-based tab selection (for iframe embedding)
+  if (location.hash) switchTab(location.hash.slice(1));
+  window.addEventListener('hashchange', () => switchTab(location.hash.slice(1)));
+
+  // ── כותרות עמודה לגרפים מוערמים 100% (הלקוח רגיש לכותרות) ──
+  // מזהה גרף מוערם 100% (כל השורות מסתכמות ל~100, לפחות שורה אחת עם 2+ מקטעים)
+  function isStacked100(hbar) {
+    const rows = hbar.querySelectorAll('.hbar-row');
+    if (!rows.length) return false;
+    let anyMulti = false, allHundred = true;
+    rows.forEach(r => {
+      const segs = r.querySelectorAll('.hbar-track .seg');
+      if (segs.length === 0) { allHundred = false; return; }
+      if (segs.length >= 2) anyMulti = true;
+      let sum = 0; segs.forEach(s => sum += parseFloat(s.style.width) || 0);
+      if (Math.abs(sum - 100) > 1.5) allHundred = false;
+    });
+    return anyMulti && allHundred;
+  }
+  // מיפוי מפורש של הכותרות (שם עמודת השורה · שם העמודה הצדדית) — בלי ניחושים
+  function headTitles(card, subTitle) {
+    const t = (card && card.querySelector('.card-title') ? card.querySelector('.card-title').textContent : '').trim();
+    const sub = (subTitle || '').trim();
+    const rowFromSub = sub.indexOf('לפי ') === 0 ? sub.slice(4).trim() : '';
+    if (t.indexOf('שיעור נשים ברכיבי התקציב') > -1)      return ['ענף', 'סה״כ תקציב'];
+    if (t.indexOf('חלוקה לפי מגדר בכל רכיב') > -1)         return ['רכיב ניקוד', 'אחוז נשים'];
+    if (t.indexOf('ניקוד לפי איגוד') > -1)                return ['ענף', sub.indexOf('הישגיות') > -1 ? 'סה״כ ניקוד הישגיות' : 'סה״כ ניקוד'];
+    if (t.indexOf('קבוצות נשים אל מול גברים') > -1)          return [rowFromSub || 'קטגוריה', 'סך קבוצות'];
+    if (t.indexOf('קבוצות נשים אל מול קבוצות גברים') > -1)   return ['ענף', 'סך קבוצות'];
+    if (t.indexOf('מתחת/מעל גיל 18') > -1)                return ['ענף', 'אחוז נשים'];
+    if (t.indexOf('מאמנות אל מול מאמנים') > -1)              return [rowFromSub || 'איגוד', 'סך מאמנים'];
+    if (t.indexOf('מאמנות אל מול מדריכות') > -1)             return ['איגוד', 'סך בעלי תפקיד'];
+    return null;
+  }
+  // מיון מקלות לפי כמות (הערך הצדדי) או לפי שיעור (ערך המקל). גלובלי — עובד גם בקובץ מיוצא.
+  function sortHbar(sel) {
+    const head = sel.closest('.hbar-head'); if (!head) return;
+    const hbar = head.nextElementSibling; if (!hbar || !hbar.classList.contains('hbar')) return;
+    const rows = Array.from(hbar.querySelectorAll('.hbar-row'));
+    rows.forEach((r, i) => { if (r.dataset.ord === undefined) r.dataset.ord = String(i); });
+    const qty  = r => { const v = r.querySelector('.hbar-val'); return parseFloat((v ? v.textContent : '').replace(/[^\d.]/g, '')) || 0; };
+    const rate = r => { let s = 0; r.querySelectorAll('.hbar-track .seg').forEach(g => { if (/(^|\s)seg-f(s|p)?(\s|$)/.test(g.className)) s += parseFloat(g.style.width) || 0; }); return s; };
+    const mode = sel.value;
+    let cmp;
+    if (mode === 'qty')       cmp = (a, b) => qty(b)  - qty(a);
+    else if (mode === 'rate') cmp = (a, b) => rate(b) - rate(a);
+    else                      cmp = (a, b) => (+a.dataset.ord) - (+b.dataset.ord);
+    rows.sort(cmp).forEach(r => hbar.appendChild(r));
+  }
+  window.sortHbar = sortHbar;
+
+  document.querySelectorAll('.hbar').forEach(hbar => {
+    if (!isStacked100(hbar)) return;
+    const prev = hbar.previousElementSibling;
+    if (prev && prev.classList.contains('hbar-head')) return;            // אידמפוטנטי — לא משכפל בקובץ מיוצא
+    const subTitle = (prev && prev.classList.contains('sub-title')) ? prev.textContent : '';
+    const titles = headTitles(hbar.closest('.card'), subTitle);
+    if (!titles) return;
+    const head = document.createElement('div');
+    head.className = 'hbar-head';
+    const a = document.createElement('span'); a.className = 'hh-label'; a.textContent = titles[0];
+    const end = document.createElement('span'); end.className = 'hh-end';
+    // פקד מיון מופיע רק כשהערך הצדדי הוא כמות (מספר), לא אחוז
+    const sampleVal = hbar.querySelector('.hbar-row .hbar-val');
+    const isQty = sampleVal && /\d/.test(sampleVal.textContent) && sampleVal.textContent.indexOf('%') === -1;
+    if (isQty) {
+      const sel = document.createElement('select');
+      sel.className = 'hh-sort'; sel.title = 'מיון מקלות';
+      sel.innerHTML = '<option value="def">מיון…</option><option value="qty">לפי כמות ↓</option><option value="rate">לפי שיעור ↓</option>';
+      sel.setAttribute('onchange', 'sortHbar(this)');
+      end.appendChild(sel);
+    }
+    const b = document.createElement('span'); b.className = 'hh-val'; b.textContent = titles[1];
+    end.appendChild(b);
+    head.appendChild(a); head.appendChild(end);
+    hbar.parentNode.insertBefore(head, hbar);
+  });
+
+  // ── make everything editable ──
+  const EDITABLE = [
+    'h1', '.meta', '.meta-badge',
+    '.kpi-label', '.kpi-value', '.kpi-sub', '.kpi-delta',
+    '.card-title', '.card-meta',
+    '.section-title', '.sub-title',
+    '.hh-label', '.hh-val',
+    '.hbar-label', '.hbar-val',
+    '.donut-cap', '.donut-center .pct', '.donut-center .sub',
+    '.legend-item',
+    '.vb-cap', '.vb-val',
+    '.auth-name', '.auth-stat .lbl', '.auth-stat .val',
+    '.filter-bar-label',
+    '.stbl th', '.stbl td'
+  ];
+  EDITABLE.forEach(sel => {
+    document.querySelectorAll(sel).forEach(el => {
+      el.setAttribute('contenteditable', 'true');
+    });
+  });
+
+  // ── assign stable IDs for persistence ──
+  const allEditable = document.querySelectorAll('[contenteditable]');
+  allEditable.forEach((el, i) => { el.dataset.eid = 'e' + i; });
+
+  // ── client demands per chart (פגישת לקוח 1.6.26) — seeded into comment boxes ──
+  const SEED_COMMENTS = {};   // נוקה לאישור סופי — תיבות ההערה נשארות ריקות עבור הערות הלקוח
+
+  // ── inject comment boxes after each card (idempotent — לא משכפל בקובץ מיוצא שנפתח מחדש) ──
+  document.querySelectorAll('.card').forEach((card, i) => {
+    let box = card.querySelector('.comment-box');
+    if (!box) {
+      const lbl = document.createElement('div');
+      lbl.className = 'comment-label';
+      lbl.textContent = 'הערות לתרשים ▾';
+      box = document.createElement('div');
+      box.className = 'comment-box';
+      box.dataset.cid = 'c' + i;
+      const titleEl = card.querySelector('.card-title');
+      const title = titleEl ? titleEl.textContent.trim() : '';
+      for (const key in SEED_COMMENTS) {
+        if (title.indexOf(key) !== -1) { box.innerHTML = SEED_COMMENTS[key]; break; }
+      }
+      card.appendChild(lbl);
+      card.appendChild(box);
+    }
+    if (!box.dataset.cid) box.dataset.cid = 'c' + i;
+    box.contentEditable = 'true';   // נשאר ניתן לעריכה גם בקובץ שהתקבל בחזרה
+  });
+
+  // ── localStorage persistence (version-safe: מפתח לפי טביעת-אצבע תוכן) ──
+  // שמירת המבנה המקורי לפני כל שחזור — הבסיס גם ל-diff וגם ל-fingerprint
+  allEditable.forEach(el => { el.dataset.original = el.innerHTML; });
+  document.querySelectorAll('.comment-box').forEach(box => { box.dataset.original = box.innerHTML; });
+
+  // טביעת אצבע מהמבנה המקורי: רשימה מסודרת של מזהה + תוכן מקורי של כל אלמנט.
+  // אותו קובץ ⇒ אותה טביעת אצבע; כל שינוי תוכן/מבנה ⇒ טביעת אצבע שונה ⇒ מפתח אחר.
+  function hashStr(s) {
+    let h = 5381;
+    for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0;
+    return (h >>> 0).toString(16);
+  }
+  function computeFingerprint() {
+    const parts = [];
+    allEditable.forEach(el => parts.push(el.dataset.eid + '=' + (el.dataset.original || '')));
+    document.querySelectorAll('.comment-box').forEach(box => parts.push(box.dataset.cid + '=' + (box.dataset.original || '')));
+    return hashStr(parts.join('\x1f'));
+  }
+  const FINGERPRINT = computeFingerprint();
+  const STORAGE_KEY = 'wg_women_draft_' + FINGERPRINT;   // טיוטה קשורה פיזית לגרסת הקובץ הזו בלבד
+  const LEGACY_KEY  = 'wg_women_final_v2';
+
+  function statusEl() { return document.getElementById('tbStatus'); }
+  function updateStatus() {
+    const el = statusEl(); if (!el) return;
+    const dirty = !!localStorage.getItem(STORAGE_KEY);
+    el.textContent = dirty ? 'שינויים שלא נשמרו' : 'מקור';
+    el.classList.toggle('dirty', dirty);
+  }
+
+  // גיזום: בשמירה מנקים טיוטות מגרסאות אחרות + המפתח הישן, שלא יצטברו בדפדפן הלקוח
+  function pruneOtherDrafts() {
+    for (let i = localStorage.length - 1; i >= 0; i--) {
+      const k = localStorage.key(i);
+      if (!k) continue;
+      if (k === LEGACY_KEY || (k.indexOf('wg_women_draft_') === 0 && k !== STORAGE_KEY)) {
+        localStorage.removeItem(k);
+      }
+    }
+  }
+
+  function saveAll() {
+    const data = { edits: {}, comments: {} };
+    allEditable.forEach(el => {
+      const id = el.dataset.eid;
+      if (id && el.dataset.original !== undefined && el.innerHTML !== el.dataset.original) {
+        data.edits[id] = el.innerHTML;
+      }
+    });
+    document.querySelectorAll('.comment-box').forEach(box => {
+      if (box.innerHTML.trim()) data.comments[box.dataset.cid] = box.innerHTML;
+    });
+    pruneOtherDrafts();
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    updateStatus();
+  }
+
+  // שחזור רק בהתאמת fingerprint (מבנה זהה מובטח) — אחרת תוכן בסיס טהור, ללא דליפה
+  function loadDraft() {
+    pruneOtherDrafts();
+    const banner0 = document.getElementById('restoreBanner');
+    if (banner0) banner0.classList.remove('show');   // ברירת מחדל: מוסתר (גם אם נצרב בטעות בקובץ מיוצא)
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) { updateStatus(); return; }
+    try {
+      const data = JSON.parse(raw);
+      if (data.edits) {
+        allEditable.forEach(el => {
+          const id = el.dataset.eid;
+          if (id && data.edits[id] !== undefined) el.innerHTML = data.edits[id];
+        });
+      }
+      if (data.comments) {
+        document.querySelectorAll('.comment-box').forEach(box => {
+          if (data.comments[box.dataset.cid] !== undefined) box.innerHTML = data.comments[box.dataset.cid];
+        });
+      }
+      const banner = document.getElementById('restoreBanner');
+      if (banner) banner.classList.add('show');
+    } catch(e) {}
+    updateStatus();
+  }
+
+  // ניקוי טיוטת הגרסה הזו (כפתור הבאנר) — אותה פעולה כמו איפוס, ללא אישור
+  function clearDraft() {
+    localStorage.removeItem(STORAGE_KEY);
+    location.reload();
+  }
+  window.clearDraft = clearDraft;
+
+  // auto-save on any edit
+  document.addEventListener('input', e => {
+    if (e.target.hasAttribute('contenteditable')) saveAll();
+  });
+
+  // ── export edited HTML (סבב הלוך-חזור: הקובץ נשלח, נפתח, מקבל הערות וניתן לייצא שוב) ──
+  function exportHTML() {
+    // הסרת מצב עריכה לרגע הסריאליזציה בלבד — הקובץ המיוצא נפתח שוב כניתן לעריכה ע״י הסקריפט.
+    // לא מוחקים תיבות הערה ריקות ולא מסתירים את הסרגל, כדי שהנמען יוכל להוסיף הערות ולשלוח בחזרה.
+    document.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
+    const banner = document.getElementById('restoreBanner');
+    const bannerShown = banner && banner.classList.contains('show');
+    if (banner) banner.classList.remove('show');   // לא לצרוב באנר שחזור לתוך הקובץ המיוצא
+    const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+    if (bannerShown && banner) banner.classList.add('show');
+    // שחזור מצב העריכה בדף החי
+    EDITABLE.forEach(sel => {
+      document.querySelectorAll(sel).forEach(el => el.setAttribute('contenteditable', 'true'));
+    });
+    document.querySelectorAll('.comment-box').forEach(box => box.contentEditable = 'true');
+    const stamp = new Date().toISOString().slice(0, 10);
+    const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'wg-women_הערות_' + stamp + '.html';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  function resetAll() {
+    if (!confirm('לאפס את כל העריכות וההערות?')) return;
+    localStorage.removeItem(STORAGE_KEY);
+    location.reload();
+  }
+
+  // ── tooltip על מקטעי הגרפים: תווית (מהמקרא) · אחוז · כמות מוחלטת ──
+  (function(){
+    let tip = document.querySelector('.chart-tip');
+    if (!tip){ tip = document.createElement('div'); tip.className = 'chart-tip'; document.body.appendChild(tip); }
+    tip.classList.remove('show'); tip.removeAttribute('style');
+    let active = false;
+
+    const SEG_COLOR = {
+      'seg-f':'var(--women)','seg-fs':'var(--women-soft)','seg-fp':'var(--women-mid)',
+      'seg-m':'var(--teal)','seg-ms':'var(--teal-soft)','seg-mp':'var(--teal-mid)',
+      'seg-n':'var(--neutral)','seg-na':'var(--ink-faint)',
+      'seg-wc':'var(--women)','seg-wi':'var(--women-mid)','seg-mc':'var(--teal)','seg-mi':'var(--teal-mid)'
+    };
+    const SEG_FALLBACK = {
+      'seg-f':'נשים','seg-fs':'נשים','seg-fp':'נשים','seg-m':'גברים','seg-ms':'גברים','seg-mp':'גברים',
+      'seg-n':'אחר','seg-na':'לא־מגדרי','seg-wc':'מאמנות','seg-wi':'מדריכות','seg-mc':'מאמנים','seg-mi':'מדריכים'
+    };
+
+    const fmt = n => n.toLocaleString('he-IL');
+    const num = t => { const m = (t||'').replace(/[^\d.]/g,''); return m ? parseFloat(m) : null; };
+    const isPct = t => (t||'').indexOf('%') > -1;
+    const segClass = el => Array.from(el.classList).find(c => c.indexOf('seg-') === 0);
+    const txt = (root, sel) => { const e = root && root.querySelector(sel); return e ? e.textContent.trim() : ''; };
+
+    function colorOf(el){
+      if (el.classList.contains('hbar-fill') || el.classList.contains('vb-fill')){
+        if (el.classList.contains('muted')) return 'var(--neutral)';
+        if (el.classList.contains('below')) return 'var(--gap)';
+        if (el.classList.contains('teal'))  return 'var(--teal)';
+        return 'var(--women)';
+      }
+      const sc = segClass(el); return sc ? SEG_COLOR[sc] : null;
+    }
+    function legendLabel(el){
+      const card = el.closest('.card'); const col = colorOf(el);
+      if (card && col){
+        const sw = Array.from(card.querySelectorAll('.legend-swatch')).find(s => s.style.background === col);
+        if (sw && sw.parentElement) return sw.parentElement.textContent.trim();
+      }
+      return null;
+    }
+    function content(el){
+      if (el.classList.contains('vstack-seg')){
+        const val = txt(el, 'span'); if (!val) return null;
+        const label = legendLabel(el) || SEG_FALLBACK[segClass(el)] || '';
+        return { t: txt(el.closest('.vstack-group'), '.vstack-cap'), r: label + ': ' + val };
+      }
+      if (el.classList.contains('seg')){
+        const sc = segClass(el);
+        const label = legendLabel(el) || SEG_FALLBACK[sc] || '';
+        const pct = parseFloat(el.style.width) || 0;
+        const row = el.closest('.hbar-row');
+        const valTxt = txt(row, '.hbar-val');
+        let q = '';
+        if (valTxt && !isPct(valTxt)){ const tot = num(valTxt); if (tot != null) q = ' · ' + fmt(Math.round(tot * pct / 100)); }
+        return { t: txt(row, '.hbar-label'), r: label + ': ' + pct + '%' + q };
+      }
+      if (el.classList.contains('hbar-fill')){
+        const row = el.closest('.hbar-row');
+        const label = legendLabel(el);
+        return { t: txt(row, '.hbar-label'), r: (label ? label + ': ' : '') + txt(row, '.hbar-val') };
+      }
+      if (el.classList.contains('vb-fill')){
+        const col = el.closest('.vb-col');
+        return { t: txt(col, '.vb-cap'), r: txt(col, '.vb-val') };
+      }
+      return null;
+    }
+    function move(e){
+      const pad = 14; let x = e.clientX + pad, y = e.clientY + pad;
+      const w = tip.offsetWidth, h = tip.offsetHeight;
+      if (x + w > window.innerWidth - 8) x = e.clientX - w - pad;
+      if (y + h > window.innerHeight - 8) y = e.clientY - h - pad;
+      tip.style.left = x + 'px'; tip.style.top = y + 'px';
+    }
+    const SEL = '.hbar-track .seg, .hbar-track .hbar-fill, .vbar-chart .vb-fill, .vstack-seg';
+    document.addEventListener('mouseover', e => {
+      const el = e.target.closest(SEL); if (!el) return;
+      const c = content(el); if (!c){ tip.classList.remove('show'); active = false; return; }
+      tip.innerHTML = '<div class="tt-t">' + c.t + '</div><div class="tt-r">' + c.r + '</div>';
+      tip.classList.add('show'); active = true; move(e);
+    });
+    document.addEventListener('mousemove', e => { if (active) move(e); });
+    document.addEventListener('mouseout', e => { if (e.target.closest(SEL)){ tip.classList.remove('show'); active = false; } });
+  })();
+
+  loadDraft();
+
+/* ---- STT weights per band (מבחן תמיכה) — 3 רצועות: על/קבוצתי/אישי (לא-אולימפי=אישי) ---- */
+(function(){
+  const STT_W = {
+    'ענפי על': {athletes:45,achieve:20,prof:10,coach:10,cost:10,excel:2,women:2},
+    'קבוצתי':  {athletes:45,achieve:20,prof:10,coach:10,cost:10,excel:0,women:3},
+    'אישי':    {athletes:30,achieve:40,prof:9, coach:8, cost:10,excel:0,women:3}
+  };
+  const LABELS = {'ספורטאים':'athletes','הישגיות':'achieve','מקצועיות':'prof',
+    'ליווי מאמנים':'coach','עלות הפעלת ענף':'cost','מרכזי מצוינות':'excel','קידום ספורט נשים':'women'};
+  function setSttBand(band){
+    const w=STT_W[band]; if(!w) return;
+    document.querySelectorAll('#sttWeights .hbar-row').forEach(function(row){
+      const lab=((row.querySelector('.hbar-label')||{}).textContent||'').trim();
+      const k=LABELS[lab]; if(k===undefined) return;
+      const v=w[k], fill=row.querySelector('.hbar-fill'), val=row.querySelector('.hbar-val');
+      if(v>0){ fill.style.width=Math.round(v/45*100)+'%'; val.textContent=v+'%'; row.style.opacity=''; }
+      else { fill.style.width='0%'; val.textContent='—'; row.style.opacity='0.45'; }
+    });
+    document.querySelectorAll('#sttBands .stt-band').forEach(function(b){ b.classList.toggle('active', b.dataset.band===band); });
+    const m=document.getElementById('sttMeta'); if(m) m.textContent='Horizontal Bar · משקלי מבחן התמיכה · רצועה: '+band;
+  }
+  document.querySelectorAll('#sttBands .stt-band').forEach(function(b){ b.addEventListener('click', function(){ setSttBand(b.dataset.band); }); });
+  setSttBand('ענפי על');
+})();
+
+</script>
+
+</body>
+</html>
+                                                                                                                                                                                                                                                                                                                                                                                    
