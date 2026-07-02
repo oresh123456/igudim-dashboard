@@ -11,6 +11,7 @@
 ## Global Constraints
 
 - **Genericity (hard rule from spec):** no hardcoded schema/table/proc names, no naming-convention assumptions (`sp_*`, `mrr_/stg_/dwh_`). Everything from catalogs + parsed SQL. Schema filter = CLI arg.
+- **AMENDMENT 2026-07-02: genericity extends to the repo/fixtures.** `tests/fixtures/real_procs.json` is DROPPED — do NOT copy real proc dumps into the repo. Every task step below that references `real_procs.json` / `load_real_procs()` is replaced by synthetic fixtures covering the same patterns (incl. a synthetic OUTER_TO_INNER case). Live-DB validation stays manual, outside the repo.
 - **Read-only:** connection opts `-c default_transaction_read_only=on`, `conn.read_only = True`; runner never issues DML.
 - **Never silently skip:** any statement that looks like DML but can't be parsed → UNPARSED list in report.
 - **Timeouts:** `statement_timeout` from `--timeout` (default 60s); a timed-out audit = status TIMEOUT, run continues.

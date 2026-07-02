@@ -66,5 +66,5 @@ Glue/spark level · scheduling/CI · auto-fixing procs · non-public schemas.
 
 ## Testing
 
-- Unit: synthetic plpgsql fixtures — one per drop class + straight-copy (no false positive) + unparseable → UNPARSED. The 3 real procs from the dump included as extra fixtures (data, not assumptions; incl. the confirmed OUTER_TO_INNER case).
+- Unit: synthetic plpgsql fixtures ONLY — one per drop class + straight-copy (no false positive) + unparseable → UNPARSED. No real proc dumps in the repo (repo itself must show zero system knowledge; genericity rule extends to fixtures). The confirmed OUTER_TO_INNER pattern is covered by a synthetic equivalent.
 - Integration (manual, this deployment): run against live DB read-only; assert report renders + `sp_stg_aa_dim_teams` flagged. Not part of the generic test suite.
