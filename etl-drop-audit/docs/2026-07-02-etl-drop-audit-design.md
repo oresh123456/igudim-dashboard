@@ -2,6 +2,8 @@
 
 **Goal:** find every silent row-drop in the SQL layer of the ETL (Postgres stored procs), quantify it, visualize it. Run by a business expert directly — no data-engineer loop, provably read-only.
 
+**Genericity rule (hard):** code assumes ONLY the stack (Postgres + plpgsql procs/views), never this system's schema. No hardcoded table names, proc-name prefixes (`sp_*`, `mrr_/stg_/dwh_`), column names, or layer conventions. Everything is discovered from catalogs and parsed SQL. Schema filter is a CLI arg (default: all non-system schemas). Pipeline layers in the DAG derive from actual INSERT-target ← FROM-source edges, not naming.
+
 ## Context
 
 - Pipeline: Glue (src→bronze→silver, out of scope — drops are SQL-side) → Postgres procs `sp_stg_*` (mrr→stg: joins+filters = drop zone) → `sp_dwh_*` (stg→dwh: straight copy).
@@ -15,9 +17,9 @@ etl-drop-audit run  →  discover → analyze → audit → report.html
 ```
 
 ### 1. Discover
-- Connect psycopg to `localhost:5432` (creds from `.env`).
-- Pull all proc/function defs from `pg_proc` (`pg_get_functiondef`) + view defs from `pg_views`, schema `public`.
-- Filter: bodies containing `INSERT INTO … SELECT` (procs) / any view with joins.
+- Connect psycopg using standard `PG*` env vars from `.env`.
+- Pull all proc/function defs from `pg_proc` (`pg_get_functiondef`) + view defs from `pg_views`; schemas from `--schema` arg (default: all non-system).
+- Filter: bodies containing `INSERT INTO … SELECT` / `CREATE TABLE AS` / `UPDATE … FROM` (procs) / any view with joins.
 
 ### 2. Analyze (sqlglot, postgres dialect)
 Per statement, extract:
@@ -34,7 +36,7 @@ Per statement, extract:
 ### 3. Audit + report
 - Run audit SQL, all read-only.
 - Emit single-file `report.html` (no server, embedded JS):
-  - **DAG** per entity chain `mrr → stg → dwh`; node = table, edge = proc; edge label `in → out (−dropped)`; red edge = drops > 0.
+  - **DAG** built from discovered edges (INSERT target ← FROM sources); node = table, edge = proc/statement; edge label `in → out (−dropped)`; red edge = drops > 0. Layering by topological sort, not name convention.
   - Click edge → breakdown by drop class + sample dropped rows (Hebrew-safe, UTF-8).
   - Summary table sorted by dropped-row count; UNPARSED list at bottom.
 
@@ -48,8 +50,9 @@ Plus safety valves: `statement_timeout=60s` per query (no runaway COUNTs), `--li
 
 ## Config
 
-`.env` (gitignored): `PGHOST=localhost PGPORT=5432 PGDATABASE=… PGUSER=… PGPASSWORD=…`
-Precondition: SSM tunnel up (user runs in terminal, as for DBeaver).
+`.env` (gitignored, user-filled): standard `PGHOST PGPORT PGDATABASE PGUSER PGPASSWORD`.
+CLI args: `--schema` (repeatable) · `--limit-sample N` (default 20; `0` = counts-only, no row samples/PII) · `--timeout SECONDS` (default 60) · `--out report.html`.
+Precondition here: SSM tunnel up → `PGHOST=localhost PGPORT=5432`; but tool is deployment-agnostic (any reachable PG).
 
 ## Out of scope (v1)
 
@@ -63,5 +66,5 @@ Glue/spark level · scheduling/CI · auto-fixing procs · non-public schemas.
 
 ## Testing
 
-- Unit: parser fixtures = the 3 real procs from the dump (incl. the OUTER_TO_INNER case) + synthetic cases per drop class.
-- Integration: run against live DB read-only; assert report renders + `sp_stg_aa_dim_teams` flagged.
+- Unit: synthetic plpgsql fixtures — one per drop class + straight-copy (no false positive) + unparseable → UNPARSED. The 3 real procs from the dump included as extra fixtures (data, not assumptions; incl. the confirmed OUTER_TO_INNER case).
+- Integration (manual, this deployment): run against live DB read-only; assert report renders + `sp_stg_aa_dim_teams` flagged. Not part of the generic test suite.
