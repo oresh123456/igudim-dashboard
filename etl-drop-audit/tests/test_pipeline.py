@@ -87,6 +87,18 @@ def test_straight_copy_no_false_positive():
     assert points == [] and unparsed == []
 
 
+DYNAMIC_SQL = proc(
+    "load_f",
+    "EXECUTE format('INSERT INTO %I SELECT * FROM staging', tbl_name);",
+)
+
+
+def test_dynamic_sql_lands_in_unparsed_not_skipped():
+    statements, _, unparsed = pipeline([DYNAMIC_SQL], sample_limit=0)
+    assert len(unparsed) == 1
+    assert "dynamic SQL" in unparsed[0].error
+
+
 def test_unparseable_lands_in_unparsed_not_skipped():
     statements, points, unparsed = pipeline([UNPARSEABLE], sample_limit=0)
     assert len(statements) == 1 and len(unparsed) == 1

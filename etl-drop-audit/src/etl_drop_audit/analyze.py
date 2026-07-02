@@ -19,6 +19,8 @@ def _table_name(t: exp.Table) -> str:
 
 
 def analyze_statement(st: EtlStatement) -> EtlStatement:
+    if st.error:  # pre-flagged (e.g. dynamic SQL) — keep as UNPARSED
+        return st
     try:
         ast = parse_one(st.sql, read=DIALECT)
     except Exception as e:  # noqa: BLE001 - any parse failure => UNPARSED

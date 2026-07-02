@@ -18,6 +18,10 @@ _DML_START = re.compile(
 
 _DOLLAR_BODY = re.compile(r"AS\s+(\$[A-Za-z_]*\$)(.*)\1", re.IGNORECASE | re.DOTALL)
 
+# plpgsql dynamic SQL — statically unauditable, must surface as UNPARSED,
+# never be silently skipped.
+_DYNAMIC = re.compile(r"\bEXECUTE\b", re.IGNORECASE)
+
 
 def extract_body(definition: str) -> str:
     """Return the dollar-quoted body of a pg_get_functiondef output, else the text as-is."""
@@ -84,9 +88,19 @@ def extract_statements(obj: SourceObject) -> list[EtlStatement]:
     idx = 0
     for seg in _split_statements(body):
         m = _DML_START.search(seg)
-        if not m:
-            continue
-        sql = seg[m.start():].strip()
-        out.append(EtlStatement(obj=obj, index=idx, sql=sql))
-        idx += 1
+        dm = _DYNAMIC.search(seg)
+        if dm and (m is None or dm.start() < m.start()):
+            # EXECUTE precedes any DML keyword => the DML text is inside a
+            # dynamic-SQL string, not a static statement.
+            out.append(
+                EtlStatement(
+                    obj=obj, index=idx, sql=seg.strip(),
+                    error="dynamic SQL (EXECUTE) — cannot audit statically, review manually",
+                )
+            )
+            idx += 1
+        elif m:
+            sql = seg[m.start():].strip()
+            out.append(EtlStatement(obj=obj, index=idx, sql=sql))
+            idx += 1
     return out
