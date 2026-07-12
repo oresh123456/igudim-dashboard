@@ -63,8 +63,8 @@
     /* navy = מותג ראשי / כותרות / KPI / גברים */
     --gold: #F8C33E; --gold-deep: #1F3F6D; --gold-soft: #E9EFF7;
     --silver: #7A8FA6; --bronze: #E07B39;
-    --teal: #1F3F6D; --teal-light: #2D9CDB;
-    --navy: #1F3F6D; --sky: #2D9CDB; --green: #248A3D; --red: #DA3439;
+    --teal: #1F3F6D; --teal-light: #42B9BA;
+    --navy: #1F3F6D; --sky: #42B9BA; --green: #248A3D; --red: #DA3439;
     --purple: #6B4FA0; --purple-soft: #ECE6F4;
     --amber: #E07B39;
     --radius: 6px; --radius-lg: 10px;
@@ -201,7 +201,7 @@
     border: 1px dashed var(--line); border-radius: var(--radius-lg);
     font-size: 12px; color: var(--ink-muted); line-height: 1.8; }
   .footer-note strong { color: var(--ink); font-weight: 600; }
-  .footer-note code { background: #EFEBE3; padding: 1px 5px; border-radius: 3px; font-size: 11px; }
+  .footer-note code { background: #EEF1F6; padding: 1px 5px; border-radius: 3px; font-size: 11px; }
 
   .tab-content { display: none; }
   .tab-content.active { display: block; }
@@ -283,7 +283,7 @@
     <div class="filter"><label>סיווג ענף</label><select><option>הכל</option><option>אולימפי</option><option>לא אולימפי</option><option>ענפי חשיבה</option></select></div>
     <div class="filter"><label>שכבת גיל</label><select><option>הכל</option><option>בוגרים</option><option>מתחת 23</option><option>נוער</option><option>קדטים</option></select></div>
     <div class="filter"><label>שכבת גיל תחרות</label><select><option>הכל</option><option>בוגרים</option><option>מתחת 23</option><option>נוער</option><option>קדטים</option></select></div>
-    <div class="filter"><label>מין</label><select><option>הכל</option><option>נשים</option><option>גברים</option></select></div>
+    <div class="filter"><label>מגדר</label><select><option>הכל</option><option>נשים</option><option>גברים</option></select></div>
     <div class="filter"><label>סוג אליפות</label><select><option>הכל</option><option>משחקים אולימפיים</option><option>אליפות עולם</option><option>אליפות אירופה</option><option>משחקי עולם</option><option>אליפות חלופית מוכרת</option></select></div>
     <div class="filter"><label>שנה</label><select><option>2026</option><option>2025</option><option>2024</option></select></div>
     <div class="filter"><label>סף מס׳ מדינות</label><select><option>הכל</option><option>קבוצה 1</option><option>קבוצה 2</option><option>קבוצה 3</option><option>קבוצה 4</option></select></div>
@@ -322,21 +322,12 @@
       <div class="card-canvas-wrap h-440"><canvas id="c_age"></canvas></div>
       <div class="card-meta" style="margin-top:8px;">צבע = מיקום (1-3 · 4-8 · 9-16 · 17+) · בכל שכבת גיל שתי עמודות צמודות: <strong>גברים</strong> ו<strong>נשים</strong> (ראו Tooltip).</div>
 </div>
-    <div class="col-6 stack-col">
-      <div class="card">
-        <div class="card-head">
-          <span class="card-title editable" data-edit="t2">התפלגות לפי סוג תחרות</span>
-          <span class="card-meta">QuickSight · Donut</span>
-        </div>
-        <div class="card-canvas-wrap h-180"><canvas id="c_tier"></canvas></div>
+    <div class="card col-6">
+      <div class="card-head">
+        <span class="card-title editable" data-edit="t2">התפלגות לפי סוג תחרות</span>
+        <span class="card-meta">QuickSight · Donut</span>
       </div>
-      <div class="card">
-        <div class="card-head">
-          <span class="card-title editable" data-edit="t3">חלוקת ספורטאים לפי מיקום</span>
-          <span class="card-meta">QuickSight · Donut</span>
-        </div>
-        <div class="card-canvas-wrap h-180"><canvas id="c_bands"></canvas></div>
-      </div>
+      <div class="card-canvas-wrap h-440"><canvas id="c_tier"></canvas></div>
     </div>
   </div>
 
@@ -358,6 +349,26 @@
       </div>
       <div class="card-canvas-wrap h-360"><canvas id="c_success_tier"></canvas></div>
 </div>
+  </div>
+
+  <!-- Section: placement distribution — overall (donut) + by competition size -->
+  <div class="section-title">התפלגות מיקומים · תמונה כוללת ולפי גודל תחרות</div>
+  <div class="card-meta" style="margin:-6px 0 12px;">מימין — תמונה כוללת של חלוקת המיקומים; משמאל — אותה התפלגות מפולחת לפי גודל התחרות (קטנה ≤16 · בינונית 17–48 · גדולה 49+).</div>
+  <div class="grid">
+    <div class="card col-6">
+      <div class="card-head">
+        <span class="card-title editable" data-edit="t3">חלוקת ספורטאים לפי מיקום</span>
+        <span class="card-meta">QuickSight · Donut</span>
+      </div>
+      <div class="card-canvas-wrap h-300"><canvas id="c_bands"></canvas></div>
+    </div>
+    <div class="card col-6">
+      <div class="card-head">
+        <span class="card-title editable" data-edit="t14">התפלגות המיקומים לפי גודל תחרות</span>
+        <span class="card-meta">QuickSight · Stacked Bar (100%)</span>
+      </div>
+      <div class="card-canvas-wrap h-300"><canvas id="c_size_bands"></canvas></div>
+    </div>
   </div>
 
   <div class="section-title">עונתיות — לפי חודש האליפות</div>
@@ -556,6 +567,14 @@ const CONFIG = {
     { name: "מיכל אברהם",    branch: "סיוף",       club: "מכבי ירושלים",     authority: "ירושלים",     ngo: "580789012", periphery: "אשכול 5", ageNum: 21, ageGroup: "בוגרים", champ: "אליפות עולם",     place: 3, medal: "ארד", cls: "b", score: 72 },
     { name: "קרם אסעד",      branch: "ג'ו ג'יטסו", club: "מכבי נצרת",        authority: "נצרת",        ngo: "580890123", periphery: "אשכול 3", ageNum: 18, ageGroup: "נוער",   champ: "אליפות עולם",     place: 3, medal: "ארד", cls: "b", score: 64 },
   ],
+
+  // התפלגות מיקומים לפי גודל תחרות (זהה למסך הקבוצתי) — קטנה ≤16 · בינונית 17–48 · גדולה 49+ מדינות.
+  // מונה השתתפויות לכל קבוצת מיקום; הגרף מנרמל ל-100%. תחרות קטנה → קל יותר למיקום גבוה.
+  sizeLabels:   ["תחרות קטנה","תחרות בינונית","תחרות גדולה"],
+  sizeBandPod:  [180, 150,  70],   // פודיום 1–3
+  sizeBandT8:   [210, 250, 170],   // גמר 8 (4–8)
+  sizeBandT16:  [120, 240, 300],   // 9–16
+  sizeBandRest: [ 70, 190, 410],   // 17+
 };
 
 /* ---- Chart.js defaults & palette ---- */
@@ -564,9 +583,9 @@ Chart.defaults.font.size = 12;
 Chart.defaults.color = '#1A1A2E';
 Chart.defaults.borderColor = '#E5E9F0';
 /* פלטה מחייבת (CLAUDE.md): navy ראשי · sky=נשים · slate/orange/purple/gold קטגוריות */
-const NAVY='#1F3F6D', SKY='#2D9CDB', GREEN='#248A3D', RED='#DA3439';
+const NAVY='#1F3F6D', SKY='#42B9BA', GREEN='#248A3D', RED='#DA3439';
 const GOLD='#F8C33E', SILVER='#7A8FA6', BRONZE='#E07B39';
-const TEAL='#1F3F6D', TEAL_L='#2D9CDB', GRAY_L='#A9B4C2', PURPLE='#6B4FA0';
+const TEAL='#1F3F6D', TEAL_L='#42B9BA', GRAY_L='#6B7280', PURPLE='#6B4FA0';
 const TIERCOL=['#1F3F6D', '#F8C33E', '#E07B39', '#6B4FA0', '#7A8FA6'];
 const fmtN = v => v.toLocaleString('he-IL');
 
@@ -615,7 +634,7 @@ new Chart(document.getElementById('c_branch'), {
       datalabels: DL_STACK
     },
     scales: {
-      x: { stacked: true, beginAtZero: true, ticks: { callback: fmtN, font: { size: 10 }, color: '#9A9A9A' }, grid: { color: '#EFEBE3' } },
+      x: { stacked: true, beginAtZero: true, ticks: { callback: fmtN, font: { size: 10 }, color: '#6B7280' }, grid: { color: '#EEF1F6' } },
       y: { stacked: true, position: 'right', ticks: { font: { size: 12, weight: '500' }, color: '#1A1A1A', autoSkip: false }, grid: { display: false } }
     }
   }
@@ -659,7 +678,7 @@ function successRateChart(canvasId, labels, totals, h13, h48) {
             return (is13 ? '1-3: ' + r.r13 + '% (' + fmtN(r.h13) : '4-8: ' + r.r48 + '% (' + fmtN(r.h48)) + ' מתוך ' + fmtN(r.total) + ')'; },
           footer: items => 'סה״כ גבוהים: ' + (rows[items[0].dataIndex].r13 + rows[items[0].dataIndex].r48) + '%' } },
         datalabels: { ...DL_STACK, formatter: v => v ? v + '%' : '', display: ctx => (ctx.dataset.data[ctx.dataIndex] || 0) >= 5 } },
-      scales: { x: { stacked: true, beginAtZero: true, max: 100, ticks: { callback: v => v + '%', font: { size: 10 }, color: '#9A9A9A' }, grid: { color: '#EFEBE3' } },
+      scales: { x: { stacked: true, beginAtZero: true, max: 100, ticks: { callback: v => v + '%', font: { size: 10 }, color: '#6B7280' }, grid: { color: '#EEF1F6' } },
         y: { stacked: true, position: 'right', ticks: { font: { size: 12, weight: '500' } }, grid: { display: false } } }
     }
   });
@@ -667,9 +686,36 @@ function successRateChart(canvasId, labels, totals, h13, h48) {
 successRateChart('c_success',      CONFIG.branches, CONFIG.branchTotal, CONFIG.branchHigh13, CONFIG.branchHigh48);
 successRateChart('c_success_tier', CONFIG.tiers,    CONFIG.tierVals,    CONFIG.tierHigh13,   CONFIG.tierHigh48);
 
+/* ---- מיקומים לפי גודל תחרות (100% stacked) — זהה לתרשים במסך הקבוצתי ---- */
+(function () {
+  const parts = [CONFIG.sizeBandPod, CONFIG.sizeBandT8, CONFIG.sizeBandT16, CONFIG.sizeBandRest];
+  const n = CONFIG.sizeLabels.map((_, i) => parts.reduce((s, arr) => s + arr[i], 0));
+  const pct = arr => arr.map((v, i) => n[i] ? Math.round(v / n[i] * 100) : 0);
+  new Chart(document.getElementById('c_size_bands'), {
+    type: 'bar',
+    data: { labels: CONFIG.sizeLabels, datasets: [
+      { label: 'פודיום (1–3)', data: pct(CONFIG.sizeBandPod),  backgroundColor: GREEN,  stack: 'a' },
+      { label: 'גמר 8 (4–8)',  data: pct(CONFIG.sizeBandT8),   backgroundColor: GOLD,   stack: 'a' },
+      { label: '9–16',          data: pct(CONFIG.sizeBandT16),  backgroundColor: BRONZE, stack: 'a' },
+      { label: '17+',           data: pct(CONFIG.sizeBandRest), backgroundColor: SILVER, stack: 'a' },
+    ]},
+    options: { responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'top', align: 'start', rtl: true, labels: { font: { size: 11 }, boxWidth: 12, boxHeight: 12, padding: 8 } },
+        datalabels: { display: false },
+        tooltip: { rtl: true, callbacks: { label: c => c.dataset.label + ': ' + c.parsed.y + '%' } }
+      },
+      scales: {
+        x: { stacked: true, grid: { display: false }, ticks: { font: { size: 12 }, color: '#1A1A2E' } },
+        y: { stacked: true, beginAtZero: true, max: 100, position: 'right', grid: { color: '#EEF1F6' }, ticks: { callback: v => v + '%', font: { size: 10 }, color: '#6B7280' } }
+      }
+    }
+  });
+})();
+
 /* ---- Card 4: age x gender — clustered by gender, stacked by 3 place buckets ---- */
 const NAVY_60 = 'rgba(31,63,109,0.6)', NAVY_30 = 'rgba(31,63,109,0.3)', NAVY_15 = 'rgba(31,63,109,0.15)';
-const SKY_60 = 'rgba(45,156,219,0.6)', SKY_30 = 'rgba(45,156,219,0.3)', SKY_15 = 'rgba(45,156,219,0.15)';
+const SKY_60 = 'rgba(66,185,186,0.6)', SKY_30 = 'rgba(66,185,186,0.3)', SKY_15 = 'rgba(66,185,186,0.15)';
 new Chart(document.getElementById('c_age'), {
   type: 'bar',
   /* צבע לפי מיקום (לבקשת ההערה): מיקום 1-3=זהב · 4-8=סלייט · 9-16=כתום · 17+=אפור.
@@ -695,7 +741,7 @@ new Chart(document.getElementById('c_age'), {
         ] } },
       tooltip: { rtl: true, callbacks: { label: c => c.dataset.label + ': ' + fmtN(c.parsed.y) } }, datalabels: DL_STACK },
     scales: { x: { stacked: true, grid: { display: false }, ticks: { font: { size: 12 } } },
-      y: { stacked: true, beginAtZero: true, ticks: { callback: fmtN, font: { size: 10 }, color: '#9A9A9A' }, grid: { color: '#EFEBE3' } } }
+      y: { stacked: true, beginAtZero: true, ticks: { callback: fmtN, font: { size: 10 }, color: '#6B7280' }, grid: { color: '#EEF1F6' } } }
   }
 });
 
@@ -716,7 +762,7 @@ function unionYearChart(canvasId, series) {
         tooltip: { rtl: true, callbacks: { label: c => c.dataset.label + ': ' + fmtN(c.parsed.y) } },
         datalabels: { ...DL_LIGHT, align: 'top', display: ctx => ctx.dataIndex === ctx.dataset.data.length - 1 } },
       scales: { x: { grid: { display: false }, ticks: { font: { size: 11 } } },
-        y: { beginAtZero: true, ticks: { callback: fmtN, font: { size: 10 }, color: '#9A9A9A' }, grid: { color: '#EFEBE3' } } }
+        y: { beginAtZero: true, ticks: { callback: fmtN, font: { size: 10 }, color: '#6B7280' }, grid: { color: '#EEF1F6' } } }
     }
   });
 }
@@ -736,7 +782,7 @@ new Chart(document.getElementById('c_season'), {
     plugins: { legend: { position: 'top', align: 'start', rtl: true, labels: { font: { size: 11 }, boxWidth: 12, boxHeight: 12, padding: 10 } },
       tooltip: { rtl: true, callbacks: { label: c => c.dataset.label + ': ' + fmtN(c.parsed.y) } }, datalabels: DL_STACK },
     scales: { x: { stacked: true, grid: { display: false }, ticks: { font: { size: 12 } } },
-      y: { stacked: true, beginAtZero: true, ticks: { callback: fmtN, font: { size: 10 }, color: '#9A9A9A' }, grid: { color: '#EFEBE3' } } }
+      y: { stacked: true, beginAtZero: true, ticks: { callback: fmtN, font: { size: 10 }, color: '#6B7280' }, grid: { color: '#EEF1F6' } } }
   }
 });
 
@@ -753,7 +799,7 @@ new Chart(document.getElementById('c_union_medals'), {
     plugins: { legend: { position: 'top', align: 'start', rtl: true, labels: { font: { size: 11 }, boxWidth: 12, boxHeight: 12, padding: 10 } },
       tooltip: { rtl: true, callbacks: { label: c => c.dataset.label + ': ' + fmtN(c.parsed.x) } },
       datalabels: { ...DL_STACK, font: { ...DL_FONT, size: 9, weight: '700' }, display: ctx => (ctx.dataset.data[ctx.dataIndex] || 0) >= 4 } },
-    scales: { x: { stacked: true, beginAtZero: true, ticks: { callback: fmtN, font: { size: 10 }, color: '#9A9A9A' }, grid: { color: '#EFEBE3' } },
+    scales: { x: { stacked: true, beginAtZero: true, ticks: { callback: fmtN, font: { size: 10 }, color: '#6B7280' }, grid: { color: '#EEF1F6' } },
       y: { stacked: true, position: 'right', ticks: { font: { size: 12, weight: '500' } }, grid: { display: false } } }
   }
 });
@@ -765,7 +811,7 @@ new Chart(document.getElementById('c_union_top8'), {
     backgroundColor: CONFIG.unions.map((_, i) => unionGray(i) ? GRAY_L : TEAL), borderRadius: 3, barThickness: 16 }] },
   options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y',
     plugins: { legend: { display: false }, tooltip: { rtl: true, callbacks: { label: c => 'מיקומים 1–8: ' + fmtN(c.parsed.x) } } },
-    scales: { x: { beginAtZero: true, ticks: { callback: fmtN, font: { size: 10 }, color: '#9A9A9A' }, grid: { color: '#EFEBE3' } },
+    scales: { x: { beginAtZero: true, ticks: { callback: fmtN, font: { size: 10 }, color: '#6B7280' }, grid: { color: '#EEF1F6' } },
       y: { position: 'right', ticks: { font: { size: 12, weight: '500' } }, grid: { display: false } } }
   }
 });
@@ -776,7 +822,7 @@ new Chart(document.getElementById('c_top'), {
   data: { labels: CONFIG.topAthletes.map((n,i) => n + ' · ' + CONFIG.topBranches[i]), datasets: [{ data: CONFIG.topScores, backgroundColor: GOLD, borderRadius: 2, barThickness: 15 }] },
   options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y',
     plugins: { legend: { display: false }, tooltip: { rtl: true, callbacks: { title: items => CONFIG.topAthletes[items[0].dataIndex] + ' · ' + CONFIG.topBranches[items[0].dataIndex], label: c => fmtN(c.parsed.x) } } },
-    scales: { x: { beginAtZero: true, ticks: { callback: fmtN, font: { size: 10 }, color: '#9A9A9A' }, grid: { color: '#EFEBE3' } },
+    scales: { x: { beginAtZero: true, ticks: { callback: fmtN, font: { size: 10 }, color: '#6B7280' }, grid: { color: '#EEF1F6' } },
       y: { position: 'right', ticks: { font: { size: 11 } }, grid: { display: false } } }
   }
 });
@@ -787,7 +833,7 @@ new Chart(document.getElementById('c_top_branches'), {
   data: { labels: CONFIG.topBranchNames, datasets: [{ data: CONFIG.topBranchScores, backgroundColor: NAVY, borderRadius: 2, barThickness: 15 }] },
   options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y',
     plugins: { legend: { display: false }, tooltip: { rtl: true, callbacks: { label: c => 'ניקוד מצרפי: ' + fmtN(c.parsed.x) } } },
-    scales: { x: { beginAtZero: true, ticks: { callback: fmtN, font: { size: 10 }, color: '#9A9A9A' }, grid: { color: '#EFEBE3' } },
+    scales: { x: { beginAtZero: true, ticks: { callback: fmtN, font: { size: 10 }, color: '#6B7280' }, grid: { color: '#EEF1F6' } },
       y: { position: 'right', ticks: { font: { size: 11 } }, grid: { display: false } } }
   }
 });
@@ -823,7 +869,7 @@ new Chart(document.getElementById('c_top_branches'), {
       html += '<tr><td>' + r.name + '</td><td>' + r.branch + '</td><td>' + r.club + '</td><td>' + r.authority +
               '</td><td>' + r.ngo + '</td><td>' + r.periphery + '</td><td>' + r.ageGroup + '</td><td>' + r.ageNum +
               '</td><td>' + r.champ + '</td><td>' + r.place +
-              '</td><td class="medal-cell"><span class="pill ' + r.cls + '">' + r.medal + '</span></td><td>' + fmtN(r.score) + '</td></tr>';
+              '</td><td>' + fmtN(r.score) + '</td></tr>';
     });
     t.innerHTML = html + '</tbody>';
     t.querySelectorAll('th[data-key]').forEach(th => th.addEventListener('click', () => sortBy(th.dataset.key)));
