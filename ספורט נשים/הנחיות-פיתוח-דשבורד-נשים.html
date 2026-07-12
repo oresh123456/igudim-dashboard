@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>הנחיות פיתוח — דשבורד ספורט נשים</title>
+<style>
+  :root {
+    --navy:   #1F3F6D;
+    --green:  #248A3D;
+    --red:    #DA3439;
+    --sky:    #2D9CDB;
+    --purple: #6B4FA0;
+    --orange: #E07B39;
+    --slate:  #7A8FA6;
+    --gold:   #F8C33E;
+    --bg:        #F2F4F7;
+    --surface:   #FFFFFF;
+    --border:    #E5E9F0;
+    --ink:       #1A1A2E;
+    --ink-muted: #6B7280;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Amazon Ember", "Heebo", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+    padding: 32px 24px 48px;
+  }
+  .page { max-width: 860px; margin: 0 auto; }
+  header.doc {
+    background: var(--navy);
+    color: #fff;
+    border-radius: 12px;
+    padding: 22px 26px;
+    margin-bottom: 18px;
+  }
+  header.doc h1 { font-size: 22px; font-weight: 700; }
+  header.doc p { font-size: 13.5px; opacity: .85; margin-top: 6px; }
+  .intro {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-right: 4px solid var(--sky);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 22px;
+    font-size: 14px;
+  }
+  .intro strong { color: var(--navy); }
+  .rules {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 26px;
+    font-size: 14px;
+  }
+  .rules h2 { font-size: 15px; color: var(--navy); margin-bottom: 8px; }
+  .rules ul { padding-right: 20px; }
+  .rules li { margin-bottom: 5px; }
+  h2.section {
+    font-size: 16px;
+    color: var(--navy);
+    margin: 26px 0 10px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid var(--navy);
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 12px;
+  }
+  .card h3 { font-size: 14.5px; color: var(--ink); margin-bottom: 8px; }
+  .card ol { padding-right: 22px; font-size: 14px; }
+  .card ol li { margin-bottom: 6px; }
+  .tag {
+    display: inline-block;
+    font-size: 11.5px;
+    border-radius: 20px;
+    padding: 1px 10px;
+    margin-inline-start: 6px;
+    vertical-align: 1px;
+    white-space: nowrap;
+  }
+  .tag.rename { background: #FDF3E7; color: var(--orange); border: 1px solid var(--orange); }
+  .note {
+    background: #FBEBEC;
+    border: 1px solid var(--red);
+    border-radius: 10px;
+    padding: 12px 18px;
+    margin-top: 26px;
+    font-size: 13.5px;
+    color: var(--ink);
+  }
+  .muted { color: var(--ink-muted); font-size: 12.5px; }
+  code { font-family: Consolas, monospace; font-size: 12.5px; background: var(--bg); padding: 1px 5px; border-radius: 4px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="doc">
+  <h1>הנחיות פיתוח — דשבורד ספורט נשים</h1>
+  <p>מבוסס על טבלת השינויים המאושרת ("דשבורד נשים — לפיתוח", 1.7.2026) · פלטפורמת יעד: <span dir="ltr">AWS QuickSight</span></p>
+</header>
+
+<div class="intro">
+  <strong>איך לעבוד עם המסמך:</strong> המוקאפ המצורף (<span dir="ltr">wg-women.html</span>, גרסת 1.7.2026) הוא מקור האמת — יש לבנות את הדשבורד 1:1 לפיו: מבנה המסכים, הכרטיסים, הכותרות, הצבעים וכרטיסי ה-KPI. הרשימה שלמטה כוללת <strong>רק</strong> את השינויים המאושרים שעדיין <strong>אינם</strong> משתקפים במוקאפ — יש ליישם אותם בפיתוח בנוסף למה שמופיע בו.
+</div>
+
+<div class="rules">
+  <h2>כללים רוחביים (חלים על כל המסך)</h2>
+  <ul>
+    <li>תצוגה בעברית מלאה מימין לשמאל, פונט <span dir="ltr">Amazon Ember</span>.</li>
+    <li>צבעים קבועים: נשים — תכלת <span dir="ltr">#2D9CDB</span> · גברים — כחול כהה <span dir="ltr">#1F3F6D</span>. אין להחליף ביניהם.</li>
+    <li>תוויות נתונים (Data Labels) מופעלות בכל גרף שבו הן קריאות, ללא חפיפות וללא חריגה מהמקטע.</li>
+    <li>בכל גרף עם אחוזים — להציג גם ערכים מוחלטים (כמות) לצד האחוז, כפי שמודגם במוקאפ.</li>
+    <li>מקרא (Legend) בגודל קריא בכל הגרפים.</li>
+  </ul>
+</div>
+
+<h2 class="section">תקציב וניקוד</h2>
+
+<div class="card">
+  <h3>ניקוד לפי איגוד — חלוקה לפי מגדר</h3>
+  <ol>
+    <li>לעדכן את חתך הניתוח ואת הכותרת מ"לפי איגוד" ל"לפי ענף". <span class="tag rename">שינוי חתך + כותרת</span></li>
+  </ol>
+</div>
+
+<h2 class="section">ספורטאיות</h2>
+
+<div class="card">
+  <h3>שיעור ספורטאיות — 4 חיתוכים</h3>
+  <ol>
+    <li>להוסיף בכרטיס עצמו השוואה לשנה קודמת ולהציג את שיעור הגידול (במוקאפ קיימת דלתא כזו רק ברמת ה-KPI במסך הראשי).</li>
+  </ol>
+</div>
+
+<div class="card">
+  <h3>ספורטאיות אל מול ספורטאים — לפי איגוד (מתחת/מעל גיל 18)</h3>
+  <ol>
+    <li>לשנות את חתך הניתוח מרמת האיגוד לרמת הענף, ולעדכן את הכותרת בהתאם. <span class="tag rename">שינוי חתך + כותרת</span></li>
+  </ol>
+</div>
+
+<h2 class="section">קבוצות</h2>
+
+<div class="card">
+  <h3>קבוצות נשים אל מול גברים — 4 חיתוכים</h3>
+  <ol>
+    <li>לתקן ניסוח ותצוגה: בענפים אישיים אין קבוצות — אין להציג נתון קבוצות עבורם.</li>
+  </ol>
+</div>
+
+<div class="card">
+  <h3>קבוצות נשים אל מול קבוצות גברים — לפי ענף וקבוצת גיל</h3>
+  <ol>
+    <li>לעדכן את התצוגה ל"קבוצות נשים לעומת שאר הקבוצות", עם גילאי קבוצות לפי סוג ליגה. <span class="tag rename">שינוי תוכן + כותרת</span></li>
+  </ol>
+</div>
+
+<h2 class="section">שימור</h2>
+
+<div class="card">
+  <h3>מדד שימור (% ת.ז. חוזרות משנה לשנה) — 4 חיתוכים</h3>
+  <ol>
+    <li>לעדכן את חתך הניתוח מ"איגוד" ל"ענף". <span class="tag rename">שינוי חתך</span></li>
+  </ol>
+</div>
+
+<div class="card">
+  <h3>שיעור שימור לאורך שנים</h3>
+  <ol>
+    <li>להוסיף קו שיעור פרישה, ולפצל את גרף המגמה לקו נפרד לכל איגוד. שיעור הפרישה מחושב מזהויות חוזרות בין שנים; החתך לפי איגוד קיים במודל הנתונים.</li>
+  </ol>
+</div>
+
+<h2 class="section">מאמנות ובעלות תפקידים</h2>
+
+<div class="card">
+  <h3>מאמנות אל מול מאמנים — לפי איגוד</h3>
+  <ol>
+    <li>להוסיף נתוני מדריכות לשתי קוביות ה-KPI הימניות בלשונית המאמנות (כיום מוצגות "מאמנות" ו"% מאמנות" בלבד — בדומה ל-KPI המשולב "מאמנות ומדריכות" שבמסך הראשי).</li>
+    <li>להוסיף גרף המשווה מנכ"ליות מול מנכ"לים. טבלת "נשים מנכ"ליות ומנהלות מקצועיות לפי איגוד" הקיימת במוקאפ סופרת נשים בלבד ואינה מחליפה גרף השוואה זה.</li>
+  </ol>
+</div>
+
+<div class="card">
+  <h3>מספר המדריכים/מדריכות ומאמנים/מאמנות על פי איגוד</h3>
+  <ol>
+    <li>להוסיף תצוגה ברמת הענף (כ-80 ענפים) עם פתרון תצוגתי מתאים; בתצוגת ברירת המחדל הגרף יוצג מצומצם. הנתונים זמינים ברמת הענף בטבלה <code dir="ltr">dwh_aa_fact_trainers</code>.</li>
+  </ol>
+</div>
+
+<div class="card">
+  <h3>מגמת שיעור מאמנות לאורך שנים</h3>
+  <ol>
+    <li>להוסיף קו נפרד למדריכות לצד קו המאמנות (שני קווים בגרף המגמה).</li>
+  </ol>
+</div>
+
+<div class="card">
+  <h3>% נשים בהנהלת איגוד — אל מול סף 30%</h3>
+  <ol>
+    <li>להציג את שיעור הנשים בהנהלה לפי איגוד בלבד, ללא השוואה לתנאי הסף וללא צביעה לפי הסף — הוכרע שלא יוצגו האחוזים שמרכיבים את תנאי הסף. לעדכן את הכותרת בהתאם. <span class="tag rename">שינוי תוכן + כותרת</span></li>
+  </ol>
+</div>
+
+<h2 class="section">רשויות מקומיות</h2>
+
+<div class="card">
+  <h3>השוואת רשויות — תמונה מצרפית</h3>
+  <ol>
+    <li>להוסיף נתון של סך הספורטאים והספורטאיות (סה"כ כולל).</li>
+    <li>להוסיף נתונים לאוכלוסייה עד גיל 18.</li>
+    <li>להציג את סך הענפים הפעילים בפיצול: ענפים אישיים וענפים קבוצתיים (כיום מוצג נתון מאוחד).</li>
+  </ol>
+</div>
+
+<div class="card">
+  <h3>אגודות ברשות — תמונה מהירה</h3>
+  <ol>
+    <li>להציג מספר ח"פ לצד שם האגודה.</li>
+    <li>להוסיף עמודות: מספר ענפים קבוצתיים ומספר ענפים אישיים.</li>
+  </ol>
+</div>
+
+<div class="card">
+  <h3>ענפים ברשות — ספורט נשים</h3>
+  <ol>
+    <li>לדייק או להסיר את התצוגה — בענפים אישיים אין קבוצות נשים.</li>
+  </ol>
+</div>
+
+<div class="note">
+  <strong>הערה:</strong> קיימות הערות נוספות של המשרד מסבב 8.7.2026 שטרם אושרו לפיתוח — הן אינן כלולות במסמך זה ויועברו בנפרד לאחר אישור.
+</div>
+
+<p class="muted" style="margin-top:14px;">מסמך פנימי · הוכן 12.7.2026 · מקור: טבלת "דשבורד נשים — לפיתוח" (1.7.2026), לאחר צמצום מול גרסת המוקאפ מ-1.7.2026 — כל מה שכבר משולב במוקאפ הוסר מהרשימה.</p>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,119 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - text: משרד התרבות
+      - text: והספורט
+    - generic [ref=e4]:
+      - heading "מצב המקומות לפי גודל" [level=1] [ref=e5]
+      - generic [ref=e6]: מסך ייעודי לראשת מנהל הספורט · נתונים סינתטיים להדגמה בלבד
+  - generic [ref=e7]:
+    - generic [ref=e8]: מסננים
+    - generic [ref=e9]:
+      - generic [ref=e10]: עיר
+      - combobox [ref=e11]:
+        - option "הכל" [selected]
+        - option "ירושלים"
+        - option "תל אביב"
+        - option "חיפה"
+        - option "באר שבע"
+        - option "נתניה"
+        - option "ראשון לציון"
+        - option "אשדוד"
+        - option "פתח תקווה"
+        - option "רמת גן"
+        - option "הרצליה"
+        - option "עכו"
+        - option "אילת"
+    - generic [ref=e12]:
+      - generic [ref=e13]: ענף (איגוד)
+      - combobox [ref=e14]:
+        - option "הכל"
+        - option "שחייה" [selected]
+        - option "אתלטיקה"
+        - option "ג'ודו"
+        - option "כדורעף"
+        - option "טניס"
+        - option "התעמלות"
+        - option "אופניים"
+        - option "סיוף"
+        - option "טריאתלון"
+        - option "איגרוף"
+  - generic [ref=e15]:
+    - generic [ref=e16]:
+      - generic [ref=e17]: רמת תצוגה — לחיצה = זום פנימה
+      - generic [ref=e18]:
+        - button "ערים" [ref=e19] [cursor=pointer]
+        - button "איגודים לפי ענף" [ref=e20] [cursor=pointer]:
+          - text: איגודים
+          - generic [ref=e21]: לפי ענף
+        - button "אגודות" [ref=e22] [cursor=pointer]
+        - button "סניפים הרמה המפורטת ביותר" [ref=e23] [cursor=pointer]:
+          - text: סניפים
+          - generic [ref=e24]: הרמה המפורטת ביותר
+    - generic [ref=e25]:
+      - generic [ref=e26]: מיקוד לפי גודל
+      - generic [ref=e27]:
+        - button "הכל" [ref=e28] [cursor=pointer]
+        - button "קטנים עד 123 ספורטאים" [ref=e122] [cursor=pointer]:
+          - text: קטנים
+          - generic [ref=e30]: עד 123 ספורטאים
+        - button "בינוניים 123–273" [ref=e123] [cursor=pointer]:
+          - text: בינוניים
+          - generic [ref=e32]: 123–273
+        - button "גדולים מעל 273" [ref=e124] [cursor=pointer]:
+          - text: גדולים
+          - generic [ref=e34]: מעל 273
+  - generic [ref=e35]: "מציג: ערים קטנים (עד 123) · בתחום — ענף: שחייה — 2 מתוך 8 ערים"
+  - generic [ref=e36]:
+    - generic [ref=e37]:
+      - generic [ref=e38]: ערים שנבחרו
+      - generic [ref=e39]: "2"
+      - generic [ref=e40]: מתוך 8 ערים
+    - generic [ref=e41]:
+      - generic [ref=e42]: סה"כ ספורטאים בהם
+      - generic [ref=e43]: "201"
+      - generic [ref=e44]: קטנים (עד 123)
+    - generic [ref=e45]:
+      - generic [ref=e46]: גודל אופייני (חציון)
+      - generic [ref=e47]: "84"
+      - generic [ref=e48]: ספורטאים למקום
+    - generic [ref=e49]:
+      - generic [ref=e50]: הקטן ביותר
+      - generic [ref=e51]: "84"
+      - generic [ref=e52]: אילת
+  - generic [ref=e53]:
+    - generic [ref=e54]:
+      - heading "תמונת מצב מלאה — ערים קטנים (עד 123)" [level=2] [ref=e125]
+      - generic [ref=e56]: ממוין לפי גודל · עמודת ספורטאים = Data Bars · ₪ לספורטאי = סולם צבע · מגמה = אייקון (הכל יכולות מובנות של QuickSight)
+      - table [ref=e58]:
+        - rowgroup [ref=e59]:
+          - row "מקום ספורטאים מגמה ₪ לספורטאי תקציב אגודות ענפים" [ref=e60]:
+            - columnheader "מקום" [ref=e61]
+            - columnheader "ספורטאים" [ref=e62]
+            - columnheader "מגמה" [ref=e63]
+            - columnheader "₪ לספורטאי" [ref=e64]
+            - columnheader "תקציב" [ref=e65]
+            - columnheader "אגודות" [ref=e66]
+            - columnheader "ענפים" [ref=e67]
+        - rowgroup [ref=e68]:
+          - row "פתח תקווה 117 ▼ 12% ₪1,737 ₪0.2M 1 1" [ref=e126]:
+            - cell "פתח תקווה" [ref=e127]
+            - cell "117" [ref=e128]:
+              - generic [ref=e132]: "117"
+            - cell "▼ 12%" [ref=e133]
+            - cell "₪1,737" [ref=e134]
+            - cell "₪0.2M" [ref=e135]
+            - cell "1" [ref=e136]
+            - cell "1" [ref=e137]
+          - row "אילת 84 ▲ 15% ₪2,668 ₪0.2M 1 1" [ref=e138]:
+            - cell "אילת" [ref=e139]
+            - cell "84" [ref=e140]:
+              - generic [ref=e144]: "84"
+            - cell "▲ 15%" [ref=e145]
+            - cell "₪2,668" [ref=e146]
+            - cell "₪0.2M" [ref=e147]
+            - cell "1" [ref=e148]
+            - cell "1" [ref=e149]
+    - generic [ref=e117]:
+      - heading "איפה זה ביחס לכולם?" [level=2] [ref=e118]
+      - generic [ref=e119]: כל המקומות לפי מדרגות גודל · כחול = הקבוצה שבחרת

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>מנהל הספורט · מצב המקומות לפי גודל — סקיצת עבודה</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
+<style>
+:root{
+  --navy:#1F3F6D; --green:#248A3D; --red:#DA3439;
+  --sky:#2D9CDB; --purple:#6B4FA0; --orange:#E07B39; --slate:#7A8FA6; --gold:#F8C33E;
+  --bg:#F2F4F7; --surface:#FFFFFF; --border:#E5E9F0; --ink:#1A1A2E; --ink-muted:#6B7280;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:"Amazon Ember","Heebo",system-ui,sans-serif;padding:24px 32px}
+header{display:flex;align-items:center;gap:16px;margin-bottom:18px}
+.logo{background:var(--navy);color:#fff;border-radius:10px;padding:10px 16px;font-weight:700;font-size:14px;line-height:1.3;text-align:center}
+h1{color:var(--navy);font-size:24px}
+.sub{color:var(--ink-muted);font-size:13px}
+
+/* שני צעדים פשוטים */
+.steps{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 22px;display:flex;gap:48px;flex-wrap:wrap;margin-bottom:18px}
+.step .q{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:10px}
+.step .q .n{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--navy);color:#fff;font-size:12.5px;margin-inline-end:8px}
+.opts{display:flex;gap:10px;flex-wrap:wrap}
+.opt{border:2px solid var(--border);background:#fff;border-radius:10px;padding:10px 20px;font-size:14px;cursor:pointer;font-family:inherit;color:var(--ink-muted);font-weight:600}
+.opt:hover{border-color:var(--slate)}
+.opt.on{border-color:var(--navy);background:var(--navy);color:#fff}
+.opt small{display:block;font-size:11px;font-weight:400;margin-top:2px;opacity:.85}
+.sentence{font-size:14px;color:var(--ink);background:#EDF2F9;border-radius:8px;padding:10px 16px;margin-bottom:18px;border-right:4px solid var(--navy)}
+.sentence b{color:var(--navy)}
+
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
+.kpi{background:var(--surface);border:1px solid var(--border);border-right:4px solid var(--navy);border-radius:12px;padding:14px 18px}
+.kpi .t{font-size:12.5px;color:var(--ink-muted);margin-bottom:6px}
+.kpi .v{font-size:26px;font-weight:700;color:var(--ink)}
+.kpi .s{font-size:11.5px;color:var(--ink-muted);margin-top:4px}
+.kpi.green{border-right-color:var(--green)}
+.kpi.red{border-right-color:var(--red)}
+
+.grid{display:grid;grid-template-columns:1.4fr 1fr;gap:14px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.card h2{font-size:15px;color:var(--navy);margin-bottom:4px}
+.card .note{font-size:11.5px;color:var(--ink-muted);margin-bottom:10px}
+.chart-wrap{position:relative;height:500px}
+.chart-wrap.small{height:230px}
+
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:6px}
+th{color:var(--ink-muted);font-weight:600;text-align:right;padding:6px 8px;border-bottom:2px solid var(--border);font-size:11.5px}
+td{padding:6px 8px;border-bottom:1px solid var(--border)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">משרד התרבות<br>והספורט</div>
+  <div>
+    <h1>מצב המקומות לפי גודל</h1>
+    <div class="sub">מסך ייעודי לראשת מנהל הספורט · נתונים סינתטיים להדגמה בלבד</div>
+  </div>
+</header>
+
+<!-- מסננים גלובליים — מגדירים על איזה עולם מסתכלים (כמו בשאר הדשבורדים) -->
+<div class="steps" style="padding:12px 22px;gap:28px;align-items:center">
+  <span style="font-size:12.5px;font-weight:700;color:var(--ink-muted)">מסננים</span>
+  <div class="step">
+    <div style="font-size:11.5px;color:var(--ink-muted);margin-bottom:4px">עיר</div>
+    <select id="fCity" style="border:1.5px solid var(--border);border-radius:8px;padding:7px 12px;font-size:13px;font-family:inherit;min-width:140px"><option value="">הכל</option></select>
+  </div>
+  <div class="step">
+    <div style="font-size:11.5px;color:var(--ink-muted);margin-bottom:4px">ענף (איגוד)</div>
+    <select id="fAssoc" style="border:1.5px solid var(--border);border-radius:8px;padding:7px 12px;font-size:13px;font-family:inherit;min-width:140px"><option value="">הכל</option></select>
+  </div>
+</div>
+
+<div class="steps">
+  <div class="step">
+    <div class="q">רמת תצוגה — לחיצה = זום פנימה</div>
+    <div class="opts" id="what">
+      <button class="opt on" data-w="city">ערים</button>
+      <button class="opt" data-w="assoc">איגודים<small>לפי ענף</small></button>
+      <button class="opt" data-w="soc">אגודות</button>
+      <button class="opt" data-w="branch">סניפים<small>הרמה המפורטת ביותר</small></button>
+    </div>
+  </div>
+  <div class="step">
+    <div class="q">מיקוד לפי גודל</div>
+    <div class="opts" id="size">
+      <button class="opt" data-s="all">הכל</button>
+      <button class="opt on" data-s="small">קטנים<small id="smallHint">השליש התחתון</small></button>
+      <button class="opt" data-s="mid">בינוניים<small id="midHint">השליש האמצעי</small></button>
+      <button class="opt" data-s="big">גדולים<small id="bigHint">השליש העליון</small></button>
+    </div>
+  </div>
+</div>
+
+<div class="sentence" id="sentence"></div>
+<div id="chips" style="display:none;gap:8px;flex-wrap:wrap;margin:-8px 0 18px;align-items:center">
+  <span style="font-size:12px;color:var(--ink-muted);font-weight:600">נבחרו (לחיצה על שורה מוסיפה):</span>
+</div>
+<style>
+.chip{display:inline-flex;align-items:center;gap:6px;background:var(--navy);color:#fff;border-radius:16px;padding:4px 12px;font-size:12.5px;font-weight:600}
+.chip .x{cursor:pointer;opacity:.8;font-weight:700}
+.chip .x:hover{opacity:1}
+#tbl tbody tr{cursor:pointer}
+#tbl tbody tr:hover{background:#F5F8FC}
+#tbl tbody tr.picked{background:#EDF2F9;box-shadow:inset 4px 0 0 var(--navy)}
+</style>
+
+<div class="kpis">
+  <div class="kpi"><div class="t" id="kCountT">מקומות</div><div class="v" id="kCount">—</div><div class="s" id="kCountS"></div></div>
+  <div class="kpi"><div class="t">סה"כ ספורטאים בהם</div><div class="v" id="kAth">—</div><div class="s" id="kAthS"></div></div>
+  <div class="kpi green"><div class="t">גודל אופייני (חציון)</div><div class="v" id="kMed">—</div><div class="s">ספורטאים למקום</div></div>
+  <div class="kpi red"><div class="t">הקטן ביותר</div><div class="v" id="kMin">—</div><div class="s" id="kMinS"></div></div>
+</div>
+
+<div class="grid">
+  <div class="card">
+    <h2 id="tblTitle">תמונת מצב מלאה</h2>
+    <div class="note" id="tblNote"></div>
+    <div style="max-height:560px;overflow:auto">
+      <table id="tbl">
+        <thead><tr>
+          <th>מקום</th><th style="min-width:170px">ספורטאים</th><th>מגמה</th>
+          <th>₪ לספורטאי</th><th>תקציב</th><th>אגודות</th><th>ענפים</th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card">
+    <h2>איפה זה ביחס לכולם?</h2>
+    <div class="note">כל המקומות לפי מדרגות גודל · כחול = הקבוצה שבחרת</div>
+    <div class="chart-wrap small"><canvas id="histChart"></canvas></div>
+  </div>
+</div>
+
+<script>
+Chart.register(ChartDataLabels);
+Chart.defaults.font.family = '"Amazon Ember","Heebo",system-ui,sans-serif';
+
+/* ---------- synthetic data: base grain = עיר × אגודה × סניף × איגוד ---------- */
+const CITIES = ["ירושלים","תל אביב","חיפה","באר שבע","נתניה","ראשון לציון","אשדוד","פתח תקווה","רמת גן","הרצליה","עכו","אילת"];
+const ASSOCS = ["שחייה","אתלטיקה","ג'ודו","כדורעף","טניס","התעמלות","אופניים","סיוף","טריאתלון","איגרוף"];
+const SOC_PREFIX = ["הפועל","מכבי","עירוני","אליצור","בית\"ר"];
+let seed = 42;
+function rnd(){ seed = (seed*1103515245+12345) % 2147483648; return seed/2147483648; }
+const ROWS = [];
+CITIES.forEach((city,ci)=>{
+  const nSoc = 2 + Math.floor(rnd()*3);
+  for(let s=0;s<nSoc;s++){
+    const soc = SOC_PREFIX[Math.floor(rnd()*SOC_PREFIX.length)] + " " + city;
+    const nSports = 2 + Math.floor(rnd()*4);
+    const used = new Set();
+    for(let k=0;k<nSports;k++){
+      const a = ASSOCS[Math.floor(rnd()*ASSOCS.length)];
+      if(used.has(a)) continue; used.add(a);
+      const nBranch = rnd() < .3 ? 2 : 1;
+      for(let b=1;b<=nBranch;b++){
+        const branch = soc + " · " + a + (nBranch>1 ? " · סניף "+["א'","ב'"][b-1] : "");
+        const sizeFactor = (CITIES.length-ci)/CITIES.length;
+        const athletes = Math.round(15 + rnd()*260*sizeFactor + rnd()*70);
+        ROWS.push({city, soc, branch, assoc:a, athletes,
+          prev: Math.round(athletes * (0.82 + rnd()*0.38)),          // אשתקד: ‎±18%‎
+          budget: Math.round(athletes * (1200 + rnd()*2400))});      // ₪ לספורטאי 1,200–3,600
+      }
+    }
+  }
+});
+
+/* ---------- state: two simple choices ---------- */
+const WHAT = {
+  city:  {label:"ערים",    dim:"city",   key:r=>r.city},
+  assoc: {label:"איגודים", dim:"assoc",  key:r=>"איגוד ה"+r.assoc},
+  soc:   {label:"אגודות",  dim:"soc",    key:r=>r.soc},
+  branch:{label:"סניפים",  dim:"branch", key:r=>r.branch},
+};
+const DIM_LABEL = {city:"עיר", assoc:"ענף", soc:"אגודה", branch:"סניף"};
+/* גבולות הגודל יחסיים לסוג המקום: שלישונים (terciles) המחושבים מהנתונים */
+function sizeBounds(all){
+  const v = all.map(b=>b.athletes).sort((a,b)=>a-b);
+  const t1 = v[Math.floor(v.length/3)] || 0;
+  const t2 = v[Math.floor(v.length*2/3)] || 0;
+  return {
+    all:  {label:"בכל גודל",                                    min:0,  max:Infinity},
+    small:{label:`קטנים (עד ${t1.toLocaleString()})`,           min:0,  max:t1},
+    mid:  {label:`בינוניים (${t1.toLocaleString()}–${t2.toLocaleString()})`, min:t1, max:t2},
+    big:  {label:`גדולים (מעל ${t2.toLocaleString()})`,         min:t2, max:Infinity},
+  };
+}
+const state = {what:"city", size:"small", fCity:"", fAssoc:"",
+  sel:{city:new Set(), assoc:new Set(), soc:new Set(), branch:new Set()}};   // בחירה מצטברת בקליק
+
+/* אכלוס המסננים + האזנה */
+CITIES.forEach(c=>document.getElementById("fCity").insertAdjacentHTML("beforeend",`<option>${c}</option>`));
+ASSOCS.forEach(a=>document.getElementById("fAssoc").insertAdjacentHTML("beforeend",`<option>${a}</option>`));
+document.getElementById("fCity").addEventListener("change",e=>{state.fCity=e.target.value;render()});
+document.getElementById("fAssoc").addEventListener("change",e=>{state.fAssoc=e.target.value;render()});
+
+/* לחיצה על שורה = הוספה/הסרה מהבחירה המצטברת */
+document.querySelector("#tbl tbody").addEventListener("click",e=>{
+  const tr = e.target.closest("tr"); if(!tr || !tr.dataset.raw) return;
+  const dim = WHAT[state.what].dim, v = tr.dataset.raw;
+  state.sel[dim].has(v) ? state.sel[dim].delete(v) : state.sel[dim].add(v);
+  render();
+});
+/* הסרת צ'יפ */
+document.getElementById("chips").addEventListener("click",e=>{
+  const x = e.target.closest(".x"); if(!x) return;
+  state.sel[x.dataset.d].delete(x.dataset.v);
+  render();
+});
+
+document.getElementById("what").addEventListener("click",e=>{
+  const b=e.target.closest(".opt"); if(!b) return;
+  state.what=b.dataset.w;
+  document.querySelectorAll("#what .opt").forEach(el=>el.classList.toggle("on",el===b));
+  render();
+});
+document.getElementById("size").addEventListener("click",e=>{
+  const b=e.target.closest(".opt"); if(!b) return;
+  state.size=b.dataset.s;
+  document.querySelectorAll("#size .opt").forEach(el=>el.classList.toggle("on",el===b));
+  render();
+});
+
+/* ---------- aggregation ---------- */
+function buckets(){
+  const kf = WHAT[state.what].key;
+  const m = new Map();
+  const dim = WHAT[state.what].dim;
+  ROWS.forEach(r=>{
+    if(state.fCity && r.city!==state.fCity) return;
+    if(state.fAssoc && r.assoc!==state.fAssoc) return;
+    for(const d of ["city","assoc","soc","branch"]){
+      if(d!==dim && state.sel[d].size && !state.sel[d].has(r[d])) return;   // בחירות מצטברות מרמות אחרות
+    }
+    const k = kf(r);
+    if(!m.has(k)) m.set(k,{name:k, raw:r[dim], athletes:0, prev:0, budget:0, socs:new Set(), sports:new Set()});
+    const o = m.get(k);
+    o.athletes += r.athletes; o.prev += r.prev; o.budget += r.budget;
+    o.socs.add(r.soc); o.sports.add(r.assoc);
+  });
+  return [...m.values()].sort((a,b)=>b.athletes-a.athletes);
+}
+
+/* ---------- render ---------- */
+let bar, hist;
+function render(){
+  const all = buckets();
+  const SIZE = sizeBounds(all);
+  const sz = SIZE[state.size];
+  const sel = all.filter(b=>b.athletes>=sz.min && b.athletes<sz.max);
+  const wLabel = WHAT[state.what].label;
+
+  document.getElementById("smallHint").textContent = `עד ${SIZE.small.max.toLocaleString()} ספורטאים`;
+  document.getElementById("midHint").textContent = `${SIZE.mid.min.toLocaleString()}–${SIZE.mid.max.toLocaleString()}`;
+  document.getElementById("bigHint").textContent = `מעל ${SIZE.big.min.toLocaleString()}`;
+
+  /* צ'יפים של הבחירה המצטברת */
+  const chipsEl = document.getElementById("chips");
+  const chipHtml = ["city","assoc","soc","branch"].flatMap(d=>
+    [...state.sel[d]].map(v=>`<span class="chip">${DIM_LABEL[d]}: ${v}<span class="x" data-d="${d}" data-v="${v}">✕</span></span>`)
+  ).join("");
+  chipsEl.querySelectorAll(".chip").forEach(c=>c.remove());
+  chipsEl.insertAdjacentHTML("beforeend", chipHtml);
+  chipsEl.style.display = chipHtml ? "flex" : "none";
+
+  const scope = [state.fCity && "עיר: "+state.fCity, state.fAssoc && "ענף: "+state.fAssoc].filter(Boolean).join(" · ");
+  document.getElementById("sentence").innerHTML =
+    `מציג: <b>${wLabel}</b> ${state.size==="all"?"":"<b>"+sz.label+"</b>"}${scope?" · בתחום — <b>"+scope+"</b>":""} — ${sel.length} מתוך ${all.length} ${wLabel}`;
+
+  document.getElementById("kCountT").textContent = wLabel+" שנבחרו";
+  document.getElementById("kCount").textContent = sel.length;
+  document.getElementById("kCountS").textContent = `מתוך ${all.length} ${wLabel}`;
+  document.getElementById("kAth").textContent = sel.reduce((s,b)=>s+b.athletes,0).toLocaleString();
+  document.getElementById("kAthS").textContent = sz.label;
+  const med = sel.length? sel[Math.floor(sel.length/2)].athletes : 0;
+  document.getElementById("kMed").textContent = med.toLocaleString();
+  const smallest = sel[sel.length-1];
+  document.getElementById("kMin").textContent = smallest? smallest.athletes.toLocaleString() : "—";
+  document.getElementById("kMinS").textContent = smallest? smallest.name : "";
+
+  document.getElementById("tblTitle").textContent = `תמונת מצב מלאה — ${wLabel} ${state.size==="all"?"":sz.label}`;
+
+  const MAXV = all[0]?.athletes||1000, BINS=8, step=Math.ceil(MAXV/BINS/50)*50||50;
+  const counts=Array(BINS).fill(0);
+  all.forEach(b=>counts[Math.min(BINS-1,Math.floor(b.athletes/step))]++);
+  const colors = counts.map((_,i)=>{
+    const lo=i*step, hi=(i+1)*step;
+    return (hi>sz.min && lo<sz.max) ? "#1F3F6D" : "#C9D3DF";
+  });
+  if(hist) hist.destroy();
+  hist = new Chart(document.getElementById("histChart"),{
+    type:"bar",
+    data:{labels:counts.map((_,i)=>`${i*step}–${(i+1)*step}`),
+      datasets:[{data:counts, backgroundColor:colors, borderRadius:3}]},
+    options:{ maintainAspectRatio:false,
+      plugins:{legend:{display:false},
+        datalabels:{anchor:"end",align:"top",color:"#1A1A2E",font:{size:10.5,weight:"600"},
+          textStrokeColor:"#fff",textStrokeWidth:3, formatter:v=>v||""}},
+      scales:{ x:{reverse:true, grid:{display:false}, ticks:{color:"#6B7280",font:{size:10}}},
+               y:{grid:{color:"#E5E9F0"}, ticks:{color:"#6B7280"}}}}
+  });
+
+  document.getElementById("tblNote").textContent =
+    `ממוין לפי גודל · עמודת ספורטאים = Data Bars · ₪ לספורטאי = סולם צבע · מגמה = אייקון (הכל יכולות מובנות של QuickSight)`;
+  const maxAth = sel[0]?.athletes || 1;
+  const ppas = sel.map(b=>b.budget/b.athletes);
+  const ppaMin = Math.min(...ppas), ppaMax = Math.max(...ppas);
+  document.querySelector("#tbl tbody").innerHTML = sel.slice(0,150).map(b=>{
+    const pct = Math.round(b.athletes/maxAth*100);
+    const delta = b.prev ? (b.athletes-b.prev)/b.prev : 0;
+    const trend = delta > 0.03
+      ? `<span style="color:var(--green);font-weight:700">▲ ${(delta*100).toFixed(0)}%</span>`
+      : delta < -0.03
+      ? `<span style="color:var(--red);font-weight:700">▼ ${(Math.abs(delta)*100).toFixed(0)}%</span>`
+      : `<span style="color:var(--ink-muted)">◄► יציב</span>`;
+    const ppa = b.budget/b.athletes;
+    const t = (ppa-ppaMin)/((ppaMax-ppaMin)||1);               // 0=זול 1=יקר
+    const ppaBg = `rgba(218,52,57,${(t*0.28).toFixed(2)})`;    // אדום מתחזק ככל שיקר יותר
+    const picked = state.sel[WHAT[state.what].dim].has(b.raw);
+    return `<tr data-raw="${b.raw}"${picked?' class="picked"':''}>
+      <td style="font-weight:600">${b.name}</td>
+      <td><div style="display:flex;align-items:center;gap:8px">
+        <div style="flex:1;background:#EDF1F6;border-radius:4px;height:14px;overflow:hidden">
+          <div style="width:${pct}%;height:100%;background:var(--navy);border-radius:4px"></div>
+        </div>
+        <span style="min-width:44px;font-weight:600">${b.athletes.toLocaleString()}</span></div></td>
+      <td>${trend}</td>
+      <td style="background:${ppaBg};font-weight:600">₪${Math.round(ppa).toLocaleString()}</td>
+      <td>₪${(b.budget/1e6).toFixed(1)}M</td>
+      <td>${b.socs.size}</td><td>${b.sports.size}</td>
+    </tr>`;
+  }).join("");
+}
+render();
+</script>
+</body>
+</html>

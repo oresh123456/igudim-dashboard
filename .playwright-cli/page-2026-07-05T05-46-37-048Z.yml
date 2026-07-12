@@ -1,0 +1,150 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - generic [ref=e3]: תקציב
+    - button "איגודים" [ref=e4] [cursor=pointer]
+    - button "אגודות" [ref=e5] [cursor=pointer]
+    - generic [ref=e7]: ספורטאים
+    - button "איגודים" [ref=e8] [cursor=pointer]
+    - button "אגודות" [ref=e9] [cursor=pointer]
+    - generic [ref=e11]: ספורט נשים
+    - button "תמונה כללית" [ref=e12] [cursor=pointer]
+    - button "תקציב וניקוד" [ref=e13] [cursor=pointer]
+    - button "ספורטאיות ושימור" [ref=e14] [cursor=pointer]
+    - button "מאמנות ובעלות תפקיד" [ref=e15] [cursor=pointer]
+    - button "השוואת רשויות" [ref=e16] [cursor=pointer]
+  - main [ref=e17]:
+    - generic [ref=e18]:
+      - generic [ref=e19]:
+        - generic [ref=e20]:
+          - text: פילטרים על
+          - strong [ref=e21]: כל הדף
+        - generic [ref=e22]:
+          - generic [ref=e23]: איגוד
+          - combobox [ref=e24] [cursor=pointer]:
+            - option "הכל" [selected]
+            - option "איגוד גלישת הגלים"
+            - option "איגוד האופניים"
+            - option "איגוד האיגרוף"
+            - option "איגוד האתלטיקה"
+            - option "איגוד הג'ודו"
+            - option "איגוד ההתעמלות"
+            - option "איגוד הטאקוונדו"
+            - option "איגוד הטניס"
+            - option "איגוד הכדוריד"
+            - option "איגוד הכדורסל"
+            - option "איגוד הכדורעף"
+            - option "איגוד הסיוף"
+            - option "איגוד הקליעה"
+            - option "איגוד הקראטה"
+            - option "איגוד הקשתות"
+            - option "איגוד הרכיבה על סוסים"
+            - option "איגוד השחייה"
+            - option "איגוד טריאתלון"
+            - option "ארגון הספורט של החרשים"
+            - option "ארגון ספורט לקויות ראיה"
+            - option "התאחדות הכדורגל"
+            - option "התאחדות הראגבי"
+            - option "התאחדות השחמט"
+            - option "התאחדות השייט"
+            - option "התאחדות ספורט נכים"
+        - generic [ref=e25]:
+          - generic [ref=e26]: ענף
+          - combobox [ref=e27] [cursor=pointer]:
+            - option "הכל" [selected]
+            - option "אופניים"
+            - option "איגרוף"
+            - option "אתלטיקה"
+            - option "בדמינטון"
+            - option "ברידג'"
+            - option "ג'ודו"
+            - option "ג'יו ג'יטסו"
+            - option "גולף"
+            - option "גלישת גלים"
+            - option "דמקה"
+            - option "הוקי קרח"
+            - option "החלקה על הקרח"
+            - option "היאבקות"
+            - option "הרמת משקולות"
+            - option "התעמלות"
+            - option "חתירה"
+            - option "טאקוונדו"
+            - option "טיפוס ספורטיבי"
+            - option "טניס"
+            - option "טניס שולחן"
+            - option "טריאתלון"
+            - option "כדורגל"
+            - option "כדוריד"
+            - option "כדורמים"
+            - option "כדורסל"
+            - option "כדורסל 3X3"
+            - option "כדורעף"
+            - option "כדורעף אולמות"
+            - option "כדורעף חופים"
+            - option "סופטבול"
+            - option "סיוף"
+            - option "סמבו"
+            - option "ספורט הריקוד"
+            - option "ספורט חרשים"
+            - option "ספורט לקויי ראייה"
+            - option "ספורט נכים"
+            - option "סקווש"
+            - option "פוטבול אמריקני"
+            - option "פיתוח הגוף"
+            - option "קיאקים"
+            - option "קיק בוקס"
+            - option "קליעה"
+            - option "קראטה"
+            - option "קשתות"
+            - option "ראגבי"
+            - option "רכיבה על סוסים"
+            - option "שחייה"
+            - option "שחמט"
+            - option "שייט"
+        - generic [ref=e28]:
+          - generic [ref=e29]: סיווג אולימפי
+          - combobox [ref=e30] [cursor=pointer]:
+            - option "הכל" [selected]
+            - option "אולימפי"
+            - option "פרה-אולימפי"
+            - option "לא אולימפי"
+        - generic [ref=e31]:
+          - generic [ref=e32]: סוג ענף
+          - combobox [ref=e33] [cursor=pointer]:
+            - option "הכל" [selected]
+            - option "אישי"
+            - option "קבוצתי"
+        - button "איפוס פילטרים" [ref=e34] [cursor=pointer]
+      - generic [ref=e35]:
+        - generic [ref=e36]:
+          - generic [ref=e37]: סך תקציב לאיגודים
+          - generic [ref=e38]: ₪522.5M
+        - generic [ref=e39]:
+          - generic [ref=e40]: איגודים מתוקצבים
+          - generic [ref=e41]: "25"
+        - generic [ref=e42]:
+          - generic [ref=e43]: תקציב ממוצע לאיגוד
+          - generic [ref=e44]: ₪20.90M
+        - generic [ref=e45]:
+          - generic [ref=e46]: מתוכם אולימפיים
+          - generic [ref=e47]: "21"
+      - generic [ref=e48]:
+        - generic [ref=e50]:
+          - generic [ref=e51]: תקציב לפי איגוד
+          - generic [ref=e52]: מקלות אופקיים · 10 מובילים
+        - generic [ref=e56]:
+          - generic [ref=e57]: תקציב לפי סיווג אולימפי
+          - generic [ref=e58]: עוגה
+        - generic [ref=e62]:
+          - generic [ref=e63]: תקציב לפי סוג ענף
+          - generic [ref=e64]: עוגה · אישי / קבוצתי
+        - generic [ref=e68]:
+          - generic [ref=e69]: תקציב לפי – הישגיות
+          - generic [ref=e70]: מקלות אופקיים · מיון לפי ציון הישגיות
+        - generic [ref=e73]:
+          - generic [ref=e74]:
+            - generic [ref=e75]: תקציב לאיגוד · השוואת 2025 ל-2026
+            - generic [ref=e76]: מקלות מקובצים · 10 איגודים מובילים
+          - generic [ref=e81]: סה"כ — כל האיגודים
+      - generic [ref=e84]:
+        - strong [ref=e85]: "הערה תכנונית:"
+        - text: "דף זה מסתמך על FACT ברמת איגוד × {סיווג אולימפי, סוג ענף, עמידה בסף}. ממדי מיקום (יישוב, פריפריאליות, סוציו-אקונומי) אינם רלוונטיים לרמה זו — איגוד הוא גוף ארצי."

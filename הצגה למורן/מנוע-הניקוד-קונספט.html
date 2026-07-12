@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מנוע הניקוד — תקציב לפי מבחן ואמת מידה</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1F3F6D; --green:#248A3D; --red:#DA3439;
+  --sky:#2D9CDB; --purple:#6B4FA0; --orange:#E07B39; --slate:#7A8FA6; --gold:#F8C33E;
+  --bg:#F2F4F7; --surface:#FFFFFF; --border:#E5E9F0; --ink:#1A1A2E; --ink-muted:#6B7280;
+}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Amazon Ember","Heebo",system-ui,sans-serif;line-height:1.55;}
+.wrap{max-width:1080px;margin:0 auto;padding:22px 26px 60px;}
+header.brand{display:flex;align-items:center;gap:12px;border-bottom:3px solid var(--navy);padding-bottom:12px;margin-bottom:16px;}
+.logo{width:40px;height:40px;border-radius:9px;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:19px;}
+.brand h1{margin:0;font-size:20px;color:var(--navy);font-weight:700;}
+.brand .sub{margin:2px 0 0;font-size:13px;color:var(--ink-muted);}
+.controls{display:flex;align-items:center;gap:10px;margin:14px 0 6px;flex-wrap:wrap;}
+.controls label{font-size:13px;color:var(--ink-muted);}
+select{font-family:inherit;font-size:14px;padding:7px 12px;border:1px solid var(--border);border-radius:9px;background:var(--surface);color:var(--ink);}
+.badge-demo{font-size:11px;color:var(--orange);border:1px solid var(--orange);border-radius:6px;padding:2px 8px;margin-inline-start:auto;}
+
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:14px 0 8px;}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:13px 15px;}
+.kpi .lab{font-size:12px;color:var(--ink-muted);}
+.kpi .val{font-size:26px;font-weight:700;color:var(--navy);margin-top:3px;}
+.kpi .sub{font-size:12px;margin-top:4px;}
+.pill{display:inline-block;border-radius:11px;padding:1px 9px;font-size:12px;font-weight:500;}
+.p-over{background:#FDEBEC;color:var(--red);}
+.p-ok{background:#EAF7EE;color:var(--green);}
+.p-target{background:#EEF1F6;color:var(--slate);}
+
+h2{font-size:15px;color:var(--navy);margin:24px 0 4px;font-weight:700;}
+.h2note{font-size:12.5px;color:var(--ink-muted);margin:0 0 12px;}
+
+.test{background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:13px;overflow:hidden;}
+.test-head{display:flex;align-items:center;gap:12px;padding:12px 15px;background:#F7F9FC;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+.test-head .tname{font-weight:700;color:var(--navy);font-size:15px;}
+.test-head .tamt{font-weight:700;color:var(--ink);font-size:15px;}
+.test-head .tshare{font-size:12px;color:var(--ink-muted);}
+.corr{margin-inline-start:auto;display:flex;align-items:center;gap:7px;font-size:11.5px;color:var(--slate);background:#EEF1F6;border:1px dashed var(--slate);border-radius:8px;padding:4px 9px;}
+.corr .dot{width:7px;height:7px;border-radius:50%;background:var(--slate);}
+.crit{padding:6px 15px 4px;}
+.crow{display:grid;grid-template-columns:1fr auto;gap:8px 14px;align-items:center;padding:8px 0;border-bottom:1px dashed var(--border);}
+.crow:last-child{border-bottom:0;}
+.cname{font-size:13.5px;color:#2b3550;}
+.cbar-wrap{height:9px;background:#EEF1F6;border-radius:5px;margin-top:6px;overflow:hidden;}
+.cbar{height:100%;background:var(--navy);border-radius:5px;}
+.cbar.women{background:var(--sky);}
+.cnums{text-align:end;white-space:nowrap;font-size:13px;}
+.cnums .amt{font-weight:700;color:var(--ink);}
+.cnums .pts{color:var(--ink-muted);font-size:11.5px;}
+
+.explain{background:#EAF2FB;border:1px solid #cfe0f4;border-radius:12px;padding:14px 16px;margin-top:8px;font-size:13.5px;color:#22406b;}
+.explain b{color:var(--navy);}
+footer{margin-top:26px;font-size:12px;color:var(--ink-muted);border-top:1px solid var(--border);padding-top:12px;}
+.qs{font-size:12px;color:var(--slate);margin-top:6px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="brand">
+  <div class="logo">תס</div>
+  <div>
+    <h1>מנוע הניקוד — תקציב לפי מבחן ואמת מידה</h1>
+    <p class="sub">שקיפות ההקצאה: למה גוף קיבל בדיוק את הסכום שקיבל · מוקאפ קונספט למורן</p>
+  </div>
+</header>
+
+<div class="controls">
+  <label for="body">גוף נתמך:</label>
+  <select id="body"></select>
+  <span class="badge-demo">נתוני המחשה</span>
+</div>
+
+<div class="kpis" id="kpis"></div>
+
+<h2>תקציב לפי מבחן ואמת מידה</h2>
+<p class="h2note">הפירוק (attribution): כל שקל של תמיכה משויך למבחן התמיכה ולאמת המידה שהניבה אותו. התיקונים שאינם נקבעים בניקוד מסומנים צמוד לכל מבחן — לתשומת לב, בשלב זה ללא פירוט.</p>
+<div id="tests"></div>
+
+<div class="explain" id="explain"></div>
+
+<footer>
+  מנוע הניקוד ממחיש את המנגנון המשותף לכל מבחני התמיכה: תנאי סף ← ניקוד לפי אמות מידה ← ערך נקודה ← סכום. הפירוק עונה לשאלה "האם 38.5% תקין?" בכך שהוא מציג <b>יעד</b> (benchmark) ו<b>ייחוס</b> (breakdown) לצד כל אחוז.
+  <div class="qs">היתכנות QuickSight: Pivot Table עם צביעת חום או Stacked Bar לפי מבחן ואמת מידה; ה-KPI עם שדה יעד. התיקונים — שכבת נתונים נפרדת שתתווסף בהמשך.</div>
+</footer>
+
+</div>
+<script>
+const NIS=n=>'₪'+Math.round(n).toLocaleString('en-US');
+const bodies=[
+ {name:"איגוד הכדורסל", income:15600000, target:32,
+  tests:[
+   {test:"מבחן תמיכה באיגודי ספורט", corrections:"תקרת תמיכה · מקדם קבוצתי · ועדת חריגים",
+    criteria:[
+     {name:"מספר ספורטאים — לפי שנתוני גיל", pts:12400, amt:3720000},
+     {name:"הישגים בתחרויות בינ״ל (דרג א׳)", pts:3100, amt:930000},
+     {name:"בונוס שילוב נשים", pts:1500, amt:450000, women:true}]},
+   {test:"קידום שילוב ספורטאים ישראלים", corrections:"מקדם ליגה · הצהרת טפסי משחק",
+    criteria:[{name:"שילוב שחקנים ישראלים עד גיל 22", pts:2000, amt:600000}]},
+   {test:"שיטור וסדרנות בכירות", corrections:"החזר עד 90% מהעלות בפועל",
+    criteria:[{name:"מימון פעולות שיטור בתחרויות זכאיות", pts:1000, amt:300000}]}
+  ]},
+ {name:"איגוד הכדורעף", income:6200000, target:32,
+  tests:[
+   {test:"מבחן תמיכה באיגודי ספורט", corrections:"תקרת תמיכה · מקדם קבוצתי",
+    criteria:[
+     {name:"מספר ספורטאים — לפי שנתוני גיל", pts:5200, amt:1040000},
+     {name:"בונוס שילוב נשים (×1.5)", pts:2600, amt:520000, women:true},
+     {name:"הישגים בתחרויות בינ״ל", pts:900, amt:180000}]},
+   {test:"קידום ספורט נשים", corrections:"מותנה בתוכנית מאושרת",
+    criteria:[{name:"פעילות לקידום ספורט נשים", pts:1300, amt:260000, women:true}]}
+  ]}
+];
+
+const sel=document.getElementById('body');
+bodies.forEach((b,i)=>{const o=document.createElement('option');o.value=i;o.textContent=b.name;sel.appendChild(o);});
+
+function render(idx){
+  const b=bodies[idx];
+  const total=b.tests.reduce((s,t)=>s+t.criteria.reduce((a,c)=>a+c.amt,0),0);
+  const share=total/b.income*100;
+  const over=share>b.target;
+  const maxAmt=Math.max(...b.tests.flatMap(t=>t.criteria.map(c=>c.amt)));
+
+  document.getElementById('kpis').innerHTML=
+   '<div class="kpi"><div class="lab">סך תמיכת המשרד לגוף</div><div class="val">'+NIS(total)+'</div>'+
+     '<div class="sub" style="color:var(--ink-muted)">מ-'+b.tests.length+' מבחני תמיכה</div></div>'+
+   '<div class="kpi"><div class="lab">שיעור תמיכה מתקציב הגוף</div><div class="val">'+share.toFixed(1)+'%</div>'+
+     '<div class="sub"><span class="pill '+(over?'p-over':'p-ok')+'">'+(over?'מעל היעד':'בתחום היעד')+'</span> '+
+     '<span class="pill p-target">יעד ענפי '+b.target+'%</span></div></div>'+
+   '<div class="kpi"><div class="lab">תקציב שנתי מוצהר של הגוף</div><div class="val" style="font-size:22px">'+NIS(b.income)+'</div>'+
+     '<div class="sub" style="color:var(--ink-muted)">מקור: רשם העמותות / גיידסטאר</div></div>';
+
+  document.getElementById('tests').innerHTML=b.tests.map(t=>{
+    const tAmt=t.criteria.reduce((a,c)=>a+c.amt,0);
+    const tShare=(tAmt/total*100).toFixed(0);
+    const rows=t.criteria.map(c=>
+      '<div class="crow"><div><div class="cname">'+c.name+'</div>'+
+      '<div class="cbar-wrap"><div class="cbar'+(c.women?' women':'')+'" style="width:'+(c.amt/maxAmt*100)+'%"></div></div></div>'+
+      '<div class="cnums"><div class="amt">'+NIS(c.amt)+'</div><div class="pts">'+c.pts.toLocaleString('en-US')+' נק׳</div></div></div>').join('');
+    return '<div class="test"><div class="test-head">'+
+      '<span class="tname">'+t.test+'</span>'+
+      '<span class="tamt">'+NIS(tAmt)+'</span>'+
+      '<span class="tshare">'+tShare+'% מסך התמיכה</span>'+
+      '<span class="corr"><span class="dot"></span>תיקונים (לא נקבעים בניקוד): '+t.corrections+'</span>'+
+      '</div><div class="crit">'+rows+'</div></div>';
+  }).join('');
+
+  const gap=(share-b.target).toFixed(1);
+  document.getElementById('explain').innerHTML=
+   '<b>קריאת ה-'+share.toFixed(1)+'% של '+b.name+':</b> לבד המספר חסר משמעות. '+
+   'ה<b>ייחוס</b> מראה שהתמיכה מורכבת מ-'+b.tests.length+' מבחנים, והנתח הגדול מגיע מאמת המידה ״מספר ספורטאים לפי גיל״. '+
+   'ה<b>יעד</b> הענפי הוא '+b.target+'% — כך ש-'+share.toFixed(1)+'% '+(over?('הוא '+gap+' נק׳ <u>מעל</u> היעד, נקודה לבדיקה.'):('בתוך הטווח התקין.'))+
+   ' בנוסף קיימים <b>תיקונים</b> (תקרות, מקדמים, ועדת חריגים) שאינם נגזרים מהניקוד — הם מסומנים צמוד לכל מבחן ויפורטו בהמשך.';
+}
+sel.onchange=e=>render(+e.target.value);
+render(0);
+</script>
+</body>
+</html>

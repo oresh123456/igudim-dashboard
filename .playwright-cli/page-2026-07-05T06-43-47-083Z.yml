@@ -1,0 +1,73 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - text: משרד התרבות
+      - text: והספורט
+    - generic [ref=e4]:
+      - heading "מצב המקומות לפי גודל" [level=1] [ref=e5]
+      - generic [ref=e6]: מסך ייעודי לראשת מנהל הספורט · נתונים סינתטיים להדגמה בלבד
+  - generic [ref=e7]:
+    - generic [ref=e8]:
+      - generic [ref=e9]:
+        - generic [ref=e10]: "1"
+        - text: על מה מסתכלים?
+      - generic [ref=e11]:
+        - button "ערים" [ref=e12] [cursor=pointer]
+        - button "איגודים לפי ענף" [ref=e13] [cursor=pointer]:
+          - text: איגודים
+          - generic [ref=e14]: לפי ענף
+        - button "אגודות" [ref=e15] [cursor=pointer]
+        - button "סניפים הרמה המפורטת ביותר" [ref=e16] [cursor=pointer]:
+          - text: סניפים
+          - generic [ref=e17]: הרמה המפורטת ביותר
+    - generic [ref=e18]:
+      - generic [ref=e19]:
+        - generic [ref=e20]: "2"
+        - text: באיזה גודל?
+      - generic [ref=e21]:
+        - button "הכל" [ref=e22] [cursor=pointer]
+        - button "קטנים עד 100 ספורטאים" [ref=e23] [cursor=pointer]:
+          - text: קטנים
+          - generic [ref=e24]: עד 100 ספורטאים
+        - button "בינוניים 100–400" [ref=e25] [cursor=pointer]:
+          - text: בינוניים
+          - generic [ref=e26]: 100–400
+        - button "גדולים מעל 400" [ref=e27] [cursor=pointer]:
+          - text: גדולים
+          - generic [ref=e28]: מעל 400
+  - generic [ref=e29]: "מציג: ערים קטנים (עד 100) — 0 מתוך 12 ערים בסה\"כ"
+  - generic [ref=e30]:
+    - generic [ref=e31]:
+      - generic [ref=e32]: ערים שנבחרו
+      - generic [ref=e33]: "0"
+      - generic [ref=e34]: מתוך 12 ערים
+    - generic [ref=e35]:
+      - generic [ref=e36]: סה"כ ספורטאים בהם
+      - generic [ref=e37]: "0"
+      - generic [ref=e38]: קטנים (עד 100)
+    - generic [ref=e39]:
+      - generic [ref=e40]: גודל אופייני (חציון)
+      - generic [ref=e41]: "0"
+      - generic [ref=e42]: ספורטאים למקום
+    - generic [ref=e43]:
+      - generic [ref=e44]: הקטן ביותר
+      - generic [ref=e45]: —
+  - generic [ref=e46]:
+    - generic [ref=e47]:
+      - heading "ערים קטנים (עד 100) — מהגדול לקטן" [level=2] [ref=e48]
+      - generic [ref=e49]: מוצגים 0 מתוך 0
+    - generic [ref=e52]:
+      - generic [ref=e53]:
+        - heading "איפה זה ביחס לכולם?" [level=2] [ref=e54]
+        - generic [ref=e55]: כל המקומות לפי מדרגות גודל · כחול = הקבוצה שבחרת
+      - generic [ref=e58]:
+        - heading "פירוט" [level=2] [ref=e59]
+        - generic [ref=e60]: ערים קטנים (עד 100) בלבד
+        - table [ref=e62]:
+          - rowgroup [ref=e63]:
+            - row "מקום ספורטאים אגודות ענפים" [ref=e64]:
+              - columnheader "מקום" [ref=e65]
+              - columnheader "ספורטאים" [ref=e66]
+              - columnheader "אגודות" [ref=e67]
+              - columnheader "ענפים" [ref=e68]
+          - rowgroup

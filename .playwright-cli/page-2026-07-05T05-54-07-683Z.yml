@@ -1,0 +1,7 @@
+- generic [ref=e2]:
+  - heading "משרד התרבות והספורט" [level=1] [ref=e3]
+  - paragraph [ref=e4]: דשבורד איגודים ואגודות — גרסת הדגמה
+  - generic [ref=e5]:
+    - textbox "סיסמה" [active] [ref=e6]
+    - button "כניסה" [ref=e7] [cursor=pointer]
+  - generic [ref=e8]: גישה מוגבלת למורשים בלבד

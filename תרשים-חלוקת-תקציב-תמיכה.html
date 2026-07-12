@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>חלוקת תקציב התמיכה בספורט — תרשים זרימה</title>
+<style>
+  :root{
+    --navy:#1F3F6D; --green:#248A3D; --red:#DA3439; --sky:#2D9CDB;
+    --purple:#6B4FA0; --orange:#E07B39; --slate:#7A8FA6; --gold:#F8C33E;
+    --bg:#F2F4F7; --surface:#FFFFFF; --border:#E5E9F0;
+    --ink:#1A1A2E; --muted:#6B7280;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:"Amazon Ember","Heebo",system-ui,sans-serif;
+    padding:0 0 48px;
+  }
+  .wrap{max-width:1120px; margin:0 auto; padding:0 20px;}
+  header.top{
+    background:var(--navy); color:#fff; padding:20px 28px; margin-bottom:22px;
+  }
+  header.top .wrap{padding:0 20px;}
+  header.top h1{margin:0; font-size:23px; font-weight:600;}
+  header.top p{margin:5px 0 0; font-size:14px; opacity:.85;}
+  .legendbar{
+    display:flex; gap:20px; flex-wrap:wrap; font-size:13px; color:var(--muted);
+    margin:0 0 20px; align-items:center;
+  }
+  .legendbar b{color:var(--ink); font-weight:600;}
+  .sw{display:inline-block; width:13px; height:13px; border-radius:3px; vertical-align:-2px; margin-left:6px;}
+
+  .pot{
+    background:var(--navy); color:#fff; border-radius:14px;
+    padding:16px 22px; text-align:center; margin-bottom:4px;
+  }
+  .pot .t{font-size:20px; font-weight:600;}
+  .pot .s{font-size:13.5px; opacity:.85; margin-top:3px;}
+  .stem{text-align:center; color:var(--slate); font-size:26px; line-height:.9; margin:2px 0 10px;}
+
+  .cards{display:flex; flex-direction:column; gap:16px;}
+  .card{
+    background:var(--surface); border:1px solid var(--border); border-radius:14px;
+    padding:16px 18px;
+    display:grid; grid-template-columns:250px 46px 180px 1fr; align-items:center; gap:10px;
+  }
+  .node{
+    border-radius:12px; padding:12px 14px; color:#fff; align-self:stretch;
+    display:flex; flex-direction:column; justify-content:center; min-height:78px;
+  }
+  .node .code{font-size:12px; opacity:.9; font-weight:600;}
+  .node .name{font-size:16.5px; font-weight:600; line-height:1.25; margin-top:2px;}
+  .node .pct{font-size:13px; opacity:.92; margin-top:4px;}
+  .node.small{color:var(--ink);}
+  .arrow{color:var(--slate); font-size:30px; text-align:center; line-height:1;}
+  .donut{position:relative; width:170px; height:170px; margin:0 auto;}
+  .legend{display:flex; flex-direction:column; gap:5px; font-size:13px;}
+  .legend .li{display:flex; align-items:center; gap:8px;}
+  .legend .li .nm{color:var(--ink);}
+  .legend .li .vv{margin-inline-start:auto; color:var(--muted); font-variant-numeric:tabular-nums; font-weight:600;}
+  .legend .li.coach .nm{color:var(--green); font-weight:600;}
+
+  .flowrow{grid-column:3 / 5; display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
+  .step{
+    background:#EAF3F8; border:1px solid #CBE3F2; color:var(--navy);
+    border-radius:10px; padding:9px 12px; font-size:13px; font-weight:500; text-align:center;
+  }
+  .step.g{background:#E7F3EB; border-color:#BFE0C9; color:var(--green);}
+  .sep{color:var(--slate); font-size:19px;}
+  .chips{grid-column:3 / 5; display:flex; gap:8px; flex-wrap:wrap;}
+  .chip{
+    background:var(--bg); border:1px solid var(--border); border-radius:22px;
+    padding:7px 13px; font-size:13.5px; color:var(--ink);
+  }
+  .note{margin-top:20px; font-size:12.5px; color:var(--muted); line-height:1.7;}
+  @media (max-width:720px){
+    .card{grid-template-columns:1fr; }
+    .arrow{transform:rotate(-90deg);}
+    .flowrow,.chips{grid-column:auto;}
+  }
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <h1>חלוקת תקציב התמיכה בספורט</h1>
+  <p>מבחן תמיכה איגודים 2026 · איך מתחלק הסל הכולל לתחומים, ומכל תחום לאמות המידה הפנימיות שלו</p>
+</div></header>
+
+<div class="wrap">
+  <div class="legendbar">
+    <span><b>מקרא:</b></span>
+    <span><span class="sw" style="background:#185FA5;"></span>נתח גדול מהסל</span>
+    <span><span class="sw" style="background:#2a78d6;"></span>נתח בינוני</span>
+    <span><span class="sw" style="background:#B5D4F4;"></span>נתח קטן</span>
+    <span>כל אחוז בדונאט = חלק יחסי <b>מתקציב אותו תחום</b></span>
+  </div>
+
+  <div class="pot">
+    <div class="t">תקציב התמיכה בספורט · 100%</div>
+    <div class="s">מתחלק תחילה ל-8 תחומים (סל א'–ח'), ואז כל תחום מתחלק פנימית</div>
+  </div>
+  <div class="stem">↓</div>
+
+  <div class="cards" id="cards"></div>
+
+  <div class="note" id="note"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const PAL = ['#185FA5','#2a78d6','#6B4FA0','#7A8FA6','#E07B39','#F8C33E','#2D9CDB','#B5D4F4'];
+const COACH = '#248A3D';
+
+const D = [
+ {c:"א'", n:"ענפי על", p:"37.85% מהסל", tone:"big", type:"donut",
+   subs:[["ספורטאים",45,0],["הישגיות",20,0],["מקצועיות",10,0],["ליווי מאמנים באגודות",10,0],["עלות הפעלת ענף",10,0],["קידום נשים",2,0],["מרכזי מצוינות",2,0],["טורנירים באירופה",1,0]]},
+ {c:"ג'", n:"ענפים אישיים", p:"24.68% מהסל", tone:"big", type:"donut",
+   subs:[["הישגיות",40,0],["ספורטאים",30,0],["עלות הפעלת ענף",10,0],["מעטפת + פיתוח מאמנים",9,0],["ליווי מאמנים באגודות",8,0],["קידום נשים",3,0]]},
+ {c:"ד'", n:"ענפים מועדפים", p:"16.37% מהסל", tone:"med", type:"donut",
+   subs:[["ענפים אישיים",79.3,0],["ענפים קבוצתיים",15.7,0],["אישיים רבי-משתתפים",5.0,0]]},
+ {c:"ב'", n:"ענפים קבוצתיים", p:"11.42% מהסל", tone:"med", type:"donut",
+   subs:[["ספורטאים",45,0],["הישגיות",20,0],["מקצועיות",10,0],["ליווי מאמנים באגודות",10,0],["עלות הפעלת ענף",10,0],["קידום נשים",3,0],["טורנירים באירופה",2,0]]},
+ {c:"ה'", n:"העסקת מאמנים באגודות", p:"6.19% מהסל", tone:"med", type:"flow",
+   steps:[["תנאי סף",0],["ניקוד לפי קבוצות/הישגים",0],["מקדמי ×1.2",0],["חלוקה יחסית לאגודות",0]]},
+ {c:"ז'", n:"ספורט נכים", p:"1.73% מהסל", tone:"small", type:"donut",
+   subs:[["התאחדות הנכים",50,0],["אגודות",50,0]]},
+ {c:"ח'", n:"צרכים מיוחדים", p:"0.92% מהסל", tone:"small", type:"chips",
+   chips:["לקות ראייה","לקות שמיעה","מוגבלות קוגניטיבית","(חלוקה לפי מספר משתתפים)"]},
+ {c:"ו'", n:"ענפי החשיבה", p:"0.84% מהסל", tone:"small", type:"donut",
+   subs:[["ספורטאים",70,0],["הישגיות",30,0]]}
+];
+
+function nodeBg(t){return t==="coach"?"#248A3D":t==="big"?"#185FA5":t==="med"?"#2a78d6":"#B5D4F4";}
+
+const host = document.getElementById('cards');
+let cid=0;
+D.forEach(d=>{
+  const card=document.createElement('div'); card.className='card';
+
+  const node=document.createElement('div');
+  node.className='node'+(d.tone==='small'?' small':'');
+  node.style.background=nodeBg(d.tone);
+  node.innerHTML=`<div class="code">${d.c}</div><div class="name">${d.n}</div><div class="pct">${d.p}</div>`;
+  card.appendChild(node);
+
+  const arrow=document.createElement('div'); arrow.className='arrow'; arrow.textContent='←';
+  card.appendChild(arrow);
+
+  if(d.type==='donut'){
+    const colors=[]; let pi=0;
+    d.subs.forEach(s=>{ colors.push(s[2]?COACH:PAL[pi++ % PAL.length]); });
+    const wrap=document.createElement('div'); wrap.className='donut';
+    const cv=document.createElement('canvas'); cv.id='c'+(cid++);
+    cv.setAttribute('role','img');
+    cv.setAttribute('aria-label','חלוקת תקציב '+d.n);
+    wrap.appendChild(cv); card.appendChild(wrap);
+
+    const leg=document.createElement('div'); leg.className='legend';
+    d.subs.forEach((s,i)=>{
+      const li=document.createElement('div'); li.className='li'+(s[2]?' coach':'');
+      li.innerHTML=`<span class="sw" style="background:${colors[i]}"></span><span class="nm">${s[0]}</span><span class="vv">${s[1]}%</span>`;
+      leg.appendChild(li);
+    });
+    card.appendChild(leg);
+
+    host.appendChild(card);
+    new Chart(cv,{type:'doughnut',
+      data:{labels:d.subs.map(s=>s[0]),datasets:[{data:d.subs.map(s=>s[1]),backgroundColor:colors,borderColor:'#fff',borderWidth:2}]},
+      options:{responsive:true,maintainAspectRatio:false,cutout:'56%',
+        plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+c.label+': '+c.raw+'%'}}}}});
+    return;
+  }
+
+  if(d.type==='flow'){
+    const row=document.createElement('div'); row.className='flowrow';
+    d.steps.forEach((st,i)=>{
+      const el=document.createElement('div'); el.className='step'+(st[1]?' g':''); el.textContent=st[0];
+      row.appendChild(el);
+      if(i<d.steps.length-1){const s=document.createElement('span');s.className='sep';s.textContent='←';row.appendChild(s);}
+    });
+    card.appendChild(row);
+    host.appendChild(card);
+    return;
+  }
+
+  if(d.type==='chips'){
+    const wrap=document.createElement('div'); wrap.className='chips';
+    d.chips.forEach(t=>{const ch=document.createElement('span');ch.className='chip';ch.textContent=t;wrap.appendChild(ch);});
+    card.appendChild(wrap);
+    host.appendChild(card);
+    return;
+  }
+});
+
+document.getElementById('note').innerHTML =
+  "תחום ג' מאחד ענפים אישיים אולימפיים (21.6% מהסל) ולא-אולימפיים (3.08%); תחום ב' מאחד קבוצתיים אולימפיים (9.35%) ולא-אולימפיים (2.07%) — שניהם חולקים את אותה טבלת אמות מידה. תחום ה' אינו חלוקה לפי אחוזים אלא מנגנון ניקוד המחלק את הסל בין האגודות הזכאיות. מקור: מבחן תמיכה איגודים 2026, פרקים ב'–ז' · נוסח משולב לא רשמי (הפרסום ברשומות מחייב).";
+</script>
+</body>
+</html>

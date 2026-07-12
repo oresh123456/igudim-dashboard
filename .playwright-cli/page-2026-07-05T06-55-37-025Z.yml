@@ -1,0 +1,94 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - text: משרד התרבות
+      - text: והספורט
+    - generic [ref=e4]:
+      - heading "מצב המקומות לפי גודל" [level=1] [ref=e5]
+      - generic [ref=e6]: מסך ייעודי לראשת מנהל הספורט · נתונים סינתטיים להדגמה בלבד
+  - generic [ref=e7]:
+    - generic [ref=e8]:
+      - generic [ref=e9]:
+        - generic [ref=e10]: "1"
+        - text: על מה מסתכלים?
+      - generic [ref=e11]:
+        - button "ערים" [ref=e12] [cursor=pointer]
+        - button "איגודים לפי ענף" [ref=e13] [cursor=pointer]:
+          - text: איגודים
+          - generic [ref=e14]: לפי ענף
+        - button "אגודות" [ref=e15] [cursor=pointer]
+        - button "סניפים הרמה המפורטת ביותר" [ref=e16] [cursor=pointer]:
+          - text: סניפים
+          - generic [ref=e17]: הרמה המפורטת ביותר
+    - generic [ref=e18]:
+      - generic [ref=e19]:
+        - generic [ref=e20]: "2"
+        - text: באיזה גודל?
+      - generic [ref=e21]:
+        - button "הכל" [ref=e22] [cursor=pointer]
+        - button "קטנים עד 1,086 ספורטאים" [ref=e23] [cursor=pointer]:
+          - text: קטנים
+          - generic [ref=e24]: עד 1,086 ספורטאים
+        - button "בינוניים 1,086–1,384" [ref=e25] [cursor=pointer]:
+          - text: בינוניים
+          - generic [ref=e26]: 1,086–1,384
+        - button "גדולים מעל 1,384" [ref=e27] [cursor=pointer]:
+          - text: גדולים
+          - generic [ref=e28]: מעל 1,384
+  - generic [ref=e29]: "מציג: ערים קטנים (עד 1,086) — 4 מתוך 12 ערים בסה\"כ"
+  - generic [ref=e30]:
+    - generic [ref=e31]:
+      - generic [ref=e32]: ערים שנבחרו
+      - generic [ref=e33]: "4"
+      - generic [ref=e34]: מתוך 12 ערים
+    - generic [ref=e35]:
+      - generic [ref=e36]: סה"כ ספורטאים בהם
+      - generic [ref=e37]: 2,967
+      - generic [ref=e38]: קטנים (עד 1,086)
+    - generic [ref=e39]:
+      - generic [ref=e40]: גודל אופייני (חציון)
+      - generic [ref=e41]: "790"
+      - generic [ref=e42]: ספורטאים למקום
+    - generic [ref=e43]:
+      - generic [ref=e44]: הקטן ביותר
+      - generic [ref=e45]: "405"
+      - generic [ref=e46]: עכו
+  - generic [ref=e47]:
+    - generic [ref=e48]:
+      - heading "ערים קטנים (עד 1,086) — מהגדול לקטן" [level=2] [ref=e49]
+      - generic [ref=e50]: מוצגים 4 מתוך 4
+    - generic [ref=e53]:
+      - generic [ref=e54]:
+        - heading "איפה זה ביחס לכולם?" [level=2] [ref=e55]
+        - generic [ref=e56]: כל המקומות לפי מדרגות גודל · כחול = הקבוצה שבחרת
+      - generic [ref=e59]:
+        - heading "פירוט" [level=2] [ref=e60]
+        - generic [ref=e61]: ערים קטנים (עד 1,086) בלבד
+        - table [ref=e63]:
+          - rowgroup [ref=e64]:
+            - row "מקום ספורטאים אגודות ענפים" [ref=e65]:
+              - columnheader "מקום" [ref=e66]
+              - columnheader "ספורטאים" [ref=e67]
+              - columnheader "אגודות" [ref=e68]
+              - columnheader "ענפים" [ref=e69]
+          - rowgroup [ref=e70]:
+            - row "פתח תקווה 950 2 6" [ref=e71]:
+              - cell "פתח תקווה" [ref=e72]
+              - cell "950" [ref=e73]
+              - cell "2" [ref=e74]
+              - cell "6" [ref=e75]
+            - row "רמת גן 822 3 7" [ref=e76]:
+              - cell "רמת גן" [ref=e77]
+              - cell "822" [ref=e78]
+              - cell "3" [ref=e79]
+              - cell "7" [ref=e80]
+            - row "אילת 790 2 7" [ref=e81]:
+              - cell "אילת" [ref=e82]
+              - cell "790" [ref=e83]
+              - cell "2" [ref=e84]
+              - cell "7" [ref=e85]
+            - row "עכו 405 2 3" [ref=e86]:
+              - cell "עכו" [ref=e87]
+              - cell "405" [ref=e88]
+              - cell "2" [ref=e89]
+              - cell "3" [ref=e90]

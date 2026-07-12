@@ -1,0 +1,144 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - text: משרד התרבות
+      - text: והספורט
+    - generic [ref=e4]:
+      - heading "ניתוח \"מקומות\" לפי מספר ספורטאים — סקיצת עבודה" [level=1] [ref=e5]
+      - generic [ref=e6]: מסך ייעודי לראשת מנהל הספורט · נתונים סינתטיים להדגמה בלבד
+  - generic [ref=e7]:
+    - generic [ref=e8]:
+      - generic [ref=e9]: הגדרת "מקום" — עד 3 רמות (כל רמה = פרמטר בחירה־יחידה)
+      - generic [ref=e10]:
+        - combobox [ref=e11]:
+          - option "— ללא —"
+          - option "עיר" [selected]
+          - option "אגודה"
+          - option "סניף"
+          - option "איגוד (ענף)"
+          - option "קבוצת גיל"
+        - generic [ref=e12]: ›
+        - combobox [ref=e13]:
+          - option "— ללא —" [selected]
+          - option "עיר"
+          - option "אגודה"
+          - option "סניף"
+          - option "איגוד (ענף)"
+          - option "קבוצת גיל"
+        - generic [ref=e14]: ›
+        - combobox [ref=e15]:
+          - option "— ללא —" [selected]
+          - option "עיר"
+          - option "אגודה"
+          - option "סניף"
+          - option "איגוד (ענף)"
+          - option "קבוצת גיל"
+    - generic [ref=e16]:
+      - generic [ref=e17]: חתך אוכלוסייה — קבוצות גיל (מסנן רב־בחירה רגיל)
+      - generic [ref=e18]:
+        - button "עד 12" [ref=e19] [cursor=pointer]
+        - button "13–15" [ref=e20] [cursor=pointer]
+        - button "16–18" [ref=e21] [cursor=pointer]
+        - button "בוגרים" [ref=e22] [cursor=pointer]
+    - generic [ref=e23]:
+      - generic [ref=e24]: טווח גודל — ספורטאים במקום (בחתך הנבחר)
+      - generic [ref=e25]:
+        - spinbutton [ref=e26]: "100"
+        - generic [ref=e27]: מינ'
+        - spinbutton [ref=e28]: "2000"
+        - generic [ref=e29]: מקס'
+  - generic [ref=e30]:
+    - generic [ref=e31]:
+      - generic [ref=e32]: מקומות בטווח
+      - generic [ref=e33]: "9"
+      - generic [ref=e34]: מתוך 12 מקומות (עיר)
+    - generic [ref=e35]:
+      - generic [ref=e36]: סה"כ ספורטאים בטווח
+      - generic [ref=e37]: 9,259
+      - generic [ref=e38]: כל הגילים · טווח 100–2,000
+    - generic [ref=e39]:
+      - generic [ref=e40]: חציון גודל מקום
+      - generic [ref=e41]: "943"
+      - generic [ref=e42]: בתוך הטווח
+    - generic [ref=e43]:
+      - generic [ref=e44]: מקומות מתחת למינימום
+      - generic [ref=e45]: "0"
+      - generic [ref=e46]: מועמדים לבחינת המשך תמיכה
+  - generic [ref=e47]:
+    - generic [ref=e48]:
+      - heading "מקומות בטווח, ממוינים לפי מספר ספורטאים" [level=2] [ref=e49]
+      - generic [ref=e50]: "מקום = עיר · חתך: כל הגילים · מוצגים 9 מתוך 9 בטווח"
+    - generic [ref=e53]:
+      - generic [ref=e54]:
+        - heading "התפלגות גדלי המקומות" [level=2] [ref=e55]
+        - generic [ref=e56]: כמה מקומות יש בכל מדרגת גודל · ירוק = בתוך הטווח שנבחר
+      - generic [ref=e59]:
+        - heading "פירוט מקומות" [level=2] [ref=e60]
+        - generic [ref=e61]: כולל מקומות מחוץ לטווח (מעומעמים)
+        - table [ref=e63]:
+          - rowgroup [ref=e64]:
+            - row "מקום ספורטאים סטטוס" [ref=e65]:
+              - columnheader "מקום" [ref=e66]
+              - columnheader "ספורטאים" [ref=e67]
+              - columnheader "סטטוס" [ref=e68]
+          - rowgroup [ref=e69]:
+            - row "תל אביב 2,808 מעל למקס'" [ref=e70]:
+              - cell "תל אביב" [ref=e71]
+              - cell "2,808" [ref=e72]
+              - cell "מעל למקס'" [ref=e73]:
+                - generic [ref=e74]: מעל למקס'
+            - row "ירושלים 2,237 מעל למקס'" [ref=e75]:
+              - cell "ירושלים" [ref=e76]
+              - cell "2,237" [ref=e77]
+              - cell "מעל למקס'" [ref=e78]:
+                - generic [ref=e79]: מעל למקס'
+            - row "נתניה 2,209 מעל למקס'" [ref=e80]:
+              - cell "נתניה" [ref=e81]
+              - cell "2,209" [ref=e82]
+              - cell "מעל למקס'" [ref=e83]:
+                - generic [ref=e84]: מעל למקס'
+            - row "חיפה 1,663 בטווח" [ref=e85]:
+              - cell "חיפה" [ref=e86]
+              - cell "1,663" [ref=e87]
+              - cell "בטווח" [ref=e88]:
+                - generic [ref=e89]: בטווח
+            - row "פתח תקווה 1,612 בטווח" [ref=e90]:
+              - cell "פתח תקווה" [ref=e91]
+              - cell "1,612" [ref=e92]
+              - cell "בטווח" [ref=e93]:
+                - generic [ref=e94]: בטווח
+            - row "עכו 1,284 בטווח" [ref=e95]:
+              - cell "עכו" [ref=e96]
+              - cell "1,284" [ref=e97]
+              - cell "בטווח" [ref=e98]:
+                - generic [ref=e99]: בטווח
+            - row "ראשון לציון 1,196 בטווח" [ref=e100]:
+              - cell "ראשון לציון" [ref=e101]
+              - cell "1,196" [ref=e102]
+              - cell "בטווח" [ref=e103]:
+                - generic [ref=e104]: בטווח
+            - row "באר שבע 943 בטווח" [ref=e105]:
+              - cell "באר שבע" [ref=e106]
+              - cell "943" [ref=e107]
+              - cell "בטווח" [ref=e108]:
+                - generic [ref=e109]: בטווח
+            - row "רמת גן 893 בטווח" [ref=e110]:
+              - cell "רמת גן" [ref=e111]
+              - cell "893" [ref=e112]
+              - cell "בטווח" [ref=e113]:
+                - generic [ref=e114]: בטווח
+            - row "אשדוד 768 בטווח" [ref=e115]:
+              - cell "אשדוד" [ref=e116]
+              - cell "768" [ref=e117]
+              - cell "בטווח" [ref=e118]:
+                - generic [ref=e119]: בטווח
+            - row "אילת 509 בטווח" [ref=e120]:
+              - cell "אילת" [ref=e121]
+              - cell "509" [ref=e122]
+              - cell "בטווח" [ref=e123]:
+                - generic [ref=e124]: בטווח
+            - row "הרצליה 391 בטווח" [ref=e125]:
+              - cell "הרצליה" [ref=e126]
+              - cell "391" [ref=e127]
+              - cell "בטווח" [ref=e128]:
+                - generic [ref=e129]: בטווח

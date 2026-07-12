@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>איך מתחלק תקציב התמיכה בספורט · מבחן איגודים 2026</title>
+<style>
+:root{
+  --navy:#1F3F6D; --sky:#2D9CDB; --green:#248A3D; --red:#DA3439;
+  --purple:#6B4FA0; --orange:#E07B39; --slate:#7A8FA6; --gold:#F8C33E;
+  --bg:#F2F4F7; --surface:#FFFFFF; --border:#E5E9F0; --ink:#1A1A2E; --muted:#6B7280;
+  --sh-sm:0 1px 2px rgba(16,24,40,.05),0 1px 3px rgba(16,24,40,.07);
+  --sh-md:0 8px 22px -8px rgba(31,63,109,.16),0 2px 6px rgba(16,24,40,.05);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:radial-gradient(1100px 460px at 88% -8%, rgba(31,63,109,.055), transparent 70%), var(--bg);
+  color:var(--ink);
+  font-family:"Amazon Ember","Heebo","Segoe UI",system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1180px;margin:0 auto;padding:26px 26px 64px}
+
+/* ---------- header ---------- */
+header.hd{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.mark{flex:none}
+.hd h1{margin:0;font-size:26px;font-weight:800;color:var(--navy);line-height:1.2}
+.hd .sub{margin:3px 0 0;color:var(--muted);font-size:13px}
+.warnchip{display:inline-block;background:#FDF3F3;color:#B3282D;border:1px solid #F3D5D6;
+  padding:1px 9px;border-radius:99px;font-size:11px;font-weight:600;margin-inline-start:6px;vertical-align:1px}
+.controls{margin-inline-start:auto;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.controls label{font-size:12px;color:var(--muted);font-weight:600}
+.controls input{
+  width:200px;padding:8px 12px;border:1px solid var(--border);border-radius:10px;
+  font-family:inherit;font-size:13px;color:var(--ink);background:var(--surface);outline:none;
+  box-shadow:var(--sh-sm);transition:border-color .2s}
+.controls input:focus{border-color:var(--sky)}
+.controls .ils{font-size:13px;font-weight:700;color:var(--muted)}
+
+/* ---------- legend bar ---------- */
+.legend{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:18px 0 20px;
+  background:var(--surface);border:1px solid var(--border);border-radius:12px;
+  padding:10px 16px;box-shadow:var(--sh-sm);font-size:12px;color:var(--muted)}
+.legend .hint{font-weight:600;color:var(--ink)}
+.lg{display:inline-flex;align-items:center;gap:6px}
+.lg i{width:10px;height:10px;border-radius:3px;display:inline-block}
+#resetBtn{margin-inline-start:auto;display:none;background:var(--surface);border:1px solid var(--navy);
+  color:var(--navy);font-family:inherit;font-size:12px;font-weight:700;padding:6px 14px;border-radius:99px;
+  cursor:pointer;transition:background .2s}
+#resetBtn:hover{background:#EEF3FA}
+#resetBtn.vis{display:inline-block}
+
+/* ---------- funnel levels ---------- */
+#funnel{display:flex;flex-direction:column}
+.level{position:relative}
+.level.in{opacity:0;transform:translateY(-10px)}
+.level.in.show{opacity:1;transform:none;transition:opacity .45s ease,transform .45s cubic-bezier(.2,.8,.25,1)}
+.conn{display:block;width:100%;height:46px}
+.lvlhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin:0 2px 7px;flex-wrap:wrap}
+.lvltitle{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.2px}
+.lvltitle b{color:var(--ink);font-weight:800}
+.lvltitle .split{font-weight:500;color:var(--muted)}
+.lvlmoney{font-size:12.5px;font-weight:700;color:var(--navy)}
+
+.bar{display:flex;gap:2px;height:64px;transition:height .35s cubic-bezier(.2,.8,.25,1)}
+.seg{position:relative;flex-basis:0;min-width:4px;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:1px;cursor:pointer;border-radius:4px;user-select:none;overflow:hidden;
+  transition:opacity .25s,filter .25s}
+.seg:first-child{border-start-start-radius:13px;border-end-start-radius:13px}
+.seg:last-child{border-start-end-radius:13px;border-end-end-radius:13px}
+.seg:hover{filter:brightness(1.08)}
+.bar.hasSel .seg:not(.sel){opacity:.32;filter:saturate(.65)}
+.bar.hasSel .seg:not(.sel):hover{opacity:.6;filter:none}
+.seg.sel{box-shadow:0 0 0 2px var(--surface),0 0 0 3.5px var(--c)}
+.seg .nm{font-size:12.5px;font-weight:700;line-height:1.15;max-width:92%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.seg .pc{font-size:11px;font-weight:600;opacity:.9}
+.seg .cd{font-size:11px;font-weight:700}
+.seg .nm,.seg .pc,.seg .cd{display:none;pointer-events:none}
+.seg.lf .nm,.seg.lf .pc{display:block}
+.seg.lp .pc{display:block}
+.seg.lc .cd{display:block}
+
+.level.anc .bar{height:36px}
+.level.anc .seg{flex-direction:row;gap:6px}
+.level.anc .seg .pc{display:none}
+.level.anc .seg.lf .nm{font-size:11.5px;font-weight:600}
+.level.anc .seg.lp .cd{display:block}
+.level.anc:not(.keepchips) .chips{display:none}
+.level.anc .lvlhead{margin-bottom:5px}
+.level.anc .lvlmoney{opacity:.8}
+
+.bar.rootbar{height:46px}
+.level.anc .bar.rootbar{height:32px}
+.rootseg{flex-grow:1;background:linear-gradient(105deg,#1F3F6D 0%,#2A5288 60%,#33619E 100%);
+  color:#fff;font-weight:700;font-size:13.5px;flex-direction:row;gap:8px}
+.rootseg .nm{display:block;font-size:13px}
+.level.anc .rootseg .nm{font-size:11.5px;font-weight:600}
+
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+.chip{display:inline-flex;align-items:center;gap:7px;background:var(--surface);border:1px solid var(--border);
+  border-radius:99px;padding:6px 12px;font-size:12px;cursor:pointer;font-family:inherit;color:var(--ink);
+  box-shadow:var(--sh-sm);transition:border-color .2s,background .2s,transform .12s}
+.chip:hover{border-color:var(--c);transform:translateY(-1px)}
+.chip .dot{width:9px;height:9px;border-radius:3px;background:var(--c);flex:none}
+.chip b{font-weight:700}
+.chip.on{border-color:var(--c);background:#fff;background:color-mix(in srgb,var(--c) 10%,#fff);font-weight:600}
+
+/* ---------- detail cards ---------- */
+.dcard{background:var(--surface);border:1px solid var(--border);border-radius:16px;
+  box-shadow:var(--sh-md);padding:20px 22px}
+.dhead{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:4px}
+.dtitle{display:flex;align-items:center;gap:10px;font-size:17px;font-weight:800;flex-wrap:wrap}
+.pchip{background:#fff;background:color-mix(in srgb,var(--c) 12%,#fff);border:1px solid var(--border);
+  border-color:color-mix(in srgb,var(--c) 40%,#fff);border-radius:99px;padding:3px 11px;font-size:11.5px;font-weight:700;color:var(--ink)}
+.dmoney{font-size:14.5px;font-weight:800;color:var(--navy);background:#F5F8FC;border:1px solid #E3EBF5;
+  padding:7px 13px;border-radius:10px}
+.dsub{color:var(--muted);font-size:12.5px;margin:2px 0 14px}
+.rows{display:flex;flex-direction:column}
+.row{display:grid;grid-template-columns:minmax(170px,1.1fr) 1fr auto;gap:14px;align-items:center;
+  padding:9px 2px;border-bottom:1px solid #F0F3F7}
+.rows>.row:last-child,.mcard .row:last-child{border-bottom:none}
+.rl{font-size:13px;font-weight:600;display:flex;align-items:baseline;gap:7px;flex-wrap:wrap}
+.rl .gd{width:9px;height:9px;border-radius:99px;flex:none;align-self:center}
+.rl .nt{flex-basis:100%;font-size:11px;color:var(--muted);font-weight:400;line-height:1.5}
+.rbar{height:8px;background:#EEF2F7;border-radius:99px;overflow:hidden;min-width:60px}
+.rbar i{display:block;height:100%;border-radius:99px;background:var(--slate)}
+.rv{font-size:13.5px;font-weight:800;min-width:66px;text-align:left;white-space:nowrap}
+.rv small{font-weight:600;color:var(--muted);font-size:10.5px}
+.chip-f{background:#FFF8E6;border:1px dashed #E4B34A;color:#8A6A14;padding:2px 10px;border-radius:99px;
+  font-size:11px;font-weight:700;white-space:nowrap}
+.row.rowc .rv{color:var(--muted);font-weight:700}
+
+.duel{background:linear-gradient(180deg,#F6FAFD,#FDFEFF);border:1px solid #D9E7F4;border-radius:12px;
+  padding:12px 14px;margin:10px 0;display:grid;grid-template-columns:1fr auto;gap:8px 18px;align-items:center}
+.duel .drows{display:flex;flex-direction:column;gap:9px;min-width:0}
+.drow{display:grid;grid-template-columns:auto minmax(130px,.85fr) 1fr auto;gap:10px;align-items:center}
+.drow .gdot{width:10px;height:10px;border-radius:99px}
+.drow .dl{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.drow .dbar{height:9px;background:#E9F0F7;border-radius:99px;overflow:hidden}
+.drow .dbar i{display:block;height:100%;border-radius:99px}
+.drow .dv{font-size:13.5px;font-weight:800;white-space:nowrap;min-width:52px;text-align:left}
+.dside{text-align:center}
+.ratio{display:inline-block;background:var(--sky);color:#fff;border-radius:10px;padding:6px 13px;font-weight:800;font-size:13px}
+.rlab{display:block;font-size:10.5px;color:var(--muted);margin-top:4px}
+.duel .dnote{grid-column:1/-1;font-size:11px;color:var(--muted);line-height:1.5;border-top:1px dashed #E0EAF3;padding-top:7px}
+
+.mgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-top:10px}
+.mcard{border:1px solid var(--border);border-radius:12px;padding:13px 16px;background:#FBFCFE}
+.mcard h4{margin:0 0 6px;font-size:13.5px;font-weight:800;color:var(--navy)}
+.mcard .row{grid-template-columns:minmax(110px,1fr) 1fr auto;gap:10px;padding:7px 0}
+
+/* ---------- footer ---------- */
+footer.notes{margin-top:36px;color:var(--muted);font-size:11.5px;line-height:1.9;
+  border-top:1px solid var(--border);padding-top:14px}
+footer.notes b{color:var(--ink)}
+
+/* ---------- tooltip ---------- */
+#tip{position:fixed;z-index:60;background:#fff;border:1px solid var(--border);border-radius:10px;
+  box-shadow:0 12px 32px -8px rgba(16,24,40,.28);padding:9px 12px;font-size:12px;max-width:270px;
+  pointer-events:none;opacity:0;transition:opacity .12s;line-height:1.55}
+#tip b{font-size:12.5px}
+#tip .tm{color:var(--navy);font-weight:700;margin-top:2px}
+#tip .tn{color:var(--muted);margin-top:2px;font-size:11.5px}
+
+/* ---------- שכבת הסבר למשתמש חדש ---------- */
+[hidden]{display:none !important}
+.btn-primary{background:var(--navy);color:#fff;border:none;border-radius:99px;padding:8px 18px;
+  font-family:inherit;font-weight:700;font-size:12.5px;cursor:pointer;transition:filter .15s}
+.btn-primary:hover{filter:brightness(1.12)}
+.btn-ghost{background:var(--surface);color:var(--navy);border:1px solid var(--border);border-radius:99px;
+  padding:7px 15px;font-family:inherit;font-weight:600;font-size:12.5px;cursor:pointer;transition:border-color .15s}
+.btn-ghost:hover{border-color:var(--navy)}
+.intro{position:relative;background:linear-gradient(135deg,#F6FAFE,#FFFFFF);border:1px solid #DDE7F3;
+  border-radius:16px;padding:18px 22px;margin-top:18px;box-shadow:var(--sh-sm)}
+.intro h2{margin:0 0 4px;font-size:16px;color:var(--navy)}
+.ilead{margin:0 0 12px;color:var(--muted);font-size:13px;line-height:1.6}
+.isteps{margin:0 0 14px;padding:0;list-style:none;display:grid;gap:9px}
+.isteps li{display:flex;gap:11px;font-size:13px;line-height:1.55;align-items:flex-start}
+.isteps .num{flex:none;width:23px;height:23px;border-radius:99px;color:#fff;font-size:11.5px;font-weight:800;
+  display:grid;place-items:center;margin-top:1px}
+.ibtns{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.introx{position:absolute;top:10px;inset-inline-end:12px;background:none;border:none;color:var(--muted);
+  font-size:15px;cursor:pointer;line-height:1}
+.introbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:18px;background:var(--surface);
+  border:1px dashed var(--border);border-radius:12px;padding:8px 14px;font-size:12.5px;color:var(--muted)}
+.chain{direction:ltr;display:flex;gap:9px;align-items:stretch;flex-wrap:wrap;justify-content:center;
+  background:#F7FAFD;border:1px solid #E3EBF5;border-radius:12px;padding:9px 14px;margin:12px 0 4px}
+.chain .fx{display:flex;flex-direction:column;align-items:center;gap:1px;min-width:56px}
+.chain .fx b{font-size:14px;font-weight:800;color:var(--ink);white-space:nowrap}
+.chain .fx small{font-size:10px;color:var(--muted);direction:rtl;max-width:110px;text-align:center;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chain .fx.res b{color:var(--navy)}
+.chain .fx.res{background:#fff;border:1px solid #D8E5F2;border-radius:9px;padding:3px 10px}
+.chain .op{align-self:center;color:var(--muted);font-weight:800;font-size:13px}
+.tourcard{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);z-index:70;background:#fff;
+  border:1px solid var(--border);border-top:4px solid var(--sky);border-radius:14px;
+  box-shadow:0 18px 44px -10px rgba(16,24,40,.35);padding:14px 18px;max-width:620px;width:calc(100vw - 40px)}
+.ttext{font-size:13.5px;line-height:1.7}
+.tbtns{display:flex;gap:8px;align-items:center;margin-top:11px}
+.tstep{margin-inline-end:auto;color:var(--muted);font-size:11.5px;font-weight:600}
+.tour-hl{outline:3px solid var(--sky);outline-offset:4px;border-radius:14px;animation:thl 1.3s ease-in-out infinite}
+@keyframes thl{0%,100%{outline-color:rgba(45,156,219,.95)}50%{outline-color:rgba(45,156,219,.3)}}
+.modal{position:fixed;inset:0;background:rgba(16,24,40,.45);display:flex;align-items:center;
+  justify-content:center;z-index:80;padding:20px}
+.mbox{background:#fff;border-radius:16px;max-width:580px;max-height:82vh;overflow:auto;
+  padding:22px 26px;position:relative;box-shadow:0 24px 60px -12px rgba(16,24,40,.4)}
+.mbox h3{margin:0 0 12px;font-size:17px;color:var(--navy)}
+.mbox dt{font-weight:800;font-size:13px;color:var(--navy);margin-top:11px}
+.mbox dd{margin:2px 0 0;font-size:12.5px;color:var(--ink);line-height:1.6}
+.mx{position:absolute;top:12px;inset-inline-end:14px;background:none;border:none;color:var(--muted);
+  font-size:16px;cursor:pointer;line-height:1}
+
+/* ---------- סימולטור נקודות→כסף ---------- */
+.sim{margin-top:16px;background:linear-gradient(135deg,#F8FBFE,#FFFFFF);border:1px dashed #C9D9EC;
+  border-radius:14px;padding:14px 16px}
+.simhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.simtitle{font-weight:800;font-size:13.5px;color:var(--navy)}
+.simworth{font-size:12px;color:var(--muted);font-weight:700}
+.simworth small{font-weight:400}
+.simrow{display:grid;grid-template-columns:minmax(92px,auto) 1fr auto;gap:12px;align-items:center;padding:4px 0}
+.simname{font-size:12.5px;font-weight:600;display:flex;align-items:center;gap:7px;white-space:nowrap}
+.simdot{width:10px;height:10px;border-radius:3px;display:inline-block}
+.simpts{font-size:12.5px;font-weight:800;min-width:54px;text-align:left;white-space:nowrap}
+.simpts small{color:var(--muted);font-weight:600;font-size:10px}
+.sim input[type=range]{width:100%;accent-color:var(--navy);cursor:pointer;margin:0}
+.simbar{display:flex;gap:2px;height:34px;margin:10px 0 8px}
+.simseg{flex-basis:0;min-width:0;display:grid;place-items:center;font-size:11.5px;font-weight:800;
+  border-radius:6px;transition:flex-grow .25s ease;overflow:hidden;white-space:nowrap}
+.simseg:first-child{border-start-start-radius:10px;border-end-start-radius:10px}
+.simseg:last-child{border-start-end-radius:10px;border-end-end-radius:10px}
+.simempty{color:var(--muted);font-size:12px;margin:0 auto;align-self:center}
+.simlegend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;margin-bottom:7px}
+.simleg{display:inline-flex;align-items:center;gap:6px}
+.simleg i{width:9px;height:9px;border-radius:3px;display:inline-block}
+.simnote{font-size:11.5px;color:var(--muted);line-height:1.6;border-top:1px dashed #E0EAF3;padding-top:8px}
+
+/* ---------- פס יעד: לאן הכסף מגיע ---------- */
+.dest{margin-top:9px}
+.destin{display:flex;align-items:center;gap:10px}
+.dlab{flex:none;background:#fff;border:1.5px solid var(--navy);color:var(--navy);border-radius:99px;
+  padding:7px 13px;font-size:12px;font-weight:800;white-space:nowrap}
+.dbar{display:flex;gap:2px;flex:1;height:38px;min-width:0}
+.dseg{flex-basis:0;min-width:0;display:flex;align-items:center;justify-content:center;gap:6px;
+  font-size:12.5px;border-radius:6px;white-space:nowrap;overflow:hidden;padding:0 10px}
+.dseg b{font-weight:800}
+.dseg:first-child{border-start-start-radius:11px;border-end-start-radius:11px}
+.dseg:last-child{border-start-end-radius:11px;border-end-end-radius:11px}
+.dclubs{background:#fff;border:1.5px dashed var(--slate);color:var(--ink)}
+.dest .dnote{display:block;font-size:11.5px;color:var(--muted);margin-top:5px;padding-inline-start:2px}
+.level.anc .dest{display:none}
+
+@media (max-width:640px){
+  .wrap{padding:18px 14px 50px}
+  .destin{flex-direction:column;align-items:stretch}
+  .hd h1{font-size:21px}
+  .row{grid-template-columns:1fr auto}
+  .row .rbar{display:none}
+  .duel{grid-template-columns:1fr}
+  .drow{grid-template-columns:auto 1fr auto}
+  .drow .dbar{display:none}
+  .controls{margin-inline-start:0}
+}
+
+/* ---------- ריווח ונשימה ---------- */
+.wrap{padding:34px 30px 88px}
+header.hd{gap:18px}
+.hd .sub{margin-top:5px}
+.intro{margin-top:26px;padding:24px 28px}
+.ilead{margin-bottom:14px}
+.isteps{gap:12px;margin-bottom:18px}
+.introbar{margin-top:26px;padding:11px 16px}
+.legend{margin:24px 0 32px;padding:13px 18px;gap:16px}
+.conn{height:58px}
+.lvlhead{margin:0 2px 11px}
+.level.anc .lvlhead{margin-bottom:7px}
+.bar{height:66px}
+.chips{margin-top:16px;gap:8px}
+.dest{margin-top:14px}
+.dest .dnote{margin-top:7px}
+.dcard{padding:26px 30px}
+.dhead{margin-bottom:8px;gap:16px}
+.chain{margin:18px 0 10px;padding:12px 16px;gap:11px}
+.dsub{margin:8px 0 20px}
+.row{padding:12px 4px;gap:16px}
+.duel{margin:14px 0;padding:15px 18px;gap:10px 20px}
+.duel .drows{gap:11px}
+.mgrid{gap:16px;margin-top:12px}
+.mcard{padding:16px 20px}
+.sim{margin-top:26px;padding:18px 22px}
+.simhead{margin-bottom:12px}
+.simrow{padding:6px 0}
+.simbar{margin:14px 0 10px;height:36px}
+.simlegend{margin-bottom:9px;gap:16px}
+.simnote{padding-top:10px}
+footer.notes{margin-top:52px;padding-top:18px}
+@media (max-width:640px){
+  .wrap{padding:20px 16px 64px}
+  .dcard{padding:18px 16px}
+}
+
+/* ---------- ניווט חזרה ---------- */
+.backrow{display:flex;margin:0 0 8px}
+.backbtn{background:var(--surface);border:1px solid var(--border);color:var(--navy);border-radius:99px;
+  padding:5px 13px;font-family:inherit;font-size:11.5px;font-weight:700;cursor:pointer;
+  box-shadow:var(--sh-sm);transition:border-color .15s,transform .12s}
+.backbtn:hover{border-color:var(--navy);transform:translateY(-1px)}
+.level.anc.keepchips .chips{margin-top:10px}
+
+/* ---------- בהירות קטגוריות (תחום ד') ---------- */
+.lvlnote{font-size:12px;color:var(--muted);margin:-3px 2px 12px;line-height:1.65;max-width:900px}
+.level.anc .lvlnote{display:none}
+
+/* ---------- קומה 4 — ענפים בתוך קטגוריה (תחום ד') ---------- */
+.d4slots{display:flex;gap:2px;height:40px;margin:14px 0 8px}
+.d4slot{flex:1;display:grid;place-items:center;font-size:12.5px;font-weight:700;border-radius:6px;
+  white-space:nowrap;overflow:hidden;padding:0 8px}
+.d4slot:first-child{border-start-start-radius:11px;border-end-start-radius:11px}
+.d4slot:last-child{border-start-end-radius:11px;border-end-end-radius:11px}
+.d4cap{font-size:11.5px;color:var(--muted);margin-bottom:14px;line-height:1.6}
+.d4rule{font-size:13px;line-height:1.75;margin:12px 0 6px}
+.d4rule b{color:var(--navy)}
+.d4extra{font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:8px}
+.d4rank{margin-top:12px;border:1px solid var(--border);border-radius:10px;padding:10px 14px;background:#FBFCFE}
+.d4rank summary{cursor:pointer;font-size:12.5px;font-weight:700;color:var(--navy)}
+.d4rank div{font-size:12px;line-height:1.9;margin-top:8px}
+
+/* ---------- שכבת "מה זה?" ---------- */
+.dexpl{font-size:13px;line-height:1.75;color:var(--ink);background:#F8FBFE;
+  border-inline-start:3px solid var(--sky);padding:9px 14px;border-radius:9px;margin:4px 0 12px}
+.mcard .dexpl{font-size:11.5px;line-height:1.65;padding:7px 10px;margin:0 0 8px;background:#F4F8FC}
+.rlx{display:block;flex-basis:100%;margin-top:3px}
+.rlx summary{cursor:pointer;font-size:10.5px;color:var(--sky);font-weight:700;list-style:none;
+  display:inline-block;border:1px solid #CBE3F5;border-radius:99px;padding:1px 9px;background:#F3F9FD;
+  transition:background .15s,color .15s}
+.rlx summary::-webkit-details-marker{display:none}
+.rlx summary:hover{border-color:var(--sky)}
+.rlx[open] summary{background:var(--sky);color:#fff}
+.rlx span{display:block;font-size:11.5px;color:var(--muted);line-height:1.7;margin-top:5px;
+  padding:8px 11px;background:#F7FAFD;border-radius:8px}
+
+/* ---------- חיזוק טיפוגרפיית ההסברים ---------- */
+:root{--ink-soft:#3A4356}
+
+/* הסבר אמת מידה — משקל של תוכן ראשי */
+.dexpl{font-size:14px;font-weight:600;line-height:1.8;color:var(--ink);
+  background:#F4F9FE;border-inline-start:4px solid var(--sky);padding:11px 16px;margin:6px 0 14px}
+.mcard .dexpl{font-size:12.5px;font-weight:600;line-height:1.7;padding:8px 12px}
+
+/* ההסבר מעל רצועת הקטגוריות (ד') — אותו מעמד */
+.lvlnote{font-size:13.5px;font-weight:600;color:var(--ink);line-height:1.75;
+  background:#F4F9FE;border-inline-start:4px solid var(--sky);border-radius:9px;
+  padding:10px 15px;margin:-2px 0 14px;max-width:none}
+
+/* "מה זה?" — כפתור בולט יותר, תשובה בגוף מלא */
+.rlx summary{font-size:11.5px;padding:2px 11px;font-weight:800}
+.rlx span{font-size:12.5px;font-weight:500;color:var(--ink);line-height:1.75;
+  background:#F2F7FC;border-inline-start:3px solid #B9D9F0;padding:9px 13px}
+
+/* קומה 4 (ד') — כללי הכניסה והחלוקה */
+.d4cap{font-size:12.5px;font-weight:600;color:var(--ink)}
+.d4rule{font-size:13.5px;font-weight:500;line-height:1.8}
+.d4extra{font-size:12.5px;font-weight:500;color:var(--ink-soft);line-height:1.75}
+.d4rank summary{font-size:13px}
+.d4rank div{font-size:12.5px;font-weight:500;color:var(--ink);line-height:1.9}
+
+/* הערות בתוך שורות ודו-קרב — קריאות, לא אפורות-נעלמות */
+.rl .nt{font-size:11.5px;font-weight:500;color:var(--ink-soft)}
+.duel .dnote{font-size:12px;font-weight:600;color:var(--ink-soft)}
+
+/* פס היעד — תת-החלוקה (85/15) שוב לא נעלמת */
+.dest .dnote{font-size:12.5px;font-weight:700;color:var(--ink)}
+
+/* סימולטור — משפט המפתח */
+.simnote{font-size:12.5px;font-weight:600;color:var(--ink-soft)}
+.simworth{font-size:12.5px;color:var(--ink)}
+
+/* פתיח, מילון וסיור */
+.ilead{font-size:13.5px;color:var(--ink-soft)}
+.isteps li{font-size:13.5px}
+.mbox dd{font-size:13px;line-height:1.7}
+.ttext{font-size:14px}
+.dsub{font-size:13px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hd">
+  <svg class="mark" width="44" height="44" viewBox="0 0 44 44" aria-hidden="true">
+    <rect width="44" height="44" rx="11" fill="#1F3F6D"/>
+    <rect x="9"  y="9"  width="6.5" height="26" rx="2.5" fill="#FFFFFF" opacity=".92"/>
+    <rect x="19" y="16" width="6.5" height="19" rx="2.5" fill="#2D9CDB"/>
+    <rect x="29" y="23" width="6.5" height="12" rx="2.5" fill="#F8C33E"/>
+  </svg>
+  <div>
+    <h1>איך מתחלק תקציב התמיכה בספורט?</h1>
+    <p class="sub">מבחן התמיכה בהתאחדויות ובאיגודי הספורט · 2026
+      <span class="warnchip">נוסח משולב לא רשמי — הפרסום ברשומות מחייב</span>
+    </p>
+  </div>
+  <div class="controls">
+    <label for="budget">התקציב בפועל (לא חובה):</label>
+    <input id="budget" type="text" inputmode="numeric" placeholder="למשל: 180,000,000">
+    <span class="ils">₪</span>
+  </div>
+</header>
+
+<section class="intro" id="intro">
+  <button class="introx" id="introClose" title="כיווץ ההסבר">✕</button>
+  <h2>איך זה עובד — שלוש קומות</h2>
+  <p class="ilead">מבחן התמיכה הוא הנוסחה שקובעת איך מתחלק תקציב התמיכה בספורט — מהשקל הראשון ועד האחרון. ככה קוראים את המפה:</p>
+  <ol class="isteps">
+    <li><span class="num" style="background:#1F3F6D">1</span><span><b>קומה 1:</b> התקציב כולו נחתך ל-8 תחומים — לכל תחום אחוז קבוע.</span></li>
+    <li><span class="num" style="background:#2E6DA4">2</span><span><b>קומה 2:</b> כל תחום נחתך שוב ל"אמות מידה" — גם כאן באחוזים קבועים.</span></li>
+    <li><span class="num" style="background:#C79A1E">3</span><span><b>קומה 3:</b> נגמרים האחוזים, מתחילות נקודות: כל איגוד צובר נקודות (ספורטאים, הישגים, מאמנים…), והכסף שבאמת המידה מתחלק בין האיגודים ביחס ישר לנקודות.</span></li>
+  </ol>
+  <div class="ibtns">
+    <button class="btn-primary" id="tourBtn">סיור מודרך (חצי דקה)</button>
+    <button class="btn-ghost" id="glosBtn">מילון מונחים</button>
+  </div>
+</section>
+<div class="introbar" id="introbar" hidden>
+  <span>חדשים כאן?</span>
+  <button class="btn-ghost" id="introOpen">איך קוראים את המפה</button>
+  <button class="btn-ghost" id="tourBtn2">סיור מודרך</button>
+  <button class="btn-ghost" id="glosBtn2">מילון מונחים</button>
+</div>
+
+<div class="legend">
+  <span class="hint">רוחב מקטע = חלקו בכסף · לחיצה צוללת פנימה · לחיצה חוזרת סוגרת · ריחוף = פירוט</span>
+  <span class="lg"><i style="background:var(--navy)"></i>ניקוד גברים</span>
+  <span class="lg"><i style="background:var(--sky)"></i>ניקוד נשים</span>
+  <span class="lg"><i style="background:var(--gold)"></i>נוסחה / נספח</span>
+  <button id="resetBtn">חזרה לתמונה המלאה</button>
+</div>
+
+<div id="funnel"></div>
+
+<footer class="notes">
+  <b>מקור:</b> מבחן התמיכה בהתאחדויות ובאיגודי ספורט 2026 — נוסח משולב (27.2.2025), לא רשמי; הפרסום ברשומות הוא המחייב.
+  · פריטים המסומנים <b>"נוסחה"</b> מחושבים לפי נספחים או מנגנון יחסי ואין להם ערך קבוע.
+  · ערכי <b>מרכזי מצוינות</b> (תחום א') טעונים אימות מול הנוסח הרשמי.
+  · "נק'" = נקודות במבחן; הכסף בכל אמת מידה מתחלק בין הזכאים באופן יחסי לניקוד שצברו.
+</footer>
+</div>
+
+<div class="modal" id="glos" hidden>
+  <div class="mbox">
+    <button class="mx" id="glosClose" title="סגירה">✕</button>
+    <h3>מילון קצר</h3>
+    <dl>
+      <dt>מבחן תמיכה</dt><dd>המסמך הרשמי שקובע נוסחה אחידה ושקופה לחלוקת כספי התמיכה של המדינה.</dd>
+      <dt>התאחדות / איגוד</dt><dd>הגוף הארצי שמנהל ענף ספורט.</dd>
+      <dt>אגודה</dt><dd>המועדון המקומי שבו הספורטאים רשומים ומתאמנים.</dd>
+      <dt>תחום</dt><dd>פרוסת-העל של התקציב (8 תחומים, א'–ח'). לכל תחום אחוז קבוע מהתקציב הכולל.</dd>
+      <dt>אמת מידה</dt><dd>קריטריון בתוך תחום, שמקבל אחוז קבוע מתקציב התחום (למשל: ספורטאים, הישגיות).</dd>
+      <dt>ניקוד</dt><dd>הקומה האחרונה: איגודים צוברים נקודות לפי טבלאות המבחן, והכסף מתחלק ביחס ישר לנקודות. לכן אין "סכום לנקודה" קבוע — שווי נקודה תלוי בכמה נקודות צברו כולם.</dd>
+      <dt>נוסחה / נספח</dt><dd>פריט בלי מספר קבוע — ערכו נגזר מנספח למבחן או ממנגנון יחסי.</dd>
+      <dt>חלוקת איגוד / אגודות</dt><dd>בכל תחום נקבע כמה מהכסף נשאר בגוף הארצי וכמה יורד למועדונים (מוצג בכותרת כל תחום).</dd>
+      <dt>"מכל 100 ₪"</dt><dd>כדי שאחוזים יהיו מוחשיים, הכול מוצג גם כשקלים מתוך תקציב דמיוני של 100 ₪. הזנת התקציב האמיתי למעלה מחליפה את ההמחשה בסכומים בפועל.</dd>
+    </dl>
+  </div>
+</div>
+
+<div class="tourcard" id="tourcard" hidden>
+  <div class="ttext" id="ttext"></div>
+  <div class="tbtns">
+    <span class="tstep" id="tstep"></span>
+    <button class="btn-ghost" id="tprev">הקודם</button>
+    <button class="btn-primary" id="tnext">הבא</button>
+    <button class="btn-ghost" id="tend">סיום</button>
+  </div>
+</div>
+
+<div id="tip"></div>
+
+<script id="app">
+/* ============================================================
+   נתונים — מוטמעים מתוך data.js (מקור האמת), כדי שהקובץ יהיה
+   עצמאי לחלוטין: נפתח בדאבל-קליק, בלי אינטרנט ובלי קבצים נלווים.
+   ============================================================ */
+const ATH_GROUP = [
+  {l:"גיל אוריינות (העשרה)", p:0.1},
+  {l:"גיל למידה", p:1},
+  {l:"גיל ילדים / ילדות", p:2},
+  {l:"נערים / קדטים — ספורטאי", p:4, g:"m"},
+  {l:"נערות / קדטיות — ספורטאית", p:6, g:"f", d:"בענף >50% נשים: 6 עד רף 50%, 4 ליתר"},
+  {l:"גיל הישגי — ספורטאי", p:6, g:"m"},
+  {l:"גיל הישגי — ספורטאית", p:10, g:"f", d:"בענף >50% נשים: 10 עד רף 50%, 6 ליתר"},
+  {l:"גיל תחרותי", p:4},
+  {l:"גיל מסטרס", p:0.5},
+  {l:"גיל וותיקים", p:0.1},
+  {l:"תוספת גידול שיעור ספורטאיות", f:1, d:"10% מסך הניקוד, לפי נספח ב'"}
+];
+const ACH_GROUP = [
+  {l:"אליפות אירופה — מקום 1 בוגרים", p:100},
+  {l:"מקום 2 בוגרים", p:80},
+  {l:"מקום 3 בוגרים", p:60},
+  {l:"מקומות 4-8 בוגרים", p:40},
+  {l:"מקום 9+ (שליש עליון)", p:30},
+  {l:"שליש שני", p:20},
+  {l:"שליש תחתון", p:10},
+  {l:"אליפות עולם", f:1, d:"פי 4 מאליפות אירופה"},
+  {l:"אולימפי / משחקי עולם", f:1, d:"פי 8 מאליפות אירופה"},
+  {l:"נבחרת עתודה", f:1, d:"50% מהבוגרים"},
+  {l:"נבחרת נוער", f:1, d:"25% מהבוגרים"},
+  {l:"נבחרת קדטים", f:1, d:"12.5% מהבוגרים"}
+];
+const ENVELOPE = [
+  {l:"מנכ״ל בעל תואר (שכר ממוצע)", p:5},
+  {l:"מנהל מקצועי / הדרכה (150%)", p:2},
+  {l:"מאמן לאומי (שכר ממוצע)", p:1, g:"m"},
+  {l:"עוזר מאמן לאומי (75%)", p:0.5},
+  {l:"חונך (75%)", p:0.5},
+  {l:"איש מקצוע נוסף (20%)", p:0.25},
+  {l:"תקרת מעטפת ענף על", p:40, d:"אדם רב-תפקידים עד 2 נק'"},
+  {l:"השתלמות ארצית", p:1, d:"תקרה 30 נק'"},
+  {l:"השתלמות בינלאומית", p:5},
+  {l:"השתלמות בינלאומית בכירה", p:10}
+];
+const COACHCLUB = [
+  {l:"מדריך באגודה (25%+)", p:1},
+  {l:"מאמן באגודה (25%+)", p:4},
+  {l:"מקדם 50%+ שכר", f:1, d:"+10% מהניקוד"},
+  {l:"מקדם 90%+ שכר", f:1, d:"+20% מהניקוד"},
+  {l:"מקדם 120%+ שכר", f:1, d:"+30% מהניקוד"}
+];
+const WOMEN = [
+  {l:"נבחרת ילדות", p:4, g:"f"},
+  {l:"נבחרת קדטיות", p:3, g:"f"},
+  {l:"נבחרת נערות", p:2, g:"f"},
+  {l:"נבחרת עתודה", p:1, g:"f"},
+  {l:"מנהלת כללית בעלת תואר", p:10, g:"f"},
+  {l:"מנהלת מקצועית / רכזת (150%)", p:2, g:"f"},
+  {l:"מאמנת לאומית (שכר ממוצע)", p:1, g:"f"},
+  {l:"עוזרת מאמן לאומי (75%)", p:0.5, g:"f"},
+  {l:"חונכת (75%)", p:0.5, g:"f"},
+  {l:"אשת מקצוע נוספת (20%)", p:0.25, g:"f"},
+  {l:"תקרת מעטפת נשים", p:14, g:"f"},
+  {l:"ליווי מאמנות — מדריכה", p:1, g:"f"},
+  {l:"ליווי מאמנות — מאמנת", p:4, g:"f"}
+];
+const ATH_INDIV = [
+  {l:"גיל אוריינות (העשרה)", p:0.1},
+  {l:"גיל למידה", p:1},
+  {l:"גיל התמחות 1", p:2},
+  {l:"התמחות 2 — ספורטאי", p:4, g:"m"},
+  {l:"התמחות 2 — ספורטאית", p:6, g:"f", d:"בענף >50% נשים: 6 עד רף 50%, 4 ליתר"},
+  {l:"גיל הישגי — ספורטאי", p:6, g:"m"},
+  {l:"גיל הישגי — ספורטאית", p:10, g:"f", d:"בענף >50% נשים: 10 עד רף 50%, 6 ליתר"},
+  {l:"גיל תחרותי", p:4},
+  {l:"גיל מסטרס", p:0.5},
+  {l:"גיל וותיקים", p:0.1},
+  {l:"תוספת גידול שיעור ספורטאיות", f:1, d:"10% לפי נספח ב'"}
+];
+const ACH_INDIV = [
+  {l:"אליפות אירופה — זהב", p:16},
+  {l:"כסף", p:12},
+  {l:"ארד", p:10},
+  {l:"מקומות 4-8", p:5},
+  {l:"מקומות 9-16", p:2},
+  {l:"שליש עליון (כולל מוקדמות)", p:1},
+  {l:"אליפות עולם", f:1, d:"פי 4"},
+  {l:"אולימפי / עולם", f:1, d:"פי 8"},
+  {l:"נוער עד 21 (1-8)", f:1, d:"25% מהבוגרים"},
+  {l:"קדטים (1-8)", f:1, d:"12.5% מהבוגרים"},
+  {l:"ספורטאי במשלחת אולימפית", p:2, d:"קבוצה >2 — עד 4 נק'"},
+  {l:"תחרות דרג א' בענף אישי 2", f:1, d:"50% מדרג א' בענף 1"}
+];
+
+const DOMAINS = [
+ {code:"א'", name:"ענפי על", pot:37.85, color:"#1F3F6D",
+  split:"איגוד 35% · אגודות 65%",
+  crit:[
+   {name:"ספורטאים", pct:45, detail:ATH_GROUP},
+   {name:"הישגיות", pct:20, detail:ACH_GROUP},
+   {name:"מקצועיות", pct:10, detail:ENVELOPE},
+   {name:"ליווי מאמנים באגודות", pct:10, detail:COACHCLUB},
+   {name:"עלות הפעלת ענף", pct:10, detail:[
+     {l:"ציוד / מתקן / שינוע", f:1, d:"לפי נספח ג'"},
+     {l:"שיגור משלחות — עד 3 טורנירים", p:1},
+     {l:"4-9 טורנירים", p:2},{l:"10-15", p:3},{l:"16-24", p:4}]},
+   {name:"קידום נשים", pct:2, detail:WOMEN},
+   {name:"מרכזי מצוינות", pct:2, detail:[
+     {l:"צוות המרכז (מנהל/מאמן/מקצוע)", f:1, d:"ערכים לאימות מול הנוסח הרשמי"},
+     {l:"טורניר בארץ", p:1, d:"תקרה 5"},{l:"טורניר בחו״ל", p:5, d:"תקרה 15"}]},
+   {name:"טורנירים באירופה", pct:1, detail:[
+     {l:"דרג גבוה", p:2},{l:"דרג שני", p:1},{l:"דרג שלישי", p:0.5}]}
+  ]},
+ {code:"ג'", name:"ענפים אישיים", pot:24.68, color:"#2E6DA4",
+  split:"אולימפי 21.6% + לא 3.08% · איגוד 60% / אגודות 40%",
+  crit:[
+   {name:"הישגיות", pct:40, detail:ACH_INDIV},
+   {name:"ספורטאים", pct:30, detail:ATH_INDIV},
+   {name:"עלות הפעלת ענף", pct:10, detail:[
+     {l:"ציוד / מתקן / שינוע", f:1, d:"נספח ג'"},
+     {l:"מקדם השתתפויות בינ״ל", f:1, d:"1-7 נק' לפי מספר וסוג ענף"}]},
+   {name:"מעטפת + פיתוח מאמנים", pct:9, detail:[
+     {l:"מנכ״ל בעל תואר", p:5},{l:"מנהל מקצועי (150%)", p:2},
+     {l:"מאמן לאומי", p:1, g:"m"},{l:"חונך (75%)", p:0.5},
+     {l:"איש מקצוע נוסף (20%)", p:0.25},{l:"תקרת מעטפת", p:10},
+     {l:"השתלמות ארצית", p:1, d:"תקרה 5"},{l:"בינלאומית", p:5},{l:"בינלאומית בכירה", p:10}]},
+   {name:"ליווי מאמנים באגודות", pct:8, detail:[
+     {l:"מדריך", p:1},{l:"מאמן", p:4, d:"מקדמי שכר 10/20/30%"}]},
+   {name:"קידום נשים", pct:3, detail:WOMEN}
+  ]},
+ {code:"ד'", name:"ענפים מועדפים", pot:16.37, color:"#6B4FA0",
+  split:"תיעדוף ענפים · חובת 10% לקידום נשים",
+  crit:[
+   {name:"רצועה א' — אישיים", pct:79.302, detail:[
+     {l:"קטגוריה א' (ענף אחד)", pct:15.094},{l:"קטגוריה ב' (2)", pct:25.786},
+     {l:"קטגוריה ג' (2)", pct:18.868},{l:"קטגוריה ד' (3)", pct:9.434},
+     {l:"קטגוריה ה' — מדליה אולימפית", pct:6.289, d:"זהב 3 · כסף 2 · ארד 1"},
+     {l:"פראלימפיים (3)", pct:14.151},{l:"לא-אולימפיים (3)", pct:10.377}]},
+   {name:"רצועה ב' — קבוצתיים", pct:15.711, detail:[
+     {l:"אולימפיים (2)", pct:60.317},{l:"פראלימפיים (2)", pct:31.746},
+     {l:"לא-אולימפי (הגבוה)", pct:7.937}]},
+   {name:"רצועה ג' — אישיים רבי-משתתפים", pct:4.988, detail:[
+     {l:"הענף האולימפי רב-המשתתפים בעל הניקוד הגבוה", pct:100}]}
+  ]},
+ {code:"ב'", name:"ענפים קבוצתיים", pot:11.42, color:"#7A8FA6",
+  split:"אולימפי 9.35% + לא 2.07% · איגוד 35% / אגודות 65%",
+  crit:[
+   {name:"ספורטאים", pct:45, detail:ATH_GROUP},
+   {name:"הישגיות", pct:20, detail:ACH_GROUP},
+   {name:"מקצועיות", pct:10, detail:[{l:"כמו ענף על, תקרת מעטפת 10 נק'", p:10}]},
+   {name:"ליווי מאמנים באגודות", pct:10, detail:COACHCLUB},
+   {name:"עלות הפעלת ענף", pct:10, detail:[{l:"נספח ג' + מקדם טורנירים", f:1}]},
+   {name:"קידום נשים", pct:3, detail:WOMEN},
+   {name:"טורנירים באירופה", pct:2, detail:[{l:"העפלת שלב (2/1/0.5)", p:2}]}
+  ]},
+ {code:"ה'", name:"העסקת מאמנים באגודות", pot:6.19, color:"#248A3D", leaf:true,
+  split:"תמיכה ישירה לאגודות · מנגנון ניקוד",
+  crit:[
+   {name:"ניקוד קבוצתי", detail:[{l:"4-8 קבוצות", p:2},{l:"9-12", p:3},{l:"13+", p:4}]},
+   {name:"ניקוד אישי", detail:[{l:"ציון תקן 3-5.5", p:2},{l:"5.6-13", p:3},{l:"מעל 13", p:4}]},
+   {name:"מקדמים", detail:[{l:"מעסיקה מאמנת", p:1.2, g:"f"},{l:"ערכים בספורט", p:1.2},{l:"בית-ספרית", p:1.2}]},
+   {name:"חלוקה", detail:[{l:"יחסית לפי ניקוד", f:1}]}
+  ]},
+ {code:"ז'", name:"ספורט נכים", pot:1.73, color:"#E07B39", leaf:true,
+  split:"התאחדות 50% / אגודות 50% (קבוצתי 85% · אישי 15%)",
+  crit:[{name:"ניקוד", detail:[{l:"קבוצתי — סעיף 13", f:1},{l:"אישי — סעיף 18", f:1}]}]},
+ {code:"ח'", name:"צרכים מיוחדים", pot:0.92, color:"#9AA7B5",
+  split:"שלושה ארגונים לפי מספר משתתפים",
+  crit:[
+   {name:"לקות שמיעה (חרשים)", pct:46.01, detail:[{l:"ארגון 70% / אגודות 30%", f:1}]},
+   {name:"לקות קוגניטיבית", pct:37.03, detail:[{l:"יחסי למשתתפים", f:1}]},
+   {name:"לקות ראייה", pct:16.96, detail:[{l:"יחסי למשתתפים", f:1}]}
+  ]},
+ {code:"ו'", name:"ענפי חשיבה", pot:0.84, color:"#F8C33E", leaf:true,
+  split:"איגוד 60% / אגודות 40%",
+  crit:[
+   {name:"ספורטאים", pct:70, detail:[{l:"ניקוד לפי גיל/מגדר (סעיף 18(1))", f:1}]},
+   {name:"הישגיות", pct:30, detail:[{l:"ניקוד הישגים (סעיף 18(2))", f:1}]}
+  ]}
+];
+
+/* ============================================================ */
+/* עזרים                                                        */
+/* ============================================================ */
+const NAVY="#1F3F6D", SKY="#2D9CDB", GOLD="#C79A1E", SLATE="#7A8FA6";
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+/* עטיפת רצפים מספריים ב-bdi כדי שמספרים, אחוזים ו"+/-" יוצגו נכון ב-RTL */
+function bw(s){
+  s=String(s).replace(/>\s*(?=\d)/g,"מעל ");           // ">50%" היה מתהפך ויזואלית ל"<"
+  return esc(s).replace(/[+]?\d[\d.,\/\-]*%?\+?/g,m=>`<bdi dir="ltr">${m}</bdi>`);
+}
+const num=n=>`<bdi dir="ltr">${n}</bdi>`;
+function mix(a,b,t){
+  const pa=[1,3,5].map(i=>parseInt(a.substr(i,2),16)), pb=[1,3,5].map(i=>parseInt(b.substr(i,2),16));
+  return "#"+pa.map((v,k)=>Math.round(v*(1-t)+pb[k]*t).toString(16).padStart(2,"0")).join("");
+}
+function lum(hex){
+  const [r,g,b]=[1,3,5].map(i=>parseInt(hex.substr(i,2),16));
+  return (r*299+g*587+b*114)/255000;
+}
+const txtOn=c=>lum(c)>0.6?"#1A2A3A":"#FFFFFF";
+function nf(v){ // מספר קומפקטי לאחוזים/שקלים מחושבים
+  let r=v.toFixed(2);
+  if(+r===0&&v>0)r=v.toFixed(3);
+  return r.replace(/\.?0+$/,"");
+}
+function fmtILS(n){
+  if(n>=1e9)return nf(n/1e9)+" מיליארד ₪";
+  if(n>=1e6)return nf(n/1e6)+" מיליון ₪";
+  if(n>=1e4)return Math.round(n).toLocaleString("he-IL")+" ₪";
+  return nf(n)+" ₪";
+}
+/* share = % מהתקציב הכולל */
+function moneyHTML(share){
+  /* fmtILS מכיל עברית ("מיליון ₪") — עוטפים רק את המספר ב-bdi דרך bw, לא את כל הביטוי */
+  if(budget)return `= ${bw(fmtILS(budget*share/100))} <span style="font-weight:600;color:var(--muted)">(${num(nf(share)+"%")} מהתקציב)</span>`;
+  return `= ${num(nf(share)+" ₪")} מכל ${num("100 ₪")} תקציב`;
+}
+function moneyTip(share){
+  return budget?`${fmtILS(budget*share/100)} · ${nf(share)}% מהתקציב הכולל`
+               :`${nf(share)} ₪ מכל 100 ₪ בתקציב הכולל`;
+}
+
+/* ============================================================ */
+/* מצב ותכנית רמות                                              */
+/* ============================================================ */
+let path=[], budget=null, lastPlan=[];
+const levelEls=new Map(), connState=new Map();
+const funnel=$("#funnel"), tip=$("#tip");
+
+const critColor=(d,c,i,n)=>/נשים/.test(c.name)?SKY:mix(d.color,"#FFFFFF",n<=1?0:i*(0.52/(n-1)));
+
+function buildPlan(){
+  const plan=[{key:"root",kind:"root"}];
+  plan.push({key:"doms",kind:"strip",depth:1,sel:path[0],
+    parent:"התקציב הכולל",
+    title:`קומה 1 · התקציב נחתך ל-<b>8 תחומים</b> <span class="split">· אחוזים קבועים · לחצו על תחום לצלילה</span>`,
+    share:100,
+    items:DOMAINS.map(d=>({name:`${d.code} ${d.name}`,cd:d.code,pct:d.pot,eff:d.pot,color:d.color,d:d.split}))});
+  if(path[0]==null)return plan;
+  const dom=DOMAINS[path[0]];
+  const hasPct=dom.crit.some(c=>c.pct!=null);
+  if(!hasPct){
+    plan.push({key:"mech"+path[0],kind:"mech",dom,share:dom.pot});
+    return plan;
+  }
+  const n=dom.crit.length;
+  plan.push({key:"crit"+path[0],kind:"strip",depth:2,sel:path[1],dom,
+    parent:`${dom.code} ${dom.name}`,
+    title:`קומה 2 · בתוך <b>${esc(dom.code)} ${esc(dom.name)}</b> — אחוזים קבועים`,
+    share:dom.pot,
+    items:dom.crit.map((c,i)=>({name:c.name,pct:c.pct,eff:dom.pot*c.pct/100,color:critColor(dom,c,i,n),node:c}))});
+  if(path[1]==null)return plan;
+  const crit=dom.crit[path[1]], share2=dom.pot*crit.pct/100;
+  const det=crit.detail||[];
+  const detPct=det.filter(x=>x.pct!=null).length*2>det.length;
+  if(detPct){
+    plan.push({key:`det${path[0]}-${path[1]}`,kind:"strip",depth:3,sel:path[2],
+      parent:crit.name,
+      title:`קומה 3 · בתוך <b>${esc(crit.name)}</b> — אחוזים קבועים`,
+      share:share2,
+      note:"אחת לארבע שנים קובע מינהל הספורט את רשימת הענפים המועדפים לפי דירוג הישגים בשני מחזורי המשחקים האחרונים, והרשימה מתפרסמת באתר המשרד. המספר בכל מקטע = כמה ענפים בקטגוריה; בתוך קטגוריה הכסף מתחלק בין הענפים שווה בשווה (סעיף 29). לחצו על קטגוריה לקומה 4.",
+      items:det.map((x,i)=>({name:prettyCat(x.l),pct:x.pct,eff:share2*x.pct/100,color:mix(dom.color,"#FFFFFF",det.length<=1?0.1:i*(0.5/(det.length-1))),d:x.d}))});
+    if(path[2]!=null){
+      const x=det[path[2]];
+      plan.push({key:`fx${path.join("-")}`,kind:"focus",item:x,crit,dom,share:share2*x.pct/100,catN:catCount(x.l),d4:dom.code==="ד'"?D4[path[1]+"-"+path[2]]:null});
+    }
+  }else{
+    plan.push({key:`cards${path[0]}-${path[1]}`,kind:"cards",crit,dom,share:share2});
+  }
+  return plan;
+}
+
+/* ============================================================ */
+/* בניית רמות                                                    */
+/* ============================================================ */
+let uid=0;
+function connSVG(){
+  const id="cg"+(++uid);
+  return `<svg class="conn" data-g="${id}" aria-hidden="true">
+    <defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1F3F6D" stop-opacity=".30"/>
+      <stop offset="1" stop-color="#1F3F6D" stop-opacity=".05"/>
+    </linearGradient></defs>
+    <path fill="url(#${id})"></path></svg>`;
+}
+
+function segHTML(it,i){
+  const tc=txtOn(it.color);
+  return `<div class="seg" data-i="${i}" data-c="${it.color}" ${it.cd?`data-cd="1"`:""}
+    style="--c:${it.color};background:${it.color};color:${tc};flex-grow:${it.pct}">
+    <span class="nm">${bw(it.name)}</span>
+    <span class="pc">${num(it.pct+"%")}</span>
+    <span class="cd">${esc(it.cd||"")}</span></div>`;
+}
+function chipHTML(it,i){
+  return `<button class="chip" data-i="${i}" style="--c:${it.color}">
+    <i class="dot"></i>${bw(it.name)}&nbsp;<b>${num(it.pct+"%")}</b></button>`;
+}
+
+function buildLevel(lv){
+  const el=document.createElement("section");
+  el.className="level";
+  el.dataset.key=lv.key;
+  if(lv.kind==="root"){
+    el.innerHTML=`<div class="lvlhead">
+        <div class="lvltitle">נקודת המוצא</div><div class="lvlmoney"></div></div>
+      <div class="bar rootbar"><div class="seg rootseg" data-c="#1F3F6D"><span class="nm">התקציב הכולל · ${num("100%")}</span></div></div>`;
+    el.querySelector(".rootseg").addEventListener("click",()=>{path=[];render();});
+  }
+  else if(lv.kind==="strip"){
+    el.innerHTML=`${connSVG()}
+      ${lv.depth>=3?`<div class="backrow"><button class="backbtn">▲ חזרה לבחירת אמת מידה</button></div>`:""}
+      <div class="lvlhead"><div class="lvltitle">${lv.title}</div><div class="lvlmoney"></div></div>
+      ${lv.note?`<div class="lvlnote">${bw(lv.note)}</div>`:""}
+      <div class="bar">${lv.items.map(segHTML).join("")}</div>
+      ${lv.dom?`<div class="destwrap"></div>`:""}
+      <div class="chips">${lv.items.map(chipHTML).join("")}</div>`;
+    el.querySelectorAll(".seg,.chip").forEach(n=>{
+      const i=+n.dataset.i;
+      n.addEventListener("click",()=>select(lv.depth,i));
+      bindTip(n,()=>tipHTML(lv.items[i],lv.parent));
+    });
+  }
+  else if(lv.kind==="cards"){
+    const c=lv.crit,d=lv.dom;
+    el.innerHTML=`${connSVG()}
+      <div class="backrow"><button class="backbtn">▲ חזרה לבחירת אמת מידה</button></div>
+      <div class="dcard" style="--c:${d.color}">
+        <div class="dhead">
+          <div class="dtitle">${bw(c.name)}
+            <span class="pchip">${num(c.pct+"%")} מתקציב ${esc(d.code)} ${esc(d.name)}</span></div>
+          <div class="dmoney"></div>
+        </div>
+        <div class="chainwrap"></div>
+        ${CRIT_EXPL[c.name]?`<div class="dexpl">${bw(CRIT_EXPL[c.name])}</div>`:""}
+        <div class="dsub">קומה 3 — כאן אין אחוזים: כל איגוד צובר נקודות לפי הטבלה, והסכום שלמעלה מתחלק בין האיגודים ביחס ישר לנקודות.</div>
+        <div class="rows">${rowsHTML(c.detail,c.name)}</div>
+        ${simHTML()}
+      </div>`;
+  }
+  else if(lv.kind==="mech"){
+    const d=lv.dom;
+    el.innerHTML=`${connSVG()}
+      <div class="backrow"><button class="backbtn">▲ חזרה לכל התחומים</button></div>
+      <div class="dcard" style="--c:${d.color}">
+        <div class="dhead">
+          <div class="dtitle">${esc(d.code)} ${esc(d.name)}
+            <span class="pchip">${num(d.pot+"%")} מהתקציב הכולל</span></div>
+          <div class="dmoney"></div>
+        </div>
+        <div class="chainwrap"></div>
+        <div class="destwrap"></div>
+        <div class="dsub">החלוקה בתוך כל קטגוריה — לפי מנגנון ניקוד, לא לפי אחוזים קבועים:</div>
+        <div class="mgrid">${d.crit.map(c=>`
+          <div class="mcard"><h4>${esc(c.name)}</h4>${CRIT_EXPL[c.name]?`<div class="dexpl">${bw(CRIT_EXPL[c.name])}</div>`:""}<div class="rows">${rowsHTML(c.detail,c.name)}</div></div>`).join("")}
+        </div>
+        ${simHTML()}
+      </div>`;
+  }
+  else if(lv.kind==="focus"){
+    const x=lv.item;
+    el.innerHTML=`${connSVG()}
+      <div class="backrow"><button class="backbtn">▲ חזרה לקטגוריות</button></div>
+      <div class="dcard" style="--c:${lv.dom.color}">
+        <div class="dhead">
+          <div class="dtitle">${bw(prettyCat(x.l))}
+            <span class="pchip">${num(x.pct+"%")} מתוך ${bw(lv.crit.name)}</span></div>
+          <div class="dmoney"></div>
+        </div>
+        <div class="chainwrap"></div>
+        ${x.d&&!lv.d4?`<div class="dsub">${bw(x.d)}</div>`:""}
+        <div class="d4wrap"></div>
+      </div>`;
+  }
+  if(lv.kind==="cards"||lv.kind==="mech")simWire(el,lv);
+  const bb=el.querySelector(".backbtn");
+  if(bb)bb.addEventListener("click",()=>{path=path.slice(0,-1);render(false);});
+  return el;
+}
+
+/* הסברים בשפה פשוטה — מאומתים מול הגדרות המבחן (סעיפים 1, 13, 18, 33, 33א ונספחים) */
+const CRIT_EXPL={
+ "ספורטאים":"סופרים את הספורטאים הרשומים בענף לפי שלב בקריירה: ילדים שווים מעט נקודות, ספורטאים בשנות השיא — הכי הרבה, וותיקים כמעט כלום. ספורטאית שווה יותר מספורטאי — תמריץ מובנה לקידום נשים.",
+ "הישגיות":"נקודות על הישגים בתחרויות בינלאומיות: ככל שהמקום גבוה יותר והתחרות חשובה יותר (אליפות אירופה, אליפות עולם, אולימפיאדה) — הניקוד גבוה יותר.",
+ "מקצועיות":"נקודות על צוות מקצועי שהאיגוד מעסיק בשכר הולם. האחוזים בסוגריים = רף שכר ביחס לשכר הממוצע במשק (למשל 150% = לפחות פי 1.5 מהממוצע).",
+ "ליווי מאמנים באגודות":"נקודות על מדריכים ומאמנים מוסמכים שמועסקים במועדונים עצמם בשכר של לפחות רבע מהשכר הממוצע במשק; שכר גבוה יותר מזכה בבונוס.",
+ "עלות הפעלת ענף":"פיצוי על יוקר הענף — ציוד אישי, הפעלת מתקנים ושיגור משלחות — לפי טבלת העלויות בנספח ג'.",
+ "קידום נשים":"נקודות על תשתית ייעודית לנשים: נבחרות צעירות לבנות, נשים בתפקידי ניהול ואימון, וליווי מאמנות.",
+ "מרכזי מצוינות":"מרכזים שמאגדים ספורטאים מצטיינים צעירים (מגיל ילדים עד נוער) תחת קורת גג מקצועית אחת.",
+ "טורנירים באירופה":"נקודות למועדונים שמעפילים שלבים בטורנירים אירופיים — לפי דרג חשיבות התחרות.",
+ "מעטפת + פיתוח מאמנים":"צוות מקצועי שהאיגוד מעסיק (האחוזים בסוגריים = רף שכר ביחס לשכר הממוצע במשק) + השתלמויות למאמנים.",
+ "ניקוד קבוצתי":"כמה קבוצות צעירות (מגיל למידה ועד גיל 18) מפעילה האגודה — יותר קבוצות, יותר נקודות.",
+ "ניקוד אישי":"הישגי ספורטאי הנוער של האגודה ביחס לשאר האגודות בענף — נמדד בציון תקן סטטיסטי.",
+ "מקדמים":"בונוסים על מדיניות רצויה: כל אחד מהם מכפיל את הניקוד של האגודה ב-1.2.",
+ "חלוקה":"כל אגודה מקבלת את חלקה היחסי: הנקודות שצברה חלקי סך הנקודות של כל האגודות הזכאיות, כפול התקציב.",
+ "ניקוד":"הניקוד נצבר לפי אותם מנגנונים של הענפים הקבוצתיים והאישיים (ראו תחומים א'–ג')."
+};
+const EXPL=[
+ ["גיל אוריינות","העשרה ספורטיבית: 3 שנים מתחת לגיל למידה — שלב החשיפה הראשונית לענף."],
+ ["גיל למידה","יסודות הענף: ילדים בני 10 עד 12, ילדות 9 עד 11 (בענפים כמו שחייה, טניס והתעמלות מתחילים שנה או שנתיים מוקדם יותר)."],
+ ["גיל ילדים","עד שנתיים מעל גיל למידה."],
+ ["נערים / קדטים","עד שנתיים מעל גיל ילדים."],
+ ["גיל התמחות 1","עד שנתיים מעל גיל למידה."],
+ ["התמחות 2","עד שנתיים מעל גיל התמחות 1."],
+ ["גיל הישגי","שנות השיא התחרותיות — טווח של עד 14 שנים אחרי גילאי ההתמחות/הנוער."],
+ ["גיל תחרותי","עד 5 שנים מעל סוף הגיל ההישגי."],
+ ["גיל מסטרס","עד 20 שנים מעל הגיל התחרותי."],
+ ["גיל וותיקים","מעל גיל מאסטרס."],
+ ["תוספת גידול","ענף שהגדיל את אחוז הספורטאיות שלו לפי יעדי נספח ב' (נקודת פתיחה נמוכה דורשת גידול גדול יותר — עד 50%) מקבל תוספת של 10% על כל ניקוד הספורטאים."],
+ ["שליש","מיקום יחסי מבין כלל הנבחרות שהשתתפו בתחרות."],
+ ["(שכר ממוצע)","מנהל כללי בעל תואר אקדמי, בשכר של לפחות השכר הממוצע במשק."],
+ ["(150%)","בשכר של לפחות פי 1.5 מהשכר הממוצע במשק."],
+ ["(75%)","בשכר של לפחות 75% מהשכר הממוצע במשק."],
+ ["(20%)","בעלות העסקה של לפחות 20% מהשכר הממוצע במשק."],
+ ["25%+","בעל תעודת הסמכה, מועסק במועדון בשכר של לפחות 25% מהשכר הממוצע במשק."],
+ ["%+ שכר","הרף = שיעור השכר ביחס לשכר הממוצע במשק; מעבר אליו מגדיל את הניקוד על אותו בעל תפקיד."],
+ ["ציוד / מתקן / שינוע","טבלת נספח ג': ציוד אישי לספורטאי, עלות הפעלת מתקן לאימונים ותחרויות, ועלות שיגור משלחות."],
+ ["ציון תקן","כמה האגודה רחוקה מהממוצע הענפי בניקוד ספורטאי נוער, במונחי סטיות תקן (מוכפל ב-10). ציון גבוה = אגודה בולטת בענף; אגודות פריפריה מקבלות הכפלת ניקוד מקדימה."],
+ ["4-8 קבוצות","קבוצות בגילאי למידה ועד גיל 18."],
+ ["מעסיקה מאמנת","אגודה שמעסיקה מאמנת אחת לפחות — כל הניקוד שלה מוכפל ב-1.2."],
+ ["ערכים בספורט","אגודה שמיישמת תוכנית להקניית ערכים בספורט שאושרה על ידי מינהל הספורט ופורסמה באתר המשרד."],
+ ["בית-ספרית","אגודה בית-ספרית שהקבוצה שלה רשומה באיגוד ומזינה את קבוצת הבוגרים בענף."],
+ ["סעיף 13","אותו מנגנון ניקוד כמו בענפים הקבוצתיים (תחומים א'–ב'): ספורטאים לפי גיל ומגדר, הישגי נבחרות וכו'."],
+ ["סעיף 18","אותו מנגנון ניקוד כמו בענפים האישיים (תחום ג'): ספורטאים לפי גיל ומגדר והישגים."],
+ ["תקרת מעטפת","המקסימום שאפשר לצבור בכל סעיפי המעטפת יחד."],
+ ["העפלת שלב","מעבר שלב בטורניר אירופי לקבוצות: 2 נק' בדרג התחרות הגבוה ביותר, 1 בדרג השני, 0.5 בשלישי."],
+ ["דרג גבוה","דרג = חשיבות התחרות האירופית; העפלת שלב בתחרות חשובה יותר שווה יותר נקודות."]
+];
+function explFor(l){
+  for(const [k,t] of EXPL)if(l.includes(k))return t;
+  return null;
+}
+
+/* שורות ניקוד: דו-קרב מגדרי, נוסחאות, תקרות, נקודות */
+function rowsHTML(items,critName){
+  const mult=/מקדמ/.test(critName||"");
+  const isCap=x=>/^תקרת/.test(x.l);
+  const maxP=Math.max(...items.filter(x=>x.p!=null&&!isCap(x)).map(x=>x.p),0)||1;
+  const out=[];
+  for(let i=0;i<items.length;i++){
+    const x=items[i],y=items[i+1];
+    if(x.g==="m"&&x.p!=null&&y&&y.g==="f"&&y.p!=null){       // דו-קרב מגדרי
+      const mx=Math.max(x.p,y.p);
+      const ratio=(y.p/x.p).toFixed(2).replace(/\.?0+$/,"");
+      out.push(`<div class="duel">
+        <div class="drows">
+          ${duelRow(x,mx,NAVY)}
+          ${duelRow(y,mx,SKY)}
+        </div>
+        <div class="dside"><span class="ratio">פי ${num(ratio)}</span><span class="rlab">לספורטאית</span></div>
+        ${(y.d||explFor(x.l))?`<div class="dnote">${bw([y.d,explFor(x.l)].filter(Boolean).join(" · "))}</div>`:""}
+      </div>`);
+      i++;continue;
+    }
+    out.push(rowHTML(x,maxP,mult));
+  }
+  return out.join("");
+}
+function duelRow(x,mx,color){
+  return `<div class="drow">
+    <span class="gdot" style="background:${color}"></span>
+    <span class="dl">${bw(x.l)}</span>
+    <span class="dbar"><i style="width:${Math.max(6,x.p/mx*100)}%;background:${color}"></i></span>
+    <b class="dv">${num(x.p)} <small style="font-weight:600;color:var(--muted);font-size:10.5px">נק'</small></b>
+  </div>`;
+}
+function rowHTML(x,maxP,mult){
+  const cap=/^תקרת/.test(x.l);
+  const gcol=x.g==="m"?NAVY:x.g==="f"?SKY:null;
+  const dot=gcol?`<span class="gd" style="background:${gcol}"></span>`:"";
+  const note=x.d?`<span class="nt">${bw(x.d)}</span>`:"";
+  let bar="",val="";
+  if(x.f){
+    val=`<span class="chip-f">נוסחה</span>`; bar=`<span></span>`;
+  }else if(cap){
+    val=`<span class="rv-cap">עד ${num(x.p)} <small>נק'</small></span>`; bar=`<span></span>`;
+  }else if(mult&&x.p!=null){
+    val=`${num("×"+x.p)}`; bar=`<span></span>`;
+  }else if(x.p!=null){
+    const w=Math.max(2,x.p/maxP*100);
+    bar=`<span class="rbar"><i style="width:${w}%;${gcol?`background:${gcol}`:""}"></i></span>`;
+    val=`${num(x.p)} <small>נק'</small>`;
+  }else if(x.pct!=null){
+    bar=`<span class="rbar"><i style="width:${x.pct}%"></i></span>`;
+    val=`${num(x.pct+"%")}`;
+  }
+  const xp=explFor(x.l);
+  const xph=xp?`<details class="rlx"><summary>מה זה?</summary><span>${bw(xp)}</span></details>`:"";
+  return `<div class="row${x.f?" rowf":""}${cap?" rowc":""}">
+    <span class="rl">${dot}<span>${bw(x.l)}</span>${note}${xph}</span>${bar}<span class="rv">${val}</span></div>`;
+}
+
+/* ============================================================ */
+/* עדכון, בחירה ורנדור                                          */
+/* ============================================================ */
+function select(depth,i){
+  if(path[depth-1]===i)path=path.slice(0,depth-1);   // לחיצה חוזרת = סגירה
+  else path=path.slice(0,depth-1).concat(i);
+  render(true);
+}
+
+function updateLevel(el,lv,idx,plan){
+  const deeper=plan[idx+1];
+  if(lv.kind==="root"){
+    el.classList.toggle("anc",path.length>0);
+    el.querySelector(".lvlmoney").innerHTML=
+      budget?`התקציב: ${bw(fmtILS(budget))}`:`להמחשה: תקציב = ${num("100 ₪")}`;
+  }
+  else if(lv.kind==="strip"){
+    el.classList.toggle("anc",lv.sel!=null&&!!deeper);
+    el.classList.toggle("keepchips",!plan.slice(idx+1).some(l=>l.kind==="strip"));
+    const bar=el.querySelector(".bar");
+    bar.classList.toggle("hasSel",lv.sel!=null);
+    el.querySelectorAll(".seg").forEach(s=>s.classList.toggle("sel",+s.dataset.i===lv.sel));
+    el.querySelectorAll(".chip").forEach(c=>c.classList.toggle("on",+c.dataset.i===lv.sel));
+    el.querySelector(".lvlmoney").innerHTML=moneyHTML(lv.share);
+    const dw=el.querySelector(".destwrap");
+    if(dw&&lv.dom)dw.innerHTML=destHTML(lv.dom,lv.share);
+  }
+  else{
+    const m=el.querySelector(".dmoney");
+    if(m)m.innerHTML=moneyHTML(lv.share);
+    const ch=el.querySelector(".chainwrap");
+    if(ch)ch.innerHTML=chainHTML(lv);
+    const sm=el.querySelector(".sim");
+    if(sm)simUpdate(sm,lv);
+    const dw=el.querySelector(".destwrap");
+    if(dw&&lv.dom)dw.innerHTML=destHTML(lv.dom,lv.share);
+    const dq=el.querySelector(".d4wrap");
+    if(dq)dq.innerHTML=d4HTML(lv);
+  }
+}
+
+/* שרשרת החישוב: מאיפה הגיע המספר — 100 ₪ × 37.85% × 45% = 17.03 ₪ */
+function chainHTML(lv){
+  const toks=[{v:budget?fmtILS(budget):"100 ₪",l:"התקציב הכולל"}];
+  if(lv.kind==="mech")toks.push({v:lv.dom.pot+"%",l:lv.dom.code+" "+lv.dom.name});
+  else{
+    toks.push({v:lv.dom.pot+"%",l:lv.dom.name});
+    toks.push({v:lv.crit.pct+"%",l:lv.crit.name});
+    if(lv.kind==="focus")toks.push({v:lv.item.pct+"%",l:lv.item.l});
+  }
+  const res=budget?fmtILS(budget*lv.share/100):nf(lv.share)+" ₪";
+  const fx=t=>`<span class="fx"><b><bdi>${esc(t.v)}</bdi></b><small>${esc(t.l)}</small></span>`;
+  return `<div class="chain" dir="ltr">${toks.map(fx).join(`<span class="op">×</span>`)}<span class="op">=</span><span class="fx res"><b><bdi>${esc(res)}</bdi></b><small>הנתח הזה</small></span></div>`;
+}
+
+/* סימולטור קומה 3: לנקודה אין ערך קבוע — הכסף מתחלק לפי היחס בין כולם */
+const SIM_DEF=[["איגוד א'",60],["איגוד ב'",30],["איגוד ג'",10]];
+function simHTML(){
+  return `<div class="sim">
+    <div class="simhead"><span class="simtitle">רגע — איך נקודות הופכות לכסף? נסו בעצמכם:</span><span class="simworth"></span></div>
+    ${SIM_DEF.map((f,i)=>`<div class="simrow">
+      <span class="simname"><i class="simdot" data-di="${i}"></i>${f[0]} <small style="color:var(--muted);font-weight:400">(דוגמה)</small></span>
+      <input type="range" min="0" max="200" step="5" value="${f[1]}" data-si="${i}" aria-label="נקודות ${f[0]}">
+      <b class="simpts" data-pi="${i}"></b></div>`).join("")}
+    <div class="simbar"></div>
+    <div class="simlegend"></div>
+    <div class="simnote"></div>
+  </div>`;
+}
+function simWire(el,lv){
+  el.querySelectorAll(".sim input[type=range]").forEach(r=>r.addEventListener("input",()=>{
+    const sm=el.querySelector(".sim");
+    if(sm)simUpdate(sm,lv);
+  }));
+}
+function simUpdate(sm,lv){
+  const shades=[0,0.32,0.6].map(t=>mix(lv.dom.color,"#FFFFFF",t));
+  const pts=[...sm.querySelectorAll("input[type=range]")].map(r=>+r.value);
+  sm.querySelectorAll(".simdot").forEach((d,i)=>d.style.background=shades[i]);
+  sm.querySelectorAll(".simpts").forEach((b,i)=>b.innerHTML=`${num(pts[i])} <small>נק'</small>`);
+  const tot=pts.reduce((a,b)=>a+b,0);
+  const potStr=budget?fmtILS(budget*lv.share/100):nf(lv.share)+" ₪";
+  const bar=sm.querySelector(".simbar"),leg=sm.querySelector(".simlegend"),
+        note=sm.querySelector(".simnote"),worth=sm.querySelector(".simworth");
+  if(!tot){
+    bar.innerHTML=`<span class="simempty">אף איגוד לא צבר נקודות — אין מה לחלק</span>`;
+    leg.innerHTML="";worth.textContent="";
+    note.innerHTML=`הסכום לחלוקה קבוע (${bw(potStr)}) — אבל בלי נקודות אין זכאים.`;
+    return;
+  }
+  const w=budget?budget*lv.share/100/tot:lv.share/tot;
+  worth.innerHTML=`שווי נקודה כרגע: ${bw(budget?fmtILS(w):nf(w)+" ₪")} <small>(${bw(potStr)} ÷ ${num(tot)} נק')</small>`;
+  bar.innerHTML=pts.map((p,i)=>`<span class="simseg" style="flex-grow:${p||0.0001};background:${shades[i]};color:${txtOn(shades[i])}">${p?num(Math.round(p/tot*100)+"%"):""}</span>`).join("");
+  leg.innerHTML=pts.map((p,i)=>{
+    const m=budget?fmtILS(budget*lv.share/100*p/tot):nf(lv.share*p/tot)+" ₪";
+    return `<span class="simleg"><i style="background:${shades[i]}"></i>${SIM_DEF[i][0]}: <b>${bw(m)}</b></span>`;
+  }).join("");
+  note.innerHTML=`הסכום קבוע — ${bw(potStr)}. הזיזו מחוון ותראו: כשאיגוד אחד מוסיף נקודות, החלק של <b>כולם</b> משתנה.`;
+}
+
+/* קטגוריות תחום ד': "(2)" במקור = מספר הענפים בקטגוריה */
+function catCount(s){
+  const m=/\((\d+)\)/.exec(s);
+  if(m)return +m[1];
+  if(/\(ענף אחד\)/.test(s))return 1;
+  return 0;
+}
+function prettyCat(s){
+  return s.replace(/\s*\(ענף אחד\)/," · ענף מועדף אחד")
+          .replace(/\s*\((\d+)\)/," · $1 ענפים מועדפים")
+          .replace(/\s*\(הגבוה\)/," · הענף בעל הניקוד הגבוה");
+}
+
+/* קומה 4 — תחום ד': מי הענפים בכל קטגוריה ואיך נקבע הדירוג (סעיפים 24–29) */
+const RANK_A="הישגי ספורטאים באליפויות אירופה בשני מחזורי המשחקים האחרונים: זהב 16 נק' · כסף 12 · ארד או מקום 4: 10 · מקומות 5 עד 8: 5 · מקומות 9 עד 16: 2. מכפילים: אליפות עולם פי 4, אולימפי או משחקי עולם פי 8. נוער עד גיל 21: רבע מהניקוד (מקומות 9 עד 16 לא מזכים). המחזור הראשון מבין השניים: מחצית הניקוד. מקדם 1.5: לענף שמקיים אליפות אחת בשנה ולענפי הקיץ האולימפיים. כל ספורטאי במשלחת: 2 נק' (קבוצה מעל 2: עד 4). לענף שירד קטגוריה יש מנגנוני הגנה (66% ואז 50%).";
+const RANK_B="ניקוד נבחרות באליפויות אירופה בשני המחזורים האחרונים, בנפרד לנבחרות גברים ונשים: מקום 1: 100 נק' · מקום 2: 80 · מקום 3: 60 · מקומות 4 עד 8: 40 · שליש עליון: 30 · שליש שני: 20 · שליש תחתון: 10. אליפות עולם פי 4 · אולימפי פי 8 · עתודה: מחצית · נוער: רבע · המחזור הראשון: מחצית. בשוויון נקודות — ההישג הגבוה מכריע.";
+const RANK_C="דירוג לפי ניקוד הספורטאים הפעילים של הענף (סעיף 18(1) — ניקוד לפי גיל ומגדר), בתנאי נציגות בשני המשחקים האולימפיים האחרונים.";
+const D4={
+ "0-0":{n:1,rule:"הענף האולימפי האישי שצבר את הניקוד הגבוה ביותר.",rank:RANK_A},
+ "0-1":{n:2,rule:"שני הענפים האולימפיים האישיים הבאים בדירוג אחרי קטגוריה א'.",rank:RANK_A},
+ "0-2":{n:2,rule:"שני הענפים הבאים בדירוג אחרי קטגוריה ב'.",rank:RANK_A},
+ "0-3":{n:3,rule:"שלושת הענפים הבאים בדירוג אחרי קטגוריה ג'.",extra:"מקום אחד מהשלושה משוריין לענף חורף אולימפי — והוא תופס את מקומו של הענף השמיני בדירוג.",rank:RANK_A},
+ "0-4":{rule:"כל ענף שזכה במדליה במשחקים האולימפיים האחרונים: זהב 3 נק' · כסף 2 · ארד 1. שווי נקודה = סכום הקטגוריה חלקי סך הנקודות של כל הענפים הזוכים, וכל ענף מקבל לפי נקודותיו.",extra:"אם לא הושגו מדליות — הסכום מתחלק בין יתר הקטגוריות באופן יחסי."},
+ "0-5":{n:3,rule:"שלושת הענפים הפראלימפיים האישיים בעלי הניקוד הגבוה ביותר.",rank:RANK_A},
+ "0-6":{n:3,rule:"שלושת הענפים האישיים הלא-אולימפיים בעלי הניקוד הגבוה ביותר.",rank:RANK_A},
+ "1-0":{n:2,rule:"שני ענפים קבוצתיים אולימפיים שאינם ענפי-על: הענף שבו נבחרת הגברים המובילה + הענף שבו נבחרת הנשים המובילה.",extra:"מ-2025: בתנאי שנבחרת בוגרת דורגה בין 12 הראשונות באליפות אירופה האחרונה; אחרת נתמך ענף אחד בלבד.",rank:RANK_B},
+ "1-1":{n:2,rule:"שני ענפי ספורט קבוצתיים פראלימפיים בעלי הניקוד הגבוה ביותר.",extra:"מ-2025: באותו תנאי דירוג; אחרת נתמך ענף אחד בלבד.",rank:RANK_B},
+ "1-2":{n:1,rule:"הענף הקבוצתי הלא-אולימפי שצבר את הניקוד הגבוה ביותר.",rank:RANK_B},
+ "2-0":{n:1,rule:"הענף האולימפי רב-המשתתפים בעל הניקוד הגבוה ביותר, שאינו נכלל ברצועה א'.",extra:"מ-2025 נתמך ענף אחד בלבד; אם אין ענף זכאי — הסכום עובר לקטגוריה א' שברצועה א'.",rank:RANK_C}
+};
+function d4HTML(lv){
+  const d4=lv.d4;
+  if(!d4)return `<div class="dsub">${lv.catN?`בקטגוריה זו: ${bw(String(lv.catN))} ענפים · `:""}זהות הענפים והחלוקה הפנימית — לפי מנגנון התיעדוף של המבחן <span class="chip-f">נוסחה</span></div>`;
+  let h="";
+  if(d4.n){
+    const per=lv.share/d4.n;
+    const perStr=budget?fmtILS(budget*per/100):nf(per)+" ₪";
+    const label=d4.n===1?"הענף הזכאי":"ענף מועדף";
+    h+=`<div class="d4slots">${Array.from({length:d4.n},(_,i)=>{
+      const c=mix(lv.dom.color,"#FFFFFF",0.1+i*0.16);
+      return `<span class="d4slot" style="background:${c};color:${txtOn(c)}">${label} · ${bw(perStr)}</span>`;
+    }).join("")}</div>
+    <div class="d4cap">קומה 4 · הכסף מתחלק <b>שווה בשווה</b> בין הענפים שבקטגוריה (סעיף 29) — כל ענף מקבל ${num(nf(lv.item.pct/d4.n)+"%")} מהרצועה</div>`;
+  }
+  h+=`<div class="d4rule"><b>מי נכנס לקטגוריה?</b> ${bw(d4.rule)}</div>`;
+  if(d4.extra)h+=`<div class="d4extra">${bw(d4.extra)}</div>`;
+  if(d4.rank)h+=`<details class="d4rank"><summary>איך נצבר ניקוד הדירוג של הענפים?</summary><div>${bw(d4.rank)}</div></details>`;
+  return h;
+}
+
+/* פס יעד: אצל מי הכסף יושב — הגוף הארצי מול האגודות (סעיפי החלוקה במבחן) */
+const SPLITS={
+ "א'":{org:35,clubs:65,orgName:"איגוד (הגוף הארצי)",note:"תקרה: עד 20% מחלק האגודות לקבוצה אחת"},
+ "ב'":{org:35,clubs:65,orgName:"איגוד (הגוף הארצי)",note:"תקרה: עד 20% מחלק האגודות לקבוצה אחת"},
+ "ג'":{org:60,clubs:40,orgName:"איגוד (הגוף הארצי)",note:"תקרה: עד 20% מחלק האגודות לאגודה אחת"},
+ "ד'":{noteOnly:"תיעדוף ענפים · חובת 10% לקידום נשים"},
+ "ה'":{org:0,clubs:100,note:"התמיכה משולמת ישירות לאגודות, לפי מנגנון הניקוד"},
+ "ו'":{org:60,clubs:40,orgName:"איגוד (הגוף הארצי)"},
+ "ז'":{org:50,clubs:50,orgName:"התאחדות (הגוף הארצי)",note:"מתוך חלק האגודות: קבוצתי 85% · אישי 15%"},
+ "ח'":{noteOnly:"שלושה ארגונים לפי מספר משתתפים · לקות שמיעה: 70% לארגון / 30% לאגודות"}
+};
+function destHTML(dom,share){
+  const sp=SPLITS[dom.code];
+  if(!sp)return "";
+  const lab=`<span class="dlab">לאן הכסף מגיע?</span>`;
+  if(sp.noteOnly)return `<div class="dest"><div class="destin">${lab}<span class="dnote" style="margin:0">${bw(sp.noteOnly)}</span></div></div>`;
+  const m=p=>budget?fmtILS(budget*share/100*p/100):nf(share*p/100)+" ₪";
+  const segs=[];
+  if(sp.org>0)
+    segs.push(`<span class="dseg" style="flex-grow:${sp.org};background:${dom.color};color:${txtOn(dom.color)}"><b>${esc(sp.orgName)}</b> · ${num(sp.org+"%")} · ${bw(m(sp.org))}</span>`);
+  segs.push(sp.org===0
+    ?`<span class="dseg" style="flex-grow:100;background:${dom.color};color:${txtOn(dom.color)}"><b>ישירות לאגודות (המועדונים)</b> · ${num("100%")} · ${bw(m(100))}</span>`
+    :`<span class="dseg dclubs" style="flex-grow:${sp.clubs};border-color:${dom.color}"><b>אגודות (המועדונים)</b> · ${num(sp.clubs+"%")} · ${bw(m(sp.clubs))}</span>`);
+  return `<div class="dest"><div class="destin">${lab}<div class="dbar">${segs.join("")}</div></div>${sp.note?`<span class="dnote">${bw(sp.note)}</span>`:""}</div>`;
+}
+
+function render(fromClick){
+  const plan=buildPlan();
+  lastPlan=plan;
+  for(const key of[...levelEls.keys()])
+    if(!plan.some(l=>l.key===key)){levelEls.get(key).remove();levelEls.delete(key);connState.delete(key);}
+  let newest=null;
+  plan.forEach(lv=>{
+    let el=levelEls.get(lv.key);
+    if(!el){el=buildLevel(lv);levelEls.set(lv.key,el);el.classList.add("in");newest=el;}
+    funnel.appendChild(el);
+  });
+  plan.forEach((lv,i)=>updateLevel(levelEls.get(lv.key),lv,i,plan));
+  $("#resetBtn").classList.toggle("vis",path.length>0);
+  requestAnimationFrame(()=>{
+    fitLabels();drawConns();
+    document.querySelectorAll(".level.in").forEach(e=>e.classList.add("show"));
+    if(fromClick&&newest)setTimeout(()=>newest.scrollIntoView({behavior:"smooth",block:"nearest"}),80);
+  });
+}
+
+function fitLabels(){
+  document.querySelectorAll(".bar:not(.rootbar)").forEach(bar=>{
+    bar.querySelectorAll(".seg").forEach(s=>{
+      const w=s.getBoundingClientRect().width;
+      s.classList.toggle("lf",w>=100);
+      s.classList.toggle("lp",w>=46&&w<100);
+      s.classList.toggle("lc",w>=17&&w<46&&!!s.dataset.cd);
+    });
+  });
+}
+
+/* טרפזי זרימה בין הרצועות */
+function drawConns(){
+  lastPlan.forEach((lv,i)=>{
+    if(i===0)return;
+    const el=levelEls.get(lv.key), svg=el.querySelector(".conn");
+    if(!svg)return;
+    const prev=levelEls.get(lastPlan[i-1].key);
+    const src=lastPlan[i-1].kind==="root"?prev.querySelector(".rootseg"):prev.querySelector(".seg.sel");
+    const tgt=el.querySelector(".bar")||el.querySelector(".dcard");
+    if(!src||!tgt){svg.style.opacity=0;return;}
+    svg.style.opacity=1;
+    const b=svg.getBoundingClientRect();
+    if(b.width<10)return;
+    svg.setAttribute("viewBox",`0 0 ${b.width} 58`);
+    const s=src.getBoundingClientRect(),t=tgt.getBoundingClientRect();
+    const to={x1:s.left-b.left,x2:s.right-b.left,t1:t.left-b.left,t2:t.right-b.left};
+    const color=src.dataset.c||"#1F3F6D";
+    const g=svg.querySelector("linearGradient");
+    g.querySelectorAll("stop")[0].setAttribute("stop-color",color);
+    g.querySelectorAll("stop")[1].setAttribute("stop-color",color);
+    animConn(svg,lv.key,to);
+  });
+}
+function animConn(svg,key,to){
+  const path=svg.querySelector("path");
+  const from=connState.get(key);
+  const draw=c=>path.setAttribute("d",
+    `M ${c.x1} 0 C ${c.x1} 33, ${c.t1} 20, ${c.t1} 58 L ${c.t2} 58 C ${c.t2} 20, ${c.x2} 33, ${c.x2} 0 Z`);
+  if(!from){connState.set(key,to);draw(to);return;}
+  if(["x1","x2","t1","t2"].every(k=>Math.abs(from[k]-to[k])<1)){draw(to);return;}
+  const t0=performance.now(),dur=240;
+  function step(now){
+    const t=Math.min(1,(now-t0)/dur),e=1-Math.pow(1-t,3);
+    const cur={};["x1","x2","t1","t2"].forEach(k=>cur[k]=from[k]+(to[k]-from[k])*e);
+    draw(cur);
+    if(t<1)requestAnimationFrame(step);else connState.set(key,to);
+  }
+  requestAnimationFrame(step);
+}
+
+/* ============================================================ */
+/* טולטיפ                                                       */
+/* ============================================================ */
+function tipHTML(it,parentName){
+  return `<b>${bw(it.name)}</b>
+    <div>${num(it.pct+"%")} מתוך ${bw(parentName)}</div>
+    <div class="tm">${bw(moneyTip(it.eff))}</div>
+    ${it.d?`<div class="tn">${bw(it.d)}</div>`:""}`;
+}
+function bindTip(n,html){
+  n.addEventListener("mouseenter",()=>{tip.innerHTML=html();tip.style.opacity=1;});
+  n.addEventListener("mousemove",e=>{
+    const w=tip.offsetWidth,h=tip.offsetHeight;
+    let x=e.clientX+14,y=e.clientY+16;
+    if(x+w>innerWidth-8)x=e.clientX-w-14;
+    if(y+h>innerHeight-8)y=e.clientY-h-12;
+    tip.style.left=Math.max(6,x)+"px";tip.style.top=Math.max(6,y)+"px";
+  });
+  n.addEventListener("mouseleave",()=>tip.style.opacity=0);
+}
+
+/* ============================================================ */
+/* שכבת הסבר: כרטיס פתיחה, מילון, סיור מודרך                    */
+/* ============================================================ */
+const store={
+  get(){try{return localStorage.getItem("mivchan-intro")}catch(e){return null}},
+  set(v){try{localStorage.setItem("mivchan-intro",v)}catch(e){}}
+};
+function introShow(open){
+  $("#intro").hidden=!open;
+  $("#introbar").hidden=open;
+  store.set(open?"open":"closed");
+}
+$("#introClose").addEventListener("click",()=>introShow(false));
+$("#introOpen").addEventListener("click",()=>introShow(true));
+if(store.get()==="closed")introShow(false);
+
+const glos=$("#glos");
+[["#glosBtn"],["#glosBtn2"]].forEach(([s])=>$(s).addEventListener("click",()=>glos.hidden=false));
+$("#glosClose").addEventListener("click",()=>glos.hidden=true);
+glos.addEventListener("click",e=>{if(e.target===glos)glos.hidden=true;});
+
+/* סיור מודרך: מצלול לבד ומסביר כל קומה */
+const TOUR=[
+ {path:[],a:()=>$('.level[data-key="root"] .bar'),
+  t:"זה כל תקציב התמיכה בספורט. כדי שיהיה מוחשי — נדמיין שהוא בדיוק 100 ₪."},
+ {path:[],a:()=>$('.level[data-key="doms"] .bar'),
+  t:"קומה 1: המבחן חותך את התקציב ל-8 תחומים באחוזים קבועים. רוחב מקטע = כמה כסף הוא מקבל. הכהה הגדול מימין — ענפי על — לוקח 37.85 ₪ מכל 100 ₪."},
+ {path:[0],a:()=>$('.level[data-key="crit0"] .bar'),
+  t:"לחצנו על ענפי על — והמקטע שלהם נמתח לכל הרוחב. קומה 2: אחוזים קבועים בתוך התחום — 45% לספורטאים, 20% להישגיות וכן הלאה. והפס שמתחת עונה על שאלה נפרדת: אצל מי הכסף יושב — 35% נשארים באיגוד הארצי, 65% יורדים לאגודות."},
+ {path:[0,0],a:()=>document.querySelectorAll('.level[data-key="cards0-0"] .duel')[1]||$('.level[data-key="cards0-0"]'),
+  t:"קומה 3 — סוף האחוזים, תחילת הנקודות: כל איגוד סופר ספורטאים לפי גיל ומגדר, והכסף מתחלק ביחס לנקודות. שימו לב לפער המודגש: ספורטאית בגיל הישגי = 10 נקודות, ספורטאי = 6. שרשרת החישוב למעלה מראה בדיוק איך הגענו ל-17.03 ₪."},
+ {path:[0,0],a:()=>$('.level[data-key="cards0-0"] .sim'),
+  t:"והחלק שהכי מבלבל: לנקודה אין ערך קבוע. מחלקים את כל ה-17.03 ₪ לפי היחס בין הנקודות של כל האיגודים. הזיזו מחוון בסימולטור — איגוד שמוסיף נקודות מכווץ את החלק של כל האחרים, כי סך הכסף לא משתנה."},
+ {path:[],a:()=>$(".legend"),
+  t:"זהו, אתם מוכנים: כל לחיצה צוללת פנימה, לחיצה חוזרת סוגרת, וריחוף מגלה כמה כסף כל פריט שווה. אפשר להזין למעלה את התקציב האמיתי — והכול יתורגם לשקלים בפועל."}
+];
+let tourI=-1,tourEl=null;
+function tourClear(){if(tourEl){tourEl.classList.remove("tour-hl");tourEl=null;}}
+function tourShow(i){
+  tourI=i;
+  path=TOUR[i].path.slice();
+  render(false);
+  $("#ttext").innerHTML=bw(TOUR[i].t);
+  $("#tstep").textContent=`שלב ${i+1} מתוך ${TOUR.length}`;
+  $("#tprev").style.visibility=i===0?"hidden":"visible";
+  $("#tnext").textContent=i===TOUR.length-1?"סיום":"הבא";
+  $("#tourcard").hidden=false;
+  requestAnimationFrame(()=>setTimeout(()=>{
+    tourClear();
+    const el=TOUR[i].a();
+    if(el){tourEl=el;el.classList.add("tour-hl");el.scrollIntoView({behavior:"smooth",block:"center"});}
+  },90));
+}
+function tourEnd(){tourClear();$("#tourcard").hidden=true;tourI=-1;path=[];render(false);}
+[["#tourBtn"],["#tourBtn2"]].forEach(([s])=>$(s).addEventListener("click",()=>tourShow(0)));
+$("#tnext").addEventListener("click",()=>tourI>=TOUR.length-1?tourEnd():tourShow(tourI+1));
+$("#tprev").addEventListener("click",()=>tourI>0&&tourShow(tourI-1));
+$("#tend").addEventListener("click",tourEnd);
+
+/* ============================================================ */
+/* אתחול                                                        */
+/* ============================================================ */
+$("#budget").addEventListener("input",e=>{
+  const digits=e.target.value.replace(/[^\d]/g,"");
+  budget=digits?+digits:null;
+  if(digits)e.target.value=(+digits).toLocaleString("he-IL");
+  render(false);
+});
+$("#resetBtn").addEventListener("click",()=>{path=[];render(false);});
+window.addEventListener("resize",()=>{fitLabels();drawConns();});
+render(false);
+</script>
+</body>
+</html>

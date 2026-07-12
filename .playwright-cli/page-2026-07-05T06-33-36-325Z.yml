@@ -1,0 +1,250 @@
+- generic [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - text: משרד התרבות
+      - text: והספורט
+    - generic [ref=e4]:
+      - heading "ניתוח \"מקומות\" לפי מספר ספורטאים — סקיצת עבודה" [level=1] [ref=e5]
+      - generic [ref=e6]: מסך ייעודי לראשת מנהל הספורט · נתונים סינתטיים להדגמה בלבד
+  - generic [ref=e7]:
+    - generic [ref=e8]: "סימניות (Bookmarks):"
+    - button "1 · מבט ערים" [ref=e9] [cursor=pointer]
+    - button "2 · עיר › אגודה" [ref=e10] [cursor=pointer]
+    - button "3 · אגודה › סניף" [ref=e11] [cursor=pointer]
+    - button "4 · נוער קטן (עד 15, מקומות ≤ 150)" [active] [ref=e12] [cursor=pointer]
+  - generic [ref=e13]:
+    - generic [ref=e14]:
+      - generic [ref=e15]: הגדרת "מקום" — עד 3 רמות (כל רמה = פרמטר בחירה־יחידה)
+      - generic [ref=e16]:
+        - combobox [ref=e17]:
+          - option "— ללא —"
+          - option "עיר" [selected]
+          - option "אגודה"
+          - option "סניף"
+          - option "איגוד (ענף)"
+          - option "קבוצת גיל"
+        - generic [ref=e18]: ›
+        - combobox [ref=e19]:
+          - option "— ללא —"
+          - option "עיר"
+          - option "אגודה" [selected]
+          - option "סניף"
+          - option "איגוד (ענף)"
+          - option "קבוצת גיל"
+        - generic [ref=e20]: ›
+        - combobox [ref=e21]:
+          - option "— ללא —" [selected]
+          - option "עיר"
+          - option "אגודה"
+          - option "סניף"
+          - option "איגוד (ענף)"
+          - option "קבוצת גיל"
+    - generic [ref=e22]:
+      - generic [ref=e23]: חתך אוכלוסייה — קבוצות גיל (מסנן רב־בחירה רגיל)
+      - generic [ref=e24]:
+        - button "עד 12" [ref=e25] [cursor=pointer]
+        - button "13–15" [ref=e26] [cursor=pointer]
+        - button "16–18" [ref=e27] [cursor=pointer]
+        - button "בוגרים" [ref=e28] [cursor=pointer]
+    - generic [ref=e29]:
+      - generic [ref=e30]: טווח גודל — ספורטאים במקום (בחתך הנבחר)
+      - generic [ref=e31]:
+        - spinbutton [ref=e32]: "0"
+        - generic [ref=e33]: מינ'
+        - spinbutton [ref=e34]: "150"
+        - generic [ref=e35]: מקס'
+  - generic [ref=e36]:
+    - generic [ref=e37]:
+      - generic [ref=e38]: מקומות בטווח
+      - generic [ref=e39]: "13"
+      - generic [ref=e40]: מתוך 32 מקומות (עיר › אגודה)
+    - generic [ref=e41]:
+      - generic [ref=e42]: סה"כ ספורטאים בטווח
+      - generic [ref=e43]: 1,168
+      - generic [ref=e44]: עד 12, 13–15 · טווח 0–150
+    - generic [ref=e45]:
+      - generic [ref=e46]: חציון גודל מקום
+      - generic [ref=e47]: "77"
+      - generic [ref=e48]: בתוך הטווח
+    - generic [ref=e49]:
+      - generic [ref=e50]: מקומות מתחת למינימום
+      - generic [ref=e51]: "0"
+      - generic [ref=e52]: מועמדים לבחינת המשך תמיכה
+  - generic [ref=e53]:
+    - generic [ref=e54]:
+      - heading "מקומות בטווח, ממוינים לפי מספר ספורטאים" [level=2] [ref=e55]
+      - generic [ref=e56]: "מקום = עיר › אגודה · חתך: עד 12, 13–15 · מוצגים 13 מתוך 13 בטווח"
+    - generic [ref=e59]:
+      - generic [ref=e60]:
+        - heading "התפלגות גדלי המקומות" [level=2] [ref=e61]
+        - generic [ref=e62]: כמה מקומות יש בכל מדרגת גודל · ירוק = בתוך הטווח שנבחר
+      - generic [ref=e65]:
+        - heading "פירוט מקומות" [level=2] [ref=e66]
+        - generic [ref=e67]: כולל מקומות מחוץ לטווח (מעומעמים)
+        - table [ref=e69]:
+          - rowgroup [ref=e70]:
+            - row "מקום ספורטאים סטטוס" [ref=e71]:
+              - columnheader "מקום" [ref=e72]
+              - columnheader "ספורטאים" [ref=e73]
+              - columnheader "סטטוס" [ref=e74]
+          - rowgroup [ref=e75]:
+            - row "תל אביב · אליצור תל אביב 930 מעל למקס'" [ref=e136]:
+              - cell "תל אביב · אליצור תל אביב" [ref=e137]
+              - cell "930" [ref=e138]
+              - cell "מעל למקס'" [ref=e139]:
+                - generic [ref=e140]: מעל למקס'
+            - row "נתניה · הפועל נתניה 872 מעל למקס'" [ref=e141]:
+              - cell "נתניה · הפועל נתניה" [ref=e142]
+              - cell "872" [ref=e143]
+              - cell "מעל למקס'" [ref=e144]:
+                - generic [ref=e145]: מעל למקס'
+            - row "ראשון לציון · בית\"ר ראשון לציון 585 מעל למקס'" [ref=e146]:
+              - cell "ראשון לציון · בית\"ר ראשון לציון" [ref=e147]
+              - cell "585" [ref=e148]
+              - cell "מעל למקס'" [ref=e149]:
+                - generic [ref=e150]: מעל למקס'
+            - row "תל אביב · עירוני תל אביב 517 מעל למקס'" [ref=e151]:
+              - cell "תל אביב · עירוני תל אביב" [ref=e152]
+              - cell "517" [ref=e153]
+              - cell "מעל למקס'" [ref=e154]:
+                - generic [ref=e155]: מעל למקס'
+            - row "חיפה · הפועל חיפה 484 מעל למקס'" [ref=e156]:
+              - cell "חיפה · הפועל חיפה" [ref=e157]
+              - cell "484" [ref=e158]
+              - cell "מעל למקס'" [ref=e159]:
+                - generic [ref=e160]: מעל למקס'
+            - row "ירושלים · עירוני ירושלים 454 מעל למקס'" [ref=e161]:
+              - cell "ירושלים · עירוני ירושלים" [ref=e162]
+              - cell "454" [ref=e163]
+              - cell "מעל למקס'" [ref=e164]:
+                - generic [ref=e165]: מעל למקס'
+            - row "ירושלים · מכבי ירושלים 373 מעל למקס'" [ref=e166]:
+              - cell "ירושלים · מכבי ירושלים" [ref=e167]
+              - cell "373" [ref=e168]
+              - cell "מעל למקס'" [ref=e169]:
+                - generic [ref=e170]: מעל למקס'
+            - row "נתניה · מכבי נתניה 330 מעל למקס'" [ref=e171]:
+              - cell "נתניה · מכבי נתניה" [ref=e172]
+              - cell "330" [ref=e173]
+              - cell "מעל למקס'" [ref=e174]:
+                - generic [ref=e175]: מעל למקס'
+            - row "חיפה · מכבי חיפה 292 מעל למקס'" [ref=e176]:
+              - cell "חיפה · מכבי חיפה" [ref=e177]
+              - cell "292" [ref=e178]
+              - cell "מעל למקס'" [ref=e179]:
+                - generic [ref=e180]: מעל למקס'
+            - row "פתח תקווה · הפועל פתח תקווה 278 מעל למקס'" [ref=e181]:
+              - cell "פתח תקווה · הפועל פתח תקווה" [ref=e182]
+              - cell "278" [ref=e183]
+              - cell "מעל למקס'" [ref=e184]:
+                - generic [ref=e185]: מעל למקס'
+            - row "באר שבע · מכבי באר שבע 272 מעל למקס'" [ref=e186]:
+              - cell "באר שבע · מכבי באר שבע" [ref=e187]
+              - cell "272" [ref=e188]
+              - cell "מעל למקס'" [ref=e189]:
+                - generic [ref=e190]: מעל למקס'
+            - row "באר שבע · הפועל באר שבע 248 מעל למקס'" [ref=e191]:
+              - cell "באר שבע · הפועל באר שבע" [ref=e192]
+              - cell "248" [ref=e193]
+              - cell "מעל למקס'" [ref=e194]:
+                - generic [ref=e195]: מעל למקס'
+            - row "פתח תקווה · אליצור פתח תקווה 232 מעל למקס'" [ref=e196]:
+              - cell "פתח תקווה · אליצור פתח תקווה" [ref=e197]
+              - cell "232" [ref=e198]
+              - cell "מעל למקס'" [ref=e199]:
+                - generic [ref=e200]: מעל למקס'
+            - row "עכו · בית\"ר עכו 231 מעל למקס'" [ref=e201]:
+              - cell "עכו · בית\"ר עכו" [ref=e202]
+              - cell "231" [ref=e203]
+              - cell "מעל למקס'" [ref=e204]:
+                - generic [ref=e205]: מעל למקס'
+            - row "ירושלים · הפועל ירושלים 211 מעל למקס'" [ref=e206]:
+              - cell "ירושלים · הפועל ירושלים" [ref=e207]
+              - cell "211" [ref=e208]
+              - cell "מעל למקס'" [ref=e209]:
+                - generic [ref=e210]: מעל למקס'
+            - row "רמת גן · אליצור רמת גן 209 מעל למקס'" [ref=e211]:
+              - cell "רמת גן · אליצור רמת גן" [ref=e212]
+              - cell "209" [ref=e213]
+              - cell "מעל למקס'" [ref=e214]:
+                - generic [ref=e215]: מעל למקס'
+            - row "רמת גן · בית\"ר רמת גן 204 מעל למקס'" [ref=e216]:
+              - cell "רמת גן · בית\"ר רמת גן" [ref=e217]
+              - cell "204" [ref=e218]
+              - cell "מעל למקס'" [ref=e219]:
+                - generic [ref=e220]: מעל למקס'
+            - row "פתח תקווה · בית\"ר פתח תקווה 200 מעל למקס'" [ref=e221]:
+              - cell "פתח תקווה · בית\"ר פתח תקווה" [ref=e222]
+              - cell "200" [ref=e223]
+              - cell "מעל למקס'" [ref=e224]:
+                - generic [ref=e225]: מעל למקס'
+            - row "עכו · אליצור עכו 166 מעל למקס'" [ref=e226]:
+              - cell "עכו · אליצור עכו" [ref=e227]
+              - cell "166" [ref=e228]
+              - cell "מעל למקס'" [ref=e229]:
+                - generic [ref=e230]: מעל למקס'
+            - row "פתח תקווה · עירוני פתח תקווה 135 בטווח" [ref=e231]:
+              - cell "פתח תקווה · עירוני פתח תקווה" [ref=e232]
+              - cell "135" [ref=e233]
+              - cell "בטווח" [ref=e234]:
+                - generic [ref=e235]: בטווח
+            - row "אשדוד · עירוני אשדוד 126 בטווח" [ref=e236]:
+              - cell "אשדוד · עירוני אשדוד" [ref=e237]
+              - cell "126" [ref=e238]
+              - cell "בטווח" [ref=e239]:
+                - generic [ref=e240]: בטווח
+            - row "עכו · עירוני עכו 126 בטווח" [ref=e241]:
+              - cell "עכו · עירוני עכו" [ref=e242]
+              - cell "126" [ref=e243]
+              - cell "בטווח" [ref=e244]:
+                - generic [ref=e245]: בטווח
+            - row "הרצליה · מכבי הרצליה 125 בטווח" [ref=e246]:
+              - cell "הרצליה · מכבי הרצליה" [ref=e247]
+              - cell "125" [ref=e248]
+              - cell "בטווח" [ref=e249]:
+                - generic [ref=e250]: בטווח
+            - row "אשדוד · אליצור אשדוד 113 בטווח" [ref=e251]:
+              - cell "אשדוד · אליצור אשדוד" [ref=e252]
+              - cell "113" [ref=e253]
+              - cell "בטווח" [ref=e254]:
+                - generic [ref=e255]: בטווח
+            - row "אשדוד · בית\"ר אשדוד 110 בטווח" [ref=e256]:
+              - cell "אשדוד · בית\"ר אשדוד" [ref=e257]
+              - cell "110" [ref=e258]
+              - cell "בטווח" [ref=e259]:
+                - generic [ref=e260]: בטווח
+            - row "הרצליה · הפועל הרצליה 77 בטווח" [ref=e261]:
+              - cell "הרצליה · הפועל הרצליה" [ref=e262]
+              - cell "77" [ref=e263]
+              - cell "בטווח" [ref=e264]:
+                - generic [ref=e265]: בטווח
+            - row "אילת · מכבי אילת 76 בטווח" [ref=e266]:
+              - cell "אילת · מכבי אילת" [ref=e267]
+              - cell "76" [ref=e268]
+              - cell "בטווח" [ref=e269]:
+                - generic [ref=e270]: בטווח
+            - row "אילת · אליצור אילת 63 בטווח" [ref=e271]:
+              - cell "אילת · אליצור אילת" [ref=e272]
+              - cell "63" [ref=e273]
+              - cell "בטווח" [ref=e274]:
+                - generic [ref=e275]: בטווח
+            - row "עכו · מכבי עכו 62 בטווח" [ref=e276]:
+              - cell "עכו · מכבי עכו" [ref=e277]
+              - cell "62" [ref=e278]
+              - cell "בטווח" [ref=e279]:
+                - generic [ref=e280]: בטווח
+            - row "אילת · עירוני אילת 59 בטווח" [ref=e281]:
+              - cell "אילת · עירוני אילת" [ref=e282]
+              - cell "59" [ref=e283]
+              - cell "בטווח" [ref=e284]:
+                - generic [ref=e285]: בטווח
+            - row "אילת · הפועל אילת 50 בטווח" [ref=e286]:
+              - cell "אילת · הפועל אילת" [ref=e287]
+              - cell "50" [ref=e288]
+              - cell "בטווח" [ref=e289]:
+                - generic [ref=e290]: בטווח
+            - row "רמת גן · עירוני רמת גן 46 בטווח" [ref=e291]:
+              - cell "רמת גן · עירוני רמת גן" [ref=e292]
+              - cell "46" [ref=e293]
+              - cell "בטווח" [ref=e294]:
+                - generic [ref=e295]: בטווח

@@ -1,0 +1,109 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - text: משרד התרבות
+      - text: והספורט
+    - generic [ref=e4]:
+      - heading "מצב המקומות לפי גודל" [level=1] [ref=e5]
+      - generic [ref=e6]: מסך ייעודי לראשת מנהל הספורט · נתונים סינתטיים להדגמה בלבד
+  - generic [ref=e7]:
+    - generic [ref=e8]:
+      - generic [ref=e9]:
+        - generic [ref=e10]: "1"
+        - text: על מה מסתכלים?
+      - generic [ref=e11]:
+        - button "ערים" [ref=e12] [cursor=pointer]
+        - button "איגודים לפי ענף" [ref=e13] [cursor=pointer]:
+          - text: איגודים
+          - generic [ref=e14]: לפי ענף
+        - button "אגודות" [ref=e15] [cursor=pointer]
+        - button "סניפים הרמה המפורטת ביותר" [ref=e16] [cursor=pointer]:
+          - text: סניפים
+          - generic [ref=e17]: הרמה המפורטת ביותר
+    - generic [ref=e18]:
+      - generic [ref=e19]:
+        - generic [ref=e20]: "2"
+        - text: באיזה גודל?
+      - generic [ref=e21]:
+        - button "הכל" [ref=e22] [cursor=pointer]
+        - button "קטנים עד 950 ספורטאים" [ref=e23] [cursor=pointer]:
+          - text: קטנים
+          - generic [ref=e24]: עד 950 ספורטאים
+        - button "בינוניים 950–2,153" [ref=e25] [cursor=pointer]:
+          - text: בינוניים
+          - generic [ref=e26]: 950–2,153
+        - button "גדולים מעל 2,153" [ref=e27] [cursor=pointer]:
+          - text: גדולים
+          - generic [ref=e28]: מעל 2,153
+  - generic [ref=e29]: "מציג: ערים קטנים (עד 950) — 4 מתוך 12 ערים בסה\"כ"
+  - generic [ref=e30]:
+    - generic [ref=e31]:
+      - generic [ref=e32]: ערים שנבחרו
+      - generic [ref=e33]: "4"
+      - generic [ref=e34]: מתוך 12 ערים
+    - generic [ref=e35]:
+      - generic [ref=e36]: סה"כ ספורטאים בהם
+      - generic [ref=e37]: 2,496
+      - generic [ref=e38]: קטנים (עד 950)
+    - generic [ref=e39]:
+      - generic [ref=e40]: גודל אופייני (חציון)
+      - generic [ref=e41]: "534"
+      - generic [ref=e42]: ספורטאים למקום
+    - generic [ref=e43]:
+      - generic [ref=e44]: הקטן ביותר
+      - generic [ref=e45]: "503"
+      - generic [ref=e46]: הרצליה
+  - generic [ref=e47]:
+    - generic [ref=e48]:
+      - heading "תמונת מצב מלאה — ערים קטנים (עד 950)" [level=2] [ref=e49]
+      - generic [ref=e50]: ממוין לפי גודל · עמודת ספורטאים = Data Bars · ₪ לספורטאי = סולם צבע · מגמה = אייקון (הכל יכולות מובנות של QuickSight)
+      - table [ref=e52]:
+        - rowgroup [ref=e53]:
+          - row "מקום ספורטאים מגמה ₪ לספורטאי תקציב אגודות ענפים" [ref=e54]:
+            - columnheader "מקום" [ref=e55]
+            - columnheader "ספורטאים" [ref=e56]
+            - columnheader "מגמה" [ref=e57]
+            - columnheader "₪ לספורטאי" [ref=e58]
+            - columnheader "תקציב" [ref=e59]
+            - columnheader "אגודות" [ref=e60]
+            - columnheader "ענפים" [ref=e61]
+        - rowgroup [ref=e62]:
+          - row "אשדוד 892 ▼ 7% ₪2,749 ₪2.5M 1 6" [ref=e63]:
+            - cell "אשדוד" [ref=e64]
+            - cell "892" [ref=e65]:
+              - generic [ref=e69]: "892"
+            - cell "▼ 7%" [ref=e70]
+            - cell "₪2,749" [ref=e71]
+            - cell "₪2.5M" [ref=e72]
+            - cell "1" [ref=e73]
+            - cell "6" [ref=e74]
+          - row "נתניה 567 ▼ 5% ₪2,214 ₪1.3M 1 4" [ref=e75]:
+            - cell "נתניה" [ref=e76]
+            - cell "567" [ref=e77]:
+              - generic [ref=e81]: "567"
+            - cell "▼ 5%" [ref=e82]
+            - cell "₪2,214" [ref=e83]
+            - cell "₪1.3M" [ref=e84]
+            - cell "1" [ref=e85]
+            - cell "4" [ref=e86]
+          - row "אילת 534 ◄► יציב ₪2,337 ₪1.2M 3 6" [ref=e87]:
+            - cell "אילת" [ref=e88]
+            - cell "534" [ref=e89]:
+              - generic [ref=e93]: "534"
+            - cell "◄► יציב" [ref=e94]
+            - cell "₪2,337" [ref=e95]
+            - cell "₪1.2M" [ref=e96]
+            - cell "3" [ref=e97]
+            - cell "6" [ref=e98]
+          - row "הרצליה 503 ▼ 6% ₪2,259 ₪1.1M 1 5" [ref=e99]:
+            - cell "הרצליה" [ref=e100]
+            - cell "503" [ref=e101]:
+              - generic [ref=e105]: "503"
+            - cell "▼ 6%" [ref=e106]
+            - cell "₪2,259" [ref=e107]
+            - cell "₪1.1M" [ref=e108]
+            - cell "1" [ref=e109]
+            - cell "5" [ref=e110]
+    - generic [ref=e111]:
+      - heading "איפה זה ביחס לכולם?" [level=2] [ref=e112]
+      - generic [ref=e113]: כל המקומות לפי מדרגות גודל · כחול = הקבוצה שבחרת

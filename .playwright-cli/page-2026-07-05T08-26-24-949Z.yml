@@ -1,0 +1,209 @@
+- generic [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - text: משרד התרבות
+      - text: והספורט
+    - generic [ref=e4]:
+      - heading "מצב המקומות לפי גודל" [level=1] [ref=e5]
+      - generic [ref=e6]: מסך ייעודי לראשת מנהל הספורט · נתונים סינתטיים להדגמה בלבד
+  - generic [ref=e7]:
+    - generic [ref=e8]: מסננים
+    - generic [ref=e9]:
+      - generic [ref=e10]: עיר
+      - combobox [ref=e11]:
+        - option "הכל" [selected]
+        - option "ירושלים"
+        - option "תל אביב"
+        - option "חיפה"
+        - option "באר שבע"
+        - option "נתניה"
+        - option "ראשון לציון"
+        - option "אשדוד"
+        - option "פתח תקווה"
+        - option "רמת גן"
+        - option "הרצליה"
+        - option "עכו"
+        - option "אילת"
+    - generic [ref=e12]:
+      - generic [ref=e13]: ענף (איגוד)
+      - combobox [ref=e14]:
+        - option "הכל" [selected]
+        - option "שחייה"
+        - option "אתלטיקה"
+        - option "ג'ודו"
+        - option "כדורעף"
+        - option "טניס"
+        - option "התעמלות"
+        - option "אופניים"
+        - option "סיוף"
+        - option "טריאתלון"
+        - option "איגרוף"
+  - generic [ref=e15]:
+    - generic [ref=e16]:
+      - generic [ref=e17]: רמת תצוגה — לחיצה = זום פנימה
+      - generic [ref=e18]:
+        - button "ערים" [ref=e19] [cursor=pointer]
+        - button "איגודים לפי ענף" [ref=e20] [cursor=pointer]:
+          - text: איגודים
+          - generic [ref=e21]: לפי ענף
+        - button "אגודות" [ref=e22] [cursor=pointer]
+        - button "סניפים הרמה המפורטת ביותר" [ref=e23] [cursor=pointer]:
+          - text: סניפים
+          - generic [ref=e24]: הרמה המפורטת ביותר
+    - generic [ref=e25]:
+      - generic [ref=e26]: מיקוד לפי גודל
+      - generic [ref=e27]:
+        - button "הכל" [active] [ref=e28] [cursor=pointer]
+        - button "קטנים עד 950 ספורטאים" [ref=e29] [cursor=pointer]:
+          - text: קטנים
+          - generic [ref=e30]: עד 950 ספורטאים
+        - button "בינוניים 950–2,153" [ref=e31] [cursor=pointer]:
+          - text: בינוניים
+          - generic [ref=e32]: 950–2,153
+        - button "גדולים מעל 2,153" [ref=e33] [cursor=pointer]:
+          - text: גדולים
+          - generic [ref=e34]: מעל 2,153
+  - generic [ref=e35]: "מציג: ערים — 12 מתוך 12 ערים"
+  - generic [ref=e36]:
+    - generic [ref=e37]:
+      - generic [ref=e38]: ערים שנבחרו
+      - generic [ref=e39]: "12"
+      - generic [ref=e40]: מתוך 12 ערים
+    - generic [ref=e41]:
+      - generic [ref=e42]: סה"כ ספורטאים בהם
+      - generic [ref=e43]: 17,597
+      - generic [ref=e44]: בכל גודל
+    - generic [ref=e45]:
+      - generic [ref=e46]: גודל אופייני (חציון)
+      - generic [ref=e47]: 1,329
+      - generic [ref=e48]: ספורטאים למקום
+    - generic [ref=e49]:
+      - generic [ref=e50]: הקטן ביותר
+      - generic [ref=e51]: "503"
+      - generic [ref=e52]: הרצליה
+  - generic [ref=e53]:
+    - generic [ref=e54]:
+      - heading "תמונת מצב מלאה — ערים" [level=2] [ref=e122]
+      - generic [ref=e56]: ממוין לפי גודל · עמודת ספורטאים = Data Bars · ₪ לספורטאי = סולם צבע · מגמה = אייקון (הכל יכולות מובנות של QuickSight)
+      - table [ref=e58]:
+        - rowgroup [ref=e59]:
+          - row "מקום ספורטאים מגמה ₪ לספורטאי תקציב אגודות ענפים" [ref=e60]:
+            - columnheader "מקום" [ref=e61]
+            - columnheader "ספורטאים" [ref=e62]
+            - columnheader "מגמה" [ref=e63]
+            - columnheader "₪ לספורטאי" [ref=e64]
+            - columnheader "תקציב" [ref=e65]
+            - columnheader "אגודות" [ref=e66]
+            - columnheader "ענפים" [ref=e67]
+        - rowgroup [ref=e68]:
+          - row "תל אביב 2,439 ▼ 5% ₪2,119 ₪5.2M 4 5" [ref=e123] [cursor=pointer]:
+            - cell "תל אביב" [ref=e124]
+            - cell "2,439" [ref=e125]:
+              - generic [ref=e129]: 2,439
+            - cell "▼ 5%" [ref=e130]
+            - cell "₪2,119" [ref=e131]
+            - cell "₪5.2M" [ref=e132]
+            - cell "4" [ref=e133]
+            - cell "5" [ref=e134]
+          - row "ירושלים 2,268 ◄► יציב ₪2,288 ₪5.2M 2 7" [ref=e135] [cursor=pointer]:
+            - cell "ירושלים" [ref=e136]
+            - cell "2,268" [ref=e137]:
+              - generic [ref=e141]: 2,268
+            - cell "◄► יציב" [ref=e142]
+            - cell "₪2,288" [ref=e143]
+            - cell "₪5.2M" [ref=e144]
+            - cell "2" [ref=e145]
+            - cell "7" [ref=e146]
+          - row "חיפה 2,234 ◄► יציב ₪2,256 ₪5.0M 3 9" [ref=e147] [cursor=pointer]:
+            - cell "חיפה" [ref=e148]
+            - cell "2,234" [ref=e149]:
+              - generic [ref=e153]: 2,234
+            - cell "◄► יציב" [ref=e154]
+            - cell "₪2,256" [ref=e155]
+            - cell "₪5.0M" [ref=e156]
+            - cell "3" [ref=e157]
+            - cell "9" [ref=e158]
+          - row "פתח תקווה 2,153 ◄► יציב ₪2,407 ₪5.2M 2 9" [ref=e159] [cursor=pointer]:
+            - cell "פתח תקווה" [ref=e160]
+            - cell "2,153" [ref=e161]:
+              - generic [ref=e165]: 2,153
+            - cell "◄► יציב" [ref=e166]
+            - cell "₪2,407" [ref=e167]
+            - cell "₪5.2M" [ref=e168]
+            - cell "2" [ref=e169]
+            - cell "9" [ref=e170]
+          - row "באר שבע 1,902 ▼ 5% ₪2,689 ₪5.1M 3 7" [ref=e171] [cursor=pointer]:
+            - cell "באר שבע" [ref=e172]
+            - cell "1,902" [ref=e173]:
+              - generic [ref=e177]: 1,902
+            - cell "▼ 5%" [ref=e178]
+            - cell "₪2,689" [ref=e179]
+            - cell "₪5.1M" [ref=e180]
+            - cell "3" [ref=e181]
+            - cell "7" [ref=e182]
+          - row "ראשון לציון 1,826 ◄► יציב ₪1,999 ₪3.7M 4 7" [ref=e183] [cursor=pointer]:
+            - cell "ראשון לציון" [ref=e184]
+            - cell "1,826" [ref=e185]:
+              - generic [ref=e189]: 1,826
+            - cell "◄► יציב" [ref=e190]
+            - cell "₪1,999" [ref=e191]
+            - cell "₪3.7M" [ref=e192]
+            - cell "4" [ref=e193]
+            - cell "7" [ref=e194]
+          - row "רמת גן 1,329 ▲ 4% ₪2,492 ₪3.3M 2 7" [ref=e195] [cursor=pointer]:
+            - cell "רמת גן" [ref=e196]
+            - cell "1,329" [ref=e197]:
+              - generic [ref=e201]: 1,329
+            - cell "▲ 4%" [ref=e202]
+            - cell "₪2,492" [ref=e203]
+            - cell "₪3.3M" [ref=e204]
+            - cell "2" [ref=e205]
+            - cell "7" [ref=e206]
+          - row "עכו 950 ◄► יציב ₪2,726 ₪2.6M 2 7" [ref=e207] [cursor=pointer]:
+            - cell "עכו" [ref=e208]
+            - cell "950" [ref=e209]:
+              - generic [ref=e213]: "950"
+            - cell "◄► יציב" [ref=e214]
+            - cell "₪2,726" [ref=e215]
+            - cell "₪2.6M" [ref=e216]
+            - cell "2" [ref=e217]
+            - cell "7" [ref=e218]
+          - row "אשדוד 892 ▼ 7% ₪2,749 ₪2.5M 1 6" [ref=e219] [cursor=pointer]:
+            - cell "אשדוד" [ref=e220]
+            - cell "892" [ref=e221]:
+              - generic [ref=e225]: "892"
+            - cell "▼ 7%" [ref=e226]
+            - cell "₪2,749" [ref=e227]
+            - cell "₪2.5M" [ref=e228]
+            - cell "1" [ref=e229]
+            - cell "6" [ref=e230]
+          - row "נתניה 567 ▼ 5% ₪2,214 ₪1.3M 1 4" [ref=e231] [cursor=pointer]:
+            - cell "נתניה" [ref=e232]
+            - cell "567" [ref=e233]:
+              - generic [ref=e237]: "567"
+            - cell "▼ 5%" [ref=e238]
+            - cell "₪2,214" [ref=e239]
+            - cell "₪1.3M" [ref=e240]
+            - cell "1" [ref=e241]
+            - cell "4" [ref=e242]
+          - row "אילת 534 ◄► יציב ₪2,337 ₪1.2M 3 6" [ref=e243] [cursor=pointer]:
+            - cell "אילת" [ref=e244]
+            - cell "534" [ref=e245]:
+              - generic [ref=e249]: "534"
+            - cell "◄► יציב" [ref=e250]
+            - cell "₪2,337" [ref=e251]
+            - cell "₪1.2M" [ref=e252]
+            - cell "3" [ref=e253]
+            - cell "6" [ref=e254]
+          - row "הרצליה 503 ▼ 6% ₪2,259 ₪1.1M 1 5" [ref=e255] [cursor=pointer]:
+            - cell "הרצליה" [ref=e256]
+            - cell "503" [ref=e257]:
+              - generic [ref=e261]: "503"
+            - cell "▼ 6%" [ref=e262]
+            - cell "₪2,259" [ref=e263]
+            - cell "₪1.1M" [ref=e264]
+            - cell "1" [ref=e265]
+            - cell "5" [ref=e266]
+    - generic [ref=e117]:
+      - heading "איפה זה ביחס לכולם?" [level=2] [ref=e118]
+      - generic [ref=e119]: כל המקומות לפי מדרגות גודל · כחול = הקבוצה שבחרת

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>חלוקת תקציב התמיכה — כלי צלילה אינטראקטיבי</title>
+<style>
+  :root{
+    --navy:#1F3F6D; --green:#248A3D; --red:#DA3439; --sky:#2D9CDB;
+    --purple:#6B4FA0; --orange:#E07B39; --slate:#7A8FA6; --gold:#F8C33E;
+    --bg:#F2F4F7; --surface:#FFFFFF; --border:#E5E9F0;
+    --ink:#1A1A2E; --muted:#6B7280;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--bg); color:var(--ink);
+    font-family:"Amazon Ember","Heebo",system-ui,sans-serif; padding-bottom:60px;}
+  header.top{background:var(--navy); color:#fff; padding:20px 28px;}
+  header.top h1{margin:0; font-size:22px; font-weight:600;}
+  header.top p{margin:5px 0 0; font-size:13.5px; opacity:.85;}
+  .wrap{max-width:1000px; margin:0 auto; padding:0 20px;}
+  .toolbar{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin:18px 0 8px;}
+  .toolbar input[type=search]{
+    flex:1; min-width:200px; padding:9px 13px; border:1px solid var(--border);
+    border-radius:9px; font-size:14px; font-family:inherit; background:var(--surface);}
+  .btn{background:var(--surface); border:1px solid var(--border); color:var(--ink);
+    padding:8px 13px; border-radius:9px; font-size:13px; cursor:pointer; font-family:inherit;}
+  .btn:hover{background:#EAEEF4;}
+  .chips{display:flex; gap:7px; flex-wrap:wrap; margin-bottom:14px;}
+  .qchip{background:#EAF0F7; border:1px solid #D3DEEC; color:var(--navy);
+    padding:6px 12px; border-radius:20px; font-size:12.5px; cursor:pointer;}
+  .qchip:hover{background:#DCE6F3;}
+  .kpis{display:flex; gap:12px; flex-wrap:wrap; margin-bottom:16px;}
+  .kpi{background:var(--surface); border:1px solid var(--border); border-radius:12px;
+    padding:11px 16px; flex:1; min-width:130px;}
+  .kpi .n{font-size:22px; font-weight:700; color:var(--navy);}
+  .kpi .l{font-size:12px; color:var(--muted); margin-top:2px;}
+
+  .node{margin:0;}
+  .row{display:flex; align-items:center; gap:9px; padding:9px 12px; cursor:pointer;
+    border-radius:10px; user-select:none;}
+  .row:hover{background:#EAEEF4;}
+  .caret{width:15px; flex:0 0 15px; color:var(--slate); font-size:12px; transition:transform .15s; text-align:center;}
+  .node.open > .row > .caret{transform:rotate(-90deg);}
+  .lbl{flex:1; font-size:14px;}
+  .lbl .desc{display:block; font-size:11.5px; color:var(--muted); margin-top:2px; font-weight:400;}
+  .badge{font-size:12.5px; font-weight:600; padding:3px 9px; border-radius:16px; white-space:nowrap;}
+  .b-pot{background:var(--navy); color:#fff;}
+  .b-crit{background:#E7EDF5; color:var(--navy);}
+  .b-pts{background:#EEF1F5; color:var(--ink);}
+  .b-m{background:#E5EBF3; color:var(--navy);}
+  .b-f{background:#E4F2FB; color:#1C6FA5;}
+  .b-pct{background:#E7F3EB; color:var(--green);}
+  .b-formula{background:#FCF3DA; color:#8A6D12;}
+  .kids{margin-inline-start:16px; border-inline-start:1.5px solid var(--border);
+    padding-inline-start:6px; display:none;}
+  .node.open > .kids{display:block;}
+  .dcard{background:var(--surface); border:1px solid var(--border); border-radius:12px;
+    margin-bottom:10px; overflow:hidden;}
+  .dcard > .row{padding:13px 14px;}
+  .dcard > .row .lbl{font-size:15.5px; font-weight:600;}
+  .sizebar{width:5px; align-self:stretch; border-radius:3px; margin-inline-end:2px;}
+  .hidden{display:none !important;}
+  .hl{background:#FFF3C4;}
+  .note{font-size:12px; color:var(--muted); line-height:1.7; margin-top:18px;
+    border-top:1px solid var(--border); padding-top:12px;}
+  .legend{display:flex; gap:16px; flex-wrap:wrap; font-size:12px; color:var(--muted); margin:2px 0 14px;}
+  .legend b{color:var(--ink); font-weight:600;}
+  .sw{display:inline-block; width:12px; height:12px; border-radius:3px; vertical-align:-2px; margin-left:5px;}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <h1>חלוקת תקציב התמיכה בספורט — כלי צלילה</h1>
+  <p>מבחן תמיכה איגודים 2026 · מהסל הכולל עד לניקוד האטומי · לחצו על כל שורה כדי להעמיק</p>
+</div></header>
+
+<div class="wrap">
+  <div class="kpis">
+    <div class="kpi"><div class="n">100%</div><div class="l">הסל הכולל</div></div>
+    <div class="kpi"><div class="n">8</div><div class="l">תחומים (א'–ח')</div></div>
+    <div class="kpi"><div class="n">~73%</div><div class="l">בליבה התחרותית א'/ב'/ג'</div></div>
+    <div class="kpi"><div class="n">4</div><div class="l">רמות צלילה</div></div>
+  </div>
+
+  <div class="legend">
+    <span><b>צבע ניקוד מגדרי:</b></span>
+    <span><span class="sw" style="background:#1F3F6D;"></span>ספורטאי (גברים)</span>
+    <span><span class="sw" style="background:#2D9CDB;"></span>ספורטאית (נשים)</span>
+    <span><span class="sw" style="background:#F8C33E;"></span>נוסחה / נספח</span>
+  </div>
+
+  <div class="toolbar">
+    <input type="search" id="q" placeholder="חיפוש: הישגי, מדליה, מאמן לאומי, נשים, מסטרס...">
+    <button class="btn" id="expand">הרחב הכל</button>
+    <button class="btn" id="collapse">כווץ הכל</button>
+  </div>
+  <div class="chips">
+    <span class="qchip" data-q="ספורטאי">ניקוד לפי גיל/מגדר</span>
+    <span class="qchip" data-q="מדלי">מדליות והישגים</span>
+    <span class="qchip" data-q="מאמן">מאמנים ומקצועיות</span>
+    <span class="qchip" data-q="נשים">קידום נשים</span>
+    <span class="qchip" data-q="">איפוס</span>
+  </div>
+
+  <div id="tree"></div>
+
+  <div class="note" id="note"></div>
+</div>
+
+<script>
+const M=[{l:"בענף שבו >50% נשים: הניקוד המלא עד לשיעור 50% מהספורטאים, ומעבר לכך ניקוד מופחת."}];
+const ATH_GROUP=[
+  {l:"גיל אוריינות (העשרה ספורטיבית)",p:0.1},
+  {l:"גיל למידה",p:1},
+  {l:"גיל ילדים / ילדות",p:2},
+  {l:"גיל נערים / קדטים — ספורטאי",p:4,g:"m"},
+  {l:"גיל נערות / קדטיות — ספורטאית",p:6,g:"f",d:"בענף >50% נשים: 6 עד רף 50%, 4 ליתר"},
+  {l:"גיל הישגי — ספורטאי",p:6,g:"m"},
+  {l:"גיל הישגי — ספורטאית",p:10,g:"f",d:"בענף >50% נשים: 10 עד רף 50%, 6 ליתר"},
+  {l:"גיל תחרותי",p:4},
+  {l:"גיל מסטרס",p:0.5},
+  {l:"גיל וותיקים",p:0.1},
+  {l:"תוספת גידול שיעור ספורטאיות",f:1,d:"תוספת 10% מסך הניקוד באמת מידה זו, לפי טבלת נספח ב'"}
+];
+const ACH_GROUP=[
+  {l:"אליפות אירופה — מקום 1 בוגרים",p:100},
+  {l:"אליפות אירופה — מקום 2 בוגרים",p:80},
+  {l:"אליפות אירופה — מקום 3 בוגרים",p:60},
+  {l:"אליפות אירופה — מקומות 4-8 בוגרים",p:40},
+  {l:"מקום 9+ (שליש עליון מהנבחרות)",p:30},
+  {l:"שליש שני מהנבחרות",p:20},
+  {l:"שליש תחתון מהנבחרות",p:10},
+  {l:"אליפות עולם",f:1,d:"פי 4 מניקוד אליפות אירופה"},
+  {l:"אולימפי / משחקי עולם",f:1,d:"פי 8 מניקוד אליפות אירופה"},
+  {l:"נבחרת עתודה",f:1,d:"50% מניקוד הבוגרים"},
+  {l:"נבחרת נוער",f:1,d:"25% מניקוד הבוגרים"},
+  {l:"נבחרת קדטים",f:1,d:"12.5% מניקוד הבוגרים"}
+];
+const ENVELOPE=[
+  {l:"מנכ״ל בעל תואר (שכר ממוצע)",p:5},
+  {l:"מנהל מקצועי / מנהל הדרכה (150% שכר)",p:2},
+  {l:"מאמן לאומי (שכר ממוצע)",p:1,g:"m"},
+  {l:"עוזר מאמן לאומי (75% שכר)",p:0.5},
+  {l:"חונך לליווי מאמנים (75% שכר)",p:0.5},
+  {l:"איש מקצוע נוסף במעטפת (20% שכר)",p:0.25},
+  {l:"תקרת מעטפת — ענף על",p:40,d:"עד 40 נק'; אדם בכמה תפקידים עד 2 נק'"},
+  {l:"פיתוח מקצועי — השתלמות ארצית",p:1,d:"תקרה 30 נק' בשנה"},
+  {l:"פיתוח מקצועי — השתלמות בינלאומית",p:5},
+  {l:"פיתוח מקצועי — השתלמות בינלאומית בכירה",p:10}
+];
+const COACHCLUB=[
+  {l:"מדריך באגודה (25%+ שכר)",p:1},
+  {l:"מאמן באגודה (25%+ שכר)",p:4},
+  {l:"מקדם העסקה 50%+ שכר",f:1,d:"תוספת 10% מהניקוד בגין בעל התפקיד"},
+  {l:"מקדם העסקה 90%+ שכר",f:1,d:"תוספת 20% מהניקוד"},
+  {l:"מקדם העסקה 120%+ שכר",f:1,d:"תוספת 30% מהניקוד"}
+];
+const WOMEN=[
+  {l:"הפעלת נבחרת — ילדות",p:4,g:"f"},
+  {l:"הפעלת נבחרת — קדטיות",p:3,g:"f"},
+  {l:"הפעלת נבחרת — נערות",p:2,g:"f"},
+  {l:"הפעלת נבחרת — עתודה",p:1,g:"f"},
+  {l:"מנהלת כללית בעלת תואר (שכר ממוצע)",p:10,g:"f"},
+  {l:"מנהלת מקצועית / רכזת / מנהלת הדרכה (150%)",p:2,g:"f"},
+  {l:"מאמנת לאומית (שכר ממוצע)",p:1,g:"f"},
+  {l:"עוזרת מאמן לאומי (75%)",p:0.5,g:"f"},
+  {l:"חונכת (75%)",p:0.5,g:"f"},
+  {l:"אשת מקצוע נוספת (20%)",p:0.25,g:"f"},
+  {l:"תקרת מעטפת נשים",p:14,d:"עד 14 נק'; אדם בכמה תפקידים עד 2"},
+  {l:"ליווי מאמנות באגודות — מדריכה",p:1,g:"f"},
+  {l:"ליווי מאמנות באגודות — מאמנת",p:4,g:"f"}
+];
+const ATH_INDIV=[
+  {l:"גיל אוריינות (העשרה ספורטיבית)",p:0.1},
+  {l:"גיל למידה",p:1},
+  {l:"גיל התמחות 1",p:2},
+  {l:"גיל התמחות 2 — ספורטאי",p:4,g:"m"},
+  {l:"גיל התמחות 2 — ספורטאית",p:6,g:"f",d:"בענף >50% נשים: 6 עד רף 50%, 4 ליתר"},
+  {l:"גיל הישגי — ספורטאי",p:6,g:"m"},
+  {l:"גיל הישגי — ספורטאית",p:10,g:"f",d:"בענף >50% נשים: 10 עד רף 50%, 6 ליתר"},
+  {l:"גיל תחרותי",p:4},
+  {l:"גיל מסטרס",p:0.5},
+  {l:"גיל וותיקים",p:0.1},
+  {l:"תוספת גידול שיעור ספורטאיות",f:1,d:"תוספת 10% לפי נספח ב'"}
+];
+const ACH_INDIV=[
+  {l:"אליפות אירופה — מדליית זהב",p:16},
+  {l:"אליפות אירופה — מדליית כסף",p:12},
+  {l:"אליפות אירופה — מדליית ארד",p:10},
+  {l:"אליפות אירופה — מקומות 4-8",p:5},
+  {l:"אליפות אירופה — מקומות 9-16",p:2},
+  {l:"שליש עליון (כולל מוקדמות)",p:1},
+  {l:"אליפות עולם",f:1,d:"פי 4 מאליפות אירופה"},
+  {l:"אולימפי / משחקי עולם",f:1,d:"פי 8 מאליפות אירופה"},
+  {l:"נוער עד גיל 21 (מקומות 1-8)",f:1,d:"25% מניקוד בוגרים"},
+  {l:"קדטים (מקומות 1-8)",f:1,d:"12.5% מניקוד בוגרים"},
+  {l:"ספורטאי במשלחת אולימפית/עולם",p:2,d:"קבוצה מעל 2 ספורטאים — עד 4 נק'"},
+  {l:"תחרות דרג א' בענף אישי 2",f:1,d:"50% מניקוד תחרות דרג א' בענף אישי 1"}
+];
+
+const DATA=[
+ {code:"א'",name:"ענפי על",pot:37.85,tone:"big",
+  split:"חלוקה: איגוד 35% · אגודות 65% (תקרת 20% לקבוצה)",
+  crit:[
+   {name:"ספורטאים וטרום ספורטאים",pct:45,leaves:ATH_GROUP},
+   {name:"הישגיות",pct:20,leaves:ACH_GROUP},
+   {name:"מקצועיות",pct:10,leaves:ENVELOPE},
+   {name:"ליווי העסקת מאמנים באגודות",pct:10,leaves:COACHCLUB},
+   {name:"עלות הפעלת ענף",pct:10,leaves:[
+     {l:"ציוד אישי / מתקן אימון / שינוע",f:1,d:"ניקוד לפי נספח ג' לכל איגוד"},
+     {l:"מקדם שיגור משלחות — עד 3 טורנירים",p:1},
+     {l:"מקדם שיגור משלחות — 4-9",p:2},
+     {l:"מקדם שיגור משלחות — 10-15",p:3},
+     {l:"מקדם שיגור משלחות — 16-24",p:4}]},
+   {name:"קידום ספורט נשים",pct:2,leaves:WOMEN},
+   {name:"מרכזי מצוינות (ענפי על בלבד)",pct:2,leaves:[
+     {l:"מנהל מקצועי / מאמן / איש מקצוע",f:1,d:"ניקוד לצוות המרכז (ערכים לאימות מול הנוסח הרשמי)"},
+     {l:"השתתפות קבוצה בטורניר בארץ",p:1,d:"תקרה 5 נק'"},
+     {l:"השתתפות קבוצה בטורניר בחו״ל",p:5,d:"תקרה 15 נק'"}]},
+   {name:"השתתפות אגודות בטורנירים באירופה",pct:1,leaves:[
+     {l:"העפלת שלב — דרג התחרות הגבוה",p:2},
+     {l:"העפלת שלב — דרג שני",p:1},
+     {l:"העפלת שלב — דרג שלישי",p:0.5},
+     {l:"סף פסילה — מחזור פי 15 מהתמיכה",f:1,d:"אגודה עשירה מדי אינה זכאית"}]}
+  ]},
+ {code:"ב'",name:"ענפים קבוצתיים",pot:11.42,tone:"med",
+  split:"אולימפי 9.35% + לא-אולימפי 2.07% · איגוד 35% / אגודות 65%",
+  note:"אמות המידה זהות לענפי על, למעט: אין 'מרכזי מצוינות'; תקרת מעטפת 10 נק' (במקום 40); נשים 3% וטורנירים 2%.",
+  crit:[
+   {name:"ספורטאים",pct:45,leaves:ATH_GROUP},
+   {name:"הישגיות",pct:20,leaves:ACH_GROUP},
+   {name:"מקצועיות",pct:10,leaves:[{l:"זהה לענפי על, אך תקרת מעטפת 10 נק'",p:10,d:"מנהל מקצועי 2 · מאמן לאומי 1 · עוזר 0.5 · חונך 0.5 · נוסף 0.25"}]},
+   {name:"ליווי העסקת מאמנים באגודות",pct:10,leaves:COACHCLUB},
+   {name:"עלות הפעלת ענף",pct:10,leaves:[{l:"נספח ג' + מקדם טורנירים",f:1}]},
+   {name:"קידום ספורט נשים",pct:3,leaves:WOMEN},
+   {name:"השתתפות אגודות בטורנירים באירופה",pct:2,leaves:[{l:"העפלת שלב (2 / 1 / 0.5 נק')",p:2}]}
+  ]},
+ {code:"ג'",name:"ענפים אישיים",pot:24.68,tone:"big",
+  split:"אולימפי 21.60% + לא-אולימפי 3.08% · איגוד 60% / אגודות 40% (תקרת 20% לאגודה)",
+  crit:[
+   {name:"ספורטאים",pct:30,leaves:ATH_INDIV},
+   {name:"הישגיות",pct:40,leaves:ACH_INDIV},
+   {name:"מעטפת מקצועיות + פיתוח מאמנים",pct:9,leaves:[
+     {l:"מנכ״ל בעל תואר (שכר ממוצע)",p:5},
+     {l:"מנהל מקצועי / הדרכה (150%)",p:2},
+     {l:"מאמן לאומי (שכר ממוצע)",p:1,g:"m"},
+     {l:"חונך (75%)",p:0.5},
+     {l:"איש מקצוע נוסף (20%)",p:0.25},
+     {l:"תקרת מעטפת",p:10,d:"עד 10 נק'; אדם בכמה תפקידים עד 2"},
+     {l:"השתלמות ארצית",p:1,d:"תקרה 5 נק'"},
+     {l:"השתלמות בינלאומית",p:5},
+     {l:"השתלמות בינלאומית בכירה",p:10}]},
+   {name:"ליווי העסקת מאמנים באגודות",pct:8,leaves:[
+     {l:"מדריך",p:1},{l:"מאמן",p:4,d:"מקדמי שכר 10/20/30%"}]},
+   {name:"עלות הפעלת ענף",pct:10,leaves:[
+     {l:"ציוד / מתקן / שינוע",f:1,d:"לפי נספח ג'"},
+     {l:"מקדם השתתפויות בינלאומיות",f:1,d:"1-7 נק' לפי מספר השתתפויות וסוג הענף"}]},
+   {name:"קידום ספורט נשים",pct:3,leaves:WOMEN}
+  ]},
+ {code:"ד'",name:"ענפים מועדפים",pot:16.37,tone:"med",
+  split:"תיעדוף ענפים בעלי סיכויי הצטיינות בינלאומיים · לאיגודים לפי תכנית עבודה מאושרת · חובת 10% לקידום נשים",
+  crit:[
+   {name:"רצועה א' — ענפים אישיים",pct:79.302,leaves:[
+     {l:"קטגוריה א' — הענף האולימפי בעל הניקוד הגבוה",pct:15.094},
+     {l:"קטגוריה ב' — 2 הענפים הבאים",pct:25.786},
+     {l:"קטגוריה ג' — 2 הענפים הבאים",pct:18.868},
+     {l:"קטגוריה ד' — 3 הענפים הבאים",pct:9.434},
+     {l:"קטגוריה ה' — זכייה במדליה אולימפית",pct:6.289,d:"זהב 3 · כסף 2 · ארד 1 נק'"},
+     {l:"ענפים פראלימפיים (3)",pct:14.151},
+     {l:"ענפים לא-אולימפיים (3)",pct:10.377}]},
+   {name:"רצועה ב' — ענפים קבוצתיים",pct:15.711,leaves:[
+     {l:"ענפים אולימפיים (2)",pct:60.317},
+     {l:"ענפים פראלימפיים (2)",pct:31.746},
+     {l:"ענף לא-אולימפי (הגבוה)",pct:7.937}]},
+   {name:"רצועה ג' — אישיים רבי-משתתפים",pct:4.988,leaves:[
+     {l:"הענף/ים האולימפיים רבי-המשתתפים בעלי הניקוד הגבוה",pct:100,d:"מ-2025 ענף אחד; ניקוד ספורטאים פעילים"}]}
+  ]},
+ {code:"ה'",name:"העסקת מאמנים באגודות",pot:6.19,tone:"med",
+  split:"תמיכה ישירה לאגודות על העסקת מאמנים · תנאי סף: תוכנית מקצועית מאושרת, פריפריה/למ״ס נמוך",
+  crit:[
+   {name:"ניקוד ענפים קבוצתיים (קבוצות עד גיל 18)",leaves:[
+     {l:"4-8 קבוצות",p:2},{l:"9-12 קבוצות",p:3},{l:"13+ קבוצות",p:4},
+     {l:"כדורגל/מועדף — 2-4 קבוצות",p:2},{l:"כדורגל/מועדף — 5-8",p:3},{l:"כדורגל/מועדף — 9+",p:4}]},
+   {name:"ניקוד ענפים אישיים (ציון תקן משוקלל)",leaves:[
+     {l:"ציון 3 עד 5.5",p:2},{l:"ציון 5.6 עד 13",p:3},{l:"ציון מעל 13",p:4},
+     {l:"חישוב ציון תקן משוקלל",f:1,d:"ממוצע → סטיית תקן → ציון ×10; אגודות פריפריה ×4"}]},
+   {name:"מקדמי הכפלה",leaves:[
+     {l:"אגודה המעסיקה מאמנת",p:1.2,g:"f",d:"מקדם ×1.2"},
+     {l:"תוכנית להקניית ערכים בספורט",p:1.2,d:"מקדם ×1.2"},
+     {l:"אגודה בית-ספרית מזינה",p:1.2,d:"מקדם ×1.2"}]},
+   {name:"חלוקת התמיכה",leaves:[
+     {l:"חלוקה יחסית לפי ניקוד",f:1,d:"תקציב התחום × (ניקוד האגודה ÷ סך הניקוד)"}]}
+  ]},
+ {code:"ו'",name:"ענפי החשיבה (ברידג׳, שחמט, דמקה)",pot:0.84,tone:"small",
+  split:"איגוד 60% / אגודות 40%",
+  crit:[
+   {name:"ספורטאים",pct:70,leaves:[{l:"ניקוד ספורטאים לפי גיל/מגדר (כמו ענף אישי)",f:1,d:"לפי סעיף 18(1)"}]},
+   {name:"הישגיות",pct:30,leaves:[{l:"ניקוד הישגים",f:1,d:"לפי סעיף 18(2)"}]}
+  ]},
+ {code:"ז'",name:"ספורט נכים",pot:1.73,tone:"small",
+  split:"התאחדות הנכים 50% / אגודות 50% (מתוך האגודות: קבוצתיים 85% · אישיים 15%)",
+  crit:[
+   {name:"אגודות קבוצתיות",leaves:[{l:"ניקוד ספורטאים + הישגיות (קבוצתי)",f:1,d:"לפי סעיף 13(1),(2)"}]},
+   {name:"אגודות אישיות",leaves:[{l:"ניקוד ספורטאים + הישגיות (אישי)",f:1,d:"לפי סעיף 18(1),(2)"}]}
+  ]},
+ {code:"ח'",name:"צרכים מיוחדים",pot:0.92,tone:"small",
+  split:"חלוקה בין שלושה ארגונים לפי מספר משתתפים",
+  crit:[
+   {name:"ארגון לבעלי לקות שמיעה (חרשים)",pct:46.01,leaves:[{l:"ארגון 70% / אגודות 30%",f:1,d:"ניקוד אגודות לפי סעיף 13; חלוקה יחסית למשתתפים"}]},
+   {name:"ארגון לבעלי לקות קוגניטיבית",pct:37.03,leaves:[{l:"חלוקה יחסית למספר משתתפים",f:1}]},
+   {name:"ארגון לבעלי לקות ראייה",pct:16.96,leaves:[{l:"חלוקה יחסית למספר משתתפים",f:1}]}
+  ]}
+];
+
+function toneColor(t){return t==="big"?"#185FA5":t==="med"?"#2a78d6":"#B5D4F4";}
+function leafBadge(x){
+  if(x.f) return '<span class="badge b-formula">נוסחה</span>';
+  if(x.p!=null){var c=x.g==="m"?"b-m":x.g==="f"?"b-f":"b-pts";return '<span class="badge '+c+'">'+x.p+" נק'</span>";}
+  if(x.pct!=null) return '<span class="badge b-pct">'+x.pct+'%</span>';
+  return "";
+}
+function makeNode(kind,label,badge,desc,children,extraClass){
+  const node=document.createElement("div"); node.className="node"+(extraClass?" "+extraClass:"");
+  const row=document.createElement("div"); row.className="row";
+  const car=document.createElement("span"); car.className="caret"; car.textContent=children&&children.length?"▾":"";
+  const lbl=document.createElement("div"); lbl.className="lbl";
+  lbl.innerHTML=label+(desc?'<span class="desc">'+desc+'</span>':"");
+  row.appendChild(car); if(kind==="dom"){const sb=document.createElement("div");sb.className="sizebar";sb.style.background=badge.color;row.appendChild(sb);}
+  row.appendChild(lbl);
+  if(badge&&badge.html){const b=document.createElement("span");b.innerHTML=badge.html;row.appendChild(b.firstChild);}
+  node.appendChild(row);
+  const kids=document.createElement("div"); kids.className="kids";
+  if(children) children.forEach(c=>kids.appendChild(c));
+  node.appendChild(kids);
+  row.addEventListener("click",()=>node.classList.toggle("open"));
+  return node;
+}
+
+const tree=document.getElementById("tree");
+DATA.forEach(d=>{
+  const leafNodes=[];
+  const critNodes=d.crit.map(cr=>{
+    const lvs=cr.leaves.map(x=>makeNode("leaf",x.l,{html:leafBadge(x)},x.d||"",null));
+    const badge=cr.pct!=null?{html:'<span class="badge b-crit">'+cr.pct+'% מהתחום</span>'}:{html:'<span class="badge b-crit">מנגנון</span>'};
+    return makeNode("crit",cr.name,badge,"",lvs);
+  });
+  const domNode=makeNode("dom",d.code+" · "+d.name,{html:'<span class="badge b-pot">'+d.pot+'% מהסל</span>',color:toneColor(d.tone)},
+    d.split+(d.note?" · "+d.note:""),critNodes,"dcard");
+  tree.appendChild(domNode);
+});
+
+document.getElementById("expand").onclick=()=>document.querySelectorAll(".node").forEach(n=>n.classList.add("open"));
+document.getElementById("collapse").onclick=()=>document.querySelectorAll(".node").forEach(n=>n.classList.remove("open"));
+
+const q=document.getElementById("q");
+function applyFilter(term){
+  term=(term||"").trim();
+  const all=document.querySelectorAll("#tree .node");
+  if(!term){all.forEach(n=>{n.classList.remove("hidden","open");n.querySelector(".lbl").innerHTML=n.querySelector(".lbl").innerHTML.replace(/<mark class="hl">(.*?)<\/mark>/g,"$1");});return;}
+  all.forEach(n=>n.classList.add("hidden"));
+  document.querySelectorAll("#tree .node").forEach(n=>{
+    const txt=n.querySelector(".lbl").textContent;
+    if(txt.indexOf(term)>-1){
+      n.classList.remove("hidden");
+      let p=n; while(p&&p.id!=="tree"){if(p.classList&&p.classList.contains("node")){p.classList.remove("hidden");p.classList.add("open");}p=p.parentElement;}
+      n.querySelectorAll(".node").forEach(c=>c.classList.remove("hidden"));
+    }
+  });
+}
+q.addEventListener("input",()=>applyFilter(q.value));
+document.querySelectorAll(".qchip").forEach(c=>c.onclick=()=>{q.value=c.dataset.q;applyFilter(c.dataset.q);});
+
+document.getElementById("note").innerHTML=
+ "כל אחוז ברמת התחום = חלק יחסי מתקציב אותו תחום; כל אחוז ברמת הסל = חלק מכלל התקציב. ניקוד מוצג בנקודות. פריטים המסומנים 'נוסחה' מחושבים לפי נספח/מנגנון יחסי ואין להם ערך קבוע. תחומים ג'/ו'/ז'/ח' מפנים לסעיפי הניקוד של הענפים האישיים/קבוצתיים. מקור: מבחן תמיכה איגודים 2026 (נוסח משולב לא רשמי — הפרסום ברשומות מחייב). ערכי 'מרכזי מצוינות' מסומנים לאימות מול הנוסח הרשמי.";
+</script>
+</body>
+</html>

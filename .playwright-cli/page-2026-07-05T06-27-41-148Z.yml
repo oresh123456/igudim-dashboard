@@ -1,0 +1,284 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - text: משרד התרבות
+      - text: והספורט
+    - generic [ref=e4]:
+      - heading "ניתוח \"מקומות\" לפי מספר ספורטאים — סקיצת עבודה" [level=1] [ref=e5]
+      - generic [ref=e6]: מסך ייעודי לראשת מנהל הספורט · נתונים סינתטיים להדגמה בלבד
+  - generic [ref=e7]:
+    - generic [ref=e8]:
+      - generic [ref=e9]: הגדרת "מקום" — עד 3 רמות (כל רמה = פרמטר בחירה־יחידה)
+      - generic [ref=e10]:
+        - combobox [ref=e11]:
+          - option "— ללא —"
+          - option "עיר"
+          - option "אגודה"
+          - option "סניף"
+          - option "איגוד (ענף)" [selected]
+          - option "קבוצת גיל"
+        - generic [ref=e12]: ›
+        - combobox [ref=e13]:
+          - option "— ללא —"
+          - option "עיר"
+          - option "אגודה"
+          - option "סניף"
+          - option "איגוד (ענף)"
+          - option "קבוצת גיל" [selected]
+        - generic [ref=e14]: ›
+        - combobox [ref=e15]:
+          - option "— ללא —" [selected]
+          - option "עיר"
+          - option "אגודה"
+          - option "סניף"
+          - option "איגוד (ענף)"
+          - option "קבוצת גיל"
+    - generic [ref=e16]:
+      - generic [ref=e17]: חתך אוכלוסייה — קבוצות גיל (מסנן רב־בחירה רגיל)
+      - generic [ref=e18]:
+        - button "עד 12" [ref=e19] [cursor=pointer]
+        - button "13–15" [ref=e20] [cursor=pointer]
+        - button "16–18" [ref=e21] [cursor=pointer]
+        - button "בוגרים" [ref=e22] [cursor=pointer]
+    - generic [ref=e23]:
+      - generic [ref=e24]: טווח גודל — ספורטאים במקום (בחתך הנבחר)
+      - generic [ref=e25]:
+        - spinbutton [ref=e26]: "100"
+        - generic [ref=e27]: מינ'
+        - spinbutton [ref=e28]: "2000"
+        - generic [ref=e29]: מקס'
+  - generic [ref=e30]:
+    - generic [ref=e31]:
+      - generic [ref=e32]: מקומות בטווח
+      - generic [ref=e33]: "40"
+      - generic [ref=e34]: מתוך 40 מקומות (איגוד › קבוצת גיל)
+    - generic [ref=e35]:
+      - generic [ref=e36]: סה"כ ספורטאים בטווח
+      - generic [ref=e37]: 16,513
+      - generic [ref=e38]: כל הגילים · טווח 100–2,000
+    - generic [ref=e39]:
+      - generic [ref=e40]: חציון גודל מקום
+      - generic [ref=e41]: "415"
+      - generic [ref=e42]: בתוך הטווח
+    - generic [ref=e43]:
+      - generic [ref=e44]: מקומות מתחת למינימום
+      - generic [ref=e45]: "0"
+      - generic [ref=e46]: מועמדים לבחינת המשך תמיכה
+  - generic [ref=e47]:
+    - generic [ref=e48]:
+      - heading "מקומות בטווח, ממוינים לפי מספר ספורטאים" [level=2] [ref=e49]
+      - generic [ref=e50]: "מקום = איגוד › קבוצת גיל · חתך: כל הגילים · מוצגים 25 מתוך 40 בטווח"
+    - generic [ref=e53]:
+      - generic [ref=e54]:
+        - heading "התפלגות גדלי המקומות" [level=2] [ref=e55]
+        - generic [ref=e56]: כמה מקומות יש בכל מדרגת גודל · ירוק = בתוך הטווח שנבחר
+      - generic [ref=e59]:
+        - heading "פירוט מקומות" [level=2] [ref=e60]
+        - generic [ref=e61]: כולל מקומות מחוץ לטווח (מעומעמים)
+        - table [ref=e63]:
+          - rowgroup [ref=e64]:
+            - row "מקום ספורטאים סטטוס" [ref=e65]:
+              - columnheader "מקום" [ref=e66]
+              - columnheader "ספורטאים" [ref=e67]
+              - columnheader "סטטוס" [ref=e68]
+          - rowgroup [ref=e69]:
+            - row "אופניים · 16–18 718 בטווח" [ref=e180]:
+              - cell "אופניים · 16–18" [ref=e181]
+              - cell "718" [ref=e182]
+              - cell "בטווח" [ref=e183]:
+                - generic [ref=e184]: בטווח
+            - row "טניס · עד 12 627 בטווח" [ref=e185]:
+              - cell "טניס · עד 12" [ref=e186]
+              - cell "627" [ref=e187]
+              - cell "בטווח" [ref=e188]:
+                - generic [ref=e189]: בטווח
+            - row "אופניים · בוגרים 562 בטווח" [ref=e190]:
+              - cell "אופניים · בוגרים" [ref=e191]
+              - cell "562" [ref=e192]
+              - cell "בטווח" [ref=e193]:
+                - generic [ref=e194]: בטווח
+            - row "טניס · בוגרים 562 בטווח" [ref=e195]:
+              - cell "טניס · בוגרים" [ref=e196]
+              - cell "562" [ref=e197]
+              - cell "בטווח" [ref=e198]:
+                - generic [ref=e199]: בטווח
+            - row "כדורעף · בוגרים 531 בטווח" [ref=e200]:
+              - cell "כדורעף · בוגרים" [ref=e201]
+              - cell "531" [ref=e202]
+              - cell "בטווח" [ref=e203]:
+                - generic [ref=e204]: בטווח
+            - row "טניס · 13–15 530 בטווח" [ref=e205]:
+              - cell "טניס · 13–15" [ref=e206]
+              - cell "530" [ref=e207]
+              - cell "בטווח" [ref=e208]:
+                - generic [ref=e209]: בטווח
+            - row "אופניים · עד 12 528 בטווח" [ref=e210]:
+              - cell "אופניים · עד 12" [ref=e211]
+              - cell "528" [ref=e212]
+              - cell "בטווח" [ref=e213]:
+                - generic [ref=e214]: בטווח
+            - row "איגרוף · בוגרים 524 בטווח" [ref=e215]:
+              - cell "איגרוף · בוגרים" [ref=e216]
+              - cell "524" [ref=e217]
+              - cell "בטווח" [ref=e218]:
+                - generic [ref=e219]: בטווח
+            - row "איגרוף · עד 12 515 בטווח" [ref=e220]:
+              - cell "איגרוף · עד 12" [ref=e221]
+              - cell "515" [ref=e222]
+              - cell "בטווח" [ref=e223]:
+                - generic [ref=e224]: בטווח
+            - row "טריאתלון · 13–15 493 בטווח" [ref=e225]:
+              - cell "טריאתלון · 13–15" [ref=e226]
+              - cell "493" [ref=e227]
+              - cell "בטווח" [ref=e228]:
+                - generic [ref=e229]: בטווח
+            - row "כדורעף · עד 12 493 בטווח" [ref=e230]:
+              - cell "כדורעף · עד 12" [ref=e231]
+              - cell "493" [ref=e232]
+              - cell "בטווח" [ref=e233]:
+                - generic [ref=e234]: בטווח
+            - row "כדורעף · 13–15 490 בטווח" [ref=e235]:
+              - cell "כדורעף · 13–15" [ref=e236]
+              - cell "490" [ref=e237]
+              - cell "בטווח" [ref=e238]:
+                - generic [ref=e239]: בטווח
+            - row "אופניים · 13–15 487 בטווח" [ref=e240]:
+              - cell "אופניים · 13–15" [ref=e241]
+              - cell "487" [ref=e242]
+              - cell "בטווח" [ref=e243]:
+                - generic [ref=e244]: בטווח
+            - row "איגרוף · 16–18 479 בטווח" [ref=e245]:
+              - cell "איגרוף · 16–18" [ref=e246]
+              - cell "479" [ref=e247]
+              - cell "בטווח" [ref=e248]:
+                - generic [ref=e249]: בטווח
+            - row "אתלטיקה · 16–18 461 בטווח" [ref=e250]:
+              - cell "אתלטיקה · 16–18" [ref=e251]
+              - cell "461" [ref=e252]
+              - cell "בטווח" [ref=e253]:
+                - generic [ref=e254]: בטווח
+            - row "שחייה · עד 12 461 בטווח" [ref=e255]:
+              - cell "שחייה · עד 12" [ref=e256]
+              - cell "461" [ref=e257]
+              - cell "בטווח" [ref=e258]:
+                - generic [ref=e259]: בטווח
+            - row "טניס · 16–18 452 בטווח" [ref=e260]:
+              - cell "טניס · 16–18" [ref=e261]
+              - cell "452" [ref=e262]
+              - cell "בטווח" [ref=e263]:
+                - generic [ref=e264]: בטווח
+            - row "איגרוף · 13–15 450 בטווח" [ref=e265]:
+              - cell "איגרוף · 13–15" [ref=e266]
+              - cell "450" [ref=e267]
+              - cell "בטווח" [ref=e268]:
+                - generic [ref=e269]: בטווח
+            - row "סיוף · בוגרים 442 בטווח" [ref=e270]:
+              - cell "סיוף · בוגרים" [ref=e271]
+              - cell "442" [ref=e272]
+              - cell "בטווח" [ref=e273]:
+                - generic [ref=e274]: בטווח
+            - row "כדורעף · 16–18 436 בטווח" [ref=e275]:
+              - cell "כדורעף · 16–18" [ref=e276]
+              - cell "436" [ref=e277]
+              - cell "בטווח" [ref=e278]:
+                - generic [ref=e279]: בטווח
+            - row "סיוף · 13–15 415 בטווח" [ref=e280]:
+              - cell "סיוף · 13–15" [ref=e281]
+              - cell "415" [ref=e282]
+              - cell "בטווח" [ref=e283]:
+                - generic [ref=e284]: בטווח
+            - row "שחייה · 16–18 392 בטווח" [ref=e285]:
+              - cell "שחייה · 16–18" [ref=e286]
+              - cell "392" [ref=e287]
+              - cell "בטווח" [ref=e288]:
+                - generic [ref=e289]: בטווח
+            - row "טריאתלון · עד 12 382 בטווח" [ref=e290]:
+              - cell "טריאתלון · עד 12" [ref=e291]
+              - cell "382" [ref=e292]
+              - cell "בטווח" [ref=e293]:
+                - generic [ref=e294]: בטווח
+            - row "טריאתלון · 16–18 368 בטווח" [ref=e295]:
+              - cell "טריאתלון · 16–18" [ref=e296]
+              - cell "368" [ref=e297]
+              - cell "בטווח" [ref=e298]:
+                - generic [ref=e299]: בטווח
+            - row "טריאתלון · בוגרים 365 בטווח" [ref=e300]:
+              - cell "טריאתלון · בוגרים" [ref=e301]
+              - cell "365" [ref=e302]
+              - cell "בטווח" [ref=e303]:
+                - generic [ref=e304]: בטווח
+            - row "שחייה · 13–15 365 בטווח" [ref=e305]:
+              - cell "שחייה · 13–15" [ref=e306]
+              - cell "365" [ref=e307]
+              - cell "בטווח" [ref=e308]:
+                - generic [ref=e309]: בטווח
+            - row "סיוף · עד 12 362 בטווח" [ref=e310]:
+              - cell "סיוף · עד 12" [ref=e311]
+              - cell "362" [ref=e312]
+              - cell "בטווח" [ref=e313]:
+                - generic [ref=e314]: בטווח
+            - row "אתלטיקה · עד 12 359 בטווח" [ref=e315]:
+              - cell "אתלטיקה · עד 12" [ref=e316]
+              - cell "359" [ref=e317]
+              - cell "בטווח" [ref=e318]:
+                - generic [ref=e319]: בטווח
+            - row "שחייה · בוגרים 353 בטווח" [ref=e320]:
+              - cell "שחייה · בוגרים" [ref=e321]
+              - cell "353" [ref=e322]
+              - cell "בטווח" [ref=e323]:
+                - generic [ref=e324]: בטווח
+            - row "אתלטיקה · בוגרים 351 בטווח" [ref=e325]:
+              - cell "אתלטיקה · בוגרים" [ref=e326]
+              - cell "351" [ref=e327]
+              - cell "בטווח" [ref=e328]:
+                - generic [ref=e329]: בטווח
+            - row "סיוף · 16–18 349 בטווח" [ref=e330]:
+              - cell "סיוף · 16–18" [ref=e331]
+              - cell "349" [ref=e332]
+              - cell "בטווח" [ref=e333]:
+                - generic [ref=e334]: בטווח
+            - row "אתלטיקה · 13–15 340 בטווח" [ref=e335]:
+              - cell "אתלטיקה · 13–15" [ref=e336]
+              - cell "340" [ref=e337]
+              - cell "בטווח" [ref=e338]:
+                - generic [ref=e339]: בטווח
+            - row "התעמלות · בוגרים 292 בטווח" [ref=e340]:
+              - cell "התעמלות · בוגרים" [ref=e341]
+              - cell "292" [ref=e342]
+              - cell "בטווח" [ref=e343]:
+                - generic [ref=e344]: בטווח
+            - row "ג'ודו · עד 12 263 בטווח" [ref=e345]:
+              - cell "ג'ודו · עד 12" [ref=e346]
+              - cell "263" [ref=e347]
+              - cell "בטווח" [ref=e348]:
+                - generic [ref=e349]: בטווח
+            - row "התעמלות · 13–15 255 בטווח" [ref=e350]:
+              - cell "התעמלות · 13–15" [ref=e351]
+              - cell "255" [ref=e352]
+              - cell "בטווח" [ref=e353]:
+                - generic [ref=e354]: בטווח
+            - row "ג'ודו · 13–15 225 בטווח" [ref=e355]:
+              - cell "ג'ודו · 13–15" [ref=e356]
+              - cell "225" [ref=e357]
+              - cell "בטווח" [ref=e358]:
+                - generic [ref=e359]: בטווח
+            - row "התעמלות · 16–18 221 בטווח" [ref=e360]:
+              - cell "התעמלות · 16–18" [ref=e361]
+              - cell "221" [ref=e362]
+              - cell "בטווח" [ref=e363]:
+                - generic [ref=e364]: בטווח
+            - row "התעמלות · עד 12 216 בטווח" [ref=e365]:
+              - cell "התעמלות · עד 12" [ref=e366]
+              - cell "216" [ref=e367]
+              - cell "בטווח" [ref=e368]:
+                - generic [ref=e369]: בטווח
+            - row "ג'ודו · 16–18 211 בטווח" [ref=e370]:
+              - cell "ג'ודו · 16–18" [ref=e371]
+              - cell "211" [ref=e372]
+              - cell "בטווח" [ref=e373]:
+                - generic [ref=e374]: בטווח
+            - row "ג'ודו · בוגרים 188 בטווח" [ref=e375]:
+              - cell "ג'ודו · בוגרים" [ref=e376]
+              - cell "188" [ref=e377]
+              - cell "בטווח" [ref=e378]:
+                - generic [ref=e379]: בטווח

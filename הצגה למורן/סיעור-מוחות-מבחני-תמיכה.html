@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>סיעור מוחות · ממבחני התמיכה למוקאפ למורן</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1F3F6D; --green:#248A3D; --red:#DA3439;
+  --sky:#2D9CDB; --purple:#6B4FA0; --orange:#E07B39; --slate:#7A8FA6; --gold:#F8C33E;
+  --bg:#F2F4F7; --surface:#FFFFFF; --border:#E5E9F0; --ink:#1A1A2E; --ink-muted:#6B7280;
+}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Amazon Ember","Heebo",system-ui,sans-serif;line-height:1.6;}
+.wrap{max-width:1180px;margin:0 auto;padding:22px 26px 60px;}
+header.brand{display:flex;align-items:center;gap:12px;border-bottom:3px solid var(--navy);padding-bottom:12px;margin-bottom:18px;}
+.logo{width:40px;height:40px;border-radius:9px;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:19px;flex:0 0 auto;}
+.brand h1{margin:0;font-size:21px;color:var(--navy);font-weight:700;}
+.brand .sub{margin:2px 0 0;font-size:13px;color:var(--ink-muted);}
+h2{font-size:15px;color:var(--navy);margin:26px 0 10px;font-weight:700;}
+.muted{color:var(--ink-muted);font-size:13px;}
+
+.dims{display:flex;flex-wrap:wrap;gap:8px;}
+.dim{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:5px 12px;font-size:13px;display:inline-flex;align-items:center;gap:8px;}
+.dim b{background:var(--navy);color:#fff;border-radius:11px;padding:1px 8px;font-size:12px;font-weight:500;}
+
+.toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:16px 0 14px;}
+.flt{font-size:13px;padding:6px 14px;border-radius:18px;border:1px solid var(--border);background:var(--surface);color:var(--ink);cursor:pointer;}
+.flt.on{background:var(--ink);color:#fff;border-color:var(--ink);}
+.counter{margin-inline-start:auto;font-size:12px;color:var(--ink-muted);}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:15px 16px;cursor:pointer;position:relative;transition:box-shadow .12s,border-color .12s;display:flex;flex-direction:column;gap:8px;}
+.card:hover{border-color:var(--navy);box-shadow:0 2px 10px rgba(31,63,109,.08);}
+.card.done{border-color:var(--green);background:#F4FBF6;}
+.card.star{border-inline-start:5px solid var(--gold);}
+.tagrow{display:flex;gap:7px;align-items:center;flex-wrap:wrap;}
+.tag{font-size:11px;border-radius:6px;padding:2px 8px;font-weight:500;}
+.t-new{background:#EAF2FB;color:var(--navy);}
+.t-enr{background:#EAF7EE;color:var(--green);}
+.tab{font-size:11px;color:var(--ink-muted);border:1px solid var(--border);border-radius:6px;padding:2px 8px;}
+.card h3{margin:0;font-size:16px;color:var(--navy);font-weight:700;}
+.card p{margin:0;font-size:13.5px;color:#34405c;}
+.src{font-size:11.5px;color:var(--ink-muted);}
+.meet{font-size:12px;color:var(--red);background:#FDEBEC;border-radius:7px;padding:6px 9px;display:flex;gap:6px;align-items:flex-start;}
+.meet b{color:var(--red);font-weight:700;}
+.chk{position:absolute;top:13px;left:13px;font-size:11px;color:var(--green);opacity:0;font-weight:700;}
+.card.done .chk{opacity:1;}
+footer{margin-top:30px;font-size:12px;color:var(--ink-muted);border-top:1px solid var(--border);padding-top:12px;}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--ink-muted);margin-top:6px;}
+.legend span{display:inline-flex;align-items:center;gap:6px;}
+.sw{width:12px;height:12px;border-radius:3px;display:inline-block;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="brand">
+  <div class="logo">תס</div>
+  <div>
+    <h1>סיעור מוחות · ממבחני התמיכה למוקאפ האסטרטגי למורן</h1>
+    <p class="sub">משרד התרבות והספורט · מינהל הספורט — חומר לדיון חי לקראת הפגישה עם מורן (יום ג׳)</p>
+  </div>
+</header>
+
+<p class="muted">נקראו 13 מבחני תמיכה ייחודיים. כולם בנויים על אותו מנגנון: <b>תנאי סף ← ניקוד לפי אמות מידה ← ערך נקודה ← סכום תמיכה</b>. הממדים החוזרים ביניהם ממופים ל-7 לשוניות המוקאפ. לחיצה על כרטיס מסמנת אותו כ״נדון״.</p>
+
+<h2>ממדים חוזרים במבחנים <span class="muted">(המספר = בכמה מבחנים מתוך 13 הופיע)</span></h2>
+<div class="dims">
+  <span class="dim">הישגים ואליפויות<b>12</b></span>
+  <span class="dim">מגדר · ספורטאיות<b>11</b></span>
+  <span class="dim">משלחות ובינ״ל<b>9</b></span>
+  <span class="dim">גיל · נוער · צנרת<b>8</b></span>
+  <span class="dim">מאמנים ומעטפת<b>8</b></span>
+  <span class="dim">קהילה · ספורט עממי<b>8</b></span>
+  <span class="dim">מוגבלות והכלה<b>6</b></span>
+  <span class="dim">למ״ס · פריפריה<b>5</b></span>
+  <span class="dim">חירום · חרבות ברזל<b>4</b></span>
+  <span class="dim">ענף מועדף · תעדוף<b>4</b></span>
+</div>
+
+<div class="toolbar">
+  <span class="muted">סינון:</span>
+  <button class="flt on" data-f="all">הכול</button>
+  <button class="flt" data-f="new">תוספת חדשה</button>
+  <button class="flt" data-f="enrich">העשרת לשונית קיימת</button>
+  <button class="flt" data-f="meet">מחובר לסיכום הפגישה</button>
+  <span class="counter" id="counter"></span>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<div class="legend">
+  <span><span class="sw" style="background:#EAF2FB;border:1px solid var(--navy)"></span> תוספת חדשה</span>
+  <span><span class="sw" style="background:#EAF7EE;border:1px solid var(--green)"></span> העשרת לשונית קיימת</span>
+  <span><span class="sw" style="background:var(--gold)"></span> מומלץ לפתיחת הפגישה</span>
+  <span><span class="sw" style="background:#FDEBEC;border:1px solid var(--red)"></span> נגזר מהחלטה בסיכום הפגישה</span>
+</div>
+
+<footer>
+  מבוסס על 13 מבחני תמיכה של מינהל הספורט + סיכום הפגישה הפנימית (מוקאפ מורן). נתוני ההמחשה כפופים לאימות מול הדאטה בפועל. אף רעיון אינו מבטיח נתונים שאין לנו — כל שדה נושא ייחוס מקור.
+</footer>
+
+</div>
+<script>
+const ideas=[
+{k:"new",star:true,t:"מנוע הניקוד — שקיפות ההקצאה",tab:"תמיכות",
+ p:"כל מבחן עובד אותו דבר: תנאי סף ← ניקוד לפי אמות מידה ← ערך נקודה ← סכום. ויזואל אחד שמסביר למה גוף קיבל בדיוק את הסכום שקיבל, ומפרק אותו לפי אמת מידה.",
+ s:"מנגנון משותף לכל 13 המבחנים",
+ meet:"עונה ישירות לשאלת ה-38.5% של חובב: ה-attribution = פירוק האחוז לפי אמות המידה; ה-target נגזר מערך הנקודה. זו המשימה שכבר נרשמה — שדות יעד+ייחוס."},
+{k:"new",star:true,t:"קטלוג תוכניות התמיכה",tab:"תמיכות · Overview",
+ p:"מפת כל ~17 המבחנים במבט-על: תקציב, מס׳ נתמכים, ערך נקודה, קריטריון מוביל. תמונת פורטפוליו אחת למורן.",
+ s:"איגודים · עממי · סל הספורט · גופי רוחב · ...",
+ meet:"מענה לשאלה הפתוחה מהפגישה — איך לבנות מסך Overview ראשוני למורן."},
+{k:"enrich",star:true,t:"שוויון גיאוגרפי (למ״ס + פריפריה)",tab:"הסתכלות גיאוגרפית",
+ p:"סל הספורט משקלל 70% אשכול חברתי-כלכלי + 30% מדד פריפריאלי. מפת חום: תמיכה לנפש מול חוזק היישוב.",
+ s:"סל הספורט לרשויות · מרחב מוגן יביל",
+ meet:"נותן תוכן מדיד ל״הסתכלות גיאוגרפית״ — הלשונית שהוחלט בפגישה לשנות מ״תיק יישוב״."},
+{k:"enrich",star:false,t:"מגדר כמכפיל — לא רק פילוח",tab:"ביצועים ומגדר",
+ p:"מבחנים רבים מכפילים ניקוד נשים ×1.5 / בונוס מעל 50%. להראות את פרמיית הנקודות שהשתתפות נשים ייצרה — לא רק מספר נשים.",
+ s:"11 מבחנים · גופי רוחב · איגודים · קידום נשים",meet:""},
+{k:"enrich",star:false,t:"צנרת דור צעיר (פירמידת גיל)",tab:"ביצועים ומגדר",
+ p:"ניקוד מדורג לפי שנתונים (ילדים→נוער→הישגי). משפך צנרת לכל ענף — היכן נבנה הדור הבא.",
+ s:"איגודים · קידום שילוב ספורטאים ישראלים",meet:""},
+{k:"new",star:false,t:"הכלה ומוגבלות",tab:"ביצועים / IMPACT",
+ p:"6 מבחנים מתגמלים שילוב אנשים עם מוגבלות (מכפילים). רצועת KPI ייעודית להכלה — כיום חסרה במוקאפ.",
+ s:"גופי רוחב · פראלימפי",meet:""},
+{k:"enrich",star:false,t:"מקצועיות — מאמנים ומעטפת",tab:"גוף נתמך / ביצועים",
+ p:"8 מבחנים מנקדים מאמנים וצוות מקצועי. מדד מקצועיות: מאמנים לספורטאי, מעטפת מוסמכת.",
+ s:"ארגוני גג · גופי רוחב · נהיגה ספורטיבית",meet:""},
+{k:"new",star:false,t:"עמידות וחירום",tab:"SLA · תפעול (מסך נסתר)",
+ p:"4 מבחנים הם חירום: אובדן הכנסות (שאגת הארי), מרחב מוגן יביל, ספורט בחירום. מבט עמידות רלוונטי לתקופה.",
+ s:"שאגת הארי · מיגוניות · סל הספורט תחום ג׳",
+ meet:"אלטרנטיבה חיובית ל-SLA ה״רך״ (רק 6 פניות) — תוכן חירום עם יותר דאטה ורלוונטיות."},
+{k:"enrich",star:false,t:"תעדוף ענפים מועדפים",tab:"תמיכות",
+ p:"מבחנים מתעדפים ״ענפי על״/״ענף מועדף״. להראות כיצד התעדוף מזיז כסף בין ענפים.",
+ s:"שיטור וסדרנות · איגודים",meet:""},
+{k:"enrich",star:false,t:"חשיפה חוצת-תוכניות של גוף",tab:"גוף נתמך",
+ p:"גוף בודד נתמך לרוב מכמה מבחנים. להראות את כל התוכניות שמהן הוא מקבל — סך חשיפה ותלות על פני הפורטפוליו.",
+ s:"מצליב את כל המבחנים לכרטיס גוף אחד",meet:""}
+];
+
+const grid=document.getElementById('grid');
+const counter=document.getElementById('counter');
+const done=new Set();
+let filter='all';
+
+function visible(i){
+  if(filter==='all') return true;
+  if(filter==='meet') return !!i.meet;
+  return i.k===filter;
+}
+function render(){
+  grid.innerHTML='';
+  let shown=0;
+  ideas.forEach((i,idx)=>{
+    if(!visible(i)) return; shown++;
+    const d=document.createElement('div');
+    d.className='card'+(i.star?' star':'')+(done.has(idx)?' done':'');
+    d.innerHTML=
+      '<span class="chk">✓ נדון</span>'+
+      '<div class="tagrow"><span class="tag '+(i.k==='new'?'t-new':'t-enr')+'">'+(i.k==='new'?'תוספת חדשה':'העשרה')+'</span>'+
+      '<span class="tab">'+i.tab+'</span></div>'+
+      '<h3>'+i.t+'</h3><p>'+i.p+'</p>'+
+      (i.meet?'<div class="meet"><b>פגישה:</b><span>'+i.meet+'</span></div>':'')+
+      '<div class="src">מקור: '+i.s+'</div>';
+    d.onclick=()=>{ done.has(idx)?done.delete(idx):done.add(idx); render(); };
+    grid.appendChild(d);
+  });
+  counter.textContent='מוצג '+shown+' מתוך '+ideas.length+' · נדונו '+done.size;
+}
+document.querySelectorAll('.flt').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('.flt').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on'); filter=b.dataset.f; render();
+});
+render();
+</script>
+</body>
+</html>
