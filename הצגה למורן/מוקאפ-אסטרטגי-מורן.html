@@ -612,12 +612,10 @@
       <div class="card col-7"><div class="card-head"><span class="card-title">שיעור השתתפות לפי מחוז מול יעד</span><span class="card-meta">Combo · Bar + קו יעד</span></div><div class="card-canvas-wrap h-300"><canvas id="i_byDistrict"></canvas></div></div>
       <div class="card col-5"><div class="card-head"><span class="card-title">מגמת שיעור ההשתתפות מול יעד</span><span class="card-meta">Line · 2019–2028</span></div><div class="card-canvas-wrap h-300"><canvas id="i_trend"></canvas></div></div>
 
-      <div class="card col-7"><div class="card-head"><span class="card-title">יעילות — תקציב מול תפוקה לאיגוד</span><span class="card-meta">Scatter · גודל = הישגים</span></div><div class="card-canvas-wrap h-320"><canvas id="i_efficiency"></canvas></div></div>
-      <div class="card col-5"><div class="card-head"><span class="card-title">עלות לתפוקה — דירוג יעילות</span><span class="card-meta">Bar · ₪ לספורטאי</span></div><div class="card-canvas-wrap h-320"><canvas id="i_cost"></canvas></div></div>
-
-      <div class="card col-12"><div class="card-head"><span class="card-title">יעילות לפי תחום — חלק מהתקציב מול ₪ למשתתף</span><span class="card-meta">Combo · שני צירים · לדוגמה</span></div><div class="card-canvas-wrap h-260"><canvas id="i_themes"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">השאלה האסטרטגית: היכן שקל מייצר את ההשתתפות הרחבה ביותר, והיכן הוא קונה עומק הישגי. התחומים והתקציבים — מקטלוג התוכניות (תחום החירום הושמט — אינו מדד השתתפות).</div></div>
+      <div class="card col-7"><div class="card-head"><span class="card-title">תקציב מול עלות לספורטאי רשום — לאיגוד</span><span class="card-meta">Scatter · גודל = הישגים</span></div><div class="card-canvas-wrap h-320"><canvas id="i_efficiency"></canvas></div></div>
+      <div class="card col-5"><div class="card-head"><span class="card-title">עלות לספורטאי רשום — דירוג</span><span class="card-meta">Bar · ₪ לספורטאי רשום</span></div><div class="card-canvas-wrap h-320"><canvas id="i_cost"></canvas></div></div>
     </div>
-    <div class="footer-note"><strong>הרעיון:</strong> IMPACT = אחוז מהאוכלוסייה בספורט מאורגן מול יעד לאומי, כמנוע לקידום תרבות ספורט. Efficiency = תקציב לתפוקה (₪ לספורטאי / למדליה) — לזהות היכן כל שקל מייצר את ההשפעה הגבוהה ביותר.</div>
+    <div class="footer-note"><strong>הרעיון:</strong> IMPACT = אחוז מהאוכלוסייה בספורט מאורגן מול יעד לאומי. <strong>הגדרת תפוקה:</strong> אין "תפוקה" כללית אחת — כל מבחן תמיכה מגדיר את התפוקה שלו באמות המידה שלו (ספורטאים לפי שנתון, הישגי דרג א', משתתפים בקהילה...), וערך הנקודה הוא המחיר ליחידת תפוקה (ר' קטלוג התוכניות ומנוע הניקוד). לכן מוצגים כאן רק מדדים עם מכנה מוגדר: ₪ לספורטאי רשום ו-₪ למדליה.</div>
   </section>
 
   <!-- ===================== LINKS ===================== -->
@@ -1373,16 +1371,8 @@
       ch.update('none');
     }
   };
-  EX.impact=function(){
-    new Chart(document.getElementById('i_themes'),{data:{labels:['הישגי','קהילה ועממי','הכלה ושוויון','תשתית ומעטפת'],datasets:[
-      {type:'bar',label:'חלק מהתקציב (₪M)',data:[76.3,33.5,13.4,17.8],backgroundColor:[v('--budget'),v('--muni'),v('--levers'),v('--org')],borderRadius:3,yAxisID:'y'},
-      {type:'line',label:'₪ למשתתף (לדוגמה)',data:[520,85,610,190],borderColor:COL.danger,borderWidth:2,pointRadius:4,pointBackgroundColor:COL.danger,yAxisID:'y1'}]},
-      options:{plugins:legBottom('top'),scales:{x:gridX,
-        y:{...gridY,position:'right',ticks:{color:COL.muted,callback:t=>'₪'+t+'M'}},
-        y1:{...gridY,position:'left',grid:{display:false},ticks:{color:COL.danger,callback:t=>'₪'+t}}}}});
-  };
   // איחוד לשוניות: התוכן המאומץ מאותחל יחד עם לשונית-האם
-  const WRAP={budget:[EX.budget], muni:[INIT.geo,EX.muni], org:[INIT.engine], perf:[EX.perf], levers:[INIT.incl], impact:[EX.impact]};
+  const WRAP={budget:[EX.budget], muni:[INIT.geo,EX.muni], org:[INIT.engine], perf:[EX.perf], levers:[INIT.incl]};
   Object.keys(WRAP).forEach(k=>{
     const orig=INIT[k], extras=WRAP[k];
     INIT[k]=function(){ orig(); extras.forEach(f=>f()); };
