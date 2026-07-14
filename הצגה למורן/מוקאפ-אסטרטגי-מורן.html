@@ -113,6 +113,13 @@
   .e-cnum { text-align:left; direction:ltr; white-space:nowrap; }
   .e-cnum .a { font-weight:600; font-size:12.5px; }
   .e-cnum .p { font-size:10.5px; color:var(--ink-faint); }
+  /* ערוצי תקציב שאינם מבחנים (רכש/תאגיד/אחר) */
+  .e-xhead { margin:14px 2px 6px; padding-top:10px; border-top:1px dashed var(--line); font-size:12.5px; font-weight:600; color:var(--ink-muted); }
+  .e-xhead span { font-weight:400; font-size:10.5px; color:var(--ink-faint); margin-inline-start:6px; }
+  .e-xrow { display:flex; align-items:center; gap:10px; padding:7px 13px; border:1px dashed var(--line); border-radius:var(--radius); margin-bottom:6px; background:var(--surface-soft); }
+  .e-xrow .xt { font-size:10.5px; font-weight:600; color:var(--ink-muted); background:#EEF1F4; border:1px solid var(--line); border-radius:999px; padding:1px 9px; white-space:nowrap; }
+  .e-xrow .xn { font-size:12.5px; color:var(--ink); flex:1; }
+  .e-xrow .xa { font-size:12.5px; font-weight:600; direction:ltr; }
   /* מתג מצב תצוגה למפה */
   .map-mode { font-family:inherit; font-size:11px; padding:4px 11px; border-radius:999px; border:1px solid var(--line); background:var(--surface-soft); color:var(--ink-muted); cursor:pointer; }
   .map-mode.on { background:var(--muni); border-color:var(--muni); color:#fff; }
@@ -334,7 +341,7 @@
 
     <div class="grid">
       <div class="card col-4"><div class="card-head"><span class="card-title">חלוקת התמיכות לפי ייעוד</span><span class="card-meta">Donut · מיליוני ₪ <span class="qs-tag">QS</span></span></div><div class="card-canvas-wrap h-300"><canvas id="b_donut"></canvas></div><div style="margin-top:8px"><a href="#" onclick="gotoTab('catalog');return false" style="font-size:12px; color:var(--budget); text-decoration:none">↩ לפירוט מלא — קטלוג התוכניות · ב-QuickSight: URL Action</a></div></div>
-      <div class="card col-8"><div class="card-head"><span class="card-title">מגמת התמיכות</span><span class="card-meta">Line · מיליוני ₪</span></div><div class="card-canvas-wrap h-300"><canvas id="b_trend"></canvas></div></div>
+      <div class="card col-8"><div class="card-head"><span class="card-title">מגמת התמיכות</span><span class="card-meta">Line · מיליוני ₪ <span class="src-real">קיים בתיק יישוב</span></span></div><div class="card-canvas-wrap h-300"><canvas id="b_trend"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">קיים היום בתיק יישוב כ"תקציב שאושר לפי שנים" (עמודות, תרבות+ספורט). כאן: קו רב-שנתי לתמיכות הספורט בלבד.</div></div>
 
       <div class="card col-7"><div class="card-head"><span class="card-title">יציבות תקציבית של הגופים הנתמכים</span><span class="card-meta"><span class="need-data">דורש דוח כספי · צבירת נתונים</span></span></div><div class="card-canvas-wrap h-300"><canvas id="b_stability"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:8px; line-height:1.6">פילוח ההכנסות העצמיות לאורך השנים קיים רק בדוחות הכספיים (PDF) ואינו זמין ב-API. כאן להמחשה.</div></div>
       <div class="card col-5"><div class="card-head"><span class="card-title">מקורות מימון הגופים הנתמכים · 2024</span><span class="card-meta">Donut · % · שנת הדיווח הכספי האחרונה</span></div><div class="card-canvas-wrap h-260"><canvas id="b_mix"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">ממקורות רשמיים בלבד: תמיכת המשרד (פנימי) · תרומות מדינה זרה (data.gov.il) · יתר עצמי. פירוט ה"יתר" — רק בדוח הכספי (PDF).</div></div>
@@ -348,7 +355,7 @@
 
   <!-- ===================== MUNICIPALITY ===================== -->
   <section class="page" id="page-muni" data-tab="muni" style="--accent:var(--muni);">
-    <p class="page-intro">הסתכלות גיאוגרפית — ראייה הוליסטית סביב הרשות: תקציב, ספורטאים, אגודות, הישגים, ואחוז מהאוכלוסייה (נתוני למ"ס · Drill-down).</p>
+    <p class="page-intro">הסתכלות גיאוגרפית — האבולוציה של דשבורד "תיק יישוב" הקיים בפרודקשן (ר' קישורים): ראייה הוליסטית סביב הרשות: תקציב, ספורטאים, אגודות, הישגים, ואחוז מהאוכלוסייה (נתוני למ"ס · Drill-down).</p>
     <div class="filter-bar">
       <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
       <div class="filter"><label>רשות / יישוב</label><select><option>חדרה</option><option>באר שבע</option><option>נצרת</option><option>מודיעין</option><option>אשקלון</option><option>כרמיאל</option></select></div>
@@ -398,6 +405,7 @@
             <div class="mini"><div class="l">מול צפי נוסחת סל הספורט <span class="need-data" style="font-size:9px; padding:1px 6px">באימות</span></div><div class="v" style="color:var(--success)">+6%</div></div>
           </div>
           <div class="card-canvas-wrap h-140"><canvas id="m_muniTrend"></canvas></div>
+          <div style="font-size:11px; color:var(--ink-faint); line-height:1.6"><span class="src-real">קיים בתיק יישוב</span> פרופיל רשות עם נתוני הלמ"ס קיים ב"מסמך לפני סיור שר". כאן: נוספו מדדי הספורט (מדליות, תקציב לספורטאי, % נשים, מגמה).</div>
         </div>
       </div>
       <div class="card col-3">
@@ -406,8 +414,9 @@
       </div>
 
       <div class="card col-7">
-        <div class="card-head"><span class="card-title">רשויות מובילות — תקציב, ספורטאים ואחוז מהאוכלוסייה</span><span class="card-meta">Table · Data bars</span></div>
+        <div class="card-head"><span class="card-title">רשויות מובילות — תקציב, ספורטאים ואחוז מהאוכלוסייה</span><span class="card-meta">Table · Data bars <span class="src-real">קיים בתיק יישוב</span></span></div>
         <div id="m_table"></div>
+        <div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">קיים היום בתיק יישוב בשני חלקים: טבלת "נתוני הלמ"ס" (אשכולות, אוכלוסייה) ו"תקציב שאושר לפי מחוז &gt; רשות". כאן: מאוחד לטבלה אחת + ספורטאים, % השתתפות והישגים.</div>
       </div>
       <div class="card col-5">
         <div class="card-head"><span class="card-title">תקציב יישובי מול שיעור השתתפות</span><span class="card-meta">Scatter · X: תקציב ₪M · Y: % מהאוכלוסייה · גודל = הישגים</span></div>
@@ -513,16 +522,16 @@
       </select>
       <span style="font-size:11px; color:var(--ink-faint)">סכומי הכדורסל זהים לפרופיל שלמעלה — ₪22.5M מתוך ₪58.5M = 38.5%</span>
     </div>
-    <div class="kpis" id="e_kpis" style="grid-template-columns:repeat(2,1fr); max-width:560px;"></div>
+    <div class="kpis" id="e_kpis" style="grid-template-columns:repeat(3,1fr); max-width:860px;"></div>
     <div class="grid">
       <div class="card col-7"><div class="card-head"><span class="card-title">הייחוס — תקציב לפי מבחן ואמת מידה</span><span class="card-meta">Attribution · Pivot / Stacked <span class="qs-tag">QS</span></span></div><div id="e_tests"></div></div>
       <div class="card col-5">
-        <div class="card-head"><span class="card-title">חשיפה חוצת-תוכניות</span><span class="card-meta">Donut · הרכב התמיכה לפי מבחן</span></div>
+        <div class="card-head"><span class="card-title">חשיפה חוצת-תוכניות</span><span class="card-meta">Donut · מבחנים (כחול) + ערוצים שאינם מבחנים (אפור)</span></div>
         <div class="card-canvas-wrap h-240"><canvas id="e_split"></canvas></div>
         <div id="e_explain" style="margin-top:12px; background:var(--engine-soft); border:1px solid #CBD6E8; border-radius:var(--radius-lg); padding:13px 15px; font-size:13px; line-height:1.7; color:#22406b;"></div>
       </div>
     </div>
-    <div class="footer-note"><strong>מהסיעור (★) + החלטת הפגישה:</strong> עונה ישירות לשאלת חובב — "38.5% תמיכה באיגוד הכדורסל, האם זה תקין?" בלי יעד וייחוס האחוז לבדו חסר משמעות. אוחד לתוך "גוף נתמך" — אותו גוף, אותה שאלה, מסך אחד. <strong>תיקונים</strong> (תקרות, מקדמים, ועדת חריגים) אינם נגזרים מהניקוד — מסומנים צמוד לכל מבחן, בשלב זה ללא פירוט. מימוש ב-QuickSight: Pivot Table עם צביעת חום או Stacked Bar; KPI עם שדה יעד. נתוני דמה להמחשה; ערך היעד הענפי (32%) להמחשה בלבד — טרם נקבע רשמית, פתוח לדיון.</div>
+    <div class="footer-note"><strong>מהסיעור (★) + החלטת הפגישה:</strong> עונה ישירות לשאלת חובב — "38.5% תמיכה באיגוד הכדורסל, האם זה תקין?" בלי יעד וייחוס האחוז לבדו חסר משמעות. אוחד לתוך "גוף נתמך" — אותו גוף, אותה שאלה, מסך אחד. <strong>תיקונים</strong> (תקרות, מקדמים, ועדת חריגים) אינם נגזרים מהניקוד — מסומנים צמוד לכל מבחן, בשלב זה ללא פירוט. מימוש ב-QuickSight: Pivot Table עם צביעת חום או Stacked Bar; KPI עם שדה יעד. <strong>ערוצים שאינם מבחנים</strong> (רכש · תאגיד · אחר — "סוגי הבקשה" בתיק יישוב) מוצגים בבלוק נפרד ללא ניקוד: הם אינם חלק מ-₪148.1M של מבחני התמיכה ואינם נספרים ביעד התלות, אך נכללים ב"חשיפה הכוללת". נתוני דמה להמחשה; ערך היעד הענפי (32%) להמחשה בלבד — טרם נקבע רשמית, פתוח לדיון.</div>
     <div class="footer-note"><strong>מקור ומתודולוגיה:</strong> נתוני הפרופיל (הכנסות/מחזור, עובדים, מתנדבים, חברי עמותה, שנת דיווח, סיווג, כתובת) — מ<em>מאגר רשם העמותות הפתוח (data.gov.il · משרד המשפטים)</em>; סטטוס תמיכות/שירותים ממשלתיים — מגיידסטאר. <strong>תלות בתמיכה</strong> = סכום התמיכה שהמשרד מחלק ÷ הכנסות העמותה — מדד היתלות של הגוף במשרד וסמן סיכון תקציבי (התמיכה שלנו היא נתון פנימי של המשרד, כאן לדוגמה). <strong>מגבלות נתונים:</strong> סך הוצאות ועודף/גירעון קיימים בקובץ הפתוח אך אינם מדווחים לעמותה זו; פירוט הכנסות לפי מקור (תרומות/מדינה/שירותים/דמי חבר) קיים רק בדוח הכספי (PDF) — שניהם לשלב הבא.</div>
   </section>
 
@@ -622,6 +631,7 @@
   <section class="page" id="page-links" data-tab="links" style="--accent:var(--links);">
     <p class="page-intro">דף ניווט — שער מרכזי למקורות המידע ולדשבורדים התפעוליים. ב-QuickSight כל אריח נבנה כ-<strong>URL Action</strong> (או כפתור ניווט) על גבי ויזואל.</p>
     <div class="link-grid">
+      <a class="link-card"><div class="ic" style="background:var(--muni-soft); color:var(--muni)">🗂</div><div class="lt">תיק יישוב <span class="src-real">בפרודקשן</span></div><div class="ld">הדשבורד הקיים למנהלי המשרד (QuickSight): בקשות וסכום מאושר לפי רשות, תקנה ומחוז · נתוני למ"ס · מסמכי סיור שר. "הסתכלות גיאוגרפית" היא האבולוציה שלו.</div></a>
       <a class="link-card"><div class="ic" style="background:var(--budget-soft); color:var(--budget)">₪</div><div class="lt">דשבורד איגודים ואגודות</div><div class="ld">פילוח תקציב וספורטאים ברמת איגוד, אגודה, קבוצה ורשות.</div></a>
       <a class="link-card"><div class="ic" style="background:var(--perf-soft); color:var(--perf)">◆</div><div class="lt">דשבורד הישגיות</div><div class="ld">הישגים אישיים וקבוצתיים לפי דירוג בתחרות (פודיום / גמר 8 / 9–16 / 17+).</div></a>
       <a class="link-card"><div class="ic" style="background:var(--impact-soft); color:var(--impact)">♀</div><div class="lt">דשבורד ספורט נשים</div><div class="ld">השתתפות, שימור, מאמנות ובעלות תפקיד והשוואת רשויות.</div></a>
@@ -655,7 +665,7 @@
     </div>
 
     <div class="grid">
-      <div class="card col-8"><div class="card-head"><span class="card-title">תקציב לפי מבחן תמיכה</span><span class="card-meta">Bar · צבע = תחום <span class="qs-tag">QS</span></span></div><div class="card-canvas-wrap h-420"><canvas id="c_byTest"></canvas></div></div>
+      <div class="card col-8"><div class="card-head"><span class="card-title">תקציב לפי מבחן תמיכה</span><span class="card-meta">Bar · צבע = תחום <span class="qs-tag">QS</span></span></div><div class="card-canvas-wrap h-420"><canvas id="c_byTest"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6"><span class="src-real">קיים בתיק יישוב</span> מקבילה תפעולית — "תקציב לפי תקנה &gt; מרכז קרנות/רצועה" (ברמת תקנה, תרבות+ספורט). כאן: ברמת מבחן תמיכה, ספורט בלבד, עם תחום וערך נקודה.</div></div>
       <div class="card col-4"><div class="card-head"><span class="card-title">חלוקת הפורטפוליו לפי תחום</span><span class="card-meta">Donut <span class="qs-tag">QS</span></span></div><div class="card-canvas-wrap h-280"><canvas id="c_theme"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:8px; line-height:1.6">חמישה תחומים: הישגי · קהילה ועממי · הכלה ושוויון · תשתית ומעטפת · חירום ועמידות.</div></div>
 
       <div class="card col-7"><div class="card-head"><span class="card-title">מפת הפורטפוליו — תקציב מול גופים נתמכים</span><span class="card-meta">Scatter · גודל = ערך נקודה <span class="qs-tag">QS</span></span></div><div class="card-canvas-wrap h-320"><canvas id="c_matrix"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">ימין-למעלה: מבחנים גדולים ורחבים · שמאל-למטה: מבחנים ממוקדים. בועה גדולה = נקודה "יקרה".</div></div>
@@ -1137,7 +1147,8 @@
        {test:'קידום שילוב ספורטאים ישראלים', corr:'מקדם ליגה · הצהרת טפסי משחק', criteria:[
          {name:'שילוב שחקנים ישראלים עד גיל 22', pts:7500, amt:2250000}]},
        {test:'שיטור וסדרנות', corr:'החזר עד 90% מהעלות בפועל', criteria:[
-         {name:'מימון פעולות שיטור בתחרויות זכאיות', pts:3750, amt:1125000}]}]},
+         {name:'מימון פעולות שיטור בתחרויות זכאיות', pts:3750, amt:1125000}]}],
+      extra:[{t:'רכש',name:'התקשרות לשירותי הדרכה ומדידה למשרד',amt:800000},{t:'אחר',name:'תמיכה ייעודית מכוח החלטת ממשלה',amt:400000}]},
      {name:'איגוד הכדורעף בישראל', income:17950000, target:32,
       tests:[
        {test:'תמיכה באיגודי ספורט', corr:'תקרת תמיכה · מקדם קבוצתי', criteria:[
@@ -1145,7 +1156,8 @@
          {name:'בונוס שילוב נשים (+30%)', pts:7540, amt:1508000, women:true},
          {name:'הישגים בתחרויות בינ"ל', pts:2610, amt:522000}]},
        {test:'קידום ספורט נשים', corr:'מותנה בתוכנית מאושרת', criteria:[
-         {name:'פעילות לקידום ספורט נשים', pts:3770, amt:754000, women:true}]}]},
+         {name:'פעילות לקידום ספורט נשים', pts:3770, amt:754000, women:true}]}],
+      extra:[{t:'רכש',name:'הפעלת ליגת בתי הספר (התקשרות)',amt:250000}]},
      {name:'איגוד הג\'ודו בישראל', income:5600000, target:32,
       tests:[
        {test:'תמיכה באיגודי ספורט', corr:'תקרת תמיכה · מקדם ענף מועדף', criteria:[
@@ -1155,7 +1167,8 @@
        {test:'הישגיות — סל ספורטאי', corr:'סגל א\' בלבד · אישור הוועד האולימפי', criteria:[
          {name:'ספורטאי סגל בינ"ל פעילים', pts:920, amt:782000}]},
        {test:'קידום ספורט נשים', corr:'מותנה בתוכנית מאושרת', criteria:[
-         {name:'פעילות לקידום ספורט נשים', pts:794, amt:270000, women:true}]}]}
+         {name:'פעילות לקידום ספורט נשים', pts:794, amt:270000, women:true}]}],
+      extra:[]}
     ];
     let splitChart=null;
     function render(idx){
@@ -1163,10 +1176,12 @@
       const total=b.tests.reduce((s,t)=>s+t.criteria.reduce((a,c)=>a+c.amt,0),0);
       const share=total/b.income*100, over=share>b.target, gap=(share-b.target).toFixed(1);
       const maxAmt=Math.max(...b.tests.flatMap(t=>t.criteria.map(c=>c.amt)));
+      const extraAmt=(b.extra||[]).reduce((s,x)=>s+x.amt,0);
 
       document.getElementById('e_kpis').innerHTML=
         `<div class="kpi"><div class="kpi-label">יעד (Target) ענפי</div><div class="kpi-value">${b.target}%</div><div class="kpi-sub">להמחשה — טרם נקבע רשמית</div></div>`+
-        `<div class="kpi"><div class="kpi-label">בפועל: ${NIS(total)} מתוך ${NIS(b.income)}</div><div class="kpi-value">${share.toFixed(1)}%</div><div class="kpi-sub ${over?'down':'up'}">${over?'▲ '+gap+' נק\' מעל היעד':'✓ בתחום היעד'} · ${b.tests.length} מבחנים</div></div>`;
+        `<div class="kpi"><div class="kpi-label">תמיכות מבחנים: ${NIS(total)} מתוך ${NIS(b.income)}</div><div class="kpi-value">${share.toFixed(1)}%</div><div class="kpi-sub ${over?'down':'up'}">${over?'▲ '+gap+' נק\' מעל היעד':'✓ בתחום היעד'} · ${b.tests.length} מבחנים</div></div>`+
+        `<div class="kpi"><div class="kpi-label">חשיפה כוללת מול המשרד</div><div class="kpi-value">${((total+extraAmt)/b.income*100).toFixed(1)}%</div><div class="kpi-sub">${extraAmt?'+ '+NIS(extraAmt)+' בערוצים שאינם מבחנים (רכש/אחר)':'אין תקציב בערוצים שאינם מבחנים'}</div></div>`;
 
       document.getElementById('e_tests').innerHTML=b.tests.map(t=>{
         const tAmt=t.criteria.reduce((a,c)=>a+c.amt,0);
@@ -1175,14 +1190,21 @@
           `<div class="e-cbar-wrap"><div class="e-cbar${c.women?' women':''}" style="width:${(c.amt/maxAmt*100).toFixed(1)}%"></div></div></div>`+
           `<div class="e-cnum"><div class="a">${NIS(c.amt)}</div><div class="p">${c.pts.toLocaleString('en-US')} נק'</div></div></div>`).join('');
         return `<div class="e-test"><div class="e-test-head"><span class="tn">${t.test}</span><span class="ta">${NIS(tAmt)}</span><span class="ts">${(tAmt/total*100).toFixed(0)}% מהתמיכה</span><span class="e-corr">תיקונים (לא בניקוד): ${t.corr}</span></div>${rows}</div>`;
-      }).join('');
+      }).join('')+
+      `<div class="e-xhead">תקנות וערוצים שאינם מבחני תמיכה <span>ללא ניקוד — מחוץ למנוע · סוגי הבקשה בתיק יישוב: 3א (מבחנים) / רכש / תאגיד / אחר</span></div>`+
+      ((b.extra&&b.extra.length)
+        ? b.extra.map(x=>`<div class="e-xrow"><span class="xt">${x.t}</span><span class="xn">${x.name}</span><span class="xa">${NIS(x.amt)}</span></div>`).join('')
+        : `<div class="e-xrow"><span class="xn" style="color:var(--ink-faint)">אין לגוף זה תקציב בערוצים שאינם מבחנים</span></div>`);
 
       document.getElementById('e_explain').innerHTML=
-        `<b>קריאת ה-${share.toFixed(1)}%:</b> לבדו המספר חסר משמעות. ה<b>ייחוס</b> מפרק את התמיכה ל-${b.tests.length} מבחנים ולאמות המידה שייצרו כל שקל; ה<b>יעד</b> הענפי הוא ${b.target}% — כך ש-${share.toFixed(1)}% ${over?`הוא ${gap} נק' <u>מעל</u> היעד — נקודה לבירור`:`בתוך הטווח התקין`}. התכלת מסמנת שקלים שנוצרו ממכפילי נשים.`;
+        `<b>קריאת ה-${share.toFixed(1)}%:</b> לבדו המספר חסר משמעות. ה<b>ייחוס</b> מפרק את התמיכה ל-${b.tests.length} מבחנים ולאמות המידה שייצרו כל שקל; ה<b>יעד</b> הענפי הוא ${b.target}% — כך ש-${share.toFixed(1)}% ${over?`הוא ${gap} נק' <u>מעל</u> היעד — נקודה לבירור`:`בתוך הטווח התקין`}. התכלת מסמנת שקלים שנוצרו ממכפילי נשים.${extraAmt?` בנוסף: ${NIS(extraAmt)} בערוצים שאינם מבחנים (רכש/אחר) — בלי ניקוד מאחוריהם, ולכן מוצגים בנפרד ואינם נספרים ביעד.`:''}`;
 
       if(splitChart) splitChart.destroy();
+      const xlabels=b.tests.map(t=>t.test).concat((b.extra||[]).map(x=>x.t+' — '+x.name));
+      const xdata=b.tests.map(t=>t.criteria.reduce((a,c)=>a+c.amt,0)).concat((b.extra||[]).map(x=>x.amt));
+      const xcols=[v('--engine'),'#4A6A9C','#8CA3C6','#B9C7DC'].slice(0,b.tests.length).concat((b.extra||[]).map((x,i)=>['#9AA7B4','#C6CFD8'][i%2]));
       splitChart=new Chart(document.getElementById('e_split'),{type:'doughnut',
-        data:{labels:b.tests.map(t=>t.test),datasets:[{data:b.tests.map(t=>t.criteria.reduce((a,c)=>a+c.amt,0)),backgroundColor:[v('--engine'),'#4A6A9C','#8CA3C6','#B9C7DC'].slice(0,b.tests.length),borderWidth:2,borderColor:'#fff'}]},
+        data:{labels:xlabels,datasets:[{data:xdata,backgroundColor:xcols,borderWidth:2,borderColor:'#fff'}]},
         options:{cutout:'58%',plugins:{...legBottom('bottom'),tooltip:{callbacks:{label:c=>` ${c.label}: ${NIS(c.raw)}`}}}}});
     }
     document.getElementById('e_body').addEventListener('change',e=>render(+e.target.value));
