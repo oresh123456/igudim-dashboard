@@ -74,3 +74,12 @@
 
 ---
 *כשמייצרים/משנים מוקאפ: התחילו מהמשתנים שלמעלה, אל תכניסו צבעים מחוץ לפלטה, ושמרו על המבנה האחיד.*
+
+---
+## TODO — research-swarm: לחזק עמידות ותיעוד (חובה להטמיע ב-skill בהיקף user)
+מקור מלא: `הצגה למורן/api-research/SWARM-IMPROVEMENTS.md`. תוכנן 15/07/2026, טרם מומש. לבנות תחילה project-local, ואז **לקדם ל-skill ב-`~/.claude/skills/research-swarm`** (גם אם ההקשר יאבד — הכיוון חייב לשרוד).
+- **#1 resume:** `STATE.md` נגזר (לא נערך ידנית) = עוגן הקשר לאורchestrator בין sessions; נקרא בהפעלה, נכתב מחדש אחרי merge.
+- **#3 עמידות:** לכידה מצטברת — כל agent כותב checkpoint לכל מקור ל-`agents/<key>.part` (agents יכולים FS ב-Bash); סולם התאוששות: detect (journal started-vs-result) → retry → salvage → flag גלוי.
+- **#2 שלמות:** שורת coverage לכל fetch עם `why` תמציתי (by construction, ~<1% tokens); backstop = diff provenance מול coverage.
+- **דחוי (לא לבנות):** schema מועדף-לא-נכפה ל-decisions — להחליט אמפירית אחרי בחינת דוחות agents.
+- **פריסה:** verbose (decisions/provenance/partials) מחוץ לנתיב הטעינה הדיפולטי; דיפולט = `STATE.md`+`findings.jsonl`.
