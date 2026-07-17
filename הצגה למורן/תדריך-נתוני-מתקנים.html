@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>תדריך · נתוני מתקני ספורט — פערים ומקורות</title>
+<style>
+  :root{
+    --navy:#1F3F6D; --green:#248A3D; --red:#DA3439;
+    --sky:#2D9CDB; --purple:#6B4FA0; --orange:#E07B39; --slate:#7A8FA6; --gold:#F8C33E;
+    --bg:#F2F4F7; --surface:#FFFFFF; --border:#E5E9F0; --ink:#1A1A2E; --ink-muted:#6B7280;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Amazon Ember","Heebo",system-ui,"Segoe UI",Arial,sans-serif;
+    background:var(--bg); color:var(--ink); line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1040px;margin:0 auto;padding:28px 22px 64px}
+  .ltr{direction:ltr;unicode-bidi:isolate;display:inline-block}
+  code,.mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.86em;
+    background:#eef1f6;padding:1px 6px;border-radius:5px;direction:ltr;unicode-bidi:isolate}
+
+  /* header */
+  header.brand{display:flex;align-items:center;justify-content:space-between;gap:16px;
+    border-bottom:3px solid var(--navy);padding-bottom:14px;margin-bottom:22px}
+  .wordmark{font-weight:800;color:var(--navy);font-size:19px;letter-spacing:.2px}
+  .wordmark small{display:block;font-weight:600;color:var(--ink-muted);font-size:12.5px;margin-top:2px}
+  .meta{font-size:12.5px;color:var(--ink-muted);text-align:left}
+
+  h1{font-size:26px;color:var(--navy);margin:6px 0 4px;font-weight:800}
+  .sub{color:var(--ink-muted);font-size:15px;margin:0 0 22px}
+
+  h2{font-size:19px;color:var(--navy);margin:30px 0 12px;font-weight:800;
+    display:flex;align-items:center;gap:9px}
+  h2 .n{background:var(--navy);color:#fff;width:26px;height:26px;border-radius:7px;
+    display:inline-flex;align-items:center;justify-content:center;font-size:14px;flex:none}
+
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;
+    padding:16px 18px;margin:12px 0;box-shadow:0 1px 2px rgba(31,63,109,.04)}
+
+  /* bottom line callout */
+  .bluf{background:linear-gradient(180deg,#1F3F6D,#274d82);color:#fff;border-radius:14px;
+    padding:20px 22px;margin:4px 0 8px;box-shadow:0 6px 18px rgba(31,63,109,.18)}
+  .bluf .tag{display:inline-block;background:var(--gold);color:#3a2e00;font-weight:800;
+    font-size:12px;padding:3px 10px;border-radius:20px;margin-bottom:10px}
+  .bluf h3{margin:0 0 8px;font-size:20px}
+  .bluf p{margin:6px 0;color:#dfe7f2;font-size:14.5px}
+  .bluf .ltr{color:#fff}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:720px){.grid2{grid-template-columns:1fr}}
+
+  .pill{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;
+    padding:2px 9px;border-radius:20px;white-space:nowrap}
+  .ok{background:#e6f4ea;color:var(--green)} .no{background:#fbe7e8;color:var(--red)}
+  .mid{background:#fff3d6;color:#8a6a00}
+
+  ul{margin:8px 0;padding-inline-start:20px} li{margin:5px 0}
+  .muted{color:var(--ink-muted)}
+  .kv{font-size:13.5px}
+  .kv b{color:var(--navy)}
+
+  table{width:100%;border-collapse:collapse;font-size:13.5px;margin:6px 0}
+  th,td{text-align:right;padding:9px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+  th{color:var(--navy);font-weight:800;background:#f6f8fb;font-size:12.5px}
+  tr:last-child td{border-bottom:none}
+
+  /* tiers strip */
+  .tiers{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:10px 0}
+  @media(max-width:720px){.tiers{grid-template-columns:1fr}}
+  .tier{border:1px solid var(--border);border-radius:10px;padding:13px 14px;background:#fff}
+  .tier h4{margin:0 0 6px;font-size:14.5px;color:var(--navy)}
+  .tier.dead{border-top:4px solid var(--red)}
+  .tier.part{border-top:4px solid var(--gold)}
+  .tier.good{border-top:4px solid var(--green)}
+  .tier p{margin:4px 0;font-size:12.8px;color:var(--ink-muted)}
+
+  .flow{background:#f6f8fb;border:1px dashed #c8d3e2;border-radius:10px;padding:12px 14px;
+    font-size:13.5px;margin:10px 0}
+  .flow b{color:var(--navy)}
+
+  .steps{counter-reset:s;list-style:none;padding:0;margin:8px 0}
+  .steps li{counter-increment:s;position:relative;padding:8px 40px 8px 8px;margin:6px 0;
+    background:#fff;border:1px solid var(--border);border-radius:10px;font-size:14px}
+  .steps li::before{content:counter(s);position:absolute;right:9px;top:8px;
+    background:var(--green);color:#fff;width:24px;height:24px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}
+
+  .src{font-size:11.5px;color:var(--ink-muted);margin-top:4px}
+  footer{margin-top:34px;padding-top:14px;border-top:1px solid var(--border);
+    font-size:12px;color:var(--ink-muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  @media print{body{background:#fff}.wrap{max-width:none}.card,.tier,.steps li{box-shadow:none}
+    .bluf{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="brand">
+    <div class="wordmark">משרד התרבות והספורט · מינהל הספורט
+      <small>אגף מתקנים · פרויקט דאטה ודשבורדים</small>
+    </div>
+    <div class="meta">תדריך פנימי לקראת ישיבה<br>יום א׳ · יולי 2026</div>
+  </header>
+
+  <h1>נתוני מתקני ספורט — פער השלמות ומקורות הנתונים</h1>
+  <p class="sub">מהו מקור-האמת הקיים, למה הוא חלקי, ומהי הדרך היחידה לסגור את הפער במלואו.</p>
+
+  <!-- BLUF -->
+  <div class="bluf">
+    <span class="tag">שורה תחתונה — ההמלצה לישיבה</span>
+    <h3>הפתרון המלא הוא בקשת מידע בין־משרדית ל<span dir="rtl">מינהל התכנון</span>, לא כלי טכני.</h3>
+    <p>כל מתקן — ציבורי או פרטי — עובר דרך <b>היתר בנייה</b> במערכת <span class="ltr">רישוי זמין</span>. המערכת סגורה לחלוטין לגורם חיצוני, אבל היא <b>משתפת נתונים דרך קבע עם גופים ממשלתיים</b>. כמשרד ממשלתי — הדלת פתוחה לנו וסגורה לכל השאר.</p>
+    <p>הבסיס החוקי (<span class="ltr">סעיף 23ג</span> לחוק הגנת הפרטיות + אחריותנו לפי חוק הספורט) והצינור הטכני (<b>שדרת המידע הממשלתית</b> ב־<span class="ltr">API</span>) כבר קיימים. התוצאה: <b>נתוני היתרים ארציים מלאים, כולל המתקנים הפרטיים שהמרשם שלנו כלל לא רואה.</b></p>
+  </div>
+
+  <!-- 1 problem -->
+  <h2><span class="n">1</span>הבעיה: מקור־האמת שלנו חלקי ו"עיוור" למגזר הפרטי</h2>
+  <div class="card">
+    <p style="margin-top:0">שלושת המקורות שבידינו — <b>דאטה 408</b> ב־<span class="ltr">data.gov.il</span>, שכבת <span class="ltr">GovMap</span>, ושרת <span class="ltr">Efshari Bari</span> — הם <b>אותו קובץ אחד</b>: <b>"קובץ המתקנים"</b> של מינהל הספורט (כ־8,794 מתקנים). המידע נכנס אליו <b>רק</b> בדיווח עצמי של הרשויות המקומיות.</p>
+    <div class="grid2">
+      <div>
+        <div class="kv"><b>מה מצא מבקר המדינה (2023):</b></div>
+        <ul>
+          <li>7,650 שגיאות הזנה מתוך 8,794 רשומות.</li>
+          <li>תת־ספירה של המתקנים בפועל ב־<b>22%–40%</b> (ראש העין ~40%, פ"ת ~22%).</li>
+          <li>הזנה לא חובה, טקסט חופשי, ללא עדכון סדיר.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="kv"><b>מה חסר מבנית:</b></div>
+        <ul>
+          <li>מתקנים <b>פרטיים מוחרגים במפורש</b>: בתי מלון, מכוני כושר פרטיים, בריכות פרטיות.</li>
+          <li><span class="ltr">Efshari Bari</span> חי אך ללא קצב מוצהר — עריכה אחרונה <b>מרץ 2025</b>.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="src">מקור: דוח מבקר המדינה, "הקמת מתקני ספורט, תחזוקתם והפעלתם", מאי 2023.</p>
+  </div>
+
+  <!-- 2 lanes -->
+  <h2><span class="n">2</span>נתיבי ההקמה: מי בונה — ומי לא נראה במרשם</h2>
+  <div class="card">
+    <table>
+      <tr><th>נתיב</th><th>גורם</th><th>נראה במרשם?</th></tr>
+      <tr><td>תקציב הרשות המקומית</td><td>רשות מקומית</td><td><span class="pill mid">חלקי (דיווח עצמי)</span></td></tr>
+      <tr><td>תמיכת מינהל הספורט (מבחני תמיכה)</td><td>המשרד → רשויות</td><td><span class="pill mid">חלקי</span></td></tr>
+      <tr><td>הטוטו (עבר למשרד 2019) · מפעל הפיס</td><td>מימון → רשויות</td><td><span class="pill mid">חלקי</span></td></tr>
+      <tr><td>אולמות ספורט בבתי ספר</td><td>משרד החינוך</td><td><span class="pill mid">חלקי</span></td></tr>
+      <tr><td><b>מגזר פרטי:</b> מועדונים/עמותות · מלונות · מכוני כושר · אוניברסיטאות · <span class="ltr">BOT</span></td><td>גורמים לא־רשותיים</td><td><span class="pill no">✗ עיוור לחלוטין</span></td></tr>
+    </table>
+    <p class="muted" style="margin-bottom:0">הנתיב הפרטי הוא בדיוק מה שמרשם הדיווח־העצמי אינו יכול לתפוס. זה הפער שאנחנו מנסים לסגור.</p>
+  </div>
+
+  <!-- 3 permit landscape -->
+  <h2><span class="n">3</span>רשת ההשלמה: היתרי בנייה — נקודת המעבר של כל מתקן</h2>
+  <p class="sub" style="margin:0 0 6px">בדקנו כל מקור אפשרי להיתרי בנייה (שלוש סבבי חקירה). התמונה:</p>
+  <div class="tiers">
+    <div class="tier dead">
+      <h4>ארצי <span class="pill no">✗ אין ברז</span></h4>
+      <p><span class="ltr">רישוי זמין</span> — מערכת סגורה (התחברות מזוהה בלבד).</p>
+      <p><span class="ltr">data.gov.il</span> — 0 מאגרי היתרים.</p>
+      <p><span class="ltr">CBS/למ"ס</span> — נתונים מצטברים בלבד, ללא זיהוי פרטני / ספורט.</p>
+      <p><span class="ltr">מבא"ת</span> — החלטות ועדה, אך נעולות ב־<span class="ltr">PDF</span>.</p>
+    </div>
+    <div class="tier good">
+      <h4>ברמת רשות <span class="pill ok">✓ קיים</span></h4>
+      <p><b>תל אביב</b> — שכבת <span class="ltr">IView2 / MapServer/772</span> (בקשות והיתרים): חי, ללא הזדהות, עדכון יומי, קואורדינטות.</p>
+      <p><b>ספקים</b> — <span class="ltr">Complot</span> (~7 רשויות) ו־<span class="ltr">Bartech</span> (~13 רשויות) על אותה סכימה.</p>
+    </div>
+    <div class="tier part">
+      <h4>מגבלות <span class="pill mid">שים לב</span></h4>
+      <p>אף מקור <b>אינו מסווג "ספורט"</b> — רק התאמת טקסט חופשי בתיאור ההיתר.</p>
+      <p>פורטלי הספקים חסומים ב־<span class="ltr">Cloudflare</span> — דורש דפדפן.</p>
+      <p>כיסוי נבנה <b>רשות־אחר־רשות</b>, אין ברז לאומי אחד.</p>
+    </div>
+  </div>
+  <div class="flow">
+    <b>התובנה המרכזית שקושרת הכול:</b> נתוני <span class="ltr">רישוי זמין</span> "בורחים" מהמערכת הסגורה כ<b>קובץ <span class="ltr">XML</span> לכל בקשה</b> — ישירות אל מערכות ההנדסה העירוניות (<span class="ltr">Complot / Bartech</span>). כלומר: <b>נתוני ההיתרים הארציים כבר יושבים, מבוזרים, בשכבת הספקים.</b>
+  </div>
+
+  <!-- 4 RZ verdict -->
+  <h2><span class="n">4</span>רישוי זמין — נסגר סופית כנתיב טכני</h2>
+  <div class="card">
+    <div class="grid2">
+      <div>
+        <div class="kv"><b>מה מצאנו:</b></div>
+        <ul>
+          <li>המערכת האמיתית: <span class="mono">rishuybniya.moin.gov.il</span> — 3 מודולים (עורכי בקשות · ועדות · גופים מאשרים).</li>
+          <li><b>כולם</b> מפנים להזדהות לאומית (<span class="ltr">login.gov.il</span>). אין כניסה אנונימית, אין <span class="ltr">API</span> ציבורי.</li>
+          <li>אף פרויקט אזרחי/קוד פתוח לא "פיצח" אותה.</li>
+          <li>המכרז (29/2019) מאשר: מערכת <span class="ltr">Esri/ArcGIS</span> ייעודית של מינהל התכנון — ללא ממשק נתונים פתוח.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="kv"><b>המסקנה:</b></div>
+        <p>המחסום אינו טכנולוגי אלא <b>הרשאתי</b>. לגורם חיצוני — קיר אטום.<br>
+        אבל המערכת <b>כבר משתפת נתונים דרך קבע</b> עם גופים סטטוטוריים (רמ"י, כב"ה, רשות העתיקות, פיקוד העורף, רשם המקרקעין ועוד).</p>
+        <p style="margin-bottom:0"><b>ולכאן נכנסים אנחנו.</b></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5 solution -->
+  <h2><span class="n">5</span>הפתרון: בקשת מידע בין־משרדית — נתיב שפתוח רק לנו</h2>
+  <div class="card">
+    <div class="grid2">
+      <div>
+        <div class="kv"><b>בסיס חוקי — עומדים בו:</b></div>
+        <p><span class="ltr">סעיף 23ג</span> לחוק הגנת הפרטיות מתיר העברת מידע בין גופים ציבוריים כשהיא במסגרת תפקידי המוסר <b>ומשרתת את תפקידי המקבל</b>. מיפוי תשתיות הספורט הוא <b>תפקידנו לפי חוק הספורט</b> — הבסיס מתקיים.</p>
+        <div class="kv" style="margin-top:10px"><b>צינור טכני — כבר קיים:</b></div>
+        <p><b>שדרת המידע הממשלתית</b> (רשות התקשוב / מערך הדיגיטל) — תשתית <span class="ltr">REST API</span> להעברת מידע בין משרדים ("שאל פעם אחת בלבד"). כאן מינהל התכנון יכול לחשוף את נתוני ההיתרים ואנחנו נצרוך אותם.</p>
+      </div>
+      <div>
+        <div class="kv"><b>למה זה יעבור:</b></div>
+        <ul>
+          <li><b>תקדים שכבר שלנו:</b> אנחנו שותפים לנתוני <span class="ltr">Efshari Bari</span> יחד עם משרד הבריאות.</li>
+          <li><span class="ltr">רישוי זמין</span> ממילא משתף נתונים <span class="ltr">G2G</span> עם שורת גופים — צרכן מורשה נוסף = שגרה.</li>
+        </ul>
+        <div class="kv" style="margin-top:10px"><b>מה זה נותן:</b></div>
+        <p style="margin-bottom:0"><b>זרם היתרים ארצי מלא — כל הנתיבים, כולל המתקנים הפרטיים שהמרשם עיוור אליהם.</b> פותר את בעיית השלמות במכה אחת, ללא גרידה.</p>
+      </div>
+    </div>
+    <p class="src">מקורות: חוק הגנת הפרטיות פרק ד׳ + תקנות העברת מידע בין גופים ציבוריים (1986); הנחיית שדרת המידע (<span class="ltr">REST API</span>), רשות התקשוב.</p>
+  </div>
+
+  <!-- 6 ops -->
+  <h2><span class="n">6</span>המלצה אופרטיבית — רצף הפעולה</h2>
+  <ol class="steps">
+    <li><b>לפתוח את בקשת המידע מול מינהל התכנון עכשיו.</b> נתיב בירוקרטי (שבועות–חודשים) אך בעל התשואה הגבוהה ביותר — עשוי לייתר את כל מאמץ הגרידה. יעד: אגף טכנולוגיות דיגיטליות ומידע + ממונה הגנת הפרטיות במשרד.</li>
+    <li><b>להריץ אב־טיפוס לדשבורד על נתוני תל אביב (<span class="ltr">layer 772</span>)</b> — חינם, חי, מרחבי — כדי להיות מוכנים כשהנתונים הארציים יגיעו.</li>
+    <li><b>להקפיא את בניית מחברי הספקים</b> (<span class="ltr">Complot/Bartech</span>) עד שתתברר הבקשה — לא להשקיע בגרידה של מה שעשוי להגיע כברז מסודר.</li>
+    <li><b>לבקש ניסוח הבקשה הרשמית</b> (מכתב/הסכם העברת מידע) לחתימת הגורם המוסמך — מוכן להכנה.</li>
+  </ol>
+
+  <footer>
+    <div>הוכן מתוך שלושה סבבי חקירת מקורות (יולי 2026) · פירוט מלא: <span class="mono">api-research/out/</span></div>
+    <div>לשימוש פנימי · משרד התרבות והספורט</div>
+  </footer>
+
+</div>
+</body>
+</html>
