@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>שקף פתיחה — בקרת איכות נתונים</title>
+<style>
+:root{
+  --navy:#1F3F6D; --green:#248A3D; --red:#DA3439; --sky:#2D9CDB;
+  --purple:#6B4FA0; --orange:#E07B39; --slate:#7A8FA6; --gold:#F8C33E;
+  --bg:#F2F4F7; --surface:#FFFFFF; --border:#E5E9F0;
+  --ink:#1A1A2E; --ink-muted:#6B7280;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{background:var(--bg);font-family:"Amazon Ember","Heebo",system-ui,sans-serif;color:var(--ink);
+  display:grid;place-items:center;padding:24px;}
+.slide{width:100%;max-width:1000px;aspect-ratio:16/9;background:var(--surface);border-radius:18px;
+  box-shadow:0 12px 40px rgba(31,63,109,.14);border:1px solid var(--border);overflow:hidden;
+  display:flex;flex-direction:column;}
+.head{background:var(--navy);color:#fff;padding:18px 30px;}
+.head .k{font-size:13px;opacity:.85;}
+.head h1{font-size:26px;margin:3px 0 5px;}
+.head .axis{font-size:13.5px;opacity:.95;}
+.head .axis b{color:var(--gold);}
+.body{flex:1;display:grid;grid-template-columns:1.35fr 1fr;gap:0;}
+.layers{padding:20px 26px;display:flex;flex-direction:column;justify-content:center;gap:12px;border-left:1px solid var(--border);}
+.layer{display:flex;gap:13px;align-items:flex-start;}
+.layer .num{width:34px;height:34px;border-radius:9px;color:#fff;display:grid;place-items:center;font-size:16px;font-weight:700;flex:none;}
+.l0 .num{background:var(--slate);} .l1 .num{background:var(--navy);} .l2 .num{background:var(--purple);}
+.layer h3{font-size:16px;margin-bottom:2px;}
+.l0 h3{color:var(--slate);} .l1 h3{color:var(--navy);} .l2 h3{color:var(--purple);}
+.layer .q{font-size:12.5px;color:var(--ink);font-weight:600;}
+.layer .d{font-size:11.5px;color:var(--ink-muted);margin-top:1px;}
+.build{padding:20px 26px;background:#fafbfc;display:flex;flex-direction:column;justify-content:center;}
+.build .bt{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.big{background:#fdecec;border:1.5px solid var(--red);border-radius:11px;padding:10px 14px;margin-bottom:12px;text-align:center;}
+.big .n{font-size:30px;font-weight:800;color:var(--red);line-height:1;}
+.big .l{font-size:12px;color:#7d1a1e;margin-top:3px;}
+.qlist{list-style:none;display:flex;flex-direction:column;gap:7px;}
+.qlist li{font-size:12.5px;display:flex;gap:8px;align-items:center;}
+.qlist .b{width:20px;height:20px;border-radius:6px;background:var(--navy);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center;flex:none;}
+.dot{width:9px;height:9px;border-radius:50%;flex:none;}
+.d-red{background:var(--red);} .d-org{background:var(--orange);} .d-none{background:var(--slate);}
+.foot{padding:11px 30px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:11.5px;color:var(--ink-muted);gap:16px;flex-wrap:wrap;}
+.foot .leg{display:flex;gap:14px;align-items:center;}
+.foot .leg span{display:flex;gap:5px;align-items:center;}
+</style>
+</head>
+<body>
+<div class="slide">
+
+  <div class="head">
+    <div class="k">משרד התרבות והספורט · אגף איגודים ואגודות</div>
+    <h1>מערכת בקרת איכות נתוני תמיכה</h1>
+    <div class="axis">ציר סיווג אחד — <b>מי מנסח את החוק:</b> מכונה מהסכימה &nbsp;·&nbsp; מומחה תוכן מגדיר "מה נכון"</div>
+  </div>
+
+  <div class="body">
+    <div class="layers">
+      <div class="layer l0">
+        <div class="num">0</div>
+        <div><h3>בריאות הצינור</h3><div class="q">האם ה-ETL רץ ומה נטען?</div><div class="d">רעננות · נפח · סכימה · התאמת סכומים · <b>הנדסה</b></div></div>
+      </div>
+      <div class="layer l1">
+        <div class="num">1</div>
+        <div><h3>ולידציה מבנית</h3><div class="q">האם הערך תקין מבנית? (נגזר מהסכימה)</div><div class="d">NOT NULL · טיפוס · ייחודיות · מפתח · טווח · <b>מהנדס נתונים</b></div></div>
+      </div>
+      <div class="layer l2">
+        <div class="num">2</div>
+        <div><h3>ולידציה עסקית / סמנטית</h3><div class="q">האם הערך נכון בהקשר התחום?</div><div class="d">זהות ישות · CRM · תנאי סף · עקביות זמן · <b>מומחה תוכן</b></div></div>
+      </div>
+    </div>
+
+    <div class="build">
+      <div class="bt">① מה בונים ראשון</div>
+      <div class="big">
+        <div class="n">48</div>
+        <div class="l">שורות ממומנות נופלות בשקט עכשיו<br>(29 year · 14 society · 5 branch)</div>
+      </div>
+      <ol class="qlist">
+        <li><span class="b">1</span> מפתח מורכב + עקביות זמן <span class="dot d-org"></span></li>
+        <li><span class="b">2</span> פיצול ישות 51↔58 — מיזוג <span class="dot d-org"></span></li>
+        <li><span class="b">3</span> התאמה למרשם CRM <span class="dot d-red"></span></li>
+        <li><span class="b">4</span> תנאי סף · עקביות ניקוד <span class="dot d-red"></span></li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div>מדד-על: <b style="color:var(--navy)">₪ בסיכון</b> + שער חוסמים — לא אחוז שטוח</div>
+    <div class="leg">
+      <span><span class="dot d-red"></span> מסלף סכום</span>
+      <span><span class="dot d-org"></span> מפיל שיוך</span>
+      <span><span class="dot d-none"></span> מבני/ניטור</span>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
