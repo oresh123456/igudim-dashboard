@@ -1,0 +1,3 @@
+[     905ms] [LOG] Register a service worker. @ https://gis.haifa.muni.il/HaifaProjectsPublic/service-worker-registration.js:10
+[    3162ms] [LOG] jimu.js init... @ https://gis.haifa.muni.il/HaifaProjectsPublic/jimu.js/main.js?wab_dv=2.26:3086
+[    4620ms] [LOG] {server: https://gishaifa.maps.arcgis.com, tokenServiceUrl: https://www.arcgis.com/sharing/generateToken, hasPortal: true, _selfReq: null, currentVersion: 8.4} @ https://gis.haifa.muni.il/HaifaProjectsPublic/jimu.js/main.js?wab_dv=2.26:457
