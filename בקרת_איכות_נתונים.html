@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>בקרת איכות נתונים — מודל שלוש שכבות · משרד התרבות והספורט</title>
+<style>
+:root{
+  --navy:#1F3F6D; --green:#248A3D; --red:#DA3439; --sky:#2D9CDB;
+  --purple:#6B4FA0; --orange:#E07B39; --slate:#7A8FA6; --gold:#F8C33E;
+  --bg:#F2F4F7; --surface:#FFFFFF; --border:#E5E9F0;
+  --ink:#1A1A2E; --ink-muted:#6B7280;
+}
+*{box-sizing:border-box;}
+body{margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Amazon Ember","Heebo",system-ui,sans-serif; line-height:1.5;
+  padding:26px 18px 70px; font-size:14px;}
+.wrap{max-width:1240px; margin:0 auto;}
+header.top{background:var(--navy); color:#fff; border-radius:14px; padding:22px 28px; margin-bottom:18px;}
+header.top .kicker{font-size:13px; opacity:.85;}
+header.top h1{margin:5px 0 6px; font-size:25px;}
+header.top p{margin:0; font-size:14px; opacity:.92; max-width:900px;}
+h2.sec{font-size:20px; color:var(--navy); margin:34px 0 4px; display:flex; align-items:center; gap:10px;}
+h2.sec .n{width:30px;height:30px;border-radius:8px;background:var(--navy);color:#fff;display:grid;place-items:center;font-size:15px;flex:none;}
+p.lead{color:var(--ink-muted); margin:0 0 14px; font-size:14px; max-width:960px;}
+
+/* axis / 3 layers intro */
+.axis{background:#fff;border:1px solid var(--border);border-right:4px solid var(--gold);border-radius:12px;padding:14px 18px;margin:14px 0 22px;font-size:14px;}
+.axis b{color:var(--navy);}
+.layers{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:16px 0 8px;}
+@media(max-width:860px){.layers{grid-template-columns:1fr;}}
+.layer{background:#fff;border:1px solid var(--border);border-radius:13px;padding:16px 16px 18px;border-top:5px solid var(--slate);}
+.layer.l0{border-top-color:var(--slate);} .layer.l1{border-top-color:var(--navy);} .layer.l2{border-top-color:var(--purple);}
+.layer .tag{font-size:12px;font-weight:700;letter-spacing:.02em;color:var(--ink-muted);}
+.layer h3{margin:3px 0 6px;font-size:17px;}
+.layer.l0 h3{color:var(--slate);} .layer.l1 h3{color:var(--navy);} .layer.l2 h3{color:var(--purple);}
+.layer .q{font-size:13.5px;color:var(--ink);margin:0 0 8px;font-weight:600;}
+.layer .who{font-size:12.5px;color:var(--ink-muted);}
+.layer .who b{color:var(--ink);}
+
+/* pipeline (converging JOIN) */
+.pipe{background:#fff;border:1px solid var(--border);border-radius:13px;padding:18px;margin:8px 0 10px;}
+.srcrow{display:flex;gap:14px;}
+@media(max-width:680px){.srcrow{flex-direction:column;}}
+.box{flex:1;border:1.5px solid var(--border);border-radius:10px;padding:10px 13px;font-size:13px;background:#f6f8fb;}
+.box .t{font-weight:700;color:var(--navy);} .box .c{font-family:ui-monospace,Consolas,monospace;font-size:11.5px;color:var(--ink-muted);direction:ltr;}
+.box .ok{float:left;color:var(--green);font-size:16px;}
+.joinbar{margin:10px 0;padding:11px 14px;border-radius:10px;background:#fdecec;border:1.5px solid var(--red);color:#7d1a1e;font-size:13px;display:flex;align-items:center;gap:10px;justify-content:center;text-align:center;}
+.joinbar b{color:var(--red);}
+.downarrow{text-align:center;color:var(--ink-muted);font-size:18px;margin:4px 0;}
+.chip{background:#eef1f6;border:1px solid var(--border);border-radius:999px;padding:2px 10px;font-size:12px;color:var(--ink-muted);}
+.infra{margin-top:12px;font-size:12px;color:var(--ink-muted);background:#fafbfc;border:1px dashed var(--border);border-radius:8px;padding:8px 12px;}
+.infra b{color:var(--slate);}
+
+/* build-first panel */
+.build{background:#fff;border:1px solid var(--border);border-radius:13px;overflow:hidden;margin:8px 0 6px;}
+.build .h{background:var(--navy);color:#fff;padding:11px 16px;font-weight:700;font-size:15px;}
+.build ol{margin:0;padding:14px 34px 16px;}
+.build li{margin:7px 0;font-size:13.5px;}
+.build li b{color:var(--navy);}
+
+/* tables */
+.tblwrap{overflow-x:auto;border:1px solid var(--border);border-radius:13px;background:#fff;margin:8px 0 4px;}
+table{width:100%;border-collapse:collapse;font-size:12.8px;min-width:900px;}
+thead th{background:#fafbfc;text-align:right;color:var(--ink-muted);font-weight:600;padding:9px 11px;border-bottom:2px solid var(--border);font-size:12px;white-space:nowrap;}
+tbody td{padding:10px 11px;border-bottom:1px solid var(--border);vertical-align:top;}
+tbody tr:last-child td{border-bottom:none;}
+tbody tr:hover{background:#fafcff;}
+.rule{font-weight:700;color:var(--navy);white-space:nowrap;}
+.t2 .rule{color:var(--purple);}
+.ex{color:var(--ink-muted);font-size:12.5px;}
+.ex b{color:var(--red);font-weight:600;}
+code{background:#eef1f6;border:1px solid var(--border);border-radius:5px;padding:0 4px;font-family:ui-monospace,Consolas,monospace;font-size:11px;direction:ltr;unicode-bidi:embed;display:inline-block;}
+.dama{font-size:11px;color:var(--ink-muted);white-space:nowrap;}
+.tool{font-size:11.5px;color:var(--ink);white-space:nowrap;}
+.owner{font-size:11.5px;white-space:nowrap;}
+.own-eng{color:var(--navy);} .own-dq{color:var(--slate);} .own-biz{color:var(--purple);}
+/* money impact icons */
+.money{white-space:nowrap;font-size:12px;font-weight:600;}
+.m-red{color:var(--red);} .m-org{color:var(--orange);} .m-none{color:var(--slate);}
+/* action badges */
+.act{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600;color:#fff;white-space:nowrap;}
+.act.reject{background:var(--red);} .act.hold{background:var(--orange);} .act.merge{background:var(--navy);} .act.flag{background:var(--slate);}
+.scope{display:inline-block;font-size:10.5px;color:var(--ink-muted);border:1px solid var(--border);border-radius:4px;padding:0 5px;margin-top:3px;}
+.ready{display:inline-block;font-size:10.5px;border-radius:4px;padding:0 5px;margin-top:3px;}
+.ready.now{color:var(--green);border:1px solid #bfe3c8;background:#f0faf3;}
+.ready.pre{color:var(--orange);border:1px solid #f3d9c2;background:#fdf3ec;}
+
+/* data-cell illustration */
+.dtable{border:1px solid var(--border);border-radius:10px;overflow-x:auto;margin:10px 0;}
+.dtable table{min-width:640px;}
+.dtable th{background:#faf7fc;font-size:11px;text-align:left;direction:ltr;}
+.dtable td{font-family:ui-monospace,Consolas,monospace;font-size:12px;direction:ltr;text-align:left;}
+.cell-bad{background:#fdecec;color:var(--red);font-weight:700;}
+.cell-warn{background:#fef6e6;color:var(--orange);font-weight:700;}
+.flags .row{display:flex;gap:9px;align-items:flex-start;font-size:13px;padding:5px 0;}
+.flags .dot{width:9px;height:9px;border-radius:50%;margin-top:6px;flex:none;}
+.flags .row b{color:var(--red);}
+
+/* decisions + system + legend */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:10px;}
+@media(max-width:860px){.grid2{grid-template-columns:1fr;}}
+.panel{background:#fff;border:1px solid var(--border);border-radius:13px;padding:16px 18px;}
+.panel h4{margin:0 0 8px;font-size:15px;color:var(--navy);}
+.panel.dec{border-right:4px solid var(--red);}
+.panel.sys{border-right:4px solid var(--green);}
+.panel ul{margin:6px 0 0;padding-inline-start:20px;}
+.panel li{margin:5px 0;font-size:13px;}
+.panel li b{color:var(--navy);}
+.legend{display:flex;flex-wrap:wrap;gap:18px;margin:14px 0 4px;font-size:12.5px;color:var(--ink-muted);align-items:center;}
+.legend .grp{display:flex;gap:8px;align-items:center;}
+.foot{margin-top:26px;font-size:12px;color:var(--ink-muted);text-align:center;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="kicker">משרד התרבות והספורט · אגף איגודים ואגודות · בקרת איכות נתוני תמיכה</div>
+  <h1>מערכת בקרת איכות נתונים — מודל שלוש שכבות</h1>
+  <p>כל בדיקה מסווגת לפי <b>ציר אחד: מי מנסח את החוק</b>. חוק שנגזר מהסכימה לבד = מכונה מכריעה · חוק שמגדיר "מה נכון" בהקשר = דורש מומחה תוכן. לכל חוק מצורפים גם מימד תקן (DAMA), פגיעה כספית, כלי מימוש, אחראי ופעולת כשל — כדי שהפגישה תוכל לתעדף ולהקצות, לא רק לסווג.</p>
+</header>
+
+<div class="axis">
+  <b>הציר המנחה (אחד, לכל השכבות):</b> טכני = ניתן <u>לנסח את החוק מהסכימה בלבד</u> (מהנדס נתונים כותב אותו) · עסקי = הגדרת "מה נכון" <u>מחייבת מומחה תחום</u>. החוק עצמו רץ אוטומטית בשני המקרים.
+  &nbsp;·&nbsp; שתי המשפחות הן <b>ציר תפעולי</b> (מי בודק ומתי) — <b>אורתוגונלי</b> למודל המימדים של DAMA-DMBOK, שמופיע כתגית לכל חוק. לכן אותו מימד (למשל שלמות התייחסותית) יכול להופיע בשתי שכבות.
+</div>
+
+<!-- ===== 3 LAYERS ===== -->
+<h2 class="sec"><span class="n">◲</span> שלוש השכבות</h2>
+<p class="lead">שכבה 0 היא <b>בריאות הצינור</b> (Data Observability) — הופרדה מ"טכני" כי חלקהּ בבעלות הנדסה/DevOps ולא נבדק בכלי DQ. שכבות 1–2 הן ולידציית תוכן.</p>
+<div class="layers">
+  <div class="layer l0">
+    <div class="tag">שכבה 0</div>
+    <h3>בריאות הצינור</h3>
+    <div class="q">האם ה-ETL רץ ומה נטען?</div>
+    <div class="who">רעננות · נפח · סחף סכימה · התאמת ספירה/סכומים בין שלבים. <b>אחראי:</b> הנדסת נתונים. תשתית טהורה (דיסק/זיכרון/הרשאות) = תנאי קדם ב-DevOps, מחוץ ל-DQ Score.</div>
+  </div>
+  <div class="layer l1">
+    <div class="tag">שכבה 1</div>
+    <h3>ולידציה מבנית</h3>
+    <div class="q">האם הערך תקין מבנית? (נגזר מהסכימה)</div>
+    <div class="who">NOT NULL · טיפוס/פורמט · ייחודיות · מפתח יתום · טווח · התאמת מפתח מורכב. <b>אחראי:</b> מהנדס נתונים — אגנוסטי לתחום.</div>
+  </div>
+  <div class="layer l2">
+    <div class="tag">שכבה 2</div>
+    <h3>ולידציה עסקית / סמנטית</h3>
+    <div class="q">האם הערך נכון בהקשר התחום?</div>
+    <div class="who">זהות ישות · התאמה ל-CRM · תנאי סף · עקביות שדות · עקביות זמן · חריגים. <b>אחראי:</b> מומחה תוכן במשרד מגדיר את הכלל.</div>
+  </div>
+</div>
+
+<!-- ===== PIPELINE VISUAL ===== -->
+<h2 class="sec"><span class="n">⇄</span> איפה הנתונים נשברים בפועל — הצינור שלנו</h2>
+<p class="lead">שני מקורות מצטרפים (JOIN) על מפתח מורכב אל טבלת העובדות. כל הכשלים המתועדים יושבים על <b>קשת ה-JOIN</b> — לא בקריסת שלב. הצינור יכול לרוץ מושלם והשורות עדיין נופלות בשקט.</p>
+<div class="pipe">
+  <div class="srcrow">
+    <div class="box"><span class="ok">✔</span><div class="t">מקור ניקוד</div><div class="c">support_request · male/female/achievement scores</div></div>
+    <div class="box"><span class="ok">✔</span><div class="t">מקור תקציב + מיפוי ישות</div><div class="c">mrr_aa_budgets · mrr_aa_new_teams → societyunions</div></div>
+  </div>
+  <div class="downarrow">↓ &nbsp; JOIN על <code>society_id + branch_id + support_request_year</code></div>
+  <div class="joinbar">⚠ <b>anti-join:</b> כמה שורות תקציב לא מצאו זוג? <b>48 נופלות עכשיו</b> — 29 על year · 14 על society · 5 על branch. אגודות ממומנות שנעלמות מהדשבורד.</div>
+  <div class="downarrow">↓</div>
+  <div class="box"><span class="ok">✔</span><div class="t">dwh_aa_fact_support_request_sport</div><div class="c">בסיס כל הדשבורדים</div></div>
+  <div class="downarrow">↓ <span class="chip">כל שלב הסתיים? משך ריצה תקין?</span></div>
+  <div class="box"><span class="ok">✔</span><div class="t">אגרגציה → QuickSight</div><div class="c">צרכן בלבד — לא מריץ ולידציה</div></div>
+  <div class="infra"><b>תנאי קדם (שכבה 0, בבעלות הנדסה):</b> רץ בזמן · הרשאות · דיסק/זיכרון · משך ריצה — מנוטר ב-orchestrator/alerting (Airflow/CloudWatch), לא נכנס ל-Data Quality Score.</div>
+</div>
+
+<!-- ===== BUILD FIRST ===== -->
+<h2 class="sec"><span class="n">①</span> מה בונים ראשון — לפי כסף בסיכון × תדירות נוכחית</h2>
+<div class="build">
+  <div class="h">תור עבודה מתועדף (לא רשימה שטוחה)</div>
+  <ol>
+    <li><b>מפתח מורכב year/society/branch</b> — 🟠 מפיל שיוך · <b>48 שורות נכשלות עכשיו</b>. גילוי מבני (שכבה 1) + שורש עסקי (עקביות זמן / זהות ישות, שכבה 2). <span class="ready pre">דורש תשתית: מפתח ישות מאוחד</span></li>
+    <li><b>פיצול ישות 51↔58</b> — 🟠 מפיל שיוך · מיזוג דרך <code>society_union_code</code>, לעולם לא פסילה. <span class="ready pre">דורש crosswalk</span></li>
+    <li><b>התאמה למרשם CRM</b> — 🔴 מסלף סכום · פער DWH↔CRM על <code>approved_amount</code>. <span class="ready pre">דורש חיבור CRM חי</span></li>
+    <li><b>עקביות female_cnt / female_score + תנאי סף</b> — 🔴 מסלף סכום · מזין את נוסחת הניקוד. <span class="ready now">ניתן לבדיקה עכשיו</span></li>
+    <li><b>NOT NULL / טיפוס / ייחודיות / טווח</b> — ⚪ מבני · חוסם רעש בסיסי. <span class="ready now">ניתן לבדיקה עכשיו</span></li>
+  </ol>
+</div>
+
+<!-- ===== LAYER 0 TABLE ===== -->
+<h2 class="sec"><span class="n">0</span> שכבה 0 — בריאות הצינור (Data Observability)</h2>
+<div class="tblwrap">
+<table>
+<thead><tr><th>חוק</th><th>מה נבדק · דוגמה</th><th>מימד DAMA</th><th>כלי / אחראי</th><th>₪ פגיעה</th><th>פעולת כשל</th></tr></thead>
+<tbody>
+<tr>
+  <td class="rule">רעננות / SLA<div class="scope">היקף: טעינה</div></td>
+  <td class="ex">השנה/הפרטישן האחרון נטען בתוך חלון מחזור-התמיכה. איחור = החלטות על מספרים ישנים — זו התחייבות, לא מגמה.</td>
+  <td class="dama">עדכניות</td>
+  <td class="tool">Job-status<div class="owner own-eng">הנדסה</div></td>
+  <td class="money m-none">⚪ ניטור</td>
+  <td><span class="act flag">התראה + חסימת חשיפה</span></td>
+</tr>
+<tr>
+  <td class="rule">נפח / קרדינליות<div class="scope">היקף: טעינה</div></td>
+  <td class="ex">מספר השורות/אגודות בטווח מול טעינה קודמת. ירידה <code>&gt;20%</code> = חשד לתקלת מקור או נשירה.</td>
+  <td class="dama">שלמות</td>
+  <td class="tool">GE / SQL<div class="owner own-dq">DQ</div></td>
+  <td class="money m-none">⚪ ניטור</td>
+  <td><span class="act flag">התראה + ניטור מגמה</span></td>
+</tr>
+<tr>
+  <td class="rule">סחף סכימה<div class="scope">היקף: מערך</div></td>
+  <td class="ex">עמודות/טיפוסים זהים בין טעינות. עמודה שנעלמה/נוספה מפילה את הטעינה במורד.</td>
+  <td class="dama">תקֵפות</td>
+  <td class="tool">dbt source<div class="owner own-eng">הנדסה</div></td>
+  <td class="money m-none">⚪ ניטור</td>
+  <td><span class="act flag">חסימת טעינה + התראה</span></td>
+</tr>
+<tr>
+  <td class="rule">התאמת ספירה/סכומים בין שלבים<div class="scope">היקף: טעינה</div></td>
+  <td class="ex">בין שלבים עוקבים: כמה נכנס = כמה יצא, ו-<code>SUM(approved_amount)</code> לפני=אחרי. <b>בדיקת גילוי</b> — חושפת נשירה שקטה; השורש מאובחן בשכבה 2 (זהות ישות / עקביות זמן).</td>
+  <td class="dama">שלמות</td>
+  <td class="tool">SQL recon<div class="owner own-dq">DQ</div></td>
+  <td class="money m-org">🟠 מפיל שיוך</td>
+  <td><span class="act flag">התראה + הפניה לשורש</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<!-- ===== LAYER 1 TABLE ===== -->
+<h2 class="sec"><span class="n">1</span> שכבה 1 — ולידציה מבנית (אגנוסטי · נגזר מהסכימה)</h2>
+<div class="tblwrap">
+<table>
+<thead><tr><th>חוק</th><th>מה נבדק · דוגמה</th><th>מימד DAMA</th><th>כלי / אחראי</th><th>₪ פגיעה</th><th>פעולת כשל</th></tr></thead>
+<tbody>
+<tr>
+  <td class="rule">שלמות / NOT NULL<div class="scope">היקף: שורה</div></td>
+  <td class="ex">מפתח והיעד לא ריקים. <b>מפתח ריק לעולם לא יתאים ב-JOIN</b> והשורה נושרת בשקט. <code>society_id, branch_id, year, approved_amount</code>.</td>
+  <td class="dama">שלמות</td>
+  <td class="tool">dbt not_null<div class="owner own-eng">הנדסה</div></td>
+  <td class="money m-org">🟠 מפיל שיוך</td>
+  <td><span class="act reject">דחייה</span></td>
+</tr>
+<tr>
+  <td class="rule">טיפוס / פורמט<div class="scope">היקף: שורה</div></td>
+  <td class="ex"><code>society_id</code>=9 ספרות · <code>year</code>=מספר 4 ספרות · <code>approved_amount</code> מספרי. טקסט בשדה מספרי = פסילה.</td>
+  <td class="dama">תקֵפות</td>
+  <td class="tool">dbt test<div class="owner own-eng">הנדסה</div></td>
+  <td class="money m-none">⚪ מבני</td>
+  <td><span class="act reject">דחייה</span></td>
+</tr>
+<tr>
+  <td class="rule">ייחודיות (FANOUT)<div class="scope">היקף: שורה</div></td>
+  <td class="ex">מפתח <code>society+branch+team+year</code> ייחודי. כפילות מנפחת שורות ב-JOIN ו<b>מכפילה תקציב</b>.</td>
+  <td class="dama">ייחודיות</td>
+  <td class="tool">dbt unique<div class="owner own-eng">הנדסה</div></td>
+  <td class="money m-org">🟠 מכפיל סכום</td>
+  <td><span class="act reject">דחייה</span></td>
+</tr>
+<tr>
+  <td class="rule">מפתח יתום (FK)<div class="scope">היקף: שורה</div></td>
+  <td class="ex">כל <code>society_id</code>/<code>branch_id</code> ב-Fact קיים בטבלת הממד. מזהה יתום = דגל.</td>
+  <td class="dama">שלמות התייחסותית</td>
+  <td class="tool">dbt relationships<div class="owner own-eng">הנדסה</div></td>
+  <td class="money m-org">🟠 מפיל שיוך</td>
+  <td><span class="act reject">דחייה</span></td>
+</tr>
+<tr>
+  <td class="rule">טווח / דומיין<div class="scope">היקף: שורה</div></td>
+  <td class="ex">כל score ≥ 0 · <code>male_cnt/female_cnt</code> ≥ 0 · <code>year</code> 2015..שנה+1 · placeholder <code>society_id=0 "לא רלוונטי"</code> לא נכנס לחישוב.</td>
+  <td class="dama">תקֵפות</td>
+  <td class="tool">GE expectation<div class="owner own-eng">הנדסה</div></td>
+  <td class="money m-none">⚪ מבני</td>
+  <td><span class="act reject">דחייה</span></td>
+</tr>
+<tr>
+  <td class="rule">התאמת מפתח מורכב<div class="scope">היקף: שורה</div></td>
+  <td class="ex"><b>בדיקת גילוי</b>: <code>society+branch+year</code> מתאים בין תקציב לפאקט. 48 נכשלות (29 year/14 society/5 branch). <b>הגורם והתיקון מוגדרים בשכבה 2 — עקביות זמן / זהות ישות.</b></td>
+  <td class="dama">שלמות התייחסותית</td>
+  <td class="tool">SQL anti-join<div class="owner own-dq">DQ</div></td>
+  <td class="money m-org">🟠 מפיל שיוך</td>
+  <td><span class="act hold">Hold → שכבה 2</span></td>
+</tr>
+<tr>
+  <td class="rule">היגיינת טקסט<div class="scope">היקף: שורה</div></td>
+  <td class="ex"><b>מזהה מועמדים</b> לכפילות טקסטואלית — מרחק עריכה / רווח נסתר / קידוד (<b>"ערוני" מול "עירוני"</b>). אגנוסטי. ההכרעה שזו אותה אגודה = ברזולוציית-ישות (שכבה 2).</td>
+  <td class="dama">עקביות</td>
+  <td class="tool">fuzzy SQL<div class="owner own-dq">DQ</div></td>
+  <td class="money m-none">⚪ מבני</td>
+  <td><span class="act flag">דגל לבדיקה</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<!-- ===== LAYER 2 TABLE ===== -->
+<h2 class="sec"><span class="n">2</span> שכבה 2 — ולידציה עסקית / סמנטית (מומחה תחום מגדיר)</h2>
+<div class="tblwrap t2">
+<table>
+<thead><tr><th>חוק</th><th>מה נבדק · דוגמה</th><th>מימד DAMA</th><th>כלי / אחראי</th><th>₪ פגיעה</th><th>פעולת כשל</th></tr></thead>
+<tbody>
+<tr>
+  <td class="rule">זהות ישות (MDM)<div class="scope">היקף: שורה</div><span class="ready pre">דורש תשתית</span></td>
+  <td class="ex">שני המזהים (<b>51… חברה, 58… עמותה</b>) נפתרים לישות-אב אחת דרך <code>society_union_code</code> עם חוקי שרידות. לדוגמה <code>513894139 → 580216372</code>. <b>מיזוג, לא פסילה</b> — פסילת השורה = בדיוק הנשירה השקטה שהפאנל מזהיר מפניה.</td>
+  <td class="dama">ייחודיות / זהות</td>
+  <td class="tool">golden record<div class="owner own-biz">מומחה תוכן</div></td>
+  <td class="money m-org">🟠 מפיל שיוך</td>
+  <td><span class="act merge">מיזוג לישות-אב</span></td>
+</tr>
+<tr>
+  <td class="rule">התאמה למרשם CRM<div class="scope">היקף: שורה</div><span class="ready pre">דורש CRM חי</span></td>
+  <td class="ex"><code>approved_amount</code> ב-DWH = הסכום ב-CRM. <b>CRM = מרשם מוסמך בהסכמה</b>, לא "מקור אמת" מוחלט: נכונות ה-CRM עצמו (הקלדה, אישור מבוטל, ערר) באחריות בעל המקור. הבדיקה מאמתת ש-DWH נאמן ל-CRM.</td>
+  <td class="dama">דיוק / עקביות</td>
+  <td class="tool">SQL recon<div class="owner own-biz">מומחה תוכן</div></td>
+  <td class="money m-red">🔴 מסלף סכום</td>
+  <td><span class="act hold">Hold — אל תמחק ₪</span></td>
+</tr>
+<tr>
+  <td class="rule">עקביות בין שדות<div class="scope">היקף: שורה</div><span class="ready now">עכשיו</span></td>
+  <td class="ex"><code>female_cnt=0</code> ⇐ <code>female_score</code>? <b>חוסר עקביות חשוד, דורש בדיקה</b> (לא "בלתי אפשרי": <code>women_promotion_score</code> עשוי חיובי גם ללא ספורטאיות בפועל). הכלל "ניקוד נגזר מספירה" = ידע תחום, לכן שכבה 2.</td>
+  <td class="dama">עקביות</td>
+  <td class="tool">SQL assertion<div class="owner own-biz">מומחה תוכן</div></td>
+  <td class="money m-red">🔴 מסלף סכום</td>
+  <td><span class="act hold">Hold לבדיקה</span></td>
+</tr>
+<tr>
+  <td class="rule">נכונות נוסחה<div class="scope">היקף: שורה</div><span class="ready now">עכשיו</span></td>
+  <td class="ex"><code>male_achievement + female_achievement ≈ achievement_score</code>; סכום אמות המידה תואם "שקל לנקודת אמת מידה".</td>
+  <td class="dama">דיוק</td>
+  <td class="tool">SQL assertion<div class="owner own-biz">מומחה תוכן</div></td>
+  <td class="money m-red">🔴 מסלף סכום</td>
+  <td><span class="act hold">Hold לבדיקה</span></td>
+</tr>
+<tr>
+  <td class="rule">תנאי סף (זכאות)<div class="scope">היקף: שורה</div><span class="ready now">עכשיו</span></td>
+  <td class="ex"><code>approved_amount &gt; 0</code> רק אם עמדה בתנאי הסף של המבחן. כסף מאושר ללא עמידה בסף = חריגה.</td>
+  <td class="dama">תקֵפות עסקית</td>
+  <td class="tool">SQL rule<div class="owner own-biz">מומחה תוכן</div></td>
+  <td class="money m-red">🔴 מסלף סכום</td>
+  <td><span class="act hold">Hold לבדיקה</span></td>
+</tr>
+<tr>
+  <td class="rule">כסף בלי רישום<div class="scope">היקף: שורה</div><span class="ready now">עכשיו</span></td>
+  <td class="ex"><code>approved_amount &gt; 0</code> אך אין שורה תואמת ב-<code>dwh_aa_fact_athlete_by_branch_society</code>. תקציב ללא ספורטאים = חריגה.</td>
+  <td class="dama">שלמות עסקית</td>
+  <td class="tool">SQL anti-join<div class="owner own-biz">מומחה תוכן</div></td>
+  <td class="money m-red">🔴 מסלף סכום</td>
+  <td><span class="act hold">Hold לבדיקה</span></td>
+</tr>
+<tr>
+  <td class="rule">עקביות זמן<div class="scope">היקף: שורה</div><span class="ready now">עכשיו</span></td>
+  <td class="ex"><b>שורש הכשל</b> של התאמת-המפתח בשכבה 1: <b>תקציב 2025 מול בקשה 2026</b>. כאן מגדירים את הכלל העסקי ליישור. (הערך 2025 תקין כשלעצמו — הכשל בין-טבלתי.)</td>
+  <td class="dama">עקביות</td>
+  <td class="tool">SQL rule<div class="owner own-biz">מומחה תוכן</div></td>
+  <td class="money m-org">🟠 מפיל שיוך</td>
+  <td><span class="act hold">Hold לבדיקה</span></td>
+</tr>
+<tr>
+  <td class="rule">גרסאות זמן (SCD)<div class="scope">היקף: מערך</div><span class="ready pre">דורש תשתית</span></td>
+  <td class="ex">מיפוי הישויות ונוסחת הניקוד מתוארכים לפי שנה. איגוד שמחליף ישות ב-2027 לא שובר היסטוריית 2025; שורות 2024 מנוקדות לפי מבחן 2024. crosswalk ללא תיארוך = היסטוריה נכתבת מחדש בכל רה-ארגון.</td>
+  <td class="dama">עקביות זמנית</td>
+  <td class="tool">SCD model<div class="owner own-biz">מומחה תוכן</div></td>
+  <td class="money m-none">⚪ סיכון היסטורי</td>
+  <td><span class="act flag">עיצוב מודל</span></td>
+</tr>
+<tr>
+  <td class="rule">חריגים (Outliers)<div class="scope">היקף: שורה</div><span class="ready now">עכשיו</span></td>
+  <td class="ex"><code>approved_amount</code>/ניקוד שסוטים משמעותית מאגודות באותו <code>branch_id</code>. לא בהכרח שגיאה — דורש תשומת לב.</td>
+  <td class="dama">דיוק</td>
+  <td class="tool">stat SQL<div class="owner own-biz">מומחה תוכן</div></td>
+  <td class="money m-none">⚪ ניטור</td>
+  <td><span class="act flag">דגל לבדיקה</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<!-- ===== DATA CELL ILLUSTRATION ===== -->
+<h2 class="sec"><span class="n">▦</span> איך זה נראה בשורה — שכבה 2 בעין</h2>
+<p class="lead">אדום = <b>נכשל בבדיקה</b> (לא בהכרח "ערך פסול"). שורה 2 היא הבריאה — הניקוד נע עם הספירה.</p>
+<div class="dtable">
+<table>
+  <tr><th>society_id</th><th>branch</th><th>year</th><th>female_cnt</th><th>female_score</th><th>approved_amount</th></tr>
+  <tr>
+    <td class="cell-bad">513894139</td><td>אתלטיקה</td><td class="cell-bad">2025</td>
+    <td class="cell-warn">0</td><td class="cell-warn">460</td><td>836,704</td>
+  </tr>
+  <tr>
+    <td>580055937</td><td>אופניים</td><td>2026</td><td>214</td><td>1,180</td><td>512,300</td>
+  </tr>
+</table>
+</div>
+<div class="flags">
+  <div class="row"><span class="dot" style="background:var(--navy)"></span><div><b>מזהה אגודה</b> — 51… (חברה) מול 58… (עמותה): אותה אגודה, ישות משפטית אחרת. <b>לא שגיאה — דורש מיפוי ל-<code>580216372</code></b> (מיזוג, לא פסילה).</div></div>
+  <div class="row"><span class="dot" style="background:var(--red)"></span><div><b>שנה</b> — הבקשה ל-2026 אך התקציב ב-<code>mrr_aa_budgets</code> ל-2025 → ה-JOIN נכשל. <b>בדיקה בין-טבלתית</b> — הערך 2025 תקין כשלעצמו.</div></div>
+  <div class="row"><span class="dot" style="background:var(--orange)"></span><div><b>עקביות</b> — 0 ספורטאיות אך ניקוד נשים 460: חוסר עקביות חשוד, דורש בדיקה (למעט רכיב קידום נשים).</div></div>
+</div>
+
+<!-- ===== DECISIONS + SYSTEM ===== -->
+<h2 class="sec"><span class="n">⚑</span> להכרעת הפגישה · ואיך זה רץ כמערכת</h2>
+<div class="grid2">
+  <div class="panel dec">
+    <h4>החלטות פתוחות — שהמנהלת בעלת ההכרעה</h4>
+    <ul>
+      <li><b>פער CRM↔DWH</b> — לחסום טעינה או לטעון עם דגל (Hold)?</li>
+      <li><b>פיצול ישות 51↔58</b> — "חוסם" כאן = <b>מוחזק לרזולוציה/מיזוג</b>, לא נזרק. לאשר?</li>
+      <li><b>חריגת תנאי סף</b> — לפסול או להעביר לבדיקת אנוש?</li>
+      <li><b>סף נפח</b> — כמה % ירידה מדליק התראה חוסמת?</li>
+    </ul>
+  </div>
+  <div class="panel sys">
+    <h4>מערכת, לא רשימה — הרכיבים</h4>
+    <ul>
+      <li><b>איפה רץ:</b> SQL harness במחסן (dbt tests / Great Expectations), מתוזמן בצד ה-ETL. <b>QuickSight = צרכן בלבד</b>, לא מריץ ולידציה.</li>
+      <li><b>תוצאות:</b> טבלת <code>dq_results</code> עם <code>load_id, rule_id, pass/fail</code> — עוגן למגמה לאורך זמן.</li>
+      <li><b>Quarantine:</b> טבלה ייעודית + סקירה שבועית. שורה מוחזקת (למשל female_cnt=0/460) <b>לא נספרת ב-KPI</b> עד הכרעה.</li>
+      <li><b>בעלוּת:</b> אחראי-בדיקה (מטפל בכשל) נפרד מ-בעל-הנתון-במקור + חוזה-הזנה (סכימה/תדירות) + lineage. תיקוני מקור (ערוני/עירוני, CRM) מנותבים לבעל המקור.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ===== METRIC + LEGEND ===== -->
+<h2 class="sec"><span class="n">Σ</span> מדד-על — ממוקד כסף, לא אחוז שטוח</h2>
+<div class="axis" style="border-right-color:var(--green)">
+  <b>ראשי — ₪ בסיכון:</b> <code>SUM(approved_amount)</code> בשורות שנכשלו בחוק "מסלף סכום" או "מפיל שיוך" (בשקלים, במגמה). &nbsp;·&nbsp;
+  <b>שער חוסמים:</b> כל חוסם פתוח = הטעינה נכשלת, ללא תלות באחוז (כדי ש-99% לא ישב מעל באג חוסם). &nbsp;·&nbsp;
+  <b>משני:</b> "% שורות תקינות" מחושב <u>רק</u> על בדיקות ברמת-שורה; בדיקות רמת-מערך/טעינה (רעננות/נפח/סכימה) נספרות כ-עבר/נכשל בנפרד — אי אפשר לקפל גרעיניוֹת שונות למספר אחד.
+</div>
+
+<div class="legend">
+  <div class="grp"><b>₪ פגיעה:</b></div>
+  <div class="grp"><span class="money m-red">🔴 מסלף סכום</span> משנה approved_amount ישירות</div>
+  <div class="grp"><span class="money m-org">🟠 מפיל שיוך</span> שובר JOIN → שורה ממומנת נופלת</div>
+  <div class="grp"><span class="money m-none">⚪ מבני/ניטור</span> ללא השפעה כספית</div>
+</div>
+<div class="legend">
+  <div class="grp"><b>פעולת כשל:</b></div>
+  <div class="grp"><span class="act reject">דחייה</span> רק שורה שבורה מבנית</div>
+  <div class="grp"><span class="act hold">Hold</span> נשמרת, מוקפאת לבדיקת אנוש</div>
+  <div class="grp"><span class="act merge">מיזוג</span> נפתרת לישות-אב</div>
+  <div class="grp"><span class="act flag">דגל/ניטור</span> ברמת טעינה/מערך</div>
+</div>
+
+<div class="foot">
+  ההבדל במשפט: <b>שכבה 0</b> = הצינור רץ ומה נטען · <b>שכבה 1</b> = הערך תקין מבנית (נגזר מסכימה) · <b>שכבה 2</b> = הערך נכון עסקית (מומחה תחום). אותה תקלה יכולה להתגלות בשכבה אחת ולהיפתר באחרת — לכן יש הפניות צולבות, לא כפילות.
+</div>
+
+</div>
+</body>
+</html>
