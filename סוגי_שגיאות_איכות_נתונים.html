@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>סוגי שגיאות איכות נתונים — מסך הניטור</title>
+<style>
+:root{
+  --navy:#1F3F6D; --green:#248A3D; --red:#DA3439; --sky:#2D9CDB;
+  --purple:#6B4FA0; --orange:#E07B39; --slate:#7A8FA6; --gold:#F8C33E;
+  --bg:#F2F4F7; --surface:#FFFFFF; --border:#E5E9F0;
+  --ink:#1A1A2E; --ink-muted:#6B7280;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);font-family:"Amazon Ember","Heebo",system-ui,sans-serif;
+  color:var(--ink);line-height:1.55;padding:28px 20px;}
+.wrap{max-width:1240px;margin:0 auto;}
+
+/* header */
+.top{display:flex;align-items:center;gap:14px;margin-bottom:6px;}
+.logo{width:44px;height:44px;border-radius:10px;background:var(--navy);color:#fff;
+  display:grid;place-items:center;font-weight:800;font-size:11px;flex:none;text-align:center;line-height:1.1;}
+.top .org{font-size:13px;color:var(--ink-muted);}
+h1{font-size:26px;color:var(--navy);margin:2px 0 4px;}
+.lead{font-size:14.5px;color:var(--ink-muted);max-width:940px;}
+.lead b{color:var(--ink);}
+.how{margin-top:14px;background:#eef3fb;border:1px solid #d7e3f5;border-radius:10px;
+  padding:12px 16px;font-size:13.5px;color:#2b4a78;display:flex;gap:22px;flex-wrap:wrap;align-items:center;}
+.how b{color:var(--navy);}
+.how .step{display:flex;align-items:center;gap:7px;}
+.how .tag{background:var(--navy);color:#fff;border-radius:6px;font-size:11.5px;padding:2px 8px;font-weight:700;}
+
+/* the two families */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:24px;}
+@media(max-width:900px){.cols{grid-template-columns:1fr;}}
+.col{background:var(--surface);border:1px solid var(--border);border-radius:16px;
+  overflow:hidden;box-shadow:0 6px 22px rgba(31,63,109,.06);}
+.col-head{padding:17px 20px;color:#fff;}
+.col-tech .col-head{background:var(--navy);}
+.col-biz  .col-head{background:var(--purple);}
+.col-head .ct{display:flex;align-items:center;gap:11px;}
+.col-head .ico{width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.18);
+  display:grid;place-items:center;font-size:17px;flex:none;}
+.col-head h2{font-size:19px;}
+.col-head .def{font-size:13px;opacity:.92;margin-top:7px;line-height:1.45;}
+.col-body{padding:14px;}
+
+/* finding card */
+.card{display:flex;gap:13px;padding:15px 12px;}
+.card+.card{border-top:1px solid var(--border);}
+.card:hover{background:#fafbfd;}
+.idx{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;
+  font-size:13px;font-weight:700;color:#fff;flex:none;}
+.col-tech .idx{background:var(--navy);}
+.col-biz  .idx{background:var(--purple);}
+.c-main{flex:1;min-width:0;}
+.c-title{display:flex;align-items:center;gap:9px;font-size:15.5px;font-weight:700;color:var(--ink);margin-bottom:9px;}
+
+.c-row{display:flex;gap:9px;font-size:13px;margin-top:6px;align-items:baseline;}
+.lbl{flex:none;width:60px;font-size:11px;font-weight:700;color:var(--ink-muted);
+  text-align:left;padding-top:1px;}
+.c-row .val{flex:1;color:var(--ink);}
+.c-row.ex .val{color:#374151;}
+.c-row.ex .val b{color:var(--navy);}
+.col-biz .c-row.ex .val b{color:var(--purple);}
+.c-row.impact{background:#f7f8fb;border-radius:8px;padding:8px 10px;margin-top:9px;
+  border-right:3px solid var(--slate);}
+.c-row.impact .lbl{color:var(--ink);}
+.c-row.impact .val{font-weight:600;}
+.card.sev-red .c-row.impact{border-right-color:var(--red);background:#fdf2f2;}
+.card.sev-org .c-row.impact{border-right-color:var(--orange);background:#fdf6f0;}
+
+/* severity dot */
+.dot{width:12px;height:12px;border-radius:50%;flex:none;box-shadow:0 0 0 3px rgba(0,0,0,.04);}
+.d-red{background:var(--red);} .d-org{background:var(--orange);} .d-none{background:var(--slate);}
+
+/* footer legend */
+.foot{margin-top:24px;background:var(--surface);border:1px solid var(--border);
+  border-radius:14px;padding:16px 22px;display:flex;flex-wrap:wrap;gap:22px;
+  align-items:center;justify-content:space-between;}
+.legend{display:flex;gap:22px;flex-wrap:wrap;}
+.legend .li{display:flex;align-items:center;gap:9px;font-size:13.5px;color:var(--ink);}
+.legend .li b{color:var(--ink);}
+.legend .li span.t{color:var(--ink-muted);font-size:12px;}
+.foot .src{font-size:12.5px;color:var(--ink-muted);max-width:420px;}
+.foot .src b{color:var(--navy);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <div class="logo">תרבות<br>וספורט</div>
+    <div>
+      <div class="org">משרד התרבות והספורט · אגף איגודים ואגודות</div>
+      <h1>סוגי שגיאות איכות נתונים — לתצוגה במסך הניטור</h1>
+    </div>
+  </div>
+  <p class="lead">
+    מסך הניטור <b>מזהה ומאיר</b> ממצאי איכות שמקורם בנתוני המקור ובמערכות שמהן נשאבים הנתונים —
+    כדי שהתמונה שעליה מתקבלות החלטות התמיכה תהיה <b>שלמה ונכונה</b>.
+    הממצאים מחולקים לשתי משפחות, וכל אחד מוצג עם ההשפעה העסקית שלו.
+  </p>
+  <div class="how">
+    <b>איך לקרוא כל ממצא:</b>
+    <div class="step"><span class="tag">מה קורה</span> התופעה</div>
+    <div class="step"><span class="tag">דוגמה</span> מהנתונים בפועל</div>
+    <div class="step"><span class="tag">משמעות</span> ההשפעה על הכסף / ההחלטה / הדוח</div>
+  </div>
+
+  <div class="cols">
+
+    <!-- ============ TECHNICAL ============ -->
+    <section class="col col-tech">
+      <div class="col-head">
+        <div class="ct"><span class="ico">⚙️</span><h2>ממצאים טכניים</h2></div>
+        <div class="def">הנתון עצמו בעייתי — חסר, כפול, בפורמט שגוי או לא מקושר.
+          לא נדרשת היכרות עם עולם התמיכה כדי לראות שמשהו אינו תקין; המערכת מזהה אוטומטית.</div>
+      </div>
+      <div class="col-body">
+
+        <div class="card sev-red">
+          <div class="idx">1</div>
+          <div class="c-main">
+            <div class="c-title"><span class="dot d-red"></span> ערך חובה חסר (NULL)</div>
+            <div class="c-row"><span class="lbl">מה קורה</span><span class="val">שדה נדרש נשאר ריק במערכת המקור.</span></div>
+            <div class="c-row ex"><span class="lbl">דוגמה</span><span class="val"><b>סכום מאושר ריק</b> ברשומת תמיכה, או ענף שלא מולא.</span></div>
+            <div class="c-row impact"><span class="lbl">משמעות</span><span class="val">הרשומה אינה שלמה — הסכום או השיוך עלולים להיחסר מהחישוב ולעוות את הסיכום.</span></div>
+          </div>
+        </div>
+
+        <div class="card sev-org">
+          <div class="idx">2</div>
+          <div class="c-main">
+            <div class="c-title"><span class="dot d-org"></span> פורמט מזהה שגוי</div>
+            <div class="c-row"><span class="lbl">מה קורה</span><span class="val">מזהה אגודה שאינו ח"פ/ת"ז תקין (9 ספרות + ספרת ביקורת).</span></div>
+            <div class="c-row ex"><span class="lbl">דוגמה</span><span class="val">מזהה בן <b>8 ספרות</b> במקום 9.</span></div>
+            <div class="c-row impact"><span class="lbl">משמעות</span><span class="val">מזהה לא תקין עלול להתקשר לאגודה הלא-נכונה ולשייך תמיכה לגורם שגוי.</span></div>
+          </div>
+        </div>
+
+        <div class="card sev-red">
+          <div class="idx">3</div>
+          <div class="c-main">
+            <div class="c-title"><span class="dot d-red"></span> כפילות רשומות</div>
+            <div class="c-row"><span class="lbl">מה קורה</span><span class="val">אותו צירוף אגודה·ענף·שנה מופיע יותר מפעם אחת.</span></div>
+            <div class="c-row ex"><span class="lbl">דוגמה</span><span class="val">שתי רשומות תמיכה לאותו צירוף מדויק.</span></div>
+            <div class="c-row impact"><span class="lbl">משמעות</span><span class="val">אותה תמיכה עלולה להיספר פעמיים — <b>ניפוח סכומים</b> בדוחות ובחישובי תקציב.</span></div>
+          </div>
+        </div>
+
+        <div class="card sev-org">
+          <div class="idx">4</div>
+          <div class="c-main">
+            <div class="c-title"><span class="dot d-org"></span> רשומה ללא התאמה בין מערכות המקור</div>
+            <div class="c-row"><span class="lbl">מה קורה</span><span class="val">צירוף המפתח (אגודה·ענף·שנה) קיים בטבלת התקציב אך אינו נמצא בטבלת הבקשות, ולכן אינו מקושר.</span></div>
+            <div class="c-row ex"><span class="lbl">דוגמה</span><span class="val">בפועל: <b>48 רשומות ממומנות אינן מקושרות כרגע</b>.</span></div>
+            <div class="c-row impact"><span class="lbl">משמעות</span><span class="val">רשומות ממומנות "נופלות" ואינן מופיעות בדוח — <b>התמונה חלקית</b> וההחלטה נשענת על פחות ממה שקיים.</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="idx">5</div>
+          <div class="c-main">
+            <div class="c-title"><span class="dot d-none"></span> ערך מחוץ לטווח חוקי</div>
+            <div class="c-row"><span class="lbl">מה קורה</span><span class="val">ערך מספרי או תאריכי מחוץ לתחום האפשרי.</span></div>
+            <div class="c-row ex"><span class="lbl">דוגמה</span><span class="val">סכום שלילי · אחוז מעל 100 · <b>שנת בקשה עתידית</b>.</span></div>
+            <div class="c-row impact"><span class="lbl">משמעות</span><span class="val">ערך בלתי-אפשרי מעיד על טעות קלט, ומזהם ממוצעים וסיכומים בדוח.</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="idx">6</div>
+          <div class="c-main">
+            <div class="c-title"><span class="dot d-none"></span> טיפוס נתונים שגוי</div>
+            <div class="c-row"><span class="lbl">מה קורה</span><span class="val">ערך מסוג לא צפוי בשדה — טקסט בשדה מספרי, תאריך לא תקין.</span></div>
+            <div class="c-row ex"><span class="lbl">דוגמה</span><span class="val">טקסט חופשי בשדה שאמור להכיל <b>סכום מספרי</b>.</span></div>
+            <div class="c-row impact"><span class="lbl">משמעות</span><span class="val">המערכת אינה יכולה לחשב או לסכם על שדה כזה — ערכים "נבלעים" ואינם נספרים.</span></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============ BUSINESS ============ -->
+    <section class="col col-biz">
+      <div class="col-head">
+        <div class="ct"><span class="ico">🧭</span><h2>ממצאים עסקיים</h2></div>
+        <div class="def">הנתון נראה תקין, אך בהקשר עולם התמיכה בספורט הוא שגוי.
+          נדרשת היכרות עם התחום ועם כללי הזכאות כדי לתפוס אותו.</div>
+      </div>
+      <div class="col-body">
+
+        <div class="card sev-org">
+          <div class="idx">1</div>
+          <div class="c-main">
+            <div class="c-title"><span class="dot d-org"></span> פיצול ישות משפטית</div>
+            <div class="c-row"><span class="lbl">מה קורה</span><span class="val">אותה אגודה מופיעה תחת שני מספרי ח"פ שונים במערכות המקור.</span></div>
+            <div class="c-row ex"><span class="lbl">דוגמה</span><span class="val">מספר בפורמט "51…" מול "58…" לאותו גוף — מזוהים דרך <b>קוד איחוד האגודה</b>.</span></div>
+            <div class="c-row impact"><span class="lbl">משמעות</span><span class="val">התמיכה של גוף אחד מתפצלת לשתי רשומות — כל אחת נראית קטנה יותר, והתמונה על האגודה שגויה.</span></div>
+          </div>
+        </div>
+
+        <div class="card sev-red">
+          <div class="idx">2</div>
+          <div class="c-main">
+            <div class="c-title"><span class="dot d-red"></span> אי-התאמה למרשם ה-CRM</div>
+            <div class="c-row"><span class="lbl">מה קורה</span><span class="val">פרטי אגודה שאינם תואמים למרשם הרשמי (שם · סטטוס · ענף).</span></div>
+            <div class="c-row ex"><span class="lbl">דוגמה</span><span class="val">אגודה פעילה בנתוני התמיכה שמסומנת אחרת <b>במרשם ה-CRM</b>.</span></div>
+            <div class="c-row impact"><span class="lbl">משמעות</span><span class="val">הדוח אינו מתיישב עם המרשם הרשמי — נוצר ספק לגבי נכונות ההחלטה.</span></div>
+          </div>
+        </div>
+
+        <div class="card sev-org">
+          <div class="idx">3</div>
+          <div class="c-main">
+            <div class="c-title"><span class="dot d-org"></span> אי-עקביות זמן בין מערכות</div>
+            <div class="c-row"><span class="lbl">מה קורה</span><span class="val">שנת הבקשה שונה בין מערכות המקור עבור אותה אגודה.</span></div>
+            <div class="c-row ex"><span class="lbl">דוגמה</span><span class="val">בפועל: <b>29 מתוך 48</b> הרשומות שאינן מקושרות נובעות מאי-התאמת שנה.</span></div>
+            <div class="c-row impact"><span class="lbl">משמעות</span><span class="val">תמיכה משויכת לשנה הלא-נכונה — דוחות שנתיים וחלוקת תקציב שנתית מוטים.</span></div>
+          </div>
+        </div>
+
+        <div class="card sev-org">
+          <div class="idx">4</div>
+          <div class="c-main">
+            <div class="c-title"><span class="dot d-org"></span> הפרת תנאי סף עסקי</div>
+            <div class="c-row"><span class="lbl">מה קורה</span><span class="val">ערך שסותר כלל זכאות מוגדר של התחום.</span></div>
+            <div class="c-row ex"><span class="lbl">דוגמה</span><span class="val">ערך <b>מתחת או מעל לסף</b> שנקבע כתנאי לתמיכה.</span></div>
+            <div class="c-row impact"><span class="lbl">משמעות</span><span class="val">סיכון להחלטת תמיכה שאינה עומדת בכללים — חשיפה תפעולית ובקרתית.</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="idx">5</div>
+          <div class="c-main">
+            <div class="c-title"><span class="dot d-none"></span> אי-עקביות בין מדדים קשורים</div>
+            <div class="c-row"><span class="lbl">מה קורה</span><span class="val">שני שדות שאמורים להתיישב זה עם זה — ואינם.</span></div>
+            <div class="c-row ex"><span class="lbl">דוגמה</span><span class="val"><b>מספר משתתפות</b> מול ניקוד/סכום שאינם מתיישבים ביניהם.</span></div>
+            <div class="c-row impact"><span class="lbl">משמעות</span><span class="val">מדדים שאינם מתיישבים מערערים את האמון בנתון ובדוח שנשען עליו.</span></div>
+          </div>
+        </div>
+
+        <div class="card sev-org">
+          <div class="idx">6</div>
+          <div class="c-main">
+            <div class="c-title"><span class="dot d-org"></span> אגודה ממומנת ללא רישום לשנה</div>
+            <div class="c-row"><span class="lbl">מה קורה</span><span class="val">קיימת תמיכה בפועל אך חסר רישום מתאים לאותה שנת פעילות.</span></div>
+            <div class="c-row ex"><span class="lbl">דוגמה</span><span class="val">תשלום תמיכה קיים, ואין <b>רישום אגודה תואם</b> לאותה שנה.</span></div>
+            <div class="c-row impact"><span class="lbl">משמעות</span><span class="val">שולם בפועל ללא רישום תואם — פער בקרה ותיעוד שדורש בירור מול המקור.</span></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+  <div class="foot">
+    <div class="legend">
+      <div class="li"><span class="dot d-red"></span> <b>מסלף סכום</b> <span class="t">— משפיע ישירות על מספרי הכסף</span></div>
+      <div class="li"><span class="dot d-org"></span> <b>מפיל שיוך</b> <span class="t">— התמיכה משויכת לגורם/שנה שגויים</span></div>
+      <div class="li"><span class="dot d-none"></span> <b>מבני / ניטור</b> <span class="t">— איכות הנתון, ללא נזק כספי ישיר</span></div>
+    </div>
+    <div class="src">כל ממצא מוצג במסך עם <b>היכן</b> (אגודה·ענף·שנה) · <b>מערכת המקור</b> · <b>מתי זוהה</b> — לפעולה במערכות המקור.</div>
+  </div>
+
+</div>
+</body>
+</html>
