@@ -1,0 +1,487 @@
+<!doctype html>
+<html dir="ltr" lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Joining facts: athletes + support requests — QuickSight implementation guide</title>
+<style>
+:root{
+  --navy:#1F3F6D; --green:#248A3D; --red:#DA3439; --sky:#2D9CDB;
+  --purple:#6B4FA0; --orange:#E07B39; --gold:#F8C33E;
+  --bg:#F2F4F7; --surface:#FFFFFF; --border:#E5E9F0; --ink:#1A1A2E; --ink-muted:#6B7280;
+  --green-bg:#E7F5EC; --amber:#92600A; --amber-bg:#FDF3E0; --grey:#565F6B; --grey-bg:#EEF1F5;
+  --red-bg:#FBE9E9; --blue:#1D4ED8; --blue-bg:#E8F1FB;
+  --code-bg:#EEF2F7; --code-border:#D5DEEA; --code-bar:#E3EAF3; --code-ink:#26324A;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Amazon Ember","Heebo",system-ui,"Segoe UI",Arial,sans-serif;
+  line-height:1.66;font-size:16px;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:860px;margin:0 auto;padding:26px 20px 90px;}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+code,.mono{font-family:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;}
+
+/* language toggle */
+#langToggle{position:fixed;top:14px;inset-inline-end:16px;z-index:20;
+  background:var(--navy);color:#fff;border:none;border-radius:999px;
+  font-family:inherit;font-size:13.5px;font-weight:700;padding:8px 16px;cursor:pointer;
+  box-shadow:0 4px 14px rgba(31,63,109,.28);}
+#langToggle:hover{background:#17314f}
+
+.doc{display:none}
+.doc.active{display:block}
+
+/* header */
+.top{background:linear-gradient(135deg,var(--navy),var(--sky));color:#fff;
+  border-radius:16px;padding:26px 26px 22px;box-shadow:0 8px 26px rgba(31,63,109,.18);}
+.top .kicker{font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:700;}
+.top h1{margin:8px 0 6px;font-size:26px;line-height:1.3;font-weight:800;}
+.top .sub{font-size:15.5px;opacity:.95;margin:0;}
+.meta{display:flex;flex-wrap:wrap;gap:22px;margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.25);}
+.meta .m{display:flex;flex-direction:column;}
+.meta .mk{font-size:11px;text-transform:uppercase;letter-spacing:.08em;opacity:.8;}
+.meta .mv{font-size:14px;font-weight:700;margin-top:2px;}
+
+/* lead panel */
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:14px;
+  padding:20px 22px;margin-top:18px;box-shadow:0 3px 12px rgba(20,30,60,.05);}
+.lead{font-size:17.5px;font-weight:700;line-height:1.5;margin:0;}
+.lead b{color:var(--navy)}
+.hint{font-size:13.5px;color:var(--ink-muted);margin:14px 2px 4px;}
+
+/* stat tiles */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:16px;}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px;}
+.stat .fig{font-size:18px;font-weight:800;color:var(--navy);line-height:1.25;}
+.stat .lab{font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-muted);margin-top:5px;}
+
+/* sections */
+details.sec{background:var(--surface);border:1px solid var(--border);border-radius:13px;
+  margin-top:14px;box-shadow:0 2px 9px rgba(20,30,60,.045);overflow:hidden;}
+details.sec>summary{list-style:none;cursor:pointer;padding:16px 20px;display:flex;align-items:center;gap:11px;
+  font-size:18px;font-weight:800;color:var(--navy);}
+details.sec>summary::-webkit-details-marker{display:none}
+.chev{width:16px;height:16px;flex:0 0 auto;transition:transform .18s;color:var(--sky);}
+details[open]>summary .chev{transform:rotate(90deg)}
+html[dir="rtl"] details[open]>summary .chev{transform:rotate(90deg)}
+html[dir="rtl"] .chev{transform:scaleX(-1)}
+.sec .inner{padding:2px 22px 22px;border-top:1px solid var(--border);}
+.sec .inner>:first-child{margin-top:16px}
+.sec h3{font-size:15.5px;color:var(--navy);margin:22px 0 8px;border-left:3px solid var(--sky);padding-left:10px;}
+html[dir="rtl"] .sec h3{border-left:none;border-right:3px solid var(--sky);padding-left:0;padding-right:10px;}
+.sec p{margin:10px 0}
+.sec ul,.sec ol{margin:10px 0;padding-inline-start:22px}
+.sec li{margin:6px 0}
+
+/* code */
+.code{background:var(--code-bg);border:1px solid var(--code-border);border-radius:10px;margin:14px 0;overflow:hidden;direction:ltr;text-align:left;}
+.code .bar{background:var(--code-bar);border-bottom:1px solid var(--code-border);padding:7px 12px;
+  display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--code-ink);}
+.code .bar .fn{font-weight:700;font-family:"Amazon Ember","Heebo",sans-serif;}
+.code button{background:var(--surface);border:1px solid var(--code-border);border-radius:6px;
+  font-size:11.5px;padding:3px 9px;cursor:pointer;color:var(--code-ink);font-family:inherit;}
+.code button:hover{background:#fff}
+.code pre{margin:0;padding:13px 15px;font-size:13.5px;line-height:1.62;color:var(--code-ink);
+  overflow-x:auto;font-family:"SFMono-Regular",Consolas,Menlo,monospace;}
+.tok-k{color:var(--purple);font-weight:600}
+.tok-f{color:var(--blue)}
+.tok-s{color:var(--green)}
+.tok-c{color:var(--ink-muted);font-style:italic}
+
+/* pills */
+.pill{display:inline-block;font-size:12px;font-weight:700;padding:2px 9px;border-radius:999px;line-height:1.5;}
+.pill.green{background:var(--green-bg);color:var(--green)}
+.pill.amber{background:var(--amber-bg);color:var(--amber)}
+.pill.red{background:var(--red-bg);color:var(--red)}
+.pill.grey{background:var(--grey-bg);color:var(--grey)}
+.pill.blue{background:var(--blue-bg);color:var(--blue)}
+
+/* callouts */
+.callout{border-radius:11px;padding:13px 16px;margin:14px 0;font-size:14.5px;border:1px solid;}
+.callout .cl{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;display:block;margin-bottom:4px;}
+.callout.win{background:var(--green-bg);border-color:#bfe3cb;} .callout.win .cl{color:var(--green)}
+.callout.note{background:var(--blue-bg);border-color:#cfe1f7;} .callout.note .cl{color:var(--blue)}
+.callout.warn{background:var(--amber-bg);border-color:#f2dcae;} .callout.warn .cl{color:var(--amber)}
+.callout.stop{background:var(--red-bg);border-color:#f2cccc;} .callout.stop .cl{color:var(--red)}
+
+/* table */
+table.sum{border-collapse:collapse;width:100%;margin:14px 0;font-size:14px;overflow:hidden;
+  border:1px solid var(--border);border-radius:10px;}
+table.sum th,table.sum td{padding:9px 12px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top;}
+html[dir="rtl"] table.sum th,html[dir="rtl"] table.sum td{text-align:right;}
+table.sum thead th{background:var(--grey-bg);color:var(--navy);font-weight:800;font-size:13px;}
+table.sum tbody tr:last-child td{border-bottom:none}
+table.sum tbody tr:hover{background:#f8fafc}
+.num{font-variant-numeric:tabular-nums;white-space:nowrap;direction:ltr;display:inline-block}
+
+footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--border);
+  font-size:12.5px;color:var(--ink-muted);text-align:center;}
+.ltr{direction:ltr;unicode-bidi:isolate;display:inline-block}
+</style>
+</head>
+<body>
+
+<button id="langToggle" onclick="setLang(document.documentElement.lang==='en'?'he':'en')">עברית</button>
+
+<!-- =========================== ENGLISH =========================== -->
+<div class="doc active" data-lang="en"><div class="wrap">
+
+  <header class="top">
+    <div class="kicker">QuickSight · Dataset Editor · Implementation guide</div>
+    <h1>Joining two facts: deduplicated athlete count + approved budget per request</h1>
+    <p class="sub">How to show, in one visual, a unique athlete count (no male/female double-counting) alongside approved budget — filter-reactive, with no measure inflated.</p>
+    <div class="meta">
+      <div class="m"><span class="mk">Fact A</span><span class="mv mono">dwh_aa_fact_athlete</span></div>
+      <div class="m"><span class="mk">Fact B</span><span class="mv mono">dwh_aa_fact_support_request_spo</span></div>
+      <div class="m"><span class="mk">Engine</span><span class="mv">SPICE</span></div>
+      <div class="m"><span class="mk">Budget dedup key</span><span class="mv mono">support_request_code</span></div>
+    </div>
+  </header>
+
+  <div class="panel">
+    <p class="lead"><b>One</b> dataset at athlete grain: <span class="mono">FULL OUTER JOIN</span> the athlete fact (primary) with the support-request fact (secondary) on <span class="mono">support_request_code</span>. Athlete count = <b><span class="mono">distinctCount(athlete_code)</span></b> (native dedup). Budget = <b><span class="mono">sum(approved_share)</span></b> — each request's full amount, counted <b>once</b> per <span class="mono">support_request_code</span>, never partial.</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="fig">athlete × request</div><div class="lab">Dataset grain</div></div>
+    <div class="stat"><div class="fig">FULL OUTER</div><div class="lab">Join type</div></div>
+    <div class="stat"><div class="fig">distinctCount</div><div class="lab">Athlete count · native dedup</div></div>
+    <div class="stat"><div class="fig">PRE_AGG</div><div class="lab">After filters · always full budget</div></div>
+    <div class="stat"><div class="fig">~4 orders</div><div class="lab">Headroom under every SPICE limit</div></div>
+  </div>
+
+  <p class="hint">All sections below are collapsed — click any header to expand. Sections 1–3 are the implementation steps; 4+ are the rationale, governance, checks and limits.</p>
+
+  <details class="sec"><summary><svg class="chev" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Step 1 — Build the dataset &amp; the join</summary>
+    <div class="inner">
+      <p>In the Dataset editor (Data prep) add both tables and define a single join. <b>Table order matters for performance:</b></p>
+      <dl class="kv" style="display:grid;grid-template-columns:190px 1fr;gap:8px 16px;margin:14px 0;font-size:14.5px;">
+        <dt style="color:var(--ink-muted);font-weight:700">Primary table</dt><dd style="margin:0"><span class="mono">dwh_aa_fact_athlete</span> — the larger one. The primary table is not subject to the size limit.</dd>
+        <dt style="color:var(--ink-muted);font-weight:700">Secondary table</dt><dd style="margin:0"><span class="mono">dwh_aa_fact_support_request_spo</span> — one row per request, small.</dd>
+        <dt style="color:var(--ink-muted);font-weight:700">Join type</dt><dd style="margin:0"><span class="pill blue">FULL OUTER</span> on <span class="mono">support_request_code</span></dd>
+        <dt style="color:var(--ink-muted);font-weight:700">Why FULL OUTER</dt><dd style="margin:0">Keeps requests with no athletes (union / European-championship) — their budget must still be counted.</dd>
+      </dl>
+      <div class="callout warn"><span class="cl">Why the athlete fact is primary</span>
+      The SPICE 20&nbsp;GB join limit applies only to the combined <b>secondary</b> tables. The athlete fact as Primary isn't counted against it — put the large table as Primary and the limit becomes practically irrelevant. (<a href="https://docs.aws.amazon.com/quicksight/latest/user/joining-data.html#w2aac34c17c25b9b9b7" target="_blank" rel="noopener">Source: AWS — Joining data</a>)</div>
+      <div class="callout note"><span class="cl">Note</span>
+      A SPICE join is computed and materialized at <b>refresh</b> time, not at view time — the fan-out cost is paid once per refresh; dashboard interaction stays fast. The join's "unique key" toggle <b>does nothing in SPICE</b> (direct-query only) — don't rely on it; correctness comes from the calculated fields below.</div>
+    </div>
+  </details>
+
+  <details class="sec"><summary><svg class="chev" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Step 2 — Calculated fields</summary>
+    <div class="inner">
+      <p>After a FULL OUTER join, on athlete-less-request rows the athlete-fact columns are NULL, and vice-versa. So build "unified" keys/dimensions with <span class="mono">coalesce</span> that exist on every row. Note: after a join, columns with the same name in both tables get a source suffix — pick the copy from the correct table.</p>
+
+      <h3>Unified key &amp; grouping dimensions</h3>
+      <div class="code"><div class="bar"><span class="fn">src_key + dims (coalesce)</span><button onclick="cp(this)">Copy</button></div><pre><span class="tok-c">// dedup key — present on every row (incl. athlete-less requests)</span>
+src_key = <span class="tok-f">coalesce</span>({support_request_code[request]}, {support_request_code})
+
+<span class="tok-c">// grouping axes — request-side wins on matched rows, athlete-side as fallback</span>
+authority_dim = <span class="tok-f">coalesce</span>({authority_name[request]}, {authority_name})
+society_dim   = <span class="tok-f">coalesce</span>({society_name[request]},   {society_name})
+branch_dim    = <span class="tok-f">coalesce</span>({branch_name[request]},    {branch_name})
+<span class="tok-c">// ...add as needed: association_dim, support_request_year, etc.</span></pre></div>
+
+      <h3>Measure 1 — unique athlete count (native)</h3>
+      <div class="code"><div class="bar"><span class="fn">athlete_cnt</span><button onclick="cp(this)">Copy</button></div><pre>athlete_cnt = <span class="tok-f">distinctCount</span>({athlete_code})</pre></div>
+      <p><span class="mono">athlete_code</span> is unique per person, so <span class="mono">distinctCount</span> collapses the double report (same person once as male, once as female) automatically, recomputing over exactly the rows that survived filters. Athlete-less-request rows arrive with <span class="mono">athlete_code = NULL</span> → contribute 0. No unpivot needed: the fact is already at athlete grain with a gender column.</p>
+
+      <h3>Measure 2 — approved budget, counted once per request</h3>
+      <div class="code"><div class="bar"><span class="fn">approved_share (recommended)</span><button onclick="cp(this)">Copy</button></div><pre>approved_share = {approved_amount} / <span class="tok-f">countOver</span>({src_key}, [{src_key}], <span class="tok-k">PRE_AGG</span>)
+
+<span class="tok-c">// in the visual use:  sum(approved_share)</span></pre></div>
+      <p>The divisor is the number of athlete rows of that request <b>after filters</b> (<span class="mono">PRE_AGG</span>). So <span class="ltr">rows × amount/rows = the full amount</span> — a request gets its whole budget whenever at least one of its athletes survives, and 0 when none do. Dedup is <b>strictly by <span class="mono">support_request_code</span></b>, no other field.</p>
+      <div class="callout win"><span class="cl">This IS "each request counted once"</span>
+      <span class="mono">sum(approved_share)</span> for a single request = <span class="mono">approved_amount</span> exactly. Per authority/society = the exact sum of its requests, each once. The fraction exists only at the hidden (athlete) row grain, which you never display.</div>
+    </div>
+  </details>
+
+  <details class="sec"><summary><svg class="chev" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Step 3 — Using it in visuals</summary>
+    <div class="inner">
+      <ul>
+        <li><b>Athlete count:</b> drop in <span class="mono">athlete_cnt</span> (already aggregated — do not wrap in SUM).</li>
+        <li><b>Budget:</b> drop in <span class="mono">approved_share</span> with <span class="mono">Sum</span> aggregation.</li>
+        <li><b>Grouping axes:</b> always the unified <span class="mono">authority_dim</span> / <span class="mono">society_dim</span> / <span class="mono">branch_dim</span>, not the raw columns.</li>
+        <li><b>Sort by budget:</b> possible because everything is in one dataset — set <span class="mono">sum(approved_share)</span> as the sort field (descending); bars show <span class="mono">athlete_cnt</span>.</li>
+      </ul>
+      <div class="callout note"><span class="cl">The TLV check</span>
+      Filter some societies + authority = Tel Aviv → athlete rows drop → <span class="mono">distinctCount</span> recomputes (fewer athletes) and <span class="mono">approved_share</span> re-sums (fewer requests). Both react, no double-count, no manual sync.</div>
+    </div>
+  </details>
+
+  <details class="sec"><summary><svg class="chev" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Step 4 — Why it works (rationale)</summary>
+    <div class="inner">
+      <table class="sum">
+        <thead><tr><th>Problem</th><th>Solution</th><th>Why robust</th></tr></thead>
+        <tbody>
+          <tr><td>Gender double report (same person male+female) → <span class="mono">male_cnt+female_cnt</span> inflated</td><td><span class="mono">distinctCount(athlete_code)</span></td><td><span class="mono">athlete_code</span> unique per person → native collapse, reacts to every filter</td></tr>
+          <tr><td>1→many join inflates <span class="mono">approved_amount</span> (repeats per athlete row)</td><td>divide by <span class="mono">countOver(...PRE_AGG)</span> then sum</td><td>constant per request → reconstitutes to the full amount, once</td></tr>
+          <tr><td>Filter surfaces only some rows of a request (e.g. age)</td><td><span class="mono">PRE_AGG</span> recomputes after the filter</td><td><span class="pill green">always full</span> if ≥1 survives · <span class="pill grey">0</span> if none — <b>never partial</b></td></tr>
+          <tr><td>Athlete-less requests (union/Europe) get dropped</td><td><span class="mono">FULL OUTER</span> + <span class="mono">coalesce</span></td><td>arrive with <span class="mono">athlete_code=NULL</span> → 0 in count, full budget (divisor = 1)</td></tr>
+        </tbody>
+      </table>
+      <div class="callout note"><span class="cl">Why not a native budget SUM?</span>
+      A native SUM needs a request-grain base — but then the deduplicated athlete count can't react to athlete-level filters (gender/age). One measure always crosses grain; we chose to keep budget whole and exact, and the dedup count is the one that forces athlete grain. QuickSight has no Tableau-style <span class="mono">SUM(FIXED)</span>, so "sum-distinct-by-key" must be realized via the share (divide) or a flag (appendix).</div>
+    </div>
+  </details>
+
+  <details class="sec"><summary><svg class="chev" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Step 5 — Governance rules (mandatory)</summary>
+    <div class="inner">
+      <ol>
+        <li><b>Hide the raw <span class="mono">approved_amount</span></b> in the dataset (Restrict / Exclude) and expose only <span class="mono">approved_share</span> as "Approved budget". So no one accidentally SUMs the inflated copy. <span class="pill red">Footgun #1</span></li>
+        <li><b>Only group budget by request-level dimensions</b> — authority / society / union / branch / geography. All of a request's rows share one value there → the full amount lands in the correct bucket.</li>
+        <li><b>Never put budget on an athlete-level axis</b> (gender/age): a single request would split across buckets (share splits proportionally; flag dumps it all into one arbitrary bucket). The total is right but the breakdown is meaningless for a request-level measure.</li>
+      </ol>
+    </div>
+  </details>
+
+  <details class="sec"><summary><svg class="chev" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Step 6 — Validation</summary>
+    <div class="inner">
+      <p>Before publishing, build a scratch table grouped by <span class="mono">support_request_code</span>:</p>
+      <div class="code"><div class="bar"><span class="fn">validation</span><button onclick="cp(this)">Copy</button></div><pre><span class="tok-c">// per request:  sum(approved_share)  must equal  approved_amount</span>
+Group by: support_request_code
+Value:    sum(approved_share)   ==   min(approved_amount)</pre></div>
+      <p>If it ties out at request grain, it's exact at every coarser grouping (authority/society) automatically. Also check: global <span class="mono">sum(approved_share)</span> = the known total budget.</p>
+    </div>
+  </details>
+
+  <details class="sec"><summary><svg class="chev" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Step 7 — SPICE limits &amp; best practices</summary>
+    <div class="inner">
+      <table class="sum">
+        <thead><tr><th>Limit</th><th>Value</th><th>Our situation</th></tr></thead>
+        <tbody>
+          <tr><td>Tables per joined dataset</td><td class="num">32</td><td>we use 2</td></tr>
+          <tr><td><b>SPICE join: combined secondary tables</b></td><td class="num">≤ 20 GB</td><td>request fact tiny · large fact is Primary ⇒ not counted</td></tr>
+          <tr><td>Rows/size per dataset (Enterprise)</td><td class="num">2B / 2TB</td><td>~10⁵ rows — nowhere near</td></tr>
+          <tr><td>Rows/size (Standard)</td><td class="num">25M / 25GB</td><td>fine either way</td></tr>
+          <tr><td>Columns per dataset</td><td class="num">2,000</td><td>fine</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:13px;color:var(--ink-muted)">Sources: <a href="https://docs.aws.amazon.com/quicksight/latest/user/joining-data.html#w2aac34c17c25b9b9b5" target="_blank" rel="noopener">table count + 20GB — AWS Joining data</a> · <a href="https://docs.aws.amazon.com/quicksight/latest/user/data-source-limits.html#spice-limits" target="_blank" rel="noopener">rows/size/columns — AWS Data source quotas</a> · <a href="https://docs.aws.amazon.com/quicksight/latest/user/spice.html#spice-capacity-formula" target="_blank" rel="noopener">logical size formula — AWS SPICE</a> · <a href="https://docs.aws.amazon.com/quicksight/latest/user/calculations-and-order-of-evaluation.html" target="_blank" rel="noopener">PRE_AGG evaluation order — AWS</a></p>
+      <h3>Best practices</h3>
+      <ul>
+        <li><b>Athlete fact = Primary</b> — sidesteps the 20 GB secondary-tables cap.</li>
+        <li><b>Hide raw request-level measures</b> (<span class="mono">approved_amount</span> and the other request scores) — so nobody SUMs the inflated copy.</li>
+        <li><b>Drop unused string columns before ingest</b> — strings dominate logical size (24B + text vs 12B numeric/date), and the fan-out repeats each string per athlete row.</li>
+        <li><b>Refresh:</b> the FULL OUTER is recomputed each refresh; at this scale it's trivial.</li>
+      </ul>
+    </div>
+  </details>
+
+  <details class="sec"><summary><svg class="chev" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Appendix — alternative: full amount on a single row (flag)</summary>
+    <div class="inner">
+      <p>If you want the row-level value to stay <b>whole</b> (not a fraction), put the full amount on <b>one</b> representative row per request and 0 on the rest. Dedup is still by <span class="mono">support_request_code</span>; <span class="mono">athlete_id</span> is only a tiebreaker to pick the row, not a dedup key.</p>
+      <div class="code"><div class="bar"><span class="fn">budget_once (alternative)</span><button onclick="cp(this)">Copy</button></div><pre>budget_once = <span class="tok-f">ifelse</span>(
+   <span class="tok-f">isNull</span>({athlete_id})                                <span class="tok-c">// athlete-less request = its only row</span>
+   OR {athlete_id} = <span class="tok-f">minOver</span>({athlete_id}, [{src_key}], <span class="tok-k">PRE_AGG</span>),
+   {approved_amount}, 0)
+
+<span class="tok-c">// in the visual: sum(budget_once)</span></pre></div>
+      <table class="sum">
+        <thead><tr><th>Consideration</th><th>approved_share <span class="pill green">recommended</span></th><th>budget_once</th></tr></thead>
+        <tbody>
+          <tr><td>Dedup key</td><td><span class="mono">support_request_code</span> only</td><td><span class="mono">support_request_code</span> + tiebreaker <span class="mono">athlete_id</span></td></tr>
+          <tr><td>Row-level value</td><td>fraction (hidden)</td><td>whole</td></tr>
+          <tr><td>Robust to duplicate rows</td><td><span class="pill green">fully</span> (no unique key needed)</td><td>needs <span class="mono">athlete_id</span> unique per row, else double count</td></tr>
+          <tr><td>Partial sum possible?</td><td><span class="pill green">never</span></td><td><span class="pill green">never</span></td></tr>
+        </tbody>
+      </table>
+      <div class="callout warn"><span class="cl">Warning</span> Do not dedup by <span class="mono">athlete_code</span> in the flag — the double report (male+female) repeats <span class="mono">athlete_code</span> within a request ⇒ two rows ⇒ double budget. The tiebreaker must be a unique-per-row key (<span class="mono">athlete_id</span>). That's why the default is <span class="mono">approved_share</span> — it depends on no unique key at all.</div>
+      <p style="font-size:13.5px"><b>Open question to confirm:</b> is <span class="mono">athlete_id</span> unique per row in the athlete fact (a different id for the male-row and the female-row of the same person)? If yes → <span class="mono">budget_once</span> is valid. If not → use <span class="mono">approved_share</span>.</p>
+    </div>
+  </details>
+
+  <footer>Written by Claude Code · QuickSight Dataset Editor implementation guide · based on STT_Aigudim_Agudut_Gold · 2026-08-19</footer>
+</div></div>
+
+<!-- =========================== HEBREW =========================== -->
+<div class="doc" data-lang="he"><div class="wrap">
+
+  <header class="top">
+    <div class="kicker">QuickSight · Dataset Editor · מדריך מימוש</div>
+    <h1>חיבור שתי פקטות: ספירת ספורטאים מדודפקת + תקציב מאושר לפי בקשה</h1>
+    <p class="sub">איך להראות בוויזואל אחד ספירת ספורטאים ייחודית (ללא כפילות מגדר) לצד תקציב מאושר — כך שהכול מגיב לפילטרים ואף מדד לא מנופח.</p>
+    <div class="meta">
+      <div class="m"><span class="mk">פקטה A</span><span class="mv mono">dwh_aa_fact_athlete</span></div>
+      <div class="m"><span class="mk">פקטה B</span><span class="mv mono">dwh_aa_fact_support_request_spo</span></div>
+      <div class="m"><span class="mk">מנוע</span><span class="mv">SPICE</span></div>
+      <div class="m"><span class="mk">מפתח דדופ תקציב</span><span class="mv mono">support_request_code</span></div>
+    </div>
+  </header>
+
+  <div class="panel">
+    <p class="lead">Dataset <b>אחד</b> ברזולוציית ספורטאי: <span class="mono">FULL OUTER JOIN</span> של פקטת הספורטאים (ראשית) עם פקטת בקשות התמיכה (משנית) על <span class="mono">support_request_code</span>. ספירת ספורטאים = <b><span class="mono">distinctCount(athlete_code)</span></b> (מדדפקת נייטיבית). תקציב = <b><span class="mono">sum(approved_share)</span></b> — הסכום המלא של כל בקשה, נספר <b>פעם אחת</b> לפי <span class="mono">support_request_code</span>, לעולם לא חלקי.</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="fig">ספורטאי × בקשה</div><div class="lab">רזולוציית ה-Dataset</div></div>
+    <div class="stat"><div class="fig">FULL OUTER</div><div class="lab">סוג ה-Join</div></div>
+    <div class="stat"><div class="fig">distinctCount</div><div class="lab">ספירת ספורטאים · דדופ נייטיבי</div></div>
+    <div class="stat"><div class="fig">PRE_AGG</div><div class="lab">אחרי פילטרים · תקציב מלא תמיד</div></div>
+    <div class="stat"><div class="fig">~4 סדרי גודל</div><div class="lab">מרווח מתחת לכל מגבלת SPICE</div></div>
+  </div>
+
+  <p class="hint">כל הסעיפים למטה מקופלים — לחצו על כותרת כדי לפתוח. סעיפים 1–3 = צעדי המימוש; 4 ואילך = הנימוק, ממשל, בדיקות ומגבלות.</p>
+
+  <details class="sec"><summary><svg class="chev" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>שלב 1 — בניית ה-Dataset וה-Join</summary>
+    <div class="inner">
+      <p>בעורך ה-Dataset (Data prep) מוסיפים את שתי הטבלאות ומגדירים join יחיד. <b>סדר הטבלאות קריטי לביצועים</b>:</p>
+      <dl class="kv" style="display:grid;grid-template-columns:190px 1fr;gap:8px 16px;margin:14px 0;font-size:14.5px;">
+        <dt style="color:var(--ink-muted);font-weight:700">טבלה ראשית (Primary)</dt><dd style="margin:0"><span class="mono">dwh_aa_fact_athlete</span> — הגדולה. הטבלה הראשית אינה כפופה למגבלת הגודל.</dd>
+        <dt style="color:var(--ink-muted);font-weight:700">טבלה משנית (Secondary)</dt><dd style="margin:0"><span class="mono">dwh_aa_fact_support_request_spo</span> — שורה אחת לבקשה, קטנה.</dd>
+        <dt style="color:var(--ink-muted);font-weight:700">סוג Join</dt><dd style="margin:0"><span class="pill blue">FULL OUTER</span> על <span class="mono">support_request_code</span></dd>
+        <dt style="color:var(--ink-muted);font-weight:700">למה FULL OUTER</dt><dd style="margin:0">שומר גם בקשות ללא ספורטאים (איגוד / אליפות אירופה) — התקציב שלהן חייב להיכלל.</dd>
+      </dl>
+      <div class="callout warn"><span class="cl">מדוע פקטת הספורטאים היא הראשית</span>
+      מגבלת ה-20&nbsp;GB של join ב-SPICE חלה רק על סכום הטבלאות <b>המשניות</b>. פקטת הספורטאים כ-Primary אינה נספרת במגבלה — שמים את הגדולה כ-Primary והמגבלה כמעט בלתי-רלוונטית. (<a href="https://docs.aws.amazon.com/quicksight/latest/user/joining-data.html#w2aac34c17c25b9b9b7" target="_blank" rel="noopener">מקור: AWS — Joining data</a>)</div>
+      <div class="callout note"><span class="cl">שים לב</span>
+      ה-join ב-SPICE מתבצע ומתממש בזמן ה-<b>Refresh</b>, לא בזמן צפייה. עלות ה-fan-out משולמת פעם אחת לרענון; אינטראקציית המשתמש בדשבורד מהירה. הגדרת ה-"unique key" ב-join <b>לא משפיעה על SPICE</b> (רלוונטית ל-Direct query בלבד) — אל תסתמכו עליה; הנכונות מגיעה מהשדות המחושבים למטה.</div>
+    </div>
+  </details>
+
+  <details class="sec"><summary><svg class="chev" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>שלב 2 — שדות מחושבים (Calculated fields)</summary>
+    <div class="inner">
+      <p>לאחר join מסוג FULL OUTER, בשורות של בקשה-ללא-ספורטאים העמודות של פקטת הספורטאים יהיו NULL, ולהפך. לכן בונים מפתחות/ממדים "מאוחדים" (<span class="mono">coalesce</span>) שקיימים בכל שורה. הערה: אחרי join, עמודות בעלות שם זהה בשתי הטבלאות מקבלות סיומת מקור — בחרו את העותק מהטבלה הנכונה.</p>
+
+      <h3>מפתח וממדי קיבוץ מאוחדים</h3>
+      <div class="code"><div class="bar"><span class="fn">src_key + dims (coalesce)</span><button onclick="cp(this)">העתק</button></div><pre><span class="tok-c">// מפתח הדדופ — קיים בכל שורה (גם בקשה ללא ספורטאים)</span>
+src_key = <span class="tok-f">coalesce</span>({support_request_code[request]}, {support_request_code})
+
+<span class="tok-c">// צירי קיבוץ — request-side מנצח בשורות מותאמות, athlete-side כגיבוי</span>
+authority_dim = <span class="tok-f">coalesce</span>({authority_name[request]}, {authority_name})
+society_dim   = <span class="tok-f">coalesce</span>({society_name[request]},   {society_name})
+branch_dim    = <span class="tok-f">coalesce</span>({branch_name[request]},    {branch_name})
+<span class="tok-c">// ...הוסיפו לפי הצורך: association_dim, support_request_year וכו'</span></pre></div>
+
+      <h3>מדד 1 — ספירת ספורטאים ייחודית (מדדפקת)</h3>
+      <div class="code"><div class="bar"><span class="fn">athlete_cnt</span><button onclick="cp(this)">העתק</button></div><pre>athlete_cnt = <span class="tok-f">distinctCount</span>({athlete_code})</pre></div>
+      <p><span class="mono">athlete_code</span> ייחודי לאדם, לכן <span class="mono">distinctCount</span> מכווץ אוטומטית את הדיווח הכפול (אותו אדם פעם כזכר ופעם כנקבה), ומחושב מחדש בדיוק על השורות ששרדו את הפילטרים. שורות של בקשה-ללא-ספורטאים מגיעות עם <span class="mono">athlete_code = NULL</span> → תורמות 0 לספירה. לא צריך unpivot: הפקטה כבר ברזולוציית ספורטאי עם עמודת מגדר.</p>
+
+      <h3>מדד 2 — תקציב מאושר, נספר פעם אחת לכל בקשה</h3>
+      <div class="code"><div class="bar"><span class="fn">approved_share (מומלץ)</span><button onclick="cp(this)">העתק</button></div><pre>approved_share = {approved_amount} / <span class="tok-f">countOver</span>({src_key}, [{src_key}], <span class="tok-k">PRE_AGG</span>)
+
+<span class="tok-c">// בוויזואל משתמשים ב:  sum(approved_share)</span></pre></div>
+      <p>המחלק הוא מספר שורות הספורטאים של אותה בקשה <b>אחרי פילטרים</b> (<span class="mono">PRE_AGG</span>). לכן <span class="ltr">rows × amount/rows = הסכום המלא</span> — הבקשה מקבלת את מלוא תקציבה בכל פעם שלפחות ספורטאי אחד שלה שרד, ו-0 אם אף אחד לא. הדדופ הוא <b>אך ורק לפי <span class="mono">support_request_code</span></b>, ללא שדה נוסף.</p>
+      <div class="callout win"><span class="cl">זה בדיוק "כל בקשה נספרת פעם אחת"</span>
+      <span class="mono">sum(approved_share)</span> לבקשה בודדת = <span class="mono">approved_amount</span> במדויק. לכל רשות/אגודה = סכום מדויק של הבקשות שלה, כל אחת פעם אחת. השבר קיים רק ברמת השורה הנסתרת (ספורטאי) שלעולם לא מוצגת.</div>
+    </div>
+  </details>
+
+  <details class="sec"><summary><svg class="chev" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>שלב 3 — שימוש בוויזואלים</summary>
+    <div class="inner">
+      <ul>
+        <li><b>ספירת ספורטאים:</b> גררו <span class="mono">athlete_cnt</span> (כבר מצטבר — אין לעטוף ב-SUM).</li>
+        <li><b>תקציב:</b> גררו <span class="mono">approved_share</span> עם צבירה <span class="mono">Sum</span>.</li>
+        <li><b>צירי קיבוץ:</b> תמיד <span class="mono">authority_dim</span> / <span class="mono">society_dim</span> / <span class="mono">branch_dim</span> (המאוחדים), לא העמודות הגולמיות.</li>
+        <li><b>מיון לפי תקציב:</b> אפשרי כי הכול ב-Dataset אחד — הציבו <span class="mono">sum(approved_share)</span> כשדה המיון (יורד), והברים מציגים <span class="mono">athlete_cnt</span>.</li>
+      </ul>
+      <div class="callout note"><span class="cl">בדיקת ה-TLV</span>
+      סינון חלק מהאגודות + רשות=ת"א → שורות ספורטאים יורדות → <span class="mono">distinctCount</span> מחשב מחדש (פחות ספורטאים) ו-<span class="mono">approved_share</span> מסתכם מחדש (פחות בקשות). שניהם מגיבים, ללא כפילות וללא סנכרון ידני.</div>
+    </div>
+  </details>
+
+  <details class="sec"><summary><svg class="chev" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>שלב 4 — למה זה עובד (הנימוק)</summary>
+    <div class="inner">
+      <table class="sum">
+        <thead><tr><th>הבעיה</th><th>הפתרון</th><th>מדוע יציב</th></tr></thead>
+        <tbody>
+          <tr><td>דיווח כפול מגדר (אותו אדם כזכר+נקבה) → <span class="mono">male_cnt+female_cnt</span> מנופח</td><td><span class="mono">distinctCount(athlete_code)</span></td><td><span class="mono">athlete_code</span> ייחודי לאדם → מכווץ נייטיבית, מגיב לכל פילטר</td></tr>
+          <tr><td>join 1→רבים מנפח את <span class="mono">approved_amount</span> (חוזר בכל שורת ספורטאי)</td><td>חלוקה ב-<span class="mono">countOver(...PRE_AGG)</span> וסכימה</td><td>קבוע לבקשה → מתכנס בחזרה לסכום מלא, פעם אחת</td></tr>
+          <tr><td>פילטר חושף רק חלק משורות הבקשה (למשל גיל)</td><td><span class="mono">PRE_AGG</span> מחשב מחדש אחרי הפילטר</td><td><span class="pill green">תמיד מלא</span> אם ≥1 שרד · <span class="pill grey">0</span> אם אף אחד — <b>לעולם לא חלקי</b></td></tr>
+          <tr><td>בקשות ללא ספורטאים (איגוד/אירופה) נשמטות</td><td><span class="mono">FULL OUTER</span> + <span class="mono">coalesce</span></td><td>מגיעות עם <span class="mono">athlete_code=NULL</span> → 0 בספירה, תקציב מלא (מחלק=1)</td></tr>
+        </tbody>
+      </table>
+      <div class="callout note"><span class="cl">למה לא סכום נייטיבי של התקציב?</span>
+      סכום נייטיבי דורש בסיס ברזולוציית בקשה — אבל אז ספירת הספורטאים המדודפקת לא יכולה להגיב לפילטרים ברמת ספורטאי (מגדר/גיל). מדד אחד תמיד חוצה רזולוציה; בחרנו שהתקציב יישאר שלם ומדויק, והספירה המדודפקת היא זו שמכתיבה את רזולציית הספורטאי. ל-QuickSight אין <span class="mono">SUM(FIXED)</span> בסגנון Tableau — לכן "סכום-דיסטינקטי-לפי-מפתח" חייב להתממש דרך ה-share (חלוקה) או דרך flag (נספח).</div>
+    </div>
+  </details>
+
+  <details class="sec"><summary><svg class="chev" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>שלב 5 — כללי ממשל (חובה)</summary>
+    <div class="inner">
+      <ol>
+        <li><b>הסתירו את <span class="mono">approved_amount</span> הגולמי</b> ב-Dataset (Restrict / Exclude), וחשפו רק את <span class="mono">approved_share</span> בשם "תקציב מאושר". כך אף אחד לא יסכום בטעות את העותק המנופח. <span class="pill red">Footgun #1</span></li>
+        <li><b>קבצו תקציב רק לפי ממדים ברמת בקשה</b> — רשות / אגודה / איגוד / ענף / גיאוגרפיה. כל שורות הבקשה חולקות ערך יחיד בממדים אלה → הסכום המלא נוחת בדלי הנכון.</li>
+        <li><b>אל תשימו תקציב על ציר ברמת ספורטאי</b> (מגדר/גיל): בקשה בודדת תתפצל בין דליים (share מפצל יחסית; flag זורק להכול לדלי אחד שרירותי). הסה"כ נכון אך הפירוק חסר-משמעות למדד ברמת בקשה.</li>
+      </ol>
+    </div>
+  </details>
+
+  <details class="sec"><summary><svg class="chev" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>שלב 6 — בדיקת תקינות</summary>
+    <div class="inner">
+      <p>לפני פרסום, בנו טבלה זמנית מקובצת לפי <span class="mono">support_request_code</span>:</p>
+      <div class="code"><div class="bar"><span class="fn">validation</span><button onclick="cp(this)">העתק</button></div><pre><span class="tok-c">// לכל בקשה:  sum(approved_share)  חייב לשוות  approved_amount</span>
+Group by: support_request_code
+Value:    sum(approved_share)   ==   min(approved_amount)</pre></div>
+      <p>אם זה מתלכד ברמת הבקשה — זה מדויק בכל קיבוץ גס יותר (רשות/אגודה) אוטומטית. בדקו גם: סכום גלובלי של <span class="mono">sum(approved_share)</span> = סכום התקציב הכולל הידוע.</p>
+    </div>
+  </details>
+
+  <details class="sec"><summary><svg class="chev" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>שלב 7 — מגבלות SPICE ושיטות עבודה</summary>
+    <div class="inner">
+      <table class="sum">
+        <thead><tr><th>מגבלה</th><th>ערך</th><th>המצב שלנו</th></tr></thead>
+        <tbody>
+          <tr><td>טבלאות ל-Dataset מחובר</td><td class="num">32</td><td>משתמשים ב-2</td></tr>
+          <tr><td><b>join ב-SPICE: סך הטבלאות המשניות</b></td><td class="num">≤ 20 GB</td><td>פקטת הבקשות זעירה · הגדולה היא Primary ⇒ לא נספרת</td></tr>
+          <tr><td>שורות/גודל ל-Dataset (Enterprise)</td><td class="num">2B / 2TB</td><td>~10⁵ שורות — רחוק מאוד</td></tr>
+          <tr><td>שורות/גודל (Standard)</td><td class="num">25M / 25GB</td><td>גם כך בסדר</td></tr>
+          <tr><td>עמודות ל-Dataset</td><td class="num">2,000</td><td>בסדר</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:13px;color:var(--ink-muted)">מקורות: <a href="https://docs.aws.amazon.com/quicksight/latest/user/joining-data.html#w2aac34c17c25b9b9b5" target="_blank" rel="noopener">מס' טבלאות + מגבלת 20GB — AWS Joining data</a> · <a href="https://docs.aws.amazon.com/quicksight/latest/user/data-source-limits.html#spice-limits" target="_blank" rel="noopener">שורות/גודל/עמודות — AWS Data source quotas</a> · <a href="https://docs.aws.amazon.com/quicksight/latest/user/spice.html#spice-capacity-formula" target="_blank" rel="noopener">נוסחת גודל לוגי — AWS SPICE</a> · <a href="https://docs.aws.amazon.com/quicksight/latest/user/calculations-and-order-of-evaluation.html" target="_blank" rel="noopener">סדר חישוב PRE_AGG — AWS</a></p>
+      <h3>שיטות עבודה</h3>
+      <ul>
+        <li><b>פקטת הספורטאים = Primary</b> — עוקף את מגבלת 20GB של הטבלאות המשניות.</li>
+        <li><b>הסתירו מדדים גולמיים ברמת בקשה</b> (<span class="mono">approved_amount</span> ושאר ניקודי הבקשה) — כדי שלא יסכמו את העותק המנופח.</li>
+        <li><b>השמיטו עמודות מחרוזת מיותרות לפני ingest</b> — מחרוזות שולטות בגודל הלוגי (24B + טקסט מול 12B למספר/תאריך), וה-fan-out חוזר על כל מחרוזת בכל שורת ספורטאי.</li>
+        <li><b>Refresh:</b> ה-FULL OUTER מחושב מחדש בכל רענון; בהיקף הזה — טריוויאלי.</li>
+      </ul>
+    </div>
+  </details>
+
+  <details class="sec"><summary><svg class="chev" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>נספח — חלופה: תקציב מלא בשורה בודדת (flag)</summary>
+    <div class="inner">
+      <p>אם רוצים שהערך ברמת השורה יישאר <b>שלם</b> (לא שבר) — שמים את מלוא הסכום על שורה מייצגת <b>אחת</b> לכל בקשה, ו-0 בשאר. הדדופ עדיין לפי <span class="mono">support_request_code</span>; ה-<span class="mono">athlete_id</span> משמש רק כ"שובר-שוויון" לבחירת השורה, לא כמפתח דדופ.</p>
+      <div class="code"><div class="bar"><span class="fn">budget_once (חלופי)</span><button onclick="cp(this)">העתק</button></div><pre>budget_once = <span class="tok-f">ifelse</span>(
+   <span class="tok-f">isNull</span>({athlete_id})                                <span class="tok-c">// בקשה ללא ספורטאים = שורתה היחידה</span>
+   OR {athlete_id} = <span class="tok-f">minOver</span>({athlete_id}, [{src_key}], <span class="tok-k">PRE_AGG</span>),
+   {approved_amount}, 0)
+
+<span class="tok-c">// בוויזואל: sum(budget_once)</span></pre></div>
+      <table class="sum">
+        <thead><tr><th>שיקול</th><th>approved_share <span class="pill green">מומלץ</span></th><th>budget_once</th></tr></thead>
+        <tbody>
+          <tr><td>מפתח דדופ</td><td><span class="mono">support_request_code</span> בלבד</td><td><span class="mono">support_request_code</span> + שובר-שוויון <span class="mono">athlete_id</span></td></tr>
+          <tr><td>ערך ברמת שורה</td><td>שבר (נסתר)</td><td>שלם</td></tr>
+          <tr><td>עמידות בכפילות שורות</td><td><span class="pill green">מלאה</span> (לא צריך מפתח ייחודי)</td><td>דורש <span class="mono">athlete_id</span> ייחודי לשורה, אחרת ספירה כפולה</td></tr>
+          <tr><td>סיכום חלקי אפשרי?</td><td><span class="pill green">לעולם לא</span></td><td><span class="pill green">לעולם לא</span></td></tr>
+        </tbody>
+      </table>
+      <div class="callout warn"><span class="cl">אזהרה</span> אל תדדפקו לפי <span class="mono">athlete_code</span> ב-flag — הדיווח הכפול (זכר+נקבה) חוזר על <span class="mono">athlete_code</span> בתוך אותה בקשה ⇒ שתי שורות ⇒ תקציב כפול. שובר-השוויון חייב להיות מפתח ייחודי-לשורה (<span class="mono">athlete_id</span>). זו הסיבה שברירת-המחדל היא <span class="mono">approved_share</span> — אינו תלוי במפתח ייחודי כלל.</div>
+      <p style="font-size:13.5px"><b>שאלה פתוחה לאישור:</b> האם <span class="mono">athlete_id</span> ייחודי לכל שורה בפקטת הספורטאים (id שונה לשורת-הזכר ולשורת-הנקבה של אותו אדם)? אם כן — <span class="mono">budget_once</span> תקף. אם לא — השתמשו ב-<span class="mono">approved_share</span>.</p>
+    </div>
+  </details>
+
+  <footer>נכתב ע"י Claude Code · מדריך מימוש ל-QuickSight Dataset Editor · מבוסס על STT_Aigudim_Agudut_Gold · 2026-08-19</footer>
+</div></div>
+
+<script>
+function cp(b){
+  var pre=b.closest('.code').querySelector('pre');
+  navigator.clipboard.writeText(pre.innerText).then(function(){
+    var o=b.textContent;b.textContent=(document.documentElement.lang==='he'?'הועתק ✓':'Copied ✓');
+    setTimeout(function(){b.textContent=o;},1300);
+  });
+}
+function setLang(l){
+  document.documentElement.lang=l;
+  document.documentElement.dir=(l==='he'?'rtl':'ltr');
+  document.querySelectorAll('.doc').forEach(function(d){
+    d.classList.toggle('active', d.getAttribute('data-lang')===l);
+  });
+  document.getElementById('langToggle').textContent=(l==='he'?'English':'עברית');
+}
+</script>
+</body>
+</html>

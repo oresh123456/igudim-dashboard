@@ -1,0 +1,19 @@
+{
+  "_comment": "host-substring -> trust tier. First matching substring wins. Grow this map per project. Edit freely.",
+  "map": {
+    "sec.gov": "primary",
+    "sedar": "primary",
+    "investor.": "official",
+    ".gov.il": "official",
+    ".gov": "official",
+    "companiesmarketcap.com": "aggregator",
+    "stockanalysis.com": "aggregator",
+    "macrotrends.net": "aggregator",
+    "wikipedia.org": "aggregator",
+    "forbes.com": "press",
+    "globes.co.il": "press",
+    "calcalist": "press",
+    "themarker.com": "press"
+  },
+  "ranks": { "primary": 0, "official": 1, "aggregator": 2, "press": 3, "blog": 4, "unknown": 9 }
+}

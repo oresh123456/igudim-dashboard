@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Public Sport Investment per Capita & per Athlete — Global, Official Sources</title>
+<style>
+  :root{
+    --navy:#1f3a5f; --teal:#0f766e; --ink:#1a2230; --muted:#5b6472;
+    --bg:#f4f6f9; --surface:#ffffff; --border:#e2e7ee;
+    --green:#166534; --green-bg:#e7f5ec;
+    --amber:#92600a; --amber-bg:#fdf3e0;
+    --grey:#565f6b;  --grey-bg:#eef1f5;
+    --red:#9b1c1c;   --red-bg:#fbe9e9;
+    --blue:#1d4ed8;  --blue-bg:#e8f1fb;
+    --code-bg:#eef2f7; --code-border:#d5deea; --code-bar:#e3eaf3; --code-ink:#26324a;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Segoe UI","Helvetica Neue",system-ui,Arial,sans-serif;
+    line-height:1.65;font-size:16px;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:900px;margin:0 auto;padding:28px 22px 80px;}
+  a{color:var(--blue)}
+  h1,h2,h3{margin:0;color:var(--navy);text-wrap:balance}
+  p{margin:0}
+  code,.mono{font-family:ui-monospace,"Cascadia Code","SF Mono",Consolas,monospace}
+
+  .top{background:linear-gradient(135deg,var(--navy),var(--teal));color:#fff;border-radius:16px;
+    padding:26px 28px;box-shadow:0 10px 26px rgba(31,58,95,.22);}
+  .top .kicker{font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:#cfe6e2;font-weight:600}
+  .top h1{color:#fff;font-size:1.7rem;margin:.4rem 0 .3rem;line-height:1.2}
+  .top .sub{color:#e6eef3;font-size:1.02rem;max-width:64ch}
+  .meta{display:flex;flex-wrap:wrap;gap:22px;margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.2)}
+  .meta div{display:flex;flex-direction:column;gap:2px}
+  .meta .k{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:#bcd4d0}
+  .meta .v{font-size:1.05rem;font-weight:600;font-variant-numeric:tabular-nums}
+
+  details.toc{margin:22px 0 6px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:2px 16px}
+  details.toc summary{cursor:pointer;font-weight:600;color:var(--navy);padding:12px 0;list-style:none}
+  details.toc summary::-webkit-details-marker{display:none}
+  details.toc summary::before{content:"▸ ";color:var(--teal)}
+  details.toc[open] summary::before{content:"▾ "}
+  details.toc ol{margin:0 0 12px;padding-left:20px;color:var(--muted)}
+  details.toc a{color:var(--muted);text-decoration:none}
+  details.toc a:hover{color:var(--teal)}
+
+  section{margin-top:38px}
+  h2{font-size:1.28rem;border-left:4px solid var(--teal);padding-left:13px;scroll-margin-top:16px;
+    display:flex;align-items:center;gap:10px}
+  h2 .num{font-variant-numeric:tabular-nums;color:var(--teal);font-size:.95rem;font-weight:700}
+  h2 .stag{margin-left:auto;font-size:.66rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--teal);background:#e2f1ef;border:1px solid #c4e2de;padding:3px 9px;border-radius:999px}
+  h3{font-size:1.02rem;margin:22px 0 8px}
+  p+p{margin-top:12px}
+  .prose{margin-top:14px;color:var(--ink)}
+  .prose.muted{color:var(--muted);font-size:.95rem}
+
+  .panel{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 22px;
+    box-shadow:0 2px 8px rgba(31,58,95,.05)}
+  .panel .lead{font-size:1.12rem;font-weight:600;color:var(--ink);line-height:1.55}
+  .panel .lead b{color:var(--teal)}
+
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:18px}
+  .stat{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+    box-shadow:0 2px 8px rgba(31,58,95,.05)}
+  .stat .fig{font-size:1.7rem;font-weight:700;color:var(--teal);line-height:1.05;font-variant-numeric:tabular-nums}
+  .stat .lab{margin-top:8px;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+  .tblwrap{overflow-x:auto;border:1px solid var(--border);border-radius:12px;margin-top:14px;
+    box-shadow:0 2px 8px rgba(31,58,95,.05)}
+  table.sum{border-collapse:collapse;width:100%;min-width:560px;font-size:.92rem;background:var(--surface)}
+  table.sum th,table.sum td{padding:10px 13px;border-bottom:1px solid var(--border);text-align:left}
+  table.sum thead th{background:var(--grey-bg);color:var(--navy);font-weight:700;font-size:.72rem;
+    letter-spacing:.05em;text-transform:uppercase}
+  table.sum td.rate{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+  table.sum tbody tr:last-child td{border-bottom:none}
+  table.sum tbody tr:hover{background:#f7f9fc}
+  table.sum td:first-child{font-weight:600;color:var(--navy)}
+  table.sum tr.hi td{background:#eef7f5}
+  table.sum tr.hi:hover td{background:#e7f2f0}
+  .n{font-variant-numeric:tabular-nums}
+
+  .pill{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.02em;padding:3px 9px;border-radius:999px;
+    border:1px solid transparent;white-space:nowrap}
+  .pill.green{color:var(--green);background:var(--green-bg);border-color:#bfe3cd}
+  .pill.amber{color:var(--amber);background:var(--amber-bg);border-color:#f0dcae}
+  .pill.grey{color:var(--grey);background:var(--grey-bg);border-color:var(--border)}
+  .pill.red{color:var(--red);background:var(--red-bg);border-color:#efc9c9}
+  .pill.blue{color:var(--blue);background:var(--blue-bg);border-color:#c6ddf6}
+  a.pill{text-decoration:none}
+  a.pill:hover{filter:brightness(.95);text-decoration:underline}
+  table.sum td a{color:var(--blue);text-decoration:none;border-bottom:1px dotted #9db4d6}
+  table.sum td a:hover{border-bottom-style:solid}
+  .srclink{font-size:.8rem}
+
+  .callout{border-radius:12px;padding:15px 18px;margin-top:16px;border:1px solid;display:flex;gap:12px;align-items:flex-start}
+  .callout .clabel{font-size:.66rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;padding:2px 0;white-space:nowrap}
+  .callout.info{background:var(--blue-bg);border-color:#c6ddf6}
+  .callout.info .clabel{color:var(--blue)}
+  .callout.warn{background:var(--amber-bg);border-color:#f0dcae}
+  .callout.warn .clabel{color:var(--amber)}
+  .callout.win{background:var(--green-bg);border-color:#bfe3cd}
+  .callout.win .clabel{color:var(--green)}
+  .callout p{font-size:.94rem}
+
+  details.finding{background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-top:10px;padding:0 16px}
+  details.finding summary{cursor:pointer;font-weight:600;color:var(--navy);padding:13px 0;list-style:none;
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  details.finding summary::-webkit-details-marker{display:none}
+  details.finding summary::before{content:"▸";color:var(--teal);font-size:.85rem}
+  details.finding[open] summary::before{content:"▾"}
+  details.finding .fbody{padding:0 0 14px;color:var(--ink);font-size:.93rem}
+  .src{font-family:ui-monospace,Consolas,monospace;font-size:.76rem;color:var(--muted);background:var(--grey-bg);
+    border:1px solid var(--border);border-radius:6px;padding:2px 7px;display:inline-block;margin:3px 4px 0 0}
+
+  ol.hier{counter-reset:s;list-style:none;padding:0;margin:14px 0 0}
+  ol.hier li{position:relative;padding:2px 0 16px 42px;margin:0}
+  ol.hier li::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:0;
+    width:28px;height:28px;border-radius:50%;background:var(--teal);color:#fff;font-weight:700;font-size:.85rem;
+    display:flex;align-items:center;justify-content:center}
+  ol.hier li:not(:last-child)::after{content:"";position:absolute;left:13.5px;top:30px;bottom:2px;width:1.5px;background:var(--border)}
+
+  footer{margin-top:48px;padding-top:18px;border-top:1px solid var(--border);color:var(--muted);font-size:.85rem}
+  .fnote{color:var(--muted);font-size:.82rem;margin-top:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="kicker">Research swarm · official sources only</div>
+    <h1>Public investment in sport — per capita &amp; per athlete, across the globe</h1>
+    <p class="sub">What governments spend on sport, and how far it stretches per resident and per athlete. Built only from national statistics offices, sport ministries/agencies, Eurostat and national budget documents.</p>
+    <div class="meta">
+      <div><span class="k">Agents</span><span class="v">30</span></div>
+      <div><span class="k">Countries</span><span class="v">40+</span></div>
+      <div><span class="k">Sources touched</span><span class="v">291</span></div>
+      <div><span class="k">Data points</span><span class="v">275</span></div>
+      <div><span class="k">Run</span><span class="v">2026-08-09</span></div>
+    </div>
+  </header>
+
+  <details class="toc">
+    <summary>On this page</summary>
+    <ol>
+      <li><a href="#answer">The short answer</a></li>
+      <li><a href="#comparable">The one comparable metric: total govt sport spend (Eurostat COFOG)</a></li>
+      <li><a href="#agencies">National sport-agency budgets (non-EU &amp; comparison)</a></li>
+      <li><a href="#perathlete">Per athlete — two different metrics</a></li>
+      <li><a href="#caveats">Caveats you must read before quoting a number</a></li>
+      <li><a href="#method">Method &amp; provenance</a></li>
+    </ol>
+  </details>
+
+  <!-- ============ 1 ANSWER ============ -->
+  <section id="answer">
+    <h2><span class="num">1</span> The short answer</h2>
+    <div class="panel">
+      <p class="lead">There is <b>no single official "sport spending per capita" league table</b>. The closest thing that is real, official and cross-country comparable is <b>Eurostat's COFOG "recreational &amp; sporting services"</b> series — on it, general government spends about <b>€151 per resident (0.4% of GDP)</b> across the EU-27, ranging from <b>~€24 (Bulgaria)</b> to <b>€700–1,100 (Luxembourg, Iceland)</b>.</p>
+      <div class="stats">
+        <div class="stat"><div class="fig">€151</div><div class="lab">EU-27 govt sport spend / capita (2023)</div></div>
+        <div class="stat"><div class="fig">0.4%</div><div class="lab">of GDP, EU-27 average</div></div>
+        <div class="stat"><div class="fig">€1,104</div><div class="lab">Iceland — highest per capita</div></div>
+        <div class="stat"><div class="fig">1.5%</div><div class="lab">Iceland — highest % of GDP</div></div>
+        <div class="stat"><div class="fig">€67.8bn</div><div class="lab">EU-27 total govt sport spend, 2023</div></div>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <span class="clabel">Read first</span>
+      <p>Two traps make raw "per capita / per athlete" numbers misleading, and both are handled below: <b>(a) scope</b> — a national sport <em>agency</em> budget is ~10× smaller than <em>total</em> government sport spending (most sport money is municipal); <b>(b) denominator</b> — "per athlete" means something completely different for a club member (€10–90) than for a state-funded elite athlete (€12k–100k).</p>
+    </div>
+  </section>
+
+  <!-- ============ 2 COMPARABLE ============ -->
+  <section id="comparable">
+    <h2><span class="num">2</span> The one comparable metric <span class="stag">Leading evidence</span></h2>
+    <p class="prose">Eurostat's <span class="mono">gov_10a_exp</span> dataset reports <b>general government expenditure on "recreational and sporting services"</b> (COFOG group GF08.1) for every EU/EFTA country on an identical definition — <em>all levels of government</em> (central + regional + municipal), same currency (EUR), same year. This is the only place the "per capita" question has a clean, official, comparable answer. Two official columns below (<b>% of GDP</b>, straight from Eurostat) plus a derived per-capita (Eurostat total ÷ population).</p>
+
+    <div class="callout info">
+      <span class="clabel">Definition</span>
+      <p>COFOG GF08.1 is <b>recreation <em>and</em> sport</b> combined (it also captures parks, playgrounds, recreation grounds) — the standard international proxy for public sport spending, but slightly broader than sport alone. "% of GDP" values are Eurostat's own; per-capita is our arithmetic on official totals.</p>
+    </div>
+
+    <div class="tblwrap">
+      <table class="sum">
+        <thead><tr><th>Country</th><th style="text-align:right">Total govt sport/rec spend, 2023</th><th style="text-align:right">≈ € per capita</th><th style="text-align:right">% of GDP</th><th>Source</th></tr></thead>
+        <tbody>
+          <tr class="hi"><td>Iceland</td><td class="rate">€435 m</td><td class="rate">~1,104</td><td class="rate">1.5%</td><td><a href="https://ec.europa.eu/eurostat/databrowser/view/gov_10a_exp/default/table?lang=en&category=gov.gov_10a_exp" target="_blank" rel="noopener" class="pill green">Eurostat ↗</a></td></tr>
+          <tr><td>Luxembourg</td><td class="rate">€469 m</td><td class="rate">~710</td><td class="rate">0.6%</td><td><a href="https://ec.europa.eu/eurostat/databrowser/view/gov_10a_exp/default/table?lang=en&category=gov.gov_10a_exp" target="_blank" rel="noopener" class="pill green">Eurostat ↗</a></td></tr>
+          <tr><td>Sweden</td><td class="rate">€3,688 m</td><td class="rate">~350</td><td class="rate">0.7%</td><td><a href="https://ec.europa.eu/eurostat/databrowser/view/gov_10a_exp/default/table?lang=en&category=gov.gov_10a_exp" target="_blank" rel="noopener" class="pill green">Eurostat ↗</a></td></tr>
+          <tr><td>Norway</td><td class="rate">€1,870 m</td><td class="rate">~338</td><td class="rate">0.4%</td><td><a href="https://ec.europa.eu/eurostat/databrowser/view/gov_10a_exp/default/table?lang=en&category=gov.gov_10a_exp" target="_blank" rel="noopener" class="pill green">Eurostat ↗</a></td></tr>
+          <tr><td>Switzerland</td><td class="rate">€2,943 m</td><td class="rate">~333</td><td class="rate">0.3%</td><td><a href="https://ec.europa.eu/eurostat/databrowser/view/gov_10a_exp/default/table?lang=en&category=gov.gov_10a_exp" target="_blank" rel="noopener" class="pill green">Eurostat ↗</a></td></tr>
+          <tr><td>Finland</td><td class="rate">€1,747 m</td><td class="rate">~314</td><td class="rate">0.6–0.7%</td><td><a href="https://ec.europa.eu/eurostat/databrowser/view/gov_10a_exp/default/table?lang=en&category=gov.gov_10a_exp" target="_blank" rel="noopener" class="pill green">Eurostat ↗</a></td></tr>
+          <tr><td>Netherlands</td><td class="rate">€5,047 m</td><td class="rate">~282</td><td class="rate">0.5%</td><td><a href="https://ec.europa.eu/eurostat/databrowser/view/gov_10a_exp/default/table?lang=en&category=gov.gov_10a_exp" target="_blank" rel="noopener" class="pill green">Eurostat ↗</a></td></tr>
+          <tr><td>France</td><td class="rate">€15,728 m</td><td class="rate">~231</td><td class="rate">0.6%</td><td><a href="https://ec.europa.eu/eurostat/databrowser/view/gov_10a_exp/default/table?lang=en&category=gov.gov_10a_exp" target="_blank" rel="noopener" class="pill green">Eurostat ↗</a></td></tr>
+          <tr><td>Denmark</td><td class="rate">€1,269 m</td><td class="rate">~214</td><td class="rate">0.3%</td><td><a href="https://ec.europa.eu/eurostat/databrowser/view/gov_10a_exp/default/table?lang=en&category=gov.gov_10a_exp" target="_blank" rel="noopener" class="pill green">Eurostat ↗</a></td></tr>
+          <tr><td>Belgium</td><td class="rate">€2,314 m</td><td class="rate">~197</td><td class="rate">0.4%</td><td><a href="https://ec.europa.eu/eurostat/databrowser/view/gov_10a_exp/default/table?lang=en&category=gov.gov_10a_exp" target="_blank" rel="noopener" class="pill green">Eurostat ↗</a></td></tr>
+          <tr><td>Austria</td><td class="rate">€1,570 m</td><td class="rate">~172</td><td class="rate">0.3%</td><td><a href="https://ec.europa.eu/eurostat/databrowser/view/gov_10a_exp/default/table?lang=en&category=gov.gov_10a_exp" target="_blank" rel="noopener" class="pill green">Eurostat ↗</a></td></tr>
+          <tr><td>Estonia</td><td class="rate">€228 m</td><td class="rate">~167</td><td class="rate">0.6%</td><td><a href="https://ec.europa.eu/eurostat/databrowser/view/gov_10a_exp/default/table?lang=en&category=gov.gov_10a_exp" target="_blank" rel="noopener" class="pill green">Eurostat ↗</a></td></tr>
+          <tr><td>Hungary</td><td class="rate">€1,489 m</td><td class="rate">~155</td><td class="rate">0.8%</td><td><a href="https://ec.europa.eu/eurostat/databrowser/view/gov_10a_exp/default/table?lang=en&category=gov.gov_10a_exp" target="_blank" rel="noopener" class="pill green">Eurostat ↗</a></td></tr>
+          <tr class="hi"><td>EU-27 average</td><td class="rate">€67,761 m</td><td class="rate">~151</td><td class="rate">0.4%</td><td><a href="https://ec.europa.eu/eurostat/databrowser/view/gov_10a_exp/default/table?lang=en&category=gov.gov_10a_exp" target="_blank" rel="noopener" class="pill green">Eurostat ↗</a></td></tr>
+          <tr><td>Malta</td><td class="rate">€77 m</td><td class="rate">~143</td><td class="rate">0.4%</td><td><a href="https://ec.europa.eu/eurostat/databrowser/view/gov_10a_exp/default/table?lang=en&category=gov.gov_10a_exp" target="_blank" rel="noopener" class="pill green">Eurostat ↗</a></td></tr>
+          <tr><td>Spain</td><td class="rate">€6,799 m</td><td class="rate">~141</td><td class="rate">0.5%</td><td><a href="https://ec.europa.eu/eurostat/databrowser/view/gov_10a_exp/default/table?lang=en&category=gov.gov_10a_exp" target="_blank" rel="noopener" class="pill green">Eurostat ↗</a></td></tr>
+          <tr><td>Germany</td><td class="rate">€11,256 m</td><td class="rate">~135</td><td class="rate">0.3%</td><td><a href="https://ec.europa.eu/eurostat/databrowser/view/gov_10a_exp/default/table?lang=en&category=gov.gov_10a_exp" target="_blank" rel="noopener" class="pill green">Eurostat ↗</a></td></tr>
+          <tr><td>Czechia</td><td class="rate">€1,425 m</td><td class="rate">~131</td><td class="rate">0.4%</td><td><a href="https://ec.europa.eu/eurostat/databrowser/view/gov_10a_exp/default/table?lang=en&category=gov.gov_10a_exp" target="_blank" rel="noopener" class="pill green">Eurostat ↗</a></td></tr>
+          <tr><td>Greece</td><td class="rate">€1,246 m</td><td class="rate">~120</td><td class="rate">0.6%</td><td><a href="https://ec.europa.eu/eurostat/databrowser/view/gov_10a_exp/default/table?lang=en&category=gov.gov_10a_exp" target="_blank" rel="noopener" class="pill green">Eurostat ↗</a></td></tr>
+          <tr><td>Slovenia</td><td class="rate">€248 m</td><td class="rate">~117</td><td class="rate">0.4%</td><td><a href="https://ec.europa.eu/eurostat/databrowser/view/gov_10a_exp/default/table?lang=en&category=gov.gov_10a_exp" target="_blank" rel="noopener" class="pill green">Eurostat ↗</a></td></tr>
+          <tr><td>Italy</td><td class="rate">€6,263 m</td><td class="rate">~106</td><td class="rate">0.3%</td><td><a href="https://ec.europa.eu/eurostat/databrowser/view/gov_10a_exp/default/table?lang=en&category=gov.gov_10a_exp" target="_blank" rel="noopener" class="pill green">Eurostat ↗</a></td></tr>
+          <tr><td>Poland</td><td class="rate">€3,547 m</td><td class="rate">~96</td><td class="rate">0.5%</td><td><a href="https://ec.europa.eu/eurostat/databrowser/view/gov_10a_exp/default/table?lang=en&category=gov.gov_10a_exp" target="_blank" rel="noopener" class="pill green">Eurostat ↗</a></td></tr>
+          <tr><td>Ireland</td><td class="rate">€461 m</td><td class="rate">~89</td><td class="rate">0.1%</td><td><a href="https://ec.europa.eu/eurostat/databrowser/view/gov_10a_exp/default/table?lang=en&category=gov.gov_10a_exp" target="_blank" rel="noopener" class="pill green">Eurostat ↗</a></td></tr>
+          <tr><td>Croatia</td><td class="rate">€324 m</td><td class="rate">~84</td><td class="rate">0.4%</td><td><a href="https://ec.europa.eu/eurostat/databrowser/view/gov_10a_exp/default/table?lang=en&category=gov.gov_10a_exp" target="_blank" rel="noopener" class="pill green">Eurostat ↗</a></td></tr>
+          <tr><td>Lithuania</td><td class="rate">€221 m</td><td class="rate">~77</td><td class="rate">0.3%</td><td><a href="https://ec.europa.eu/eurostat/databrowser/view/gov_10a_exp/default/table?lang=en&category=gov.gov_10a_exp" target="_blank" rel="noopener" class="pill green">Eurostat ↗</a></td></tr>
+          <tr><td>Portugal</td><td class="rate">€693 m</td><td class="rate">~66</td><td class="rate">0.3%</td><td><a href="https://ec.europa.eu/eurostat/databrowser/view/gov_10a_exp/default/table?lang=en&category=gov.gov_10a_exp" target="_blank" rel="noopener" class="pill green">Eurostat ↗</a></td></tr>
+          <tr><td>Slovakia</td><td class="rate">€319 m</td><td class="rate">~59</td><td class="rate">0.3%</td><td><a href="https://ec.europa.eu/eurostat/databrowser/view/gov_10a_exp/default/table?lang=en&category=gov.gov_10a_exp" target="_blank" rel="noopener" class="pill green">Eurostat ↗</a></td></tr>
+          <tr><td>Cyprus</td><td class="rate">€51 m</td><td class="rate">~55</td><td class="rate">0.2%</td><td><a href="https://ec.europa.eu/eurostat/databrowser/view/gov_10a_exp/default/table?lang=en&category=gov.gov_10a_exp" target="_blank" rel="noopener" class="pill green">Eurostat ↗</a></td></tr>
+          <tr><td>Romania</td><td class="rate">€1,043 m</td><td class="rate">~55</td><td class="rate">0.3%</td><td><a href="https://ec.europa.eu/eurostat/databrowser/view/gov_10a_exp/default/table?lang=en&category=gov.gov_10a_exp" target="_blank" rel="noopener" class="pill green">Eurostat ↗</a></td></tr>
+          <tr><td>Latvia</td><td class="rate">€88 m</td><td class="rate">~47</td><td class="rate">0.2%</td><td><a href="https://ec.europa.eu/eurostat/databrowser/view/gov_10a_exp/default/table?lang=en&category=gov.gov_10a_exp" target="_blank" rel="noopener" class="pill green">Eurostat ↗</a></td></tr>
+          <tr><td>Bulgaria</td><td class="rate">€153 m</td><td class="rate">~24</td><td class="rate">0.2%</td><td><a href="https://ec.europa.eu/eurostat/databrowser/view/gov_10a_exp/default/table?lang=en&category=gov.gov_10a_exp" target="_blank" rel="noopener" class="pill green">Eurostat ↗</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="fnote">Source: Eurostat <a href="https://ec.europa.eu/eurostat/databrowser/view/gov_10a_exp/default/table?lang=en" target="_blank" rel="noopener"><span class="mono">gov_10a_exp</span></a>, COFOG GF08.1, sector S13 (general government), na_item TE, 2023 — <a href="https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/data/gov_10a_exp/A.MIO_EUR.S13.GF0801.TE.EU27_2020+BE+BG+CZ+DK+DE+EE+IE+EL+ES+FR+HR+IT+CY+LV+LT+LU+HU+MT+NL+AT+PL+PT+RO+SI+SK+FI+SE+IS+NO+CH?format=SDMX-CSV&startPeriod=2020&endPeriod=2023" target="_blank" rel="noopener">raw SDMX-CSV pull ↗</a> · narrative: <a href="https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Government_expenditure_on_recreational_and_sporting_services" target="_blank" rel="noopener">Eurostat Statistics Explained ↗</a>. Per-capita = official 2023 total ÷ ~2023 population; figures rounded. USA shown in §3 is scope-comparable (~$136/capita, all state+local).</p>
+  </section>
+
+  <!-- ============ 3 AGENCIES ============ -->
+  <section id="agencies">
+    <h2><span class="num">3</span> National sport-agency budgets <span class="stag">Info</span></h2>
+    <p class="prose">Outside the EU there is no common accounting standard, so the official figure available is usually the <b>national sport ministry/agency budget</b>. <span class="pill amber">Scope warning</span> These are <b>not</b> comparable to the Eurostat column above — they are the central agency <em>only</em>, and exclude the (usually much larger) municipal and regional sport spend. Read them as "what the national sport body directly controls," not "total public sport spending."</p>
+
+    <div class="tblwrap">
+      <table class="sum">
+        <thead><tr><th>Country</th><th>Agency / vote</th><th style="text-align:right">Budget (local, latest)</th><th style="text-align:right">≈ per capita</th><th>Basis</th></tr></thead>
+        <tbody>
+          <tr class="hi"><td><a href="https://www.census.gov/programs-surveys/gov-finances.html" target="_blank" rel="noopener">United States</a></td><td>State + local parks &amp; recreation (Census)</td><td class="rate">~$45 bn</td><td class="rate">~$136</td><td><span class="pill green">all govt levels ≈ Eurostat scope</span></td></tr>
+          <tr><td><a href="https://www.uksport.gov.uk/news/2024/12/16/greatest-investment-on-journey-to-la-2028" target="_blank" rel="noopener">United Kingdom</a></td><td>UK Sport (elite) — WCP</td><td class="rate">~£100 m/yr</td><td class="rate">—</td><td><span class="pill amber">elite only; Sport England grassroots separate</span></td></tr>
+          <tr><td><a href="https://search.open.canada.ca/qpnotes/record/pch,PCH-2024-QP-00045" target="_blank" rel="noopener">Canada</a></td><td>Sport Canada — Sport Support Program</td><td class="rate">C$179 m</td><td class="rate">~C$4.4</td><td><span class="pill amber">federal agency only</span></td></tr>
+          <tr><td><a href="https://www.health.gov.au/sites/default/files/2025-03/2025-26_health_pbs_4.06_asc.pdf" target="_blank" rel="noopener">Australia</a></td><td>Australian Sports Commission / AIS</td><td class="rate">—</td><td class="rate">A$17.4</td><td><span class="pill amber">federal agency only</span></td></tr>
+          <tr><td><a href="https://www.mext.go.jp/sports/content/250123-spt_kensport01-000039902_09.pdf" target="_blank" rel="noopener">Japan</a></td><td>Japan Sports Agency</td><td class="rate">¥36.1 bn</td><td class="rate">~¥293 (≈€1.8)</td><td><span class="pill amber">central agency only</span></td></tr>
+          <tr><td><a href="https://welcon.kocca.kr/en/support/issue-focus/81" target="_blank" rel="noopener">South Korea</a></td><td>Min. Culture, Sports &amp; Tourism — sport</td><td class="rate">₩1.68 tn</td><td class="rate">~₩32,400 (≈€22)</td><td><span class="pill amber">central budget</span></td></tr>
+          <tr><td><a href="https://www.singaporebudget.gov.sg/docs/librariesprovider3/budget2025/download/pdf/53-mccy-2025.pdf" target="_blank" rel="noopener">Singapore</a></td><td>Sport Singapore (SportSG)</td><td class="rate">S$513 m</td><td class="rate">~S$84 (≈€58)</td><td><span class="pill amber">agency budget</span></td></tr>
+          <tr><td><a href="https://next.obudget.org/i/budget/001943/2025" target="_blank" rel="noopener">Israel</a></td><td>Ministry of Culture &amp; Sport — sport</td><td class="rate">—</td><td class="rate">~₪99 (≈€25)</td><td><span class="pill amber">national budget</span></td></tr>
+          <tr><td><a href="https://www.sports.gov.ae/ministry-of-sports-budget-overview" target="_blank" rel="noopener">UAE</a></td><td>Federal sports authority</td><td class="rate">AED 226 m</td><td class="rate">~AED 20 (≈€5)</td><td><span class="pill amber">federal only; emirate spend excluded</span></td></tr>
+          <tr><td><a href="https://www.dsac.gov.za/" target="_blank" rel="noopener">South Africa</a></td><td>Dept Sport, Arts &amp; Culture — sport vote</td><td class="rate">R1.28 bn</td><td class="rate">~R20 (≈€1)</td><td><span class="pill amber">national dept only</span></td></tr>
+          <tr><td><a href="https://www.indiabudget.gov.in/doc/eb/sbe102.pdf" target="_blank" rel="noopener">India</a></td><td>Dept of Sports (Union budget)</td><td class="rate">₹44.8 bn</td><td class="rate">~₹30 (≈€0.34)</td><td><span class="pill amber">central; states excluded</span></td></tr>
+          <tr><td><a href="https://www.camara.leg.br/noticias/1119641-orcamento-do-esporte-para-2025-dobra-no-relatorio-setorial-mas-ainda-nao-alcanca-o-valor-de-2024/" target="_blank" rel="noopener">Brazil</a></td><td>Ministério do Esporte</td><td class="rate">~R$2.4 bn</td><td class="rate">~R$11 (≈€2)</td><td><span class="pill amber">federal only</span></td></tr>
+          <tr><td>Qatar</td><td>Ministry of Sports &amp; Youth</td><td class="rate">n/a</td><td class="rate">—</td><td><span class="pill red">no consolidated figure published</span></td></tr>
+          <tr><td>Saudi Arabia</td><td>Ministry of Sport</td><td class="rate">n/a</td><td class="rate">—</td><td><span class="pill red">no consolidated figure published</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="fnote">The USA row is the exception that <em>is</em> comparable to §2: US Census state+local parks &amp; recreation (~$45bn, 2021) is all-government-levels, landing the US at ~$136/capita — mid-table, near Germany/Spain. Gulf states publish no consolidated sport budget line, so per-capita is genuinely not computable from official sources.</p>
+  </section>
+
+  <!-- ============ 4 PER ATHLETE ============ -->
+  <section id="perathlete">
+    <h2><span class="num">4</span> Per athlete — two different metrics <span class="stag">Leading evidence</span></h2>
+    <p class="prose">"Spend per athlete" only means something once you fix the denominator. Two live, incompatible definitions came back from official sources:</p>
+
+    <h3>A · Public/organised spend per <em>registered club member</em> (grassroots)</h3>
+    <p class="prose muted">Denominator = everyone with a club membership / sport licence — millions of people. Small numbers, mostly derived (agency budget ÷ membership).</p>
+    <div class="tblwrap">
+      <table class="sum">
+        <thead><tr><th>Country</th><th style="text-align:right">Registered members</th><th style="text-align:right">≈ spend / member</th><th>Note</th></tr></thead>
+        <tbody>
+          <tr><td><a href="https://www.csd.gob.es/es/promocion-del-deporte/estadisticas/licencias-y-clubes-federados" target="_blank" rel="noopener">Spain</a></td><td class="rate">4.27 m licences</td><td class="rate">~€88</td><td>CSD budget ÷ federated licences</td></tr>
+          <tr><td><a href="https://www.idrettsforbundet.no/nyheter/2025/takknemlige-for-965-millioner-i-spillemidler-til-norsk-idrett/" target="_blank" rel="noopener">Norway</a></td><td class="rate">1.89 m memberships</td><td class="rate">~€44–193</td><td>range: org grant vs total gaming funds</td></tr>
+          <tr><td><a href="https://idrottsstatistik.se/ekonomi-och-etik/statens-stod-till-idrotten/" target="_blank" rel="noopener">Sweden</a></td><td class="rate">~3.0 m members</td><td class="rate">~€67</td><td>state grant to RF ÷ members</td></tr>
+          <tr><td><a href="https://www.rijksfinancien.nl/memorie-van-toelichting/2024/OWB/XVI/onderdeel/2112074" target="_blank" rel="noopener">Netherlands</a></td><td class="rate">4.3 m organised</td><td class="rate">~€51</td><td>VWS sport art. ÷ organised sporters</td></tr>
+          <tr><td><a href="https://www.sports.gouv.fr/les-chiffres-cles-du-sport-323" target="_blank" rel="noopener">France</a></td><td class="rate">16.5 m licences</td><td class="rate">~€62</td><td>Sport mission budget ÷ licences</td></tr>
+          <tr><td><a href="https://www.mext.go.jp/sports/content/250123-spt_kensport01-000039902_09.pdf" target="_blank" rel="noopener">Japan</a></td><td class="rate">5.96 m registered</td><td class="rate">~€38</td><td>agency budget ÷ federation members</td></tr>
+          <tr><td><a href="https://www.bundeshaushalt.de/DE/Bundeshaushalt-digital/bundeshaushalt-digital.html" target="_blank" rel="noopener">Germany</a></td><td class="rate">27.9 m memberships</td><td class="rate">~€10</td><td>federal agency budget only (understates)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>B · State funding per <em>elite / carded athlete</em> (high-performance)</h3>
+    <p class="prose muted">Denominator = a few hundred to ~1,500 nationally-funded elite athletes. Numbers are 100–1,000× larger, and several are official.</p>
+    <div class="tblwrap">
+      <table class="sum">
+        <thead><tr><th>Country / programme</th><th style="text-align:right">Funded athletes</th><th style="text-align:right">≈ spend / athlete</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr class="hi"><td><a href="https://www.uksport.gov.uk/news/2024/12/16/greatest-investment-on-journey-to-la-2028" target="_blank" rel="noopener">UK — UK Sport World Class Programme</a></td><td class="rate">~1,200</td><td class="rate">~£83,000</td><td><span class="pill amber">derived</span></td></tr>
+          <tr><td><a href="https://www.sportireland.ie/high-performance/carding-and-funding" target="_blank" rel="noopener">Ireland — Sport Ireland HP carding</a></td><td class="rate">~140</td><td class="rate">~€32,000</td><td><span class="pill amber">derived</span></td></tr>
+          <tr><td><a href="https://search.open.canada.ca/qpnotes/record/pch,PCH-2024-QP-00045" target="_blank" rel="noopener">Canada — Athlete Assistance Program</a></td><td class="rate">1,800+</td><td class="rate">~C$18,300</td><td><span class="pill green">official (C$33m ÷ carded)</span></td></tr>
+          <tr><td><a href="https://www.gov.br/esporte/pt-br/acesso-a-informacao/acoes-e-programas/bolsa-atleta" target="_blank" rel="noopener">Brazil — Bolsa Atleta</a></td><td class="rate">9,207</td><td class="rate">~R$19,100</td><td><span class="pill green">official (2025 list)</span></td></tr>
+          <tr><td><a href="https://www.usopc.org/2023-impact-report/financial-summary" target="_blank" rel="noopener">USA — USOPC athlete excellence</a></td><td class="rate">1,509 stipended</td><td class="rate">~$112,700</td><td><span class="pill red">private funds, NOT government</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout warn">
+      <span class="clabel">Do not mix A &amp; B</span>
+      <p>Germany's "€10 per member" and the UK's "£83k per athlete" are both correct and both official-derived — they answer different questions. A per-member figure divided into elite funding, or vice-versa, produces nonsense (we discarded e.g. a "S$4.8m per Singapore scholar" figure that wrongly divided the whole agency budget by 107 elite scholars).</p>
+    </div>
+  </section>
+
+  <!-- ============ 5 CAVEATS ============ -->
+  <section id="caveats">
+    <h2><span class="num">5</span> Caveats before you quote a number <span class="stag">Method</span></h2>
+    <ol class="hier">
+      <li><b>Scope is everything.</b> Eurostat COFOG = all levels of government (municipal dominates). National-agency budgets (§3) are a fraction of that. Never rank a COFOG per-capita against an agency per-capita.</li>
+      <li><b>Recreation vs sport.</b> COFOG GF08.1 bundles recreation (parks, playgrounds) with sport. It is the accepted proxy but slightly overstates "sport."</li>
+      <li><b>Currency.</b> §2 is natively in EUR (comparable). §3 non-EU per-capita carries a rough €-equivalent at ~2025 rates — indicative only, not an official conversion.</li>
+      <li><b>Per-capita figures marked "~" are our arithmetic</b> on official numerators (budget/total) and standard populations — the inputs are official, the division is ours.</li>
+      <li><b>Athlete counts are not standardised.</b> "Licence", "membership", "registered", "carded", "beneficiary" all differ by country — the denominator drives the per-athlete number more than the money does.</li>
+      <li><b>Gulf states &amp; some others publish no consolidated sport budget</b>, so an official per-capita is genuinely unavailable (recorded as such, not estimated).</li>
+    </ol>
+  </section>
+
+  <!-- ============ 6 METHOD ============ -->
+  <section id="method">
+    <h2><span class="num">6</span> Method &amp; provenance <span class="stag">Method</span></h2>
+    <p class="prose">30 subagents, one per country or cross-country source, each restricted to <b>official sources only</b> — national statistics offices, sport ministries/agencies, national budget/treasury documents, Eurostat. Each returned a coverage log (what it searched, with status) and format-neutral findings <span class="mono">{entity, field, value, source, as_of, status}</span>. Contradictions are retained, not overwritten.</p>
+    <div class="stats">
+      <div class="stat"><div class="fig">30</div><div class="lab">agents, 0 errors</div></div>
+      <div class="stat"><div class="fig">291</div><div class="lab">sources logged</div></div>
+      <div class="stat"><div class="fig">275</div><div class="lab">findings captured</div></div>
+      <div class="stat"><div class="fig">1.26 M</div><div class="lab">tokens (of 10 M budget)</div></div>
+    </div>
+    <p class="prose muted" style="margin-top:16px">Primary official taps that carried the report: Eurostat <span class="mono">gov_10a_exp</span> (COFOG GF08.1) SDMX-CSV; US Census Bureau state/local finances; Sport Canada &amp; the Athlete Assistance Program; UK Sport investment tables; national budget documents (France mission Sport, Japan Sports Agency, Korea MCST, India Union budget, Brazil Bolsa Atleta lists), and national sport-agency annual reports. UNESCO/OECD were checked but publish no country-level public-sport-expenditure dataset (only qualitative policy reports).</p>
+    <div class="callout info">
+      <span class="clabel">Every claim is linked</span>
+      <p>Each row in §2–§4 links (country name or the <b>Eurostat ↗</b> pill) to the <b>official source</b> the figure came from — Eurostat databrowser, national budget PDFs, statistics offices and sport-agency pages. Where a government publishes no consolidated figure (Qatar, Saudi Arabia), the row is marked as such rather than linked to an estimate. Full findings + source keys live in <span class="mono">findings.jsonl</span> / <span class="mono">out/findings.csv</span> (275 rows), re-exportable to CSV, Markdown or Excel without re-running the swarm.</p>
+    </div>
+  </section>
+
+  <footer>
+    Generated by Claude Code · research-swarm run <span class="mono">2026-08-09a</span> · 30 agents, official sources only · figures as published; per-capita and €-equivalents marked "~" are derived from official totals.
+  </footer>
+
+</div>
+</body>
+</html>

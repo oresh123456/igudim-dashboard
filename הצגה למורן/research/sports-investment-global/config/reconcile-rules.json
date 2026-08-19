@@ -1,0 +1,15 @@
+{
+  "_comment": "MECHANICAL reconciliation rules, evaluated first-decisive in this order. Each abstains unless it can decide. Add/reorder as situations accrue. Anything needing judgment about a source's CONTENT is NOT here — it's an agent reason_type (see reason-types.json).",
+  "order": ["source-tier", "verification", "corroboration", "recency"],
+  "corroboration_min": 2,
+  "reason_types": [
+    "source-impeached",
+    "primary-stale",
+    "primary-ambiguous",
+    "unit-or-scope-mismatch",
+    "corroboration-outweighs",
+    "local-knowledge",
+    "note",
+    "other"
+  ]
+}
