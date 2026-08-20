@@ -295,14 +295,13 @@
 </style>
 
 <style id="feas-style">
-:root{--f-live:#248A3D;--f-spec:#2D9CDB;--f-part:#E07B39;--f-new:#7A8FA6;--f-block:#DA3439}
+:root{--f-cov:#248A3D;--f-part:#E07B39;--f-no:#DA3439;--f-hist:#7A8FA6}
 .feas{display:inline-block;font-size:10.5px;font-weight:700;line-height:1.7;border-radius:999px;
-  padding:1px 9px;margin-inline-start:8px;vertical-align:middle;white-space:nowrap;cursor:help;color:#fff}
-.feas.live{background:var(--f-live)}.feas.spec{background:var(--f-spec)}
-.feas.part{background:var(--f-part)}.feas.new{background:var(--f-new)}
-.feas.block{background:var(--f-block)}
-.feas-bar{background:#fff;border:1px solid var(--border,#E5E9F0);border-radius:12px;
-  padding:13px 16px;margin:0 0 14px;box-shadow:0 1px 3px rgba(26,34,48,.05)}
+ padding:1px 9px;margin-inline-start:8px;vertical-align:middle;white-space:nowrap;cursor:help;color:#fff}
+.feas.cov{background:var(--f-cov)}.feas.part{background:var(--f-part)}
+.feas.no{background:var(--f-no)}.feas.hist{background:var(--f-hist)}
+.feas-bar{background:#fff;border:1px solid var(--border,#E5E9F0);border-radius:12px;padding:13px 16px;
+ margin:0 0 14px;box-shadow:0 1px 3px rgba(26,34,48,.05)}
 .feas-bar .fb-top{display:flex;flex-wrap:wrap;align-items:baseline;gap:14px}
 .feas-bar .fb-score{font-size:13px;color:var(--ink-muted,#6B7280);font-weight:700}
 .feas-bar .fb-score b{font-size:19px;color:var(--navy,#1F3F6D);font-weight:800}
@@ -311,11 +310,11 @@
 .feas-bar .fb-track{height:6px;border-radius:99px;background:#EEF1F5;margin-top:10px;overflow:hidden;display:flex}
 .feas-bar .fb-track i{display:block;height:100%}
 .feas-ribbon{background:linear-gradient(135deg,#1F3F6D,#0f766e);color:#fff;padding:9px 18px;
-  font-size:13px;text-align:center;line-height:1.6}
+ font-size:13px;text-align:center;line-height:1.6}
 .feas-ribbon b{font-weight:800}
 </style>
 </head>
-<body><div class="feas-ribbon">עותק מסומן — <b>היתכנות מול ה-DWH</b>. ליד כל ויזואל: מצב הנתונים. בראש כל לשונית: ציון הלשונית. נבחן מול STT Gold+Silver מ-20/08/2026 · הדוח המלא: היתכנות-לפי-לשונית.html</div>
+<body><div class="feas-ribbon">עותק מסומן — <b>כיסוי מול ה-DWH בלבד</b>. ליד כל ויזואל: האם השדות קיימים במחסן. בראש כל לשונית: ציון הכיסוי. נבחן מול STT Gold+Silver (בפרודקשן) מ-20/08/2026 · תג <span class="feas hist">עומק היסטוריה</span> = מכוסה סכמתית, תלוי בכמה שנים טעונות</div>
 
 <header class="brand">
   <div class="brand-logo">ת<span style="font-size:12px">ס</span></div>
@@ -342,7 +341,7 @@
 <main>
 
   <!-- ===================== BUDGET ===================== -->
-  <section class="page active" id="page-budget" data-tab="budget" style="--accent:var(--budget);"><div class="feas-bar"><div class="fb-top"><span class="fb-score">ניתן לבנייה היום <b>0%</b></span><span class="fb-score">אחרי ה-ETL החדש <b>17%</b></span><span class="fb-score">6 ויזואלים</span><span class="fb-chips"><span class="feas spec">במפרט · ETL 1</span><span class="feas part">חלקי 3</span><span class="feas block">חסום 2</span></span></div><div class="fb-track"><i style="width:16.6667%;background:var(--f-spec)"></i><i style="width:50.0000%;background:var(--f-part)"></i><i style="width:33.3333%;background:var(--f-block)"></i></div><div class="fb-note">הכסף קיים בחוזה (approved_amount) והייעוד נפתח ב-STT החדש. הפער האמיתי: היסטוריה רב-שנתית ונתוני עמותה.</div></div>
+  <section class="page active" id="page-budget" data-tab="budget" style="--accent:var(--budget);"><div class="feas-bar"><div class="fb-top"><span class="fb-score">מכוסה במלואו ב-DWH <b>50%</b></span><span class="fb-score">6 ויזואלים</span><span class="fb-chips"><span class="feas cov">מכוסה ב-DWH 3</span><span class="feas part">חלקי 1</span><span class="feas no">לא ב-DWH 2</span><span class="feas hist">עומק היסטוריה 2</span></span></div><div class="fb-track"><i style="width:50.0000%;background:var(--f-cov)"></i><i style="width:16.6667%;background:var(--f-part)"></i><i style="width:33.3333%;background:var(--f-no)"></i></div><div class="fb-note">הכסף והייעוד מכוסים במלואם ב-DWH. מה שחסר אינו במחסן כלל: דוחות כספיים של העמותות ותיקוני ועדת חריגים.</div></div>
     <p class="page-intro">תמיכות — התמיכות שהמשרד מחלק לאיגודים ולאגודות על פי מבחני התמיכה: פילוח לפי ייעוד, מגמות רב-שנתיות ויציבות הגופים הנתמכים. <strong>אין חיבור לתקציב המשרד עצמו — כל הנתונים מתייחסים לתמיכות המחולקות בלבד.</strong></p>
     <div class="filter-bar">
       <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
@@ -361,21 +360,21 @@
     </div>
 
     <div class="grid">
-      <div class="card col-4"><div class="card-head"><span class="card-title">חלוקת התמיכות לפי ייעוד</span><span class="feas spec" title="fact_budget_pct · goal_type/area_name">במפרט · ETL</span><span class="card-meta">Donut · מיליוני ₪ <span class="qs-tag">QS</span></span></div><div class="card-canvas-wrap h-300"><canvas id="b_donut"></canvas></div><div style="margin-top:8px"><a href="#" onclick="gotoTab('catalog');return false" style="font-size:12px; color:var(--budget); text-decoration:none">↩ לפירוט מלא — קטלוג התוכניות · ב-QuickSight: URL Action</a></div></div>
-      <div class="card col-8"><div class="card-head"><span class="card-title">מגמת התמיכות</span><span class="feas part" title="תלוי בכמה שנים טעונות (B1)">חלקי</span><span class="card-meta">Line · מיליוני ₪ <span class="src-real">קיים בתיק יישוב</span></span></div><div class="card-canvas-wrap h-300"><canvas id="b_trend"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">קיים היום בתיק יישוב כ"תקציב שאושר לפי שנים" (עמודות, תרבות+ספורט). כאן: קו רב-שנתי לתמיכות הספורט בלבד.</div></div>
+      <div class="card col-4"><div class="card-head"><span class="card-title">חלוקת התמיכות לפי ייעוד</span><span class="feas cov" title="fact_budget_pct — goal_type · area_name · measurement_for_area">מכוסה ב-DWH</span><span class="card-meta">Donut · מיליוני ₪ <span class="qs-tag">QS</span></span></div><div class="card-canvas-wrap h-300"><canvas id="b_donut"></canvas></div><div style="margin-top:8px"><a href="#" onclick="gotoTab('catalog');return false" style="font-size:12px; color:var(--budget); text-decoration:none">↩ לפירוט מלא — קטלוג התוכניות · ב-QuickSight: URL Action</a></div></div>
+      <div class="card col-8"><div class="card-head"><span class="card-title">מגמת התמיכות</span><span class="feas cov" title="approved_amount × support_request_year">מכוסה ב-DWH</span><span class="feas hist" title="מכוסה סכמתית — תלוי בכמה שנות נתונים טעונות">עומק היסטוריה</span><span class="card-meta">Line · מיליוני ₪ <span class="src-real">קיים בתיק יישוב</span></span></div><div class="card-canvas-wrap h-300"><canvas id="b_trend"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">קיים היום בתיק יישוב כ"תקציב שאושר לפי שנים" (עמודות, תרבות+ספורט). כאן: קו רב-שנתי לתמיכות הספורט בלבד.</div></div>
 
-      <div class="card col-7"><div class="card-head"><span class="card-title">יציבות תקציבית של הגופים הנתמכים</span><span class="feas block" title="דורש דוחות כספיים + שנים צבורות">חסום</span><span class="card-meta"><span class="need-data">דורש דוח כספי · צבירת נתונים</span></span></div><div class="card-canvas-wrap h-300"><canvas id="b_stability"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:8px; line-height:1.6">פילוח ההכנסות העצמיות לאורך השנים קיים רק בדוחות הכספיים (PDF) ואינו זמין ב-API. כאן להמחשה.</div></div>
-      <div class="card col-5"><div class="card-head"><span class="card-title">מקורות מימון הגופים הנתמכים · 2024</span><span class="feas block" title="פילוח הכנסות קיים רק ב-PDF">חסום</span><span class="card-meta">Donut · % · שנת הדיווח הכספי האחרונה</span></div><div class="card-canvas-wrap h-260"><canvas id="b_mix"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">ממקורות רשמיים בלבד: תמיכת המשרד (פנימי) · תרומות מדינה זרה (data.gov.il) · יתר עצמי. פירוט ה"יתר" — רק בדוח הכספי (PDF).</div></div>
+      <div class="card col-7"><div class="card-head"><span class="card-title">יציבות תקציבית של הגופים הנתמכים</span><span class="feas no" title="דוחות כספיים של עמותות — לא ב-DWH">לא ב-DWH</span><span class="card-meta"><span class="need-data">דורש דוח כספי · צבירת נתונים</span></span></div><div class="card-canvas-wrap h-300"><canvas id="b_stability"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:8px; line-height:1.6">פילוח ההכנסות העצמיות לאורך השנים קיים רק בדוחות הכספיים (PDF) ואינו זמין ב-API. כאן להמחשה.</div></div>
+      <div class="card col-5"><div class="card-head"><span class="card-title">מקורות מימון הגופים הנתמכים · 2024</span><span class="feas no" title="פילוח הכנסות לפי מקור — לא ב-DWH">לא ב-DWH</span><span class="card-meta">Donut · % · שנת הדיווח הכספי האחרונה</span></div><div class="card-canvas-wrap h-260"><canvas id="b_mix"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">ממקורות רשמיים בלבד: תמיכת המשרד (פנימי) · תרומות מדינה זרה (data.gov.il) · יתר עצמי. פירוט ה"יתר" — רק בדוח הכספי (PDF).</div></div>
 
-      <div class="card col-12"><div class="card-head"><span class="card-title">תמיכות לפי איגוד · השוואת 2025 ל-2026</span><span class="feas part" title="תלוי בקיום 2 שנים (B1)">חלקי</span><span class="card-meta">Clustered Bar · 10 המובילים מתוך 64 איגודים</span></div><div class="card-canvas-wrap h-340"><canvas id="b_yoy"></canvas></div></div>
+      <div class="card col-12"><div class="card-head"><span class="card-title">תמיכות לפי איגוד · השוואת 2025 ל-2026</span><span class="feas cov" title="approved_amount לפי איגוד ושנה">מכוסה ב-DWH</span><span class="feas hist" title="מכוסה סכמתית — תלוי בכמה שנות נתונים טעונות">עומק היסטוריה</span><span class="card-meta">Clustered Bar · 10 המובילים מתוך 64 איגודים</span></div><div class="card-canvas-wrap h-340"><canvas id="b_yoy"></canvas></div></div>
 
-      <div class="card col-12"><div class="card-head"><span class="card-title">הרכב התמיכה — ניקוד לפי אמות מידה מול תיקונים</span><span class="feas part" title="חצי הניקוד קיים; לוועדת חריגים אין מקור">חלקי</span><span class="card-meta"><span class="need-data">פנימי · לדוגמה</span></span></div><div class="card-canvas-wrap h-260"><canvas id="b_corrections"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">"התיקונים" — תקרות תמיכה, מקדמים וועדת חריגים — אינם נגזרים מהניקוד (ר' מנוע הניקוד בלשונית גוף נתמך). הפער בין החישוב לתשלום בפועל, במספר אחד. הסכומים מסתכמים למגמת התמיכות שלמעלה.</div></div>
+      <div class="card col-12"><div class="card-head"><span class="card-title">הרכב התמיכה — ניקוד לפי אמות מידה מול תיקונים</span><span class="feas part" title="רכיבי הניקוד מכוסים; תיקוני ועדת חריגים אינם ב-DWH">חלקי</span><span class="card-meta"><span class="need-data">פנימי · לדוגמה</span></span></div><div class="card-canvas-wrap h-260"><canvas id="b_corrections"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">"התיקונים" — תקרות תמיכה, מקדמים וועדת חריגים — אינם נגזרים מהניקוד (ר' מנוע הניקוד בלשונית גוף נתמך). הפער בין החישוב לתשלום בפועל, במספר אחד. הסכומים מסתכמים למגמת התמיכות שלמעלה.</div></div>
     </div>
     <div class="footer-note"><strong>הבהרת תכולה:</strong> הנתונים משקפים את ה<em>תמיכות</em> שהמשרד מחלק לאיגודים ולאגודות על פי מבחני התמיכה — ולא את תקציב המשרד עצמו (אין לכך חיבור נתונים). <strong>מקורות מימון</strong> מוצג ממקורות רשמיים בלבד (תמיכת המשרד · תרומות מדינה זרה מ-data.gov.il · יתר עצמי); הפילוח המלא של ה"יתר" ו<strong>יציבות תקציבית</strong> רב-שנתית קיימים רק בדוחות הכספיים (PDF) ואינם זמינים ב-API — מסומנים בהתאם. כל הוויזואלים נתמכים ב-QuickSight.</div>
   </section>
 
   <!-- ===================== MUNICIPALITY ===================== -->
-  <section class="page" id="page-muni" data-tab="muni" style="--accent:var(--muni);"><div class="feas-bar"><div class="fb-top"><span class="fb-score">ניתן לבנייה היום <b>62%</b></span><span class="fb-score">אחרי ה-ETL החדש <b>75%</b></span><span class="fb-score">8 ויזואלים</span><span class="fb-chips"><span class="feas live">בפרודקשן 5</span><span class="feas spec">במפרט · ETL 1</span><span class="feas part">חלקי 1</span><span class="feas block">חסום 1</span></span></div><div class="fb-track"><i style="width:62.5000%;background:var(--f-live)"></i><i style="width:12.5000%;background:var(--f-spec)"></i><i style="width:12.5000%;background:var(--f-part)"></i><i style="width:12.5000%;background:var(--f-block)"></i></div><div class="fb-note">הלשונית החזקה ביותר. ממד הרשות — אוכלוסייה, אשכול חברתי-כלכלי ופריפריאליות — מכסה כמעט הכל. לבנות ראשונה.</div></div>
+  <section class="page" id="page-muni" data-tab="muni" style="--accent:var(--muni);"><div class="feas-bar"><div class="fb-top"><span class="fb-score">מכוסה במלואו ב-DWH <b>75%</b></span><span class="fb-score">8 ויזואלים</span><span class="fb-chips"><span class="feas cov">מכוסה ב-DWH 6</span><span class="feas part">חלקי 1</span><span class="feas no">לא ב-DWH 1</span><span class="feas hist">עומק היסטוריה 1</span></span></div><div class="fb-track"><i style="width:75.0000%;background:var(--f-cov)"></i><i style="width:12.5000%;background:var(--f-part)"></i><i style="width:12.5000%;background:var(--f-no)"></i></div><div class="fb-note">ממד הרשות — אוכלוסייה, אשכול חברתי-כלכלי ופריפריאליות — מכסה כמעט הכל. החריג היחיד: שכבת הגבולות למפה אינה נתון DWH.</div></div>
     <p class="page-intro">הסתכלות גיאוגרפית — האבולוציה של דשבורד "תיק יישוב" הקיים בפרודקשן (ר' קישורים): ראייה הוליסטית סביב הרשות: תקציב, ספורטאים, אגודות, הישגים, ואחוז מהאוכלוסייה (נתוני למ"ס · Drill-down).</p>
     <div class="filter-bar">
       <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
@@ -397,7 +396,7 @@
 
     <div class="grid">
       <div class="card col-5">
-        <div class="card-head"><span class="card-title" id="mapTitle">מפת חום — ספורטאים ל-1,000 תושבים</span><span class="feas live" title="GeoJSON רשויות כבר בריפו">בפרודקשן</span><span class="card-meta">Filled Map · לפי מחוז <span class="qs-tag">QS</span></span></div>
+        <div class="card-head"><span class="card-title" id="mapTitle">מפת חום — ספורטאים ל-1,000 תושבים</span><span class="feas part" title="המדד מכוסה; שכבת הגאומטריה אינה ב-DWH — נדרש קובץ גבולות חיצוני">חלקי</span><span class="card-meta">Filled Map · לפי מחוז <span class="qs-tag">QS</span></span></div>
         <div style="display:flex; gap:6px; margin:-4px 0 10px;">
           <button class="map-mode on" data-mode="0">ספורטאים ל-1,000</button>
           <button class="map-mode" data-mode="1">תמיכה לנפש (₪)</button>
@@ -414,7 +413,7 @@
         </div>
       </div>
       <div class="card col-4">
-        <div class="card-head"><span class="card-title">כרטיס יישוב · חדרה</span><span class="feas live" title="כל השורות ממופות">בפרודקשן</span><span class="card-meta">ראייה הוליסטית</span></div>
+        <div class="card-head"><span class="card-title">כרטיס יישוב · חדרה</span><span class="feas cov" title="אוכלוסייה · תקציב · ספורטאים · הישגים · תמיכה לנפש">מכוסה ב-DWH</span><span class="card-meta">ראייה הוליסטית</span></div>
         <div class="muni-card">
           <div class="muni-head"><span class="n">חדרה</span><span class="m">מחוז חיפה · אשכול סוציו-אקונומי 5</span></div>
           <div class="muni-mini">
@@ -430,17 +429,17 @@
         </div>
       </div>
       <div class="card col-3">
-        <div class="card-head"><span class="card-title">ספורטאים לפי ענף</span><span class="feas live" title="פקטת ספורטאים × ממד ענף">בפרודקשן</span><span class="card-meta">חדרה · Bar</span></div>
+        <div class="card-head"><span class="card-title">ספורטאים לפי ענף</span><span class="feas cov" title="fact_athlete × dim_branchs">מכוסה ב-DWH</span><span class="card-meta">חדרה · Bar</span></div>
         <div class="card-canvas-wrap h-300"><canvas id="m_byBranch"></canvas></div>
       </div>
 
       <div class="card col-7">
-        <div class="card-head"><span class="card-title">רשויות מובילות — תקציב, ספורטאים ואחוז מהאוכלוסייה</span><span class="feas live" title="תקציב + ספורטאים + % אוכלוסייה">בפרודקשן</span><span class="card-meta">Table · Data bars <span class="src-real">קיים בתיק יישוב</span></span></div>
+        <div class="card-head"><span class="card-title">רשויות מובילות — תקציב, ספורטאים ואחוז מהאוכלוסייה</span><span class="feas cov" title="approved_amount + ספורטאים + % מהאוכלוסייה">מכוסה ב-DWH</span><span class="card-meta">Table · Data bars <span class="src-real">קיים בתיק יישוב</span></span></div>
         <div id="m_table"></div>
         <div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">קיים היום בתיק יישוב בשני חלקים: טבלת "נתוני הלמ"ס" (אשכולות, אוכלוסייה) ו"תקציב שאושר לפי מחוז &gt; רשות". כאן: מאוחד לטבלה אחת + ספורטאים, % השתתפות והישגים.</div>
       </div>
       <div class="card col-5">
-        <div class="card-head"><span class="card-title">תקציב יישובי מול שיעור השתתפות</span><span class="feas spec" title="גודל הבועה = הישגים · פקטה חדשה">במפרט · ETL</span><span class="card-meta">Scatter · X: תקציב ₪M · Y: % מהאוכלוסייה · גודל = הישגים</span></div>
+        <div class="card-head"><span class="card-title">תקציב יישובי מול שיעור השתתפות</span><span class="feas cov" title="גודל הבועה = הישגים (fact_achievement_*)">מכוסה ב-DWH</span><span class="card-meta">Scatter · X: תקציב ₪M · Y: % מהאוכלוסייה · גודל = הישגים</span></div>
         <div class="card-canvas-wrap h-320"><canvas id="m_scatter"></canvas></div>
       </div>
     </div>
@@ -453,16 +452,16 @@
       <div class="kpi"><div class="kpi-label">יחס פריפריה / מרכז</div><div class="kpi-value">×1.70</div><div class="kpi-sub up">▲ עלה מ-×1.48 ב-2024</div></div>
     </div>
     <div class="grid">
-      <div class="card col-7"><div class="card-head"><span class="card-title">תמיכה לנפש מול אשכול חברתי-כלכלי</span><span class="feas live" title="socioeconomic_cluster">בפרודקשן</span><span class="card-meta">Scatter · גודל = אוכלוסייה <span class="qs-tag">QS</span></span></div><div class="card-canvas-wrap h-320"><canvas id="g_scatter"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">שיפוע יורד = הנוסחה עובדת: רשויות חלשות מקבלות יותר לנפש. חריגים מעל/מתחת לקו — נקודות לבדיקה.</div></div>
-      <div class="card col-5"><div class="card-head"><span class="card-title">רכיבי הנוסחה — אשכול מול פריפריאליות</span><span class="feas block" title="משקלי הנוסחה לא אומתו מול נוסח המבחן">חסום</span><span class="card-meta"><span class="need-data">משקלים להמחשה · טעון אימות מול נוסח המבחן</span></span></div><div class="card-canvas-wrap h-320"><canvas id="g_formula"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">פירוק נקודות הסל לשני הרכיבים — רשות יכולה להיות חזקה חברתית אך פריפריאלית גיאוגרפית (ולהפך). היחס בין הרכיבים כאן להמחשה בלבד.</div></div>
-      <div class="card col-12"><div class="card-head"><span class="card-title">מגמת יחס פריפריה / מרכז</span><span class="feas part" title="תלוי ב-B1">חלקי</span><span class="card-meta">Line · מול יעד מדיניות</span></div><div class="card-canvas-wrap h-240"><canvas id="g_ratio"></canvas></div></div>
+      <div class="card col-7"><div class="card-head"><span class="card-title">תמיכה לנפש מול אשכול חברתי-כלכלי</span><span class="feas cov" title="socioeconomic_cluster">מכוסה ב-DWH</span><span class="card-meta">Scatter · גודל = אוכלוסייה <span class="qs-tag">QS</span></span></div><div class="card-canvas-wrap h-320"><canvas id="g_scatter"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">שיפוע יורד = הנוסחה עובדת: רשויות חלשות מקבלות יותר לנפש. חריגים מעל/מתחת לקו — נקודות לבדיקה.</div></div>
+      <div class="card col-5"><div class="card-head"><span class="card-title">רכיבי הנוסחה — אשכול מול פריפריאליות</span><span class="feas no" title="משקלי הנוסחה — החלטת מדיניות, לא נתון">לא ב-DWH</span><span class="card-meta"><span class="need-data">משקלים להמחשה · טעון אימות מול נוסח המבחן</span></span></div><div class="card-canvas-wrap h-320"><canvas id="g_formula"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">פירוק נקודות הסל לשני הרכיבים — רשות יכולה להיות חזקה חברתית אך פריפריאלית גיאוגרפית (ולהפך). היחס בין הרכיבים כאן להמחשה בלבד.</div></div>
+      <div class="card col-12"><div class="card-head"><span class="card-title">מגמת יחס פריפריה / מרכז</span><span class="feas cov" title="peripherality_cluster לאורך שנים">מכוסה ב-DWH</span><span class="feas hist" title="מכוסה סכמתית — תלוי בכמה שנות נתונים טעונות">עומק היסטוריה</span><span class="card-meta">Line · מול יעד מדיניות</span></div><div class="card-canvas-wrap h-240"><canvas id="g_ratio"></canvas></div></div>
     </div>
     <div class="footer-note"><strong>מהסיעור:</strong> שוויון גיאוגרפי (למ"ס + פריפריה) — נגזר ממבחן סל הספורט לרשויות (תעדוף לפי אשכול ופריפריאליות; המשקלים טעונים אימות מול נוסח המבחן ברשומות) וממבחן מרחב מוגן יביל. אוחד לתוך "הסתכלות גיאוגרפית" כמבט המדיניות של אותו נושא. מקורות: אשכולות למ"ס (פומבי) + תמיכות המשרד (פנימי) — נתוני דמה להמחשה. Scatter · Stacked · Line ילידיים ב-QuickSight.</div>
     <div class="footer-note"><strong>הרעיון (אור):</strong> הסתכלות גיאוגרפית (לשעבר "תיק יישוב") מאגדת ממדים — תקציב, כמות ספורטאים, נתונים טכניים ואוכלוסייה מהלמ"ס — לכדי ראייה אחת סביב הרשות, עם Drill-down ממחוז לרשות. "כמויות תמיד ביחס לכלל האוכלוסייה". Filled Map, Scatter, Bar ו-Table נתמכים ב-QuickSight.</div>
   </section>
 
   <!-- ===================== SUPPORTED BODY (GuideStar) ===================== -->
-  <section class="page" id="page-org" data-tab="org" style="--accent:var(--org);"><div class="feas-bar"><div class="fb-top"><span class="fb-score">ניתן לבנייה היום <b>0%</b></span><span class="fb-score">אחרי ה-ETL החדש <b>14%</b></span><span class="fb-score">7 ויזואלים</span><span class="fb-chips"><span class="feas spec">במפרט · ETL 1</span><span class="feas part">חלקי 1</span><span class="feas new">מקור חדש 4</span><span class="feas block">חסום 1</span></span></div><div class="fb-track"><i style="width:14.2857%;background:var(--f-spec)"></i><i style="width:14.2857%;background:var(--f-part)"></i><i style="width:57.1429%;background:var(--f-new)"></i><i style="width:14.2857%;background:var(--f-block)"></i></div><div class="fb-note">מנוע הניקוד קיים היום; פרופיל הארגון תלוי ב-API הפתוח של רשם העמותות. מדד התלות יציג בחסר — המונה מכסה מבחן אחד.</div></div>
+  <section class="page" id="page-org" data-tab="org" style="--accent:var(--org);"><div class="feas-bar"><div class="fb-top"><span class="fb-score">מכוסה במלואו ב-DWH <b>14%</b></span><span class="fb-score">7 ויזואלים</span><span class="fb-chips"><span class="feas cov">מכוסה ב-DWH 1</span><span class="feas part">חלקי 1</span><span class="feas no">לא ב-DWH 5</span></span></div><div class="fb-track"><i style="width:14.2857%;background:var(--f-cov)"></i><i style="width:14.2857%;background:var(--f-part)"></i><i style="width:71.4286%;background:var(--f-no)"></i></div><div class="fb-note">מנוע הניקוד מכוסה במלואו. חצי הפרופיל — מחזור, עובדים, מתנדבים — אינו ב-DWH ודורש מקור חיצוני.</div></div>
     <p class="page-intro">כרטיסיית גוף נתמך — פרופיל הארגון ומדד <strong>תלות בתמיכה</strong> (התמיכה שלנו ÷ הכנסות העמותה). מקור נתונים: מאגר רשם העמותות הפתוח (data.gov.il · משרד המשפטים) + גיידסטאר. בהמשך המסך: <strong>מנוע הניקוד</strong> — יעד וייחוס לכל אחוז.</p>
     <div class="filter-bar">
       <span class="filter-bar-label">בחירת <strong>גוף נתמך</strong></span>
@@ -510,28 +509,28 @@
 
     <div class="grid">
       <div class="card col-4">
-        <div class="card-head"><span class="card-title">תלות בתמיכת המשרד</span><span class="feas new" title="דורש API רשם העמותות">מקור חדש</span><span class="card-meta">Gauge · תמיכה ÷ מחזור</span></div>
+        <div class="card-head"><span class="card-title">תלות בתמיכת המשרד</span><span class="feas no" title="מחזור העמותה — לא ב-DWH">לא ב-DWH</span><span class="card-meta">Gauge · תמיכה ÷ מחזור</span></div>
         <div class="card-canvas-wrap h-200"><canvas id="o_gauge"></canvas></div>
         <div style="text-align:center; margin-top:4px; font-size:12px; color:var(--ink-muted)">מתוך הכנסות ₪58.5M — <strong style="color:var(--ink)">₪22.5M</strong> תמיכת המשרד</div>
       </div>
       <div class="card col-8">
-        <div class="card-head"><span class="card-title">מחזור מול תמיכת המשרד לאורך השנים</span><span class="feas block" title="דורש צבירת snapshots רב-שנתיים">חסום</span><span class="card-meta"><span class="need-data">דורש צבירת נתונים</span></span></div>
+        <div class="card-head"><span class="card-title">מחזור מול תמיכת המשרד לאורך השנים</span><span class="feas no" title="מחזור רב-שנתי — לא ב-DWH">לא ב-DWH</span><span class="card-meta"><span class="need-data">דורש צבירת נתונים</span></span></div>
         <div class="card-canvas-wrap h-260"><canvas id="o_trend"></canvas></div>
         <div style="font-size:11px; color:var(--ink-faint); margin-top:8px; line-height:1.6">רק התמיכה שלנו זמינה רב-שנתית (נתון פנימי). <strong style="color:var(--ink-muted)">ההכנסות זמינות רק לשנת הדיווח האחרונה</strong> — הסדרה ההיסטורית תיצבר מ-snapshots שנתיים או מפענוח דוחות (PDF). כאן להמחשה.</div>
       </div>
 
       <div class="card col-7">
-        <div class="card-head"><span class="card-title">תלות בתמיכה — השוואה בין הגופים הנתמכים</span><span class="feas new" title="דורש API רשם העמותות">מקור חדש</span><span class="card-meta">Bar · הגוף הנבחר מודגש</span></div>
+        <div class="card-head"><span class="card-title">תלות בתמיכה — השוואה בין הגופים הנתמכים</span><span class="feas no" title="מחזור העמותה — לא ב-DWH">לא ב-DWH</span><span class="card-meta">Bar · הגוף הנבחר מודגש</span></div>
         <div class="card-canvas-wrap h-300"><canvas id="o_peers"></canvas></div>
       </div>
       <div class="card col-5">
-        <div class="card-head"><span class="card-title">הרכב המחזור</span><span class="feas new" title="פילוח מלא קיים רק ב-PDF">מקור חדש</span><span class="card-meta">3 מקורות רשמיים · Donut</span></div>
+        <div class="card-head"><span class="card-title">הרכב המחזור</span><span class="feas no" title="פילוח הכנסות — לא ב-DWH">לא ב-DWH</span><span class="card-meta">3 מקורות רשמיים · Donut</span></div>
         <div class="card-canvas-wrap h-200"><canvas id="o_split"></canvas></div>
         <div style="font-size:11.5px; color:var(--ink-faint); margin-top:8px; line-height:1.6">פילוח ממקורות רשמיים בלבד: <strong style="color:var(--ink-muted)">תמיכת המשרד</strong> (פנימי) · <strong style="color:var(--ink-muted)">תרומות מדינה זרה</strong> (data.gov.il — ₪0 לעמותה זו, אומת) · <strong style="color:var(--ink-muted)">יתר עצמי</strong> (= מחזור פחות השניים). פירוט ה"יתר" לתרומות פרטיות / שירותים / דמי חבר — רק בדוח הכספי (PDF).</div>
       </div>
 
       <div class="card col-12">
-        <div class="card-head"><span class="card-title">דירוג תלות בתמיכה — כל הגופים הנתמכים</span><span class="feas new" title="דורש API רשם העמותות">מקור חדש</span><span class="card-meta">Table · Data bars · מיון לפי תלות</span></div>
+        <div class="card-head"><span class="card-title">דירוג תלות בתמיכה — כל הגופים הנתמכים</span><span class="feas no" title="מחזור העמותה — לא ב-DWH">לא ב-DWH</span><span class="card-meta">Table · Data bars · מיון לפי תלות</span></div>
         <div id="o_table"></div>
       </div>
     </div>
@@ -545,9 +544,9 @@
     </div>
     <div class="kpis" id="e_kpis" style="grid-template-columns:repeat(3,1fr); max-width:860px;"></div>
     <div class="grid">
-      <div class="card col-7"><div class="card-head"><span class="card-title">הייחוס — תקציב לפי מבחן ואמת מידה</span><span class="feas spec" title="fact_budget_pct — ייעוד ואמת מידה">במפרט · ETL</span><span class="card-meta">Attribution · Pivot / Stacked <span class="qs-tag">QS</span></span></div><div id="e_tests"></div></div>
+      <div class="card col-7"><div class="card-head"><span class="card-title">הייחוס — תקציב לפי מבחן ואמת מידה</span><span class="feas cov" title="fact_budget_pct + ניקודי אמות המידה בפקטת הבקשות">מכוסה ב-DWH</span><span class="card-meta">Attribution · Pivot / Stacked <span class="qs-tag">QS</span></span></div><div id="e_tests"></div></div>
       <div class="card col-5">
-        <div class="card-head"><span class="card-title">חשיפה חוצת-תוכניות</span><span class="feas part" title="חיתוך חוצה-מבחנים דורש B7">חלקי</span><span class="card-meta">Donut · מבחנים (כחול) + ערוצים שאינם מבחנים (אפור)</span></div>
+        <div class="card-head"><span class="card-title">חשיפה חוצת-תוכניות</span><span class="feas part" title="קוד המבחן קיים ב-Silver, לא נחשף ב-fact_budget_pct">חלקי</span><span class="card-meta">Donut · מבחנים (כחול) + ערוצים שאינם מבחנים (אפור)</span></div>
         <div class="card-canvas-wrap h-240"><canvas id="e_split"></canvas></div>
         <div id="e_explain" style="margin-top:12px; background:var(--engine-soft); border:1px solid #CBD6E8; border-radius:var(--radius-lg); padding:13px 15px; font-size:13px; line-height:1.7; color:#22406b;"></div>
       </div>
@@ -557,7 +556,7 @@
   </section>
 
   <!-- ===================== PERFORMANCE ===================== -->
-  <section class="page" id="page-perf" data-tab="perf" style="--accent:var(--perf);"><div class="feas-bar"><div class="fb-top"><span class="fb-score">ניתן לבנייה היום <b>17%</b></span><span class="fb-score">אחרי ה-ETL החדש <b>67%</b></span><span class="fb-score">6 ויזואלים</span><span class="fb-chips"><span class="feas live">בפרודקשן 1</span><span class="feas spec">במפרט · ETL 3</span><span class="feas part">חלקי 2</span></span></div><div class="fb-track"><i style="width:16.6667%;background:var(--f-live)"></i><i style="width:50.0000%;background:var(--f-spec)"></i><i style="width:33.3333%;background:var(--f-part)"></i></div><div class="fb-note">פקטות ההישגים ב-STT החדש פתחו את שלושת גרפי הדירוג. עד שה-ETL ינחת — חלופת ניקוד הישגיות.</div></div>
+  <section class="page" id="page-perf" data-tab="perf" style="--accent:var(--perf);"><div class="feas-bar"><div class="fb-top"><span class="fb-score">מכוסה במלואו ב-DWH <b>83%</b></span><span class="fb-score">6 ויזואלים</span><span class="fb-chips"><span class="feas cov">מכוסה ב-DWH 5</span><span class="feas part">חלקי 1</span><span class="feas hist">עומק היסטוריה 1</span></span></div><div class="fb-track"><i style="width:83.3333%;background:var(--f-cov)"></i><i style="width:16.6667%;background:var(--f-part)"></i></div><div class="fb-note">הלשונית המכוסה ביותר. פקטות ההישגים נותנות דירוג, מגדר, שכבת גיל וציר זמן עצמאי. לבנות ראשונה.</div></div>
     <p class="page-intro">דשבורד ביצועים אחד — כמות ספורטאים, הישגים וראייה מגדרית, במבט מאוחד וביחס לאוכלוסייה.</p>
     <div class="filter-bar">
       <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
@@ -576,21 +575,21 @@
     </div>
 
     <div class="grid">
-      <div class="card col-8"><div class="card-head"><span class="card-title">ספורטאים לפי ענף — נשים מול גברים</span><span class="feas live" title="male_cnt / female_cnt">בפרודקשן</span><span class="card-meta">Stacked Bar · 10 מובילים</span></div><div class="card-canvas-wrap h-340"><canvas id="p_byBranch"></canvas></div></div>
-      <div class="card col-4"><div class="card-head"><span class="card-title">ראייה מגדרית</span><span class="feas part" title="הדונאט קיים; המגמה תלויה ב-B1">חלקי</span><span class="card-meta">Donut + מגמה</span></div><div class="card-canvas-wrap h-180"><canvas id="p_gender"></canvas></div><div class="card-canvas-wrap h-140" style="margin-top:6px"><canvas id="p_genderTrend"></canvas></div></div>
+      <div class="card col-8"><div class="card-head"><span class="card-title">ספורטאים לפי ענף — נשים מול גברים</span><span class="feas cov" title="male_cnt / female_cnt">מכוסה ב-DWH</span><span class="card-meta">Stacked Bar · 10 מובילים</span></div><div class="card-canvas-wrap h-340"><canvas id="p_byBranch"></canvas></div></div>
+      <div class="card col-4"><div class="card-head"><span class="card-title">ראייה מגדרית</span><span class="feas cov" title="מגדר בפקטת הספורטאים">מכוסה ב-DWH</span><span class="feas hist" title="מכוסה סכמתית — תלוי בכמה שנות נתונים טעונות">עומק היסטוריה</span><span class="card-meta">Donut + מגמה</span></div><div class="card-canvas-wrap h-180"><canvas id="p_gender"></canvas></div><div class="card-canvas-wrap h-140" style="margin-top:6px"><canvas id="p_genderTrend"></canvas></div></div>
 
-      <div class="card col-7"><div class="card-head"><span class="card-title">הישגים לפי דירוג בתחרות</span><span class="feas spec" title="competition_rank">במפרט · ETL</span><span class="card-meta">Stacked · 6 ענפים מובילים</span></div><div class="card-canvas-wrap h-300"><canvas id="p_bands"></canvas></div></div>
-      <div class="card col-5"><div class="card-head"><span class="card-title">השתתפות ביחס לאוכלוסייה לפי גיל</span><span class="feas part" title="המכנה דורש שכבות גיל מהלמ״ס">חלקי</span><span class="card-meta">Clustered · רשומים מול % אוכלוסייה</span></div><div class="card-canvas-wrap h-300"><canvas id="p_vsPop"></canvas></div></div>
+      <div class="card col-7"><div class="card-head"><span class="card-title">הישגים לפי דירוג בתחרות</span><span class="feas cov" title="competition_rank">מכוסה ב-DWH</span><span class="card-meta">Stacked · 6 ענפים מובילים</span></div><div class="card-canvas-wrap h-300"><canvas id="p_bands"></canvas></div></div>
+      <div class="card col-5"><div class="card-head"><span class="card-title">השתתפות ביחס לאוכלוסייה לפי גיל</span><span class="feas part" title="הגיל מכוסה; פילוח האוכלוסייה לפי גיל אינו ב-DWH">חלקי</span><span class="card-meta">Clustered · רשומים מול % אוכלוסייה</span></div><div class="card-canvas-wrap h-300"><canvas id="p_vsPop"></canvas></div></div>
 
-      <div class="card col-12"><div class="card-head"><span class="card-title">מגמת הישגים רב-שנתית</span><span class="feas spec" title="champion_date נותן ציר זמן אמיתי">במפרט · ETL</span><span class="card-meta">Line · מדליות ארציות ובינ"ל</span></div><div class="card-canvas-wrap h-260"><canvas id="p_achTrend"></canvas></div></div>
+      <div class="card col-12"><div class="card-head"><span class="card-title">מגמת הישגים רב-שנתית</span><span class="feas cov" title="champion_date / end_date — ציר זמן עצמאי">מכוסה ב-DWH</span><span class="card-meta">Line · מדליות ארציות ובינ"ל</span></div><div class="card-canvas-wrap h-260"><canvas id="p_achTrend"></canvas></div></div>
 
-      <div class="card col-12"><div class="card-head"><span class="card-title">הישגים לפי דירוג ומגדר — כלל הענפים</span><span class="feas spec" title="competition_rank × מגדר">במפרט · ETL</span><span class="card-meta">Clustered · נשים תכלת / גברים נייבי · מסתכם ל-1,284 · לדוגמה</span></div><div class="card-canvas-wrap h-260"><canvas id="p_bandsGender"></canvas></div></div>
+      <div class="card col-12"><div class="card-head"><span class="card-title">הישגים לפי דירוג ומגדר — כלל הענפים</span><span class="feas cov" title="competition_rank × מגדר">מכוסה ב-DWH</span><span class="card-meta">Clustered · נשים תכלת / גברים נייבי · מסתכם ל-1,284 · לדוגמה</span></div><div class="card-canvas-wrap h-260"><canvas id="p_bandsGender"></canvas></div></div>
     </div>
     <div class="footer-note"><strong>הרעיון:</strong> דשבורד ביצועים אחד המאחד כמות ספורטאים + הישגים + ראייה מגדרית. שמירה על צבעי הדירוג המחייבים (פודיום ירוק · גמר 8 זהב · 9–16 כתום · 17+ אפור) ועל <em>נשים תכלת / גברים כחול-נייבי</em>. "כמויות תמיד ביחס לכלל האוכלוסייה".</div>
   </section>
 
   <!-- ===================== SLA ===================== -->
-  <section class="page" id="page-sla" data-tab="sla" style="--accent:var(--sla);"><div class="feas-bar"><div class="fb-top"><span class="fb-score">ניתן לבנייה היום <b>0%</b></span><span class="fb-score">אחרי ה-ETL החדש <b>0%</b></span><span class="fb-score">4 ויזואלים</span><span class="fb-chips"><span class="feas block">חסום 4</span></span></div><div class="fb-track"><i style="width:100.0000%;background:var(--f-block)"></i></div><div class="fb-note">אין מקור, והפגישה קבעה שהנפח דליל (כשש פניות בשנה). מועמדת להסרה מהמצגת.</div></div>
+  <section class="page" id="page-sla" data-tab="sla" style="--accent:var(--sla);"><div class="feas-bar"><div class="fb-top"><span class="fb-score">מכוסה במלואו ב-DWH <b>0%</b></span><span class="fb-score">4 ויזואלים</span><span class="fb-chips"><span class="feas no">לא ב-DWH 4</span></span></div><div class="fb-track"><i style="width:100.0000%;background:var(--f-no)"></i></div><div class="fb-note">אין מקור במחסן. מועמדת להסרה מהמצגת.</div></div>
     <p class="page-intro">SLA תפעולי — זמני טיפול, פניות פרטניות, בקשות חוזרות/השלמות, ותיקוני ועדת חריגים ועררים.</p>
     <div class="filter-bar">
       <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
@@ -609,17 +608,17 @@
     </div>
 
     <div class="grid">
-      <div class="card col-4"><div class="card-head"><span class="card-title">זמן בקשה עד תשובה</span><span class="feas block" title="אין מקור במחסן">חסום</span><span class="card-meta">Gauge · מול יעד 7 ימים</span></div><div class="card-canvas-wrap h-220"><canvas id="s_gauge"></canvas></div><div style="text-align:center; margin-top:6px; font-size:12px; color:var(--ink-muted)">ממוצע נוכחי <strong style="color:var(--ink)">8.4</strong> ימים · יעד 7</div></div>
-      <div class="card col-8"><div class="card-head"><span class="card-title">מגמת פניות פרטניות וזמן טיפול</span><span class="feas block" title="אין מקור במחסן">חסום</span><span class="card-meta">Combo · פניות (Bar) + ימים (Line)</span></div><div class="card-canvas-wrap h-260"><canvas id="s_combo"></canvas></div></div>
+      <div class="card col-4"><div class="card-head"><span class="card-title">זמן בקשה עד תשובה</span><span class="feas no" title="מערכת הפניות — לא ב-DWH">לא ב-DWH</span><span class="card-meta">Gauge · מול יעד 7 ימים</span></div><div class="card-canvas-wrap h-220"><canvas id="s_gauge"></canvas></div><div style="text-align:center; margin-top:6px; font-size:12px; color:var(--ink-muted)">ממוצע נוכחי <strong style="color:var(--ink)">8.4</strong> ימים · יעד 7</div></div>
+      <div class="card col-8"><div class="card-head"><span class="card-title">מגמת פניות פרטניות וזמן טיפול</span><span class="feas no" title="מערכת הפניות — לא ב-DWH">לא ב-DWH</span><span class="card-meta">Combo · פניות (Bar) + ימים (Line)</span></div><div class="card-canvas-wrap h-260"><canvas id="s_combo"></canvas></div></div>
 
-      <div class="card col-6"><div class="card-head"><span class="card-title">בקשות חוזרות והשלמות פרטים לפי איגוד</span><span class="feas block" title="אין מקור במחסן">חסום</span><span class="card-meta">Stacked Bar</span></div><div class="card-canvas-wrap h-300"><canvas id="s_repeat"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">בקשה חוזרת = הוגשה מחדש לאחר דחייה · השלמת פרטים = נדרשו מסמכים נוספים להשלמת הטיפול.</div></div>
-      <div class="card col-6"><div class="card-head"><span class="card-title">תיקוני ועדת חריגים ועררים</span><span class="feas block" title="אין מקור במחסן">חסום</span><span class="card-meta">Bar · לפי עילת התיקון</span></div><div class="card-canvas-wrap h-300"><canvas id="s_appeals"></canvas></div></div>
+      <div class="card col-6"><div class="card-head"><span class="card-title">בקשות חוזרות והשלמות פרטים לפי איגוד</span><span class="feas no" title="מערכת הפניות — לא ב-DWH">לא ב-DWH</span><span class="card-meta">Stacked Bar</span></div><div class="card-canvas-wrap h-300"><canvas id="s_repeat"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">בקשה חוזרת = הוגשה מחדש לאחר דחייה · השלמת פרטים = נדרשו מסמכים נוספים להשלמת הטיפול.</div></div>
+      <div class="card col-6"><div class="card-head"><span class="card-title">תיקוני ועדת חריגים ועררים</span><span class="feas no" title="מערכת הפניות — לא ב-DWH">לא ב-DWH</span><span class="card-meta">Bar · לפי עילת התיקון</span></div><div class="card-canvas-wrap h-300"><canvas id="s_appeals"></canvas></div></div>
     </div>
     <div class="footer-note"><strong>הרעיון:</strong> מדדי SLA תפעוליים — כמות בקשות חוזרות/השלמות, פניות פרטניות, תיקוני ועדת חריגים/עררים, וזמן מבקשה עד תשובה (מקצה לקצה). מבט "עומס תפעולי" ברמת עובד ירד — מצבת העובדים במשרד קטנה מכדי שמדד כזה יהיה משמעותי. Gauge · Combo · Stacked Bar נתמכים ב-QuickSight.</div>
   </section>
 
   <!-- ===================== IMPACT ===================== -->
-  <section class="page" id="page-impact" data-tab="impact" style="--accent:var(--impact);"><div class="feas-bar"><div class="fb-top"><span class="fb-score">ניתן לבנייה היום <b>50%</b></span><span class="fb-score">אחרי ה-ETL החדש <b>75%</b></span><span class="fb-score">4 ויזואלים</span><span class="fb-chips"><span class="feas live">בפרודקשן 2</span><span class="feas spec">במפרט · ETL 1</span><span class="feas block">חסום 1</span></span></div><div class="fb-track"><i style="width:50.0000%;background:var(--f-live)"></i><i style="width:25.0000%;background:var(--f-spec)"></i><i style="width:25.0000%;background:var(--f-block)"></i></div><div class="fb-note">בסיס ההשתתפות קיים במלואו; המגמה הרב-שנתית והתחזית חסומות.</div></div>
+  <section class="page" id="page-impact" data-tab="impact" style="--accent:var(--impact);"><div class="feas-bar"><div class="fb-top"><span class="fb-score">מכוסה במלואו ב-DWH <b>75%</b></span><span class="fb-score">4 ויזואלים</span><span class="fb-chips"><span class="feas cov">מכוסה ב-DWH 3</span><span class="feas part">חלקי 1</span><span class="feas hist">עומק היסטוריה 1</span></span></div><div class="fb-track"><i style="width:75.0000%;background:var(--f-cov)"></i><i style="width:25.0000%;background:var(--f-part)"></i></div><div class="fb-note">בסיס ההשתתפות והיעילות מכוסה. היעד הלאומי הוא פרמטר, והתחזית אינה נתון.</div></div>
     <p class="page-intro">IMPACT — קידום תרבות ספורט: שיעור ההשתתפות מהאוכלוסייה מול יעד לאומי, ויעילות תקציבית (Budget for impact).</p>
     <div class="filter-bar">
       <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
@@ -639,17 +638,17 @@
     </div>
 
     <div class="grid">
-      <div class="card col-7"><div class="card-head"><span class="card-title">שיעור השתתפות לפי מחוז מול יעד</span><span class="feas live" title="ספורטאים ÷ אוכלוסייה לפי מחוז">בפרודקשן</span><span class="card-meta">Combo · Bar + קו יעד</span></div><div class="card-canvas-wrap h-300"><canvas id="i_byDistrict"></canvas></div></div>
-      <div class="card col-5"><div class="card-head"><span class="card-title">מגמת שיעור ההשתתפות מול יעד</span><span class="feas block" title="היסטוריה (B1) + קו תחזית">חסום</span><span class="card-meta">Line · 2019–2028</span></div><div class="card-canvas-wrap h-300"><canvas id="i_trend"></canvas></div></div>
+      <div class="card col-7"><div class="card-head"><span class="card-title">שיעור השתתפות לפי מחוז מול יעד</span><span class="feas cov" title="ספורטאים ÷ אוכלוסייה לפי מחוז; היעד = פרמטר">מכוסה ב-DWH</span><span class="card-meta">Combo · Bar + קו יעד</span></div><div class="card-canvas-wrap h-300"><canvas id="i_byDistrict"></canvas></div></div>
+      <div class="card col-5"><div class="card-head"><span class="card-title">מגמת שיעור ההשתתפות מול יעד</span><span class="feas part" title="הסדרה מכוסה; קו התחזית אינו נתון">חלקי</span><span class="feas hist" title="מכוסה סכמתית — תלוי בכמה שנות נתונים טעונות">עומק היסטוריה</span><span class="card-meta">Line · 2019–2028</span></div><div class="card-canvas-wrap h-300"><canvas id="i_trend"></canvas></div></div>
 
-      <div class="card col-7"><div class="card-head"><span class="card-title">תקציב מול עלות לספורטאי רשום — לאיגוד</span><span class="feas spec" title="גודל הבועה = מדליות">במפרט · ETL</span><span class="card-meta">Scatter · גודל = מדליות ארציות ובינ"ל</span></div><div class="card-canvas-wrap h-320"><canvas id="i_efficiency"></canvas></div></div>
-      <div class="card col-5"><div class="card-head"><span class="card-title">עלות לספורטאי רשום — דירוג</span><span class="feas live" title="לפי איגוד / ענף">בפרודקשן</span><span class="card-meta">Bar · ₪ לספורטאי רשום</span></div><div class="card-canvas-wrap h-320"><canvas id="i_cost"></canvas></div></div>
+      <div class="card col-7"><div class="card-head"><span class="card-title">תקציב מול עלות לספורטאי רשום — לאיגוד</span><span class="feas cov" title="approved_amount + הישגים">מכוסה ב-DWH</span><span class="card-meta">Scatter · גודל = מדליות ארציות ובינ"ל</span></div><div class="card-canvas-wrap h-320"><canvas id="i_efficiency"></canvas></div></div>
+      <div class="card col-5"><div class="card-head"><span class="card-title">עלות לספורטאי רשום — דירוג</span><span class="feas cov" title="approved_amount ÷ ספורטאים">מכוסה ב-DWH</span><span class="card-meta">Bar · ₪ לספורטאי רשום</span></div><div class="card-canvas-wrap h-320"><canvas id="i_cost"></canvas></div></div>
     </div>
     <div class="footer-note"><strong>הרעיון:</strong> IMPACT = אחוז מהאוכלוסייה בספורט מאורגן מול יעד לאומי. <strong>הגדרת תפוקה:</strong> אין "תפוקה" כללית אחת — כל מבחן תמיכה מגדיר את התפוקה שלו באמות המידה שלו (ספורטאים לפי שנתון, הישגי דרג א', משתתפים בקהילה...), וערך הנקודה הוא המחיר ליחידת תפוקה (ר' קטלוג התוכניות ומנוע הניקוד). לכן מוצגים כאן רק מדדים עם מכנה מוגדר: ₪ לספורטאי רשום ו-₪ למדליה.</div>
   </section>
 
   <!-- ===================== LINKS ===================== -->
-  <section class="page" id="page-links" data-tab="links" style="--accent:var(--links);"><div class="feas-bar"><div class="fb-top"><span class="fb-score">ניתן לבנייה היום <b>100%</b></span><span class="fb-score">אין תלות בנתונים</span><span class="fb-chips"><span class="feas live">בפרודקשן</span></span></div><div class="fb-track"><i style="width:100%;background:var(--f-live)"></i></div><div class="fb-note">אין תלות בנתונים — כל אריח הוא URL Action. ימים.</div></div>
+  <section class="page" id="page-links" data-tab="links" style="--accent:var(--links);"><div class="feas-bar"><div class="fb-top"><span class="fb-score">אין תלות בנתונים <b>—</b></span><span class="fb-chips"><span class="feas cov">מכוסה ב-DWH</span></span></div><div class="fb-track"><i style="width:100%;background:var(--f-cov)"></i></div><div class="fb-note">אין תלות בנתונים — כל אריח הוא URL Action.</div></div>
     <p class="page-intro">דף ניווט — שער מרכזי למקורות המידע ולדשבורדים התפעוליים. ב-QuickSight כל אריח נבנה כ-<strong>URL Action</strong> (או כפתור ניווט) על גבי ויזואל.</p>
     <div class="link-grid">
       <a class="link-card"><div class="ic" style="background:var(--muni-soft); color:var(--muni)">🗂</div><div class="lt">תיק יישוב <span class="src-real">בפרודקשן</span></div><div class="ld">הדשבורד הקיים למנהלי המשרד (QuickSight): בקשות וסכום מאושר לפי רשות, תקנה ומחוז · נתוני למ"ס · מסמכי סיור שר. "הסתכלות גיאוגרפית" היא האבולוציה שלו.</div></a>
@@ -667,7 +666,7 @@
   </section>
 
   <!-- ===================== CATALOG · קטלוג התוכניות (סיעור מוחות) ===================== -->
-  <section class="page" id="page-catalog" data-tab="catalog" style="--accent:var(--catalog);"><div class="feas-bar"><div class="fb-top"><span class="fb-score">ניתן לבנייה היום <b>0%</b></span><span class="fb-score">אחרי ה-ETL החדש <b>0%</b></span><span class="fb-score">5 ויזואלים</span><span class="fb-chips"><span class="feas part">חלקי 4</span><span class="feas block">חסום 1</span></span></div><div class="fb-track"><i style="width:80.0000%;background:var(--f-part)"></i><i style="width:20.0000%;background:var(--f-block)"></i></div><div class="fb-note">כל הלשונית תלויה בעמודה אחת: חשיפת support_test_type_code על fact_budget_pct (B7). ב-Silver הנתון כבר קיים.</div></div>
+  <section class="page" id="page-catalog" data-tab="catalog" style="--accent:var(--catalog);"><div class="feas-bar"><div class="fb-top"><span class="fb-score">מכוסה במלואו ב-DWH <b>0%</b></span><span class="fb-score">5 ויזואלים</span><span class="fb-chips"><span class="feas part">חלקי 5</span></span></div><div class="fb-track"><i style="width:100.0000%;background:var(--f-part)"></i></div><div class="fb-note">כל הלשונית תלויה בעמודה אחת: חשיפת support_test_type_code מ-Silver אל fact_budget_pct.</div></div>
     <p class="page-intro">קטלוג התוכניות — מפת כל מבחני התמיכה במבט-על אחד: תקציב, גופים נתמכים, ערך נקודה וקריטריון מוביל. <strong>תמונת הפורטפוליו של מורן</strong> — מענה לשאלה הפתוחה מהפגישה על מסך Overview ראשוני.</p>
     <div class="filter-bar">
       <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
@@ -686,19 +685,19 @@
     </div>
 
     <div class="grid">
-      <div class="card col-8"><div class="card-head"><span class="card-title">תקציב לפי מבחן תמיכה</span><span class="feas part" title="דורש חשיפת support_test_type_code (B7)">חלקי</span><span class="card-meta">Bar · צבע = תחום <span class="qs-tag">QS</span></span></div><div class="card-canvas-wrap h-420"><canvas id="c_byTest"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6"><span class="src-real">קיים בתיק יישוב</span> מקבילה תפעולית — "תקציב לפי תקנה &gt; מרכז קרנות/רצועה" (ברמת תקנה, תרבות+ספורט). כאן: ברמת מבחן תמיכה, ספורט בלבד, עם תחום וערך נקודה.</div></div>
-      <div class="card col-4"><div class="card-head"><span class="card-title">חלוקת הפורטפוליו לפי תחום</span><span class="feas part" title="דורש B7">חלקי</span><span class="card-meta">Donut <span class="qs-tag">QS</span></span></div><div class="card-canvas-wrap h-280"><canvas id="c_theme"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:8px; line-height:1.6">חמישה תחומים: הישגי · קהילה ועממי · הכלה ושוויון · תשתית ומעטפת · חירום ועמידות.</div></div>
+      <div class="card col-8"><div class="card-head"><span class="card-title">תקציב לפי מבחן תמיכה</span><span class="feas part" title="תקציב לפי מבחן קיים ב-Silver; לא נחשף ב-Gold">חלקי</span><span class="card-meta">Bar · צבע = תחום <span class="qs-tag">QS</span></span></div><div class="card-canvas-wrap h-420"><canvas id="c_byTest"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6"><span class="src-real">קיים בתיק יישוב</span> מקבילה תפעולית — "תקציב לפי תקנה &gt; מרכז קרנות/רצועה" (ברמת תקנה, תרבות+ספורט). כאן: ברמת מבחן תמיכה, ספורט בלבד, עם תחום וערך נקודה.</div></div>
+      <div class="card col-4"><div class="card-head"><span class="card-title">חלוקת הפורטפוליו לפי תחום</span><span class="feas part" title="דורש חשיפת support_test_type_code">חלקי</span><span class="card-meta">Donut <span class="qs-tag">QS</span></span></div><div class="card-canvas-wrap h-280"><canvas id="c_theme"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:8px; line-height:1.6">חמישה תחומים: הישגי · קהילה ועממי · הכלה ושוויון · תשתית ומעטפת · חירום ועמידות.</div></div>
 
-      <div class="card col-7"><div class="card-head"><span class="card-title">מפת הפורטפוליו — תקציב מול גופים נתמכים</span><span class="feas part" title="דורש B7">חלקי</span><span class="card-meta">Scatter · גודל = ערך נקודה <span class="qs-tag">QS</span></span></div><div class="card-canvas-wrap h-320"><canvas id="c_matrix"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">ימין-למעלה: מבחנים גדולים ורחבים · שמאל-למטה: מבחנים ממוקדים. בועה גדולה = נקודה "יקרה".</div></div>
-      <div class="card col-5"><div class="card-head"><span class="card-title">תעדוף ענפים מועדפים — כמה כסף המקדם מזיז</span><span class="feas block" title="מקדם התעדוף אינו מודל בשום טבלה">חסום</span><span class="card-meta">Stacked Bar · בסיס + תוספת תעדוף</span></div><div class="card-canvas-wrap h-320"><canvas id="c_priority"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">"ענף מועדף" מקבל מקדם ניקוד מוגדל — הרצועה הבהירה היא הכסף שהמקדם הזיז. מוצגים 8 הענפים המובילים מתוך מבחן האיגודים; הסכומים תואמים ללשונית "תמיכות".</div></div>
+      <div class="card col-7"><div class="card-head"><span class="card-title">מפת הפורטפוליו — תקציב מול גופים נתמכים</span><span class="feas part" title="תקציב וגופים מכוסים; ערך נקודה אינו ב-DWH">חלקי</span><span class="card-meta">Scatter · גודל = ערך נקודה <span class="qs-tag">QS</span></span></div><div class="card-canvas-wrap h-320"><canvas id="c_matrix"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">ימין-למעלה: מבחנים גדולים ורחבים · שמאל-למטה: מבחנים ממוקדים. בועה גדולה = נקודה "יקרה".</div></div>
+      <div class="card col-5"><div class="card-head"><span class="card-title">תעדוף ענפים מועדפים — כמה כסף המקדם מזיז</span><span class="feas part" title="branch_type=מועדף וסכומים מכוסים; מקדם התעדוף = כלל">חלקי</span><span class="card-meta">Stacked Bar · בסיס + תוספת תעדוף</span></div><div class="card-canvas-wrap h-320"><canvas id="c_priority"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">"ענף מועדף" מקבל מקדם ניקוד מוגדל — הרצועה הבהירה היא הכסף שהמקדם הזיז. מוצגים 8 הענפים המובילים מתוך מבחן האיגודים; הסכומים תואמים ללשונית "תמיכות".</div></div>
 
-      <div class="card col-12"><div class="card-head"><span class="card-title">קטלוג המבחנים המלא</span><span class="feas part" title="דורש B7">חלקי</span><span class="card-meta">Table · Data bars <span class="qs-tag">QS</span></span></div><div id="c_table"></div></div>
+      <div class="card col-12"><div class="card-head"><span class="card-title">קטלוג המבחנים המלא</span><span class="feas part" title="new_supporttesttypes ב-Silver; כיסוי כל 17 המבחנים לא אומת">חלקי</span><span class="card-meta">Table · Data bars <span class="qs-tag">QS</span></span></div><div id="c_table"></div></div>
     </div>
     <div class="footer-note"><strong>מהסיעור (★ מומלץ לפתיחת הפגישה):</strong> קטלוג תוכניות התמיכה — תמונת פורטפוליו אחת למורן, מענה לשאלה הפתוחה מהפגישה איך לבנות מסך Overview ראשוני. 13 מבחנים נקראו לעומק ועוד 4 הושלמו מרשימות המשרד — יחד 17 (נתוני דמה להמחשה — הרשימה והסכומים כפופים לאימות). "אמת המידה המובילה" = הקריטריון שמניב את רוב הניקוד במבחן. Bar · Donut · Scatter · Table נתמכים ילידית ב-QuickSight.</div>
   </section>
 
   <!-- ===================== POLICY LEVERS · מנופי מדיניות (סיעור מוחות) ===================== -->
-  <section class="page" id="page-levers" data-tab="levers" style="--accent:var(--levers);"><div class="feas-bar"><div class="fb-top"><span class="fb-score">ניתן לבנייה היום <b>11%</b></span><span class="fb-score">אחרי ה-ETL החדש <b>22%</b></span><span class="fb-score">9 ויזואלים</span><span class="fb-chips"><span class="feas live">בפרודקשן 1</span><span class="feas spec">במפרט · ETL 1</span><span class="feas part">חלקי 7</span></span></div><div class="fb-track"><i style="width:11.1111%;background:var(--f-live)"></i><i style="width:11.1111%;background:var(--f-spec)"></i><i style="width:77.7778%;background:var(--f-part)"></i></div><div class="fb-note">המאמנים ובעלי התפקידים נפתחו ב-STT החדש. המכפילים דורשים קידוד כלל המבחן וחיתוך חוצה-מבחנים.</div></div>
+  <section class="page" id="page-levers" data-tab="levers" style="--accent:var(--levers);"><div class="feas-bar"><div class="fb-top"><span class="fb-score">מכוסה במלואו ב-DWH <b>33%</b></span><span class="fb-score">9 ויזואלים</span><span class="fb-chips"><span class="feas cov">מכוסה ב-DWH 3</span><span class="feas part">חלקי 6</span><span class="feas hist">עומק היסטוריה 2</span></span></div><div class="fb-track"><i style="width:33.3333%;background:var(--f-cov)"></i><i style="width:66.6667%;background:var(--f-part)"></i></div><div class="fb-note">המאמנים והצנרת מכוסים. הפרמיות דורשות קידוד כללי המבחן, וההכלה קיימת ברמת ענף בלבד.</div></div>
     <p class="page-intro">מנופי מדיניות — המבחנים לא רק מחלקים כסף, הם <strong>מכוונים התנהגות</strong>: תוספת ניקוד לנשים (+30% במבחן האיגודים), ניקוד מדורג לשנתוני נוער, תגמול מעטפת מקצועית ומכפיל הכלה ×1.5. המסך מודד כמה כסף כל מנוף באמת מזיז.</p>
     <div class="filter-bar">
       <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
@@ -716,13 +715,13 @@
     </div>
 
     <div class="grid">
-      <div class="card col-7"><div class="card-head"><span class="card-title">מגדר כמכפיל — פרמיית הנקודות שנשים ייצרו</span><span class="feas part" title="דורש קידוד כלל המבחן (+30%)">חלקי</span><span class="card-meta">Stacked · בסיס + פרמיה <span class="qs-tag">QS</span></span></div><div class="card-canvas-wrap h-320"><canvas id="l_gender"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">לא רק "כמה נשים" — כמה כסף ההשתתפות שלהן ייצרה דרך תוספת הניקוד (+30% במבחן האיגודים; מנגנונים דומים במבחנים נוספים — בבדיקה מול נוסחי המבחנים). תכלת = נשים, לפי עקרונות העיצוב. הסכומים זהים למנוע הניקוד.</div></div>
-      <div class="card col-5"><div class="card-head"><span class="card-title">הפרמיה כאחוז מהתמיכה</span><span class="feas part" title="דורש קידוד כלל המבחן">חלקי</span><span class="card-meta">Bar · מיון יורד</span></div><div class="card-canvas-wrap h-320"><canvas id="l_gpct"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">בכדורעף כ-40% מהתמיכה נובעים מהפרמיה — טיעון חזק לקידום ספורטאיות.</div></div>
+      <div class="card col-7"><div class="card-head"><span class="card-title">מגדר כמכפיל — פרמיית הנקודות שנשים ייצרו</span><span class="feas part" title="הניקודים מכוסים; כלל ה-+30% דורש קידוד">חלקי</span><span class="card-meta">Stacked · בסיס + פרמיה <span class="qs-tag">QS</span></span></div><div class="card-canvas-wrap h-320"><canvas id="l_gender"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">לא רק "כמה נשים" — כמה כסף ההשתתפות שלהן ייצרה דרך תוספת הניקוד (+30% במבחן האיגודים; מנגנונים דומים במבחנים נוספים — בבדיקה מול נוסחי המבחנים). תכלת = נשים, לפי עקרונות העיצוב. הסכומים זהים למנוע הניקוד.</div></div>
+      <div class="card col-5"><div class="card-head"><span class="card-title">הפרמיה כאחוז מהתמיכה</span><span class="feas part" title="הניקודים מכוסים; כלל ה-+30% דורש קידוד">חלקי</span><span class="card-meta">Bar · מיון יורד</span></div><div class="card-canvas-wrap h-320"><canvas id="l_gpct"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">בכדורעף כ-40% מהתמיכה נובעים מהפרמיה — טיעון חזק לקידום ספורטאיות.</div></div>
 
-      <div class="card col-7"><div class="card-head"><span class="card-title">צנרת דור צעיר — פירמידת גיל לפי ענף</span><span class="feas live" title="age + athlete_age_category">בפרודקשן</span><span class="card-meta">Clustered · ילדים / נוער / הישגי</span></div><div class="card-canvas-wrap h-300"><canvas id="l_pipeline"></canvas></div></div>
-      <div class="card col-5"><div class="card-head"><span class="card-title">משפך הצנרת הארצי</span><span class="feas part" title="קוהורטות דורשות 2–3 שנים (B1)">חלקי</span><span class="card-meta">Bar · שיעורי מעבר</span></div><div class="card-canvas-wrap h-300"><canvas id="l_funnel"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">היכן נבנה — והיכן דולף — הדור הבא. מעקב התמדה במסלול התחרותי (Cohort) — אינו זהה למצבת הרשומים בשנה נתונה. הניקוד המדורג לפי שנתונים נועד בדיוק לכאן.</div></div>
+      <div class="card col-7"><div class="card-head"><span class="card-title">צנרת דור צעיר — פירמידת גיל לפי ענף</span><span class="feas cov" title="age · athlete_age_category · new_ageforgroups">מכוסה ב-DWH</span><span class="card-meta">Clustered · ילדים / נוער / הישגי</span></div><div class="card-canvas-wrap h-300"><canvas id="l_pipeline"></canvas></div></div>
+      <div class="card col-5"><div class="card-head"><span class="card-title">משפך הצנרת הארצי</span><span class="feas cov" title="athlete_code יציב בין שנים">מכוסה ב-DWH</span><span class="feas hist" title="מכוסה סכמתית — תלוי בכמה שנות נתונים טעונות">עומק היסטוריה</span><span class="card-meta">Bar · שיעורי מעבר</span></div><div class="card-canvas-wrap h-300"><canvas id="l_funnel"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">היכן נבנה — והיכן דולף — הדור הבא. מעקב התמדה במסלול התחרותי (Cohort) — אינו זהה למצבת הרשומים בשנה נתונה. הניקוד המדורג לפי שנתונים נועד בדיוק לכאן.</div></div>
 
-      <div class="card col-12"><div class="card-head"><span class="card-title">מקצועיות — ספורטאים למאמן מוסמך לפי ענף</span><span class="feas spec" title="fact_trainers · role_desc">במפרט · ETL</span><span class="card-meta">Combo · מול קו יעד 1:45 <span class="qs-tag">QS</span></span></div><div class="card-canvas-wrap h-260"><canvas id="l_coach"></canvas></div></div>
+      <div class="card col-12"><div class="card-head"><span class="card-title">מקצועיות — ספורטאים למאמן מוסמך לפי ענף</span><span class="feas cov" title="fact_trainers · role_desc">מכוסה ב-DWH</span><span class="card-meta">Combo · מול קו יעד 1:45 <span class="qs-tag">QS</span></span></div><div class="card-canvas-wrap h-260"><canvas id="l_coach"></canvas></div></div>
     </div>
     <div class="sub-div"><span class="t" style="color:var(--incl)">הכלה ומוגבלות — המנוף הרביעי</span><span class="s">מהסיעור · 6 מבחנים מתגמלים שילוב במכפיל ניקוד ×1.5 (מאומת) — אותו מנגנון, מבט מאוחד ראשון</span></div>
     <div class="kpis">
@@ -735,14 +734,14 @@
       <div class="card col-7"><div class="card-head"><span class="card-title">ספורטאים משולבים לפי ענף ומסגרת</span><span class="feas part" title="ברמת ענף בלבד — אין מוגבלות ברמת ספורטאי">חלקי</span><span class="card-meta">Stacked Bar <span class="qs-tag">QS</span></span></div><div class="card-canvas-wrap h-320"><canvas id="n_byBranch"></canvas></div></div>
       <div class="card col-5"><div class="card-head"><span class="card-title">חלוקה לפי מסגרת</span><span class="feas part" title="ברמת ענף בלבד">חלקי</span><span class="card-meta">Donut</span></div><div class="card-canvas-wrap h-260"><canvas id="n_frame"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">פראלימפי תחרותי · עממי משלב · ספיישל אולימפיקס — שלוש מסגרות, מדיניות אחת.</div></div>
 
-      <div class="card col-6"><div class="card-head"><span class="card-title">פרמיית המכפילים לפי מבחן תמיכה</span><span class="feas part" title="דורש B7">חלקי</span><span class="card-meta">Bar · 6 מבחנים</span></div><div class="card-canvas-wrap h-300"><canvas id="n_premium"></canvas></div></div>
-      <div class="card col-6"><div class="card-head"><span class="card-title">מגמת השילוב — שיעור מכלל הרשומים</span><span class="feas part" title="תלוי ב-B1">חלקי</span><span class="card-meta">Line · מול יעד 6%</span></div><div class="card-canvas-wrap h-300"><canvas id="n_trend"></canvas></div></div>
+      <div class="card col-6"><div class="card-head"><span class="card-title">פרמיית המכפילים לפי מבחן תמיכה</span><span class="feas part" title="דורש חשיפת קוד המבחן">חלקי</span><span class="card-meta">Bar · 6 מבחנים</span></div><div class="card-canvas-wrap h-300"><canvas id="n_premium"></canvas></div></div>
+      <div class="card col-6"><div class="card-head"><span class="card-title">מגמת השילוב — שיעור מכלל הרשומים</span><span class="feas part" title="פרוקסי ברמת ענף">חלקי</span><span class="feas hist" title="מכוסה סכמתית — תלוי בכמה שנות נתונים טעונות">עומק היסטוריה</span><span class="card-meta">Line · מול יעד 6%</span></div><div class="card-canvas-wrap h-300"><canvas id="n_trend"></canvas></div></div>
     </div>
     <div class="footer-note"><strong>מהסיעור (4 רעיונות באחד):</strong> מגדר כמכפיל (11 מבחנים) · צנרת דור צעיר (ניקוד מדורג לפי שנתונים) · מקצועיות — מאמנים ומעטפת (8 מבחנים) · הכלה ומוגבלות (6 מבחנים: גופי רוחב, פראלימפי, עממי-קהילתי, סל רשויות, איגודים, ליגות). המסר למורן: מבחני התמיכה הם הגה מדיניות, והדשבורד מראה כמה כל הגה באמת מסובב. נתוני דמה להמחשה; הפרמיות מחושבות מתוך מנוע הניקוד. Stacked · Clustered · Bar · Combo ילידיים ב-QuickSight.</div>
   </section>
 
   <!-- ===================== RESILIENCE · עמידות וחירום (סיעור מוחות) ===================== -->
-  <section class="page" id="page-resil" data-tab="resil" style="--accent:var(--resil);"><div class="feas-bar"><div class="fb-top"><span class="fb-score">ניתן לבנייה היום <b>0%</b></span><span class="fb-score">אחרי ה-ETL החדש <b>0%</b></span><span class="fb-score">4 ויזואלים</span><span class="fb-chips"><span class="feas block">חסום 4</span></span></div><div class="fb-track"><i style="width:100.0000%;background:var(--f-block)"></i></div><div class="fb-note">מבחני חירום ונתוני מיגוניות — מחוץ ל-DWH לחלוטין.</div></div>
+  <section class="page" id="page-resil" data-tab="resil" style="--accent:var(--resil);"><div class="feas-bar"><div class="fb-top"><span class="fb-score">מכוסה במלואו ב-DWH <b>0%</b></span><span class="fb-score">4 ויזואלים</span><span class="fb-chips"><span class="feas no">לא ב-DWH 4</span></span></div><div class="fb-track"><i style="width:100.0000%;background:var(--f-no)"></i></div><div class="fb-note">מבחני חירום ונתוני מיגוניות — מחוץ ל-DWH לחלוטין.</div></div>
     <p class="page-intro">עמידות וחירום — <strong>4 מבחני חירום</strong> פעלו בתקופת חרבות ברזל: פיצוי אובדן הכנסות ("שאגת הארי"), מרחב מוגן יביל, ספורט בחירום וסל תחום ג'. המסך מספר את סיפור העמידות של מערכת הספורט.</p>
     <div class="filter-bar">
       <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
@@ -761,11 +760,11 @@
     </div>
 
     <div class="grid">
-      <div class="card col-8"><div class="card-head"><span class="card-title">תמיכות חירום לאורך זמן לפי מבחן</span><span class="feas block" title="מבחני חירום מחוץ ל-DWH">חסום</span><span class="card-meta">Stacked Bar · חצי-שנתי <span class="qs-tag">QS</span></span></div><div class="card-canvas-wrap h-300"><canvas id="r_quarters"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">סל הספורט תחום ג' פעל כרכיב בתוך סל הספורט הרגיל — אינו מוצג כאן כמבחן נפרד.</div></div>
-      <div class="card col-4"><div class="card-head"><span class="card-title">מיגוניות לפי מחוז</span><span class="feas block" title="נתוני מתקנים ידניים">חסום</span><span class="card-meta">Bar · דרום וצפון מובילים</span></div><div class="card-canvas-wrap h-300"><canvas id="r_shelters"></canvas></div></div>
+      <div class="card col-8"><div class="card-head"><span class="card-title">תמיכות חירום לאורך זמן לפי מבחן</span><span class="feas no" title="מבחני חירום ומתקנים — לא ב-DWH">לא ב-DWH</span><span class="card-meta">Stacked Bar · חצי-שנתי <span class="qs-tag">QS</span></span></div><div class="card-canvas-wrap h-300"><canvas id="r_quarters"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">סל הספורט תחום ג' פעל כרכיב בתוך סל הספורט הרגיל — אינו מוצג כאן כמבחן נפרד.</div></div>
+      <div class="card col-4"><div class="card-head"><span class="card-title">מיגוניות לפי מחוז</span><span class="feas no" title="מבחני חירום ומתקנים — לא ב-DWH">לא ב-DWH</span><span class="card-meta">Bar · דרום וצפון מובילים</span></div><div class="card-canvas-wrap h-300"><canvas id="r_shelters"></canvas></div></div>
 
-      <div class="card col-7"><div class="card-head"><span class="card-title">מדד ההתאוששות — ספורטאים פעילים</span><span class="feas block" title="מחוץ ל-DWH">חסום</span><span class="card-meta">Line · בסיס 100 = ספט' 23</span></div><div class="card-canvas-wrap h-280"><canvas id="r_recovery"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">הצניחה של אוקטובר 23, והטיפוס חזרה — סיפור העמידות של מערכת הספורט במספר אחד.</div></div>
-      <div class="card col-5"><div class="card-head"><span class="card-title">פיצוי אובדן הכנסות לפי ענף</span><span class="feas block" title="מבחני חירום מחוץ ל-DWH">חסום</span><span class="card-meta">Bar · "שאגת הארי" · אלפי ₪</span></div><div class="card-canvas-wrap h-280"><canvas id="r_lion"></canvas></div></div>
+      <div class="card col-7"><div class="card-head"><span class="card-title">מדד ההתאוששות — ספורטאים פעילים</span><span class="feas no" title="מבחני חירום ומתקנים — לא ב-DWH">לא ב-DWH</span><span class="card-meta">Line · בסיס 100 = ספט' 23</span></div><div class="card-canvas-wrap h-280"><canvas id="r_recovery"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">הצניחה של אוקטובר 23, והטיפוס חזרה — סיפור העמידות של מערכת הספורט במספר אחד.</div></div>
+      <div class="card col-5"><div class="card-head"><span class="card-title">פיצוי אובדן הכנסות לפי ענף</span><span class="feas no" title="מבחני חירום ומתקנים — לא ב-DWH">לא ב-DWH</span><span class="card-meta">Bar · "שאגת הארי" · אלפי ₪</span></div><div class="card-canvas-wrap h-280"><canvas id="r_lion"></canvas></div></div>
     </div>
     <div class="footer-note"><strong>מהסיעור + הפגישה:</strong> עמידות וחירום הוצע כאלטרנטיבה חיובית ל-SLA ה"רך" (רק 6 פניות השנה) — תוכן חירום עם יותר דאטה ורלוונטיות לתקופה. מקורות: שאגת הארי · מרחב מוגן יביל · ספורט בחירום · סל הספורט תחום ג' — נתונים פנימיים, דמה להמחשה. הסכומים תואמים לתחום "חירום ועמידות" בקטלוג התוכניות (₪7.1M). Stacked · Bar · Line ילידיים ב-QuickSight.</div>
   </section>

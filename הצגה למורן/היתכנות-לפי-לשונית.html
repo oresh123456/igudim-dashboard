@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mockup feasibility by tab · היתכנות לפי לשונית</title>
+<title>DWH coverage by tab · כיסוי DWH לפי לשונית</title>
 <style>
 :root{
   --navy:#1f3a5f; --teal:#0f766e; --ink:#1a2230; --muted:#5b6472;
@@ -13,7 +13,7 @@
   --grey:#565f6b;  --grey-bg:#eef1f5;
   --red:#9b1c1c;   --red-bg:#fbe9e9;
   --blue:#1d4ed8;  --blue-bg:#e8f1fb;
-  --code-bg:#eef2f7; --code-border:#d5deea; --code-bar:#e3eaf3; --code-ink:#26324a;
+  --code-bg:#eef2f7; --code-border:#d5deea; --code-ink:#26324a;
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);
@@ -21,16 +21,12 @@ body{margin:0;background:var(--bg);color:var(--ink);
   line-height:1.65;font-size:16px;-webkit-font-smoothing:antialiased;}
 html[dir="rtl"] body{font-family:"Amazon Ember","Heebo","Segoe UI",system-ui,sans-serif;}
 .wrap{max-width:900px;margin:0 auto;padding:28px 22px 80px;}
-
-/* language toggle */
 #langbtn{position:fixed;top:16px;inset-inline-end:18px;z-index:50;
   background:var(--surface);color:var(--navy);border:1px solid var(--border);
   border-radius:999px;padding:8px 18px;font-size:14px;font-weight:600;cursor:pointer;
   box-shadow:0 2px 10px rgba(31,58,95,.10);font-family:inherit;}
 #langbtn:hover{background:var(--blue-bg);border-color:#c8d8ef}
 .doc[hidden]{display:none}
-
-/* header */
 .top{background:linear-gradient(135deg,var(--navy),var(--teal));color:#fff;
   border-radius:16px;padding:30px 32px;box-shadow:0 6px 24px rgba(31,58,95,.16);margin-bottom:26px}
 .kicker{text-transform:uppercase;letter-spacing:.12em;font-size:12px;opacity:.85;margin-bottom:8px}
@@ -40,8 +36,6 @@ html[dir="rtl"] body{font-family:"Amazon Ember","Heebo","Segoe UI",system-ui,san
 .meta div{min-width:120px}
 .meta .k{font-size:11px;text-transform:uppercase;letter-spacing:.09em;opacity:.8}
 .meta .v{font-size:15px;font-weight:600;margin-top:3px}
-
-/* sections */
 h2{font-size:21px;margin:38px 0 14px;color:var(--navy);
   border-left:4px solid var(--teal);padding-left:13px;scroll-margin-top:20px;line-height:1.35}
 html[dir="rtl"] h2{border-left:0;border-right:4px solid var(--teal);padding-left:0;padding-right:13px}
@@ -56,15 +50,11 @@ code{background:var(--code-bg);border:1px solid var(--code-border);border-radius
   padding:1px 5px;font-family:"Cascadia Mono",Consolas,monospace;font-size:13.5px;
   color:var(--code-ink);direction:ltr;display:inline-block}
 strong{color:var(--navy)}
-
-/* stats */
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin:20px 0}
 .stat{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;
   box-shadow:0 1px 3px rgba(26,34,48,.05)}
 .stat .n{font-size:27px;font-weight:700;color:var(--teal);line-height:1.15}
 .stat .l{font-size:11.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-top:5px}
-
-/* tables */
 table.sum{width:100%;border-collapse:collapse;margin:16px 0;background:var(--surface);
   border:1px solid var(--border);border-radius:12px;overflow:hidden;font-size:14.7px}
 table.sum th{background:var(--grey-bg);color:var(--navy);font-weight:700;text-align:left;
@@ -76,17 +66,15 @@ table.sum tr:last-child td{border-bottom:0}
 table.sum tr:hover td{background:#fafcfe}
 table.sum td:first-child{font-weight:600;color:var(--navy)}
 .tw{overflow-x:auto}
-
-/* pills */
 .pill{display:inline-block;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:700;
   white-space:nowrap;line-height:1.7}
 .pill.green{background:var(--green-bg);color:var(--green)}
-.pill.blue{background:var(--blue-bg);color:var(--blue)}
 .pill.amber{background:var(--amber-bg);color:var(--amber)}
 .pill.grey{background:var(--grey-bg);color:var(--grey)}
 .pill.red{background:var(--red-bg);color:var(--red)}
-
-/* callouts */
+.pill.blue{background:var(--blue-bg);color:var(--blue)}
+.bar{height:9px;border-radius:99px;background:var(--grey-bg);display:flex;overflow:hidden;margin:6px 0 2px}
+.bar i{display:block;height:100%}
 .callout{border-radius:12px;padding:15px 18px;margin:18px 0;border:1px solid}
 .callout .clabel{font-size:11px;text-transform:uppercase;letter-spacing:.09em;font-weight:700;
   display:block;margin-bottom:5px}
@@ -98,25 +86,11 @@ table.sum td:first-child{font-weight:600;color:var(--navy)}
 .callout.win .clabel{color:var(--green)}
 .callout p{margin:6px 0 0}
 .callout p:first-of-type{margin-top:0}
-
-/* legend */
-.legend{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0}
-.legend span{font-size:13.5px;color:var(--muted)}
-
-/* kv */
 dl.kv{display:grid;grid-template-columns:190px 1fr;gap:8px 18px;margin:14px 0}
 dl.kv dt{font-weight:700;color:var(--navy);font-size:14.5px}
 dl.kv dd{margin:0;font-size:15px}
-
-/* details */
-details.finding{background:var(--surface);border:1px solid var(--border);border-radius:12px;
-  padding:13px 18px;margin:12px 0}
-details.finding summary{cursor:pointer;font-weight:700;color:var(--navy);font-size:15.5px}
-details.finding[open] summary{margin-bottom:9px}
-
 footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--border);
   color:var(--muted);font-size:13px}
-.ltr{direction:ltr;display:inline-block;unicode-bidi:isolate}
 @media(max-width:620px){
   .top{padding:22px}.top h1{font-size:23px}
   dl.kv{grid-template-columns:1fr;gap:2px 0}
@@ -127,572 +101,440 @@ footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--border);
 <body>
 <button id="langbtn" onclick="setLang(document.documentElement.lang==='en'?'he':'en')">עברית</button>
 
-<!-- ============================= ENGLISH ============================= -->
+<!-- ============================ ENGLISH ============================ -->
 <div class="doc" data-lang="en">
 <div class="wrap">
 
 <header class="top">
-  <div class="kicker">Data feasibility assessment</div>
-  <h1>Strategic mockup — what is buildable, and when</h1>
-  <p class="sub">Every visual in <code>מוקאפ-אסטרטגי-מורן.html</code> scored against the data warehouse contract, so the two-to-three-week release can be separated from the multi-quarter one.</p>
+  <div class="kicker">DWH coverage assessment</div>
+  <h1>Strategic mockup — what the warehouse can actually answer</h1>
+  <p class="sub">All 53 visuals in <code>מוקאפ-אסטרטגי-מורן.html</code> scored against the STT alone. A visual scores well here if and only if the fields it needs exist in the warehouse.</p>
   <div class="meta">
     <div><div class="k">Scored against</div><div class="v">STT Gold + Silver</div></div>
-    <div><div class="k">STT revision</div><div class="v">20/08/2026 09:04</div></div>
-    <div><div class="k">Visuals reviewed</div><div class="v">53 cards · 54 KPIs</div></div>
-    <div><div class="k">Tabs</div><div class="v">10</div></div>
+    <div><div class="k">Revision</div><div class="v">20/08/2026 · in production</div></div>
+    <div><div class="k">Visuals</div><div class="v">53</div></div>
+    <div><div class="k">Fully covered</div><div class="v">21 · 40%</div></div>
   </div>
 </header>
 
 <div class="panel">
-  <p class="lead">Four tabs are deliverable in two to three weeks on tables already proven in production. Five more become deliverable as the newly specified facts land — with no new data sourcing at all. Three tabs have no data behind them in any horizon.</p>
-  <p>The STT revision of 20/08 changed the picture materially: the Gold layer went from <strong>2 facts to 7</strong>, and a Silver STT now exists. Five of the six gaps in the previous assessment are now specified — achievements, coaches, official roles, budget-by-purpose, and money as a first-class Gold column.</p>
+  <p class="lead">Three tabs are 75% covered or better and can be built against the warehouse as it stands. Three have no warehouse source at all. The rest sit in between — and in almost every case what's missing is not data engineering but a decision, a rule, or a source that was never going to live in a warehouse.</p>
+  <p><strong>Scope of this assessment: the DWH only.</strong> Nothing in the project repo counts as evidence — not the mockups, not the Excel workbooks, not the boundary files, not the diagnostic SQL. Coverage means the STT has the field.</p>
 </div>
 
 <div class="stats">
-  <div class="stat"><div class="n">7</div><div class="l">Gold facts (was 2)</div></div>
-  <div class="stat"><div class="n">5</div><div class="l">Gold dimensions</div></div>
-  <div class="stat"><div class="n">21</div><div class="l">Silver tables</div></div>
-  <div class="stat"><div class="n">4</div><div class="l">Tabs in Release 1</div></div>
-  <div class="stat"><div class="n">3</div><div class="l">Tabs with no source</div></div>
+  <div class="stat"><div class="n">21</div><div class="l">Fully covered</div></div>
+  <div class="stat"><div class="n">16</div><div class="l">Partial</div></div>
+  <div class="stat"><div class="n">16</div><div class="l">Not in the DWH</div></div>
+  <div class="stat"><div class="n">7</div><div class="l">Gold facts</div></div>
+  <div class="stat"><div class="n">7</div><div class="l">Trend visuals gated on history depth</div></div>
 </div>
 
-<h2 id="legend-en">How each visual is scored</h2>
+<h2 id="score-en">1 · How each visual is scored</h2>
 <table class="sum"><tbody>
-<tr><td><span class="pill green">Live</span></td><td>Backed by the contract <em>and</em> by tables already running in production. Buildable now.</td></tr>
-<tr><td><span class="pill blue">Specced</span></td><td>Defined in the new STT, ETL not confirmed built. Real, but its ship date is the ETL's ship date.</td></tr>
-<tr><td><span class="pill amber">Partial</span></td><td>Needs a substitute measure, a rescope, or an unresolved blocker cleared.</td></tr>
-<tr><td><span class="pill grey">New source</span></td><td>Needs a source we have not started acquiring. Weeks.</td></tr>
-<tr><td><span class="pill red">Blocked</span></td><td>Needs a system or an agreement we do not have. Quarters.</td></tr>
+<tr><td><span class="pill green">Covered</span></td><td>Every field the visual needs exists in the warehouse.</td></tr>
+<tr><td><span class="pill amber">Partial</span></td><td>Some fields exist and some don't — or a rule or decision has to be supplied that isn't data.</td></tr>
+<tr><td><span class="pill red">Not in the DWH</span></td><td>The core measure is absent. It needs a source outside the warehouse.</td></tr>
+<tr><td><span class="pill grey">History depth</span></td><td>Schematically covered, but it's a trend — its usefulness depends on how many years are loaded, which the STT does not state.</td></tr>
 </tbody></table>
 
-<div class="callout warn">
-  <span class="clabel">The caveat that governs everything below</span>
-  <p>Every sheet in both workbooks is marked <strong>STT Status = In Progress</strong>, and the <strong>ETL Status cell is empty on all 12 Gold tables</strong>. The contract is agreed; the pipeline is not confirmed built. So <span class="pill blue">Specced</span> items are safe to plan against, but not safe to demo until someone confirms the tables are loaded.</p>
-</div>
-
-<h2 id="changed-en">1 · What the new STT changed</h2>
+<h2 id="rank-en">2 · Tab ranking</h2>
 <div class="tw"><table class="sum">
-<thead><tr><th>New or changed</th><th>What it unlocks</th></tr></thead>
+<thead><tr><th>Tab</th><th>Covered</th><th>Note</th></tr></thead>
 <tbody>
-<tr><td><code>dwh_aa_fact_achievement_personal</code></td><td>Champion type, date, host country, competing-countries count, <strong><code>competition_rank</code></strong>, participants count, olympic-profession flag, weight/discipline category, athlete gender and age category, score. Real medal counts by rank — five charts previously marked "no source".</td></tr>
-<tr><td><code>dwh_aa_fact_achievement_group</code></td><td>The same shape at group level, with <code>group_name</code>, <code>end_date</code>, <code>competition_rank</code>.</td></tr>
-<tr><td><code>dwh_aa_fact_trainers</code></td><td>Coaches and instructors unified, with <code>role_desc</code> (מאמן / מדריך / מאמן לאומי), gender, branch, association, society, year. The athletes-per-coach lever becomes real.</td></tr>
-<tr><td><code>dwh_aa_fact_office_roles_sport</code></td><td>Official roles per association, <strong>with gender</strong> — a governance-equality view the mockup never had, and one that feeds the women's-sport dashboards.</td></tr>
-<tr><td><code>dwh_aa_fact_budget_pct</code></td><td>Allocation budget by <code>area_name</code> (ייעוד תחום) and <code>measurement_for_area</code> (אמת מידה), with <code>percent</code> and amount per year. Powers both the "support by purpose" donut and the scoring engine's attribution screen.</td></tr>
-<tr><td><code>approved_amount</code> + <code>area_name</code></td><td>Money and purpose are now Gold columns on the request fact, not just ETL artefacts.</td></tr>
-<tr><td>Multi-level threshold flags</td><td>Athlete → team → society → association → total, with the exact CASE logic per request type. Makes a drop-off funnel screen possible for free.</td></tr>
-<tr><td><code>age</code> redefined</td><td>Now <code>assessment_year − birth_year</code> (was request year). Worth stating on any age visual.</td></tr>
-<tr><td>Silver <code>municipalities</code></td><td>Everything in <code>dim_authority</code> <em>plus</em> distance from Tel Aviv, area, population growth, socioeconomic index value and rank, compactness cluster/index/rank, peripherality index value and rank.</td></tr>
-<tr><td>Silver test tables</td><td><code>new_supporttesttypes</code> and <code>new_allocationbudgetstoareaandm</code> — support tests as entities, with per-test budget allocation. The catalog tab is no longer impossible.</td></tr>
+<tr><td>ביצועים ומגדר</td><td><strong>83%</strong> (5/6)</td><td>Best-covered tab — achievement facts supply rank, gender, age category and an independent time axis</td></tr>
+<tr><td>הסתכלות גיאוגרפית</td><td><strong>75%</strong> (6/8)</td><td>The authority dimension carries almost everything</td></tr>
+<tr><td>IMPACT ויעילות</td><td><strong>75%</strong> (3/4)</td><td>Participation and efficiency fully covered</td></tr>
+<tr><td>קישורים</td><td>—</td><td>No data dependency</td></tr>
+<tr><td>תמיכות</td><td><strong>50%</strong> (3/6)</td><td>Money and purpose covered; the gaps are outside the warehouse entirely</td></tr>
+<tr><td>מנופי מדיניות והכלה</td><td><strong>33%</strong> (3/9)</td><td>Coaches and pipeline covered; premiums need rules encoded</td></tr>
+<tr><td>גוף נתמך · מנוע הניקוד</td><td><strong>14%</strong> (1/7)</td><td>Scoring engine covered; the organisation profile is not warehouse data</td></tr>
+<tr><td>קטלוג התוכניות</td><td><strong>0%</strong> — all partial</td><td>Every card hinges on one column Silver has and Gold doesn't expose</td></tr>
+<tr><td>SLA · תפעול</td><td><strong>0%</strong></td><td>No source</td></tr>
+<tr><td>עמידות וחירום</td><td><strong>0%</strong></td><td>No source</td></tr>
 </tbody>
 </table></div>
 
-<div class="callout win">
-  <span class="clabel">Two corrections to the earlier assessment</span>
-  <p><strong>"ייעוד is cross-test and unavailable"</strong> — wrong now. It exists as a dimension on both the request fact and <code>dim_branchs</code>.</p>
-  <p><strong>"The catalog tab is impossible"</strong> — overstated. Silver holds the tests and their budget allocations; Gold's <code>fact_budget_pct</code> simply drops <code>support_test_type_code</code>. That single column is what separates "this test's purposes" from "the portfolio".</p>
-</div>
-
-<h2 id="contract-en">2 · The warehouse contract as it stands</h2>
-
+<h2 id="contract-en">3 · What the warehouse contains</h2>
 <h3>Gold facts</h3>
 <dl class="kv">
-  <dt><code>fact_athlete</code></dt>
-  <dd>Athlete × request. Gender, final score, age and age category, insurance, medical check, branch, authority, society, association, team, league, year, plus the full threshold set (athlete / team / society / association / totals).</dd>
-  <dt><code>fact_support_request_sport</code></dt>
-  <dd>Request grain. <code>approved_amount</code>, <code>area_name</code>, request type (איגוד / אגודה / קבוצה / אישי / אליפות אירופה), male and female counts and scores, achievement / professional / coach / branch-cost / women-promotion / excellence-centre scores, all threshold flags, year.</dd>
-  <dt><code>fact_achievement_personal</code></dt>
-  <dd>Athlete achievements with competition rank, champion type and date, host country, competing countries, participants, olympic-profession flag, discipline/weight category, gender and age category.</dd>
-  <dt><code>fact_achievement_group</code></dt>
-  <dd>Group achievements with rank, gender, age category, score, group name, end date.</dd>
-  <dt><code>fact_trainers</code></dt>
-  <dd>Coaches and instructors (union of trainers + officials), with role description, gender, branch, association, society, year.</dd>
-  <dt><code>fact_office_roles_sport</code></dt>
-  <dd>Official roles with gender and role description, per association and branch.</dd>
-  <dt><code>fact_budget_pct</code></dt>
-  <dd>Allocation amount and percentage by purpose type, area and criterion, per support year.</dd>
+  <dt><code>fact_athlete</code></dt><dd>Athlete × request. Gender, final score, age and age category, insurance, medical check, branch, authority, society, association, team, league, year, and the full threshold set.</dd>
+  <dt><code>fact_support_request_sport</code></dt><dd>Request grain. <strong><code>approved_amount</code></strong>, <strong><code>area_name</code></strong>, request type, male and female counts and scores, all criterion scores, threshold flags, year.</dd>
+  <dt><code>fact_achievement_personal</code></dt><dd><strong><code>competition_rank</code></strong>, champion type and date, host country, competing countries, participants, olympic-profession flag, discipline/weight category, gender, age category, score.</dd>
+  <dt><code>fact_achievement_group</code></dt><dd>Rank, gender, age category, score, group name, end date.</dd>
+  <dt><code>fact_trainers</code></dt><dd>Coaches and instructors with role description, gender, branch, association, society, year.</dd>
+  <dt><code>fact_office_roles_sport</code></dt><dd>Official roles with gender and role description.</dd>
+  <dt><code>fact_budget_pct</code></dt><dd>Allocation amount and percentage by purpose type, area and criterion, per year.</dd>
 </dl>
-<p><strong>Also in production but absent from the STT:</strong> <code>dwh_aa_fact_athlete_by_branch_society</code> and the raw <code>mrr_aa_budgets</code>, both referenced by the production diagnostics.</p>
-
 <h3>Gold dimensions</h3>
-<div class="tw"><table class="sum">
-<thead><tr><th>Dimension</th><th>Fields that matter here</th></tr></thead>
-<tbody>
-<tr><td><code>dim_authority</code></td><td>Population, male/female totals, ethnic splits, LAMAS and CRM districts, municipal status, <strong>socioeconomic cluster</strong>, <strong>peripherality cluster</strong>, head of authority. The strongest asset in the warehouse for this mockup.</td></tr>
-<tr><td><code>dim_branchs</code></td><td>Individual vs team, branch type (מועדף / חשיבה / על / רגיל), olympic flag, special-needs flag, sub-branch, sport type (incl. paralympic), main branch, <strong><code>branch_area</code></strong>.</td></tr>
-<tr><td><code>dim_association</code></td><td>Merkava supplier number, main branch.</td></tr>
-<tr><td><code>dim_society</code></td><td>Authority code. <code>authority_name</code> is annotated "לא רלוונטי" — take locality from the fact or <code>dim_authority</code>.</td></tr>
-<tr><td><code>dim_teams</code></td><td>Team achievement score, team number, society.</td></tr>
-</tbody>
-</table></div>
-
-<h3>Silver — staged but not yet surfaced in Gold</h3>
+<p><code>dim_authority</code> — population, gender totals, ethnic splits, LAMAS and CRM district, municipal status, <strong>socioeconomic cluster</strong>, <strong>peripherality cluster</strong>. <code>dim_branchs</code> — individual vs team, branch type, olympic, special-needs, sport type, <strong><code>branch_area</code></strong>. Plus <code>dim_association</code>, <code>dim_society</code>, <code>dim_teams</code>.</p>
+<h3>Silver — in production, not surfaced in Gold</h3>
 <ul>
-  <li><strong><code>municipalities</code></strong> (LAMAS) — the continuous socioeconomic and peripherality index values and ranks, distance from Tel Aviv, area, density and population growth. Finer equity analysis is a column promotion away, not a new source.</li>
-  <li><strong><code>new_supporttesttypes</code></strong> — the support tests as first-class entities, by year and administering system.</li>
-  <li><strong><code>new_allocationbudgetstoareaandm</code></strong> — allocation per test: test code, year, purpose type, area, criterion, percentage, amount, budget frame.</li>
-  <li><strong><code>new_ageforgroups</code></strong> — formal age-band definitions with gender and per-branch-type applicability.</li>
-  <li><strong><code>budget</code></strong> — the Excel-sourced approved amounts, with <code>society_id</code> and <code>team_number</code> currently mapped to <code>null</code>. That is the join-drop mechanism, visible in the contract itself.</li>
+  <li><code>municipalities</code> — continuous socioeconomic and peripherality <strong>index values and ranks</strong>, distance from Tel Aviv, area, compactness, population growth. Richer than what <code>dim_authority</code> exposes.</li>
+  <li><code>new_supporttesttypes</code> — the support tests as entities.</li>
+  <li><code>new_allocationbudgetstoareaandm</code> — allocation per test, carrying <strong><code>support_test_type_code</code></strong>, which <code>fact_budget_pct</code> drops.</li>
+  <li><code>new_ageforgroups</code> — age-band definitions. <code>budget</code> — approved amounts, with <code>society_id</code> and <code>team_number</code> mapped to <code>null</code>.</li>
 </ul>
 
 <div class="callout info">
-  <span class="clabel">The scope boundary — read before any executive framing</span>
-  <p>Gold is <code>dwh_aa_*</code>: <strong>one support test, associations and clubs</strong>. It does not carry the other tests' outcomes, emergency tests, procurement and regulation channels, facilities, or the ministry's own budget. The mockup's ₪148.1M / 476 bodies / 17 tests framing remains illustrative.</p>
+  <span class="clabel">The scope boundary</span>
+  <p>Gold is <code>dwh_aa_*</code> — <strong>one support test, associations and clubs</strong>. Other tests' outcomes, emergency tests, procurement channels, facilities and the ministry's own budget are not in it. The mockup's ₪148.1M / 476 bodies / 17 tests framing is illustrative.</p>
 </div>
 
-<h2 id="blockers-en">3 · Cross-cutting blockers</h2>
+<h2 id="open-en">4 · Open items</h2>
 <div class="tw"><table class="sum">
-<thead><tr><th>#</th><th>Blocker</th><th>Impact</th><th>Status</th></tr></thead>
+<thead><tr><th>#</th><th>Item</th><th>Why it matters</th></tr></thead>
 <tbody>
-<tr><td>B0</td><td>Every STT sheet is <em>In Progress</em>, ETL status empty</td><td>Decides whether the specced facts are weeks or months away</td><td><span class="pill amber">Ask the DWH team</span></td></tr>
-<tr><td>B1</td><td>How many years are actually loaded</td><td>Every trend line, growth KPI and cohort funnel</td><td><span class="pill amber">Unverified</span></td></tr>
-<tr><td>B2</td><td>Budget rows dropped on the join</td><td>Every ₪ visual understated by an unknown amount</td><td><span class="pill red">Visible in the Silver <code>budget</code> sheet: society and team map to <code>null</code></span></td></tr>
-<tr><td>B3</td><td>Cross-test scope labelling</td><td>An executive reading ₪148.1M off a live dashboard reads a number with no source</td><td><span class="pill amber">Decision needed</span></td></tr>
-<tr><td>B4</td><td>Deduplicated athlete count beside per-request budget</td><td>Would inflate every joint visual</td><td><span class="pill green">Solved — pattern documented</span></td></tr>
-<tr><td>B5</td><td>Association requests are national, with no meaningful authority</td><td>The geographic tab is really a clubs view</td><td><span class="pill amber">Rule needed before the map</span></td></tr>
-<tr><td>B6</td><td><s>No achievements model</s></td><td>—</td><td><span class="pill green">Resolved by this revision</span></td></tr>
-<tr><td>B7</td><td><code>fact_budget_pct</code> omits <code>support_test_type_code</code></td><td>Blocks per-test portfolio views Silver could otherwise support</td><td><span class="pill blue">One-column request</span></td></tr>
-<tr><td>B8</td><td>Data-type errors in the trainers and roles facts</td><td><code>first_name</code> and <code>branch_name</code> typed Int64; <code>branch_id</code> and <code>association_id</code> typed string</td><td><span class="pill blue">Fix before the ETL is written</span></td></tr>
+<tr><td>B1</td><td>How many years of <code>support_request_year</code> are loaded</td><td>A <em>data-content</em> question the STT cannot answer. Gates 7 trend visuals, all schematically covered</td></tr>
+<tr><td>B2</td><td>Silver <code>budget</code> maps <code>society_id</code> and <code>team_number</code> to <code>null</code></td><td>The join key can't match on those fields, so amounts drop. Visible in the contract itself — and now a production issue</td></tr>
+<tr><td>B3</td><td>Scope labelling</td><td>Any ministry-wide framing on a live dashboard has no warehouse behind it</td></tr>
+<tr><td>B5</td><td>Association-level requests are national</td><td><code>authority_id</code> is meaningless for them; the geographic view is a clubs view unless a rule allocates them</td></tr>
+<tr><td>B7</td><td><code>fact_budget_pct</code> omits <code>support_test_type_code</code></td><td>The column exists in Silver. Exposing it converts an entire tab from partial to covered</td></tr>
+<tr><td>B8</td><td>Declared types on the trainers and roles facts</td><td><code>first_name</code> and <code>branch_name</code> as Int64, <code>branch_id</code> and <code>association_id</code> as string. Either the STT is wrong or the tables are</td></tr>
 </tbody>
 </table></div>
 
-<h2 id="plan-en">4 · Release plan</h2>
+<h2 id="order-en">5 · Build order</h2>
 <dl class="kv">
-  <dt>Release 1 — 2–3 weeks</dt>
-  <dd>Only tables proven in production: <strong>Geographic view · Performance &amp; gender</strong> (score-based variants) <strong>· Support payments</strong> (rescoped) <strong>· Links</strong>. Prerequisites: B1 and B2 answered, B3 and B5 decided.</dd>
-  <dt>Release 1.5 — rides the ETL</dt>
-  <dd>No new data acquisition. As each specced fact lands: achievements (5 visuals), coaches (2), budget-by-purpose (2–3), official roles (1 new). Sequence against B0, not against a calendar.</dd>
-  <dt>Release 2 — genuine sourcing</dt>
-  <dd>Nonprofit-registry snapshot · LAMAS population by age band · promoting the extra <code>municipalities</code> columns · exposing the test code for a data-driven catalog.</dd>
-  <dt>Long — quarters</dt>
-  <dd>Cross-test warehouse beyond the CRM's allocation table · GuideStar account · accumulated multi-year snapshots · financial-report parsing · the inquiry system · facilities and emergency data.</dd>
+  <dt>Wave 1 — covered</dt><dd>ביצועים ומגדר · הסתכלות גיאוגרפית · IMPACT · קישורים. Build the covered visuals; drop or substitute the few that aren't.</dd>
+  <dt>Wave 2 — one decision each</dt><dd>תמיכות once B3 is decided and B1 known · מנופי מדיניות once the premium rules are encoded · קטלוג once B7 is done.</dd>
+  <dt>Wave 3 — needs an outside source</dt><dd>גוף נתמך profile · SLA · עמידות וחירום.</dd>
 </dl>
 
-<h2 id="tabs-en">5 · Tab by tab</h2>
+<h2 id="tabs-en">6 · Tab by tab</h2>
 
-<h3>5.1 · Geographic view — ~85% · build first</h3>
+<h3>ביצועים ומגדר — 83%</h3>
+<div class="bar"><i style="width:83.3%;background:var(--green)"></i><i style="width:16.7%;background:var(--amber)"></i></div>
+<div class="tw"><table class="sum"><tbody>
+<tr><td>ספורטאים לפי ענף — נשים מול גברים</td><td><span class="pill green">Covered</span></td><td><code>male_cnt</code> / <code>female_cnt</code></td></tr>
+<tr><td>ראייה מגדרית</td><td><span class="pill green">Covered</span> <span class="pill grey">History</span></td><td>Gender on the athlete fact</td></tr>
+<tr><td>הישגים לפי דירוג בתחרות</td><td><span class="pill green">Covered</span></td><td><code>competition_rank</code></td></tr>
+<tr><td>מגמת הישגים רב-שנתית</td><td><span class="pill green">Covered</span></td><td><code>champion_date</code> — a time axis independent of the request year</td></tr>
+<tr><td>הישגים לפי דירוג ומגדר</td><td><span class="pill green">Covered</span></td><td><code>competition_rank</code> × gender</td></tr>
+<tr><td>השתתפות ביחס לאוכלוסייה לפי גיל</td><td><span class="pill amber">Partial</span></td><td>Age is covered; population by age band is not in the DWH</td></tr>
+</tbody></table></div>
+
+<h3>הסתכלות גיאוגרפית — 75%</h3>
+<div class="bar"><i style="width:75%;background:var(--green)"></i><i style="width:12.5%;background:var(--amber)"></i><i style="width:12.5%;background:var(--red)"></i></div>
+<div class="tw"><table class="sum"><tbody>
+<tr><td>כרטיס יישוב</td><td><span class="pill green">Covered</span></td><td>Population · budget · athletes · achievements · per-capita</td></tr>
+<tr><td>ספורטאים לפי ענף</td><td><span class="pill green">Covered</span></td><td><code>fact_athlete</code> × <code>dim_branchs</code></td></tr>
+<tr><td>טבלת רשויות מובילות</td><td><span class="pill green">Covered</span></td><td>Amount + athletes + % of population</td></tr>
+<tr><td>תקציב יישובי מול שיעור השתתפות</td><td><span class="pill green">Covered</span></td><td>Bubble size = achievements</td></tr>
+<tr><td>תמיכה לנפש מול אשכול</td><td><span class="pill green">Covered</span></td><td><code>socioeconomic_cluster</code></td></tr>
+<tr><td>מגמת יחס פריפריה / מרכז</td><td><span class="pill green">Covered</span> <span class="pill grey">History</span></td><td><code>peripherality_cluster</code></td></tr>
+<tr><td>מפת חום</td><td><span class="pill amber">Partial</span></td><td>The measure is covered; <strong>the geometry is not warehouse data</strong> — a boundary layer must come from outside</td></tr>
+<tr><td>רכיבי הנוסחה — משקלים</td><td><span class="pill red">Not in DWH</span></td><td>A policy formula, not a dataset</td></tr>
+</tbody></table></div>
+
+<h3>IMPACT ויעילות — 75%</h3>
+<div class="bar"><i style="width:75%;background:var(--green)"></i><i style="width:25%;background:var(--amber)"></i></div>
+<div class="tw"><table class="sum"><tbody>
+<tr><td>שיעור השתתפות לפי מחוז מול יעד</td><td><span class="pill green">Covered</span></td><td>Athletes ÷ population by district; the target is a parameter</td></tr>
+<tr><td>תקציב מול עלות לספורטאי — Scatter</td><td><span class="pill green">Covered</span></td><td><code>approved_amount</code> + achievements</td></tr>
+<tr><td>עלות לספורטאי רשום — דירוג</td><td><span class="pill green">Covered</span></td><td><code>approved_amount</code> ÷ athletes</td></tr>
+<tr><td>מגמת שיעור ההשתתפות 2019–2028</td><td><span class="pill amber">Partial</span> <span class="pill grey">History</span></td><td>The series is covered; the forecast line is not data</td></tr>
+</tbody></table></div>
+
+<h3>תמיכות — 50%</h3>
+<div class="bar"><i style="width:50%;background:var(--green)"></i><i style="width:16.7%;background:var(--amber)"></i><i style="width:33.3%;background:var(--red)"></i></div>
+<div class="tw"><table class="sum"><tbody>
+<tr><td>חלוקת התמיכות לפי ייעוד</td><td><span class="pill green">Covered</span></td><td><code>fact_budget_pct</code> — purpose type, area, criterion</td></tr>
+<tr><td>מגמת התמיכות</td><td><span class="pill green">Covered</span> <span class="pill grey">History</span></td><td><code>approved_amount</code> × year</td></tr>
+<tr><td>תמיכות לפי איגוד · 2025 מול 2026</td><td><span class="pill green">Covered</span> <span class="pill grey">History</span></td><td>Amount by association and year</td></tr>
+<tr><td>הרכב התמיכה — ניקוד מול תיקונים</td><td><span class="pill amber">Partial</span></td><td>Scoring covered; the exceptions committee isn't in the DWH</td></tr>
+<tr><td>יציבות תקציבית של הגופים</td><td><span class="pill red">Not in DWH</span></td><td>Nonprofit financial reports</td></tr>
+<tr><td>מקורות מימון הגופים</td><td><span class="pill red">Not in DWH</span></td><td>Income breakdown by source</td></tr>
+</tbody></table></div>
+
+<h3>מנופי מדיניות והכלה — 33%</h3>
+<div class="bar"><i style="width:33.3%;background:var(--green)"></i><i style="width:66.7%;background:var(--amber)"></i></div>
+<div class="tw"><table class="sum"><tbody>
+<tr><td>צנרת דור צעיר — פירמידת גיל</td><td><span class="pill green">Covered</span></td><td><code>age</code> · <code>athlete_age_category</code> · <code>new_ageforgroups</code></td></tr>
+<tr><td>משפך הצנרת הארצי</td><td><span class="pill green">Covered</span> <span class="pill grey">History</span></td><td><code>athlete_code</code> is stable across years, so cohorts are computable</td></tr>
+<tr><td>מקצועיות — ספורטאים למאמן</td><td><span class="pill green">Covered</span></td><td><code>fact_trainers</code> · <code>role_desc</code></td></tr>
+<tr><td>פרמיית מגדר · הפרמיה כאחוז מהתמיכה</td><td><span class="pill amber">Partial ×2</span></td><td>Scores covered; the <strong>+30%</strong> rule must be encoded</td></tr>
+<tr><td>ספורטאים משולבים · חלוקה לפי מסגרת</td><td><span class="pill amber">Partial ×2</span></td><td>Branch-level only; no athlete-level disability</td></tr>
+<tr><td>פרמיית המכפילים לפי מבחן</td><td><span class="pill amber">Partial</span></td><td>Needs B7</td></tr>
+<tr><td>מגמת השילוב</td><td><span class="pill amber">Partial</span> <span class="pill grey">History</span></td><td>Branch-level proxy</td></tr>
+</tbody></table></div>
+<div class="callout win"><span class="clabel">Covered but not in the mockup</span>
+<p>Women in official and governance roles — <code>fact_office_roles_sport</code> carries gender × role description. Nothing to source.</p></div>
+
+<h3>גוף נתמך · מנוע הניקוד — 14%</h3>
+<div class="bar"><i style="width:14.3%;background:var(--green)"></i><i style="width:14.3%;background:var(--amber)"></i><i style="width:71.4%;background:var(--red)"></i></div>
+<div class="tw"><table class="sum"><tbody>
+<tr><td>הייחוס — תקציב לפי מבחן ואמת מידה</td><td><span class="pill green">Covered</span></td><td><code>fact_budget_pct</code> + the request fact's per-criterion scores</td></tr>
+<tr><td>חשיפה חוצת-תוכניות</td><td><span class="pill amber">Partial</span></td><td>Needs B7</td></tr>
+<tr><td>תלות בתמיכה (gauge · comparison · ranking) · הרכב המחזור · מחזור רב-שנתי</td><td><span class="pill red">Not in DWH ×5</span></td><td>Nonprofit revenue, employees, volunteers and members are not warehouse data</td></tr>
+</tbody></table></div>
+
+<h3>קטלוג התוכניות — 0% covered, 100% partial</h3>
+<p>All five cards are one column away. <code>new_supporttesttypes</code> and <code>new_allocationbudgetstoareaandm</code> are in production in Silver carrying <code>support_test_type_code</code>; <code>fact_budget_pct</code> drops it. Two residual gaps: <strong>ערך נקודה</strong> is not in the DWH at any layer, and it is unverified whether the CRM's test list covers all 17 tests or only those administered in this system.</p>
+
+<h3>SLA · תפעול · עמידות וחירום — 0%</h3>
+<p>No warehouse source for either. The inquiry system, the emergency tests and the facilities data all sit outside. Both are candidates for removal from the deck.</p>
+
+<h3>A screen the DWH supports that the mockup doesn't have</h3>
+<div class="callout win"><span class="clabel">Fully covered, currently unbuilt</span>
+<p>Both facts carry per-level threshold flags with documented logic — athlete → team → society → association → total, with rules differing by request type. That is a complete drop-off funnel: how many applicants fail, at which level, in which branch. Nothing to source.</p></div>
+
+<h2 id="outside-en">7 · What must come from outside the warehouse</h2>
 <div class="tw"><table class="sum">
-<thead><tr><th>Visual</th><th>Status</th><th>Mapping or gap</th></tr></thead>
+<thead><tr><th>Need</th><th>For</th></tr></thead>
 <tbody>
-<tr><td>Population, registered athletes, % of population</td><td><span class="pill green">Live</span></td><td><code>total_population</code> and a deduplicated athlete count</td></tr>
-<tr><td>Municipal budget</td><td><span class="pill amber">Partial</span></td><td>Via society → authority; excludes association-level money (B5); subject to B2</td></tr>
-<tr><td>Active clubs</td><td><span class="pill green">Live</span></td><td>Distinct societies</td></tr>
-<tr><td>National achievements</td><td><span class="pill blue">Specced</span></td><td>Both achievement facts, counted by rank</td></tr>
-<tr><td>Support per capita, by cluster</td><td><span class="pill green">Live</span></td><td>Amount ÷ population, banded by socioeconomic cluster</td></tr>
-<tr><td>Periphery / centre ratio</td><td><span class="pill green">Live</span></td><td>Peripherality cluster; Silver also offers the continuous index and distance</td></tr>
-<tr><td>Heat map — athletes per 1,000</td><td><span class="pill green">Live</span></td><td>Authority GeoJSON already in the repo; district fallback available</td></tr>
-<tr><td>Locality card</td><td><span class="pill green">Live</span></td><td>Every line now has a source (the achievements line is specced)</td></tr>
-<tr><td>Athletes by branch · leading-authorities table</td><td><span class="pill green">Live</span></td><td>Direct</td></tr>
-<tr><td>Budget vs participation scatter</td><td><span class="pill blue">Specced</span></td><td>Axes live; bubble size (achievements) now has a source</td></tr>
-<tr><td>Support per capita vs cluster</td><td><span class="pill green">Live</span></td><td>Direct</td></tr>
-<tr><td>Formula components</td><td><span class="pill red">Blocked</span></td><td>The weights are a policy formula, unverified against the test text — not a data problem</td></tr>
-<tr><td>Periphery-ratio trend</td><td><span class="pill amber">Partial</span></td><td>Gated on B1</td></tr>
+<tr><td>Authority boundary geometry</td><td>The heat map</td></tr>
+<tr><td>Population by age band</td><td>Participation by age; pipeline denominators</td></tr>
+<tr><td>Nonprofit registry / financial data</td><td>The entire supported-body profile</td></tr>
+<tr><td>Policy parameters — national target, the +30% premium, the preference coefficient, point value</td><td>Target lines, premium and catalog visuals</td></tr>
+<tr><td>Exceptions-committee decisions</td><td>The corrections half of the support-composition chart</td></tr>
+<tr><td>Inquiry system</td><td>SLA tab</td></tr>
+<tr><td>Emergency tests and facilities</td><td>Resilience tab</td></tr>
 </tbody>
 </table></div>
 
-<h3>5.2 · Performance &amp; gender — ~95% with the new facts, ~60% without</h3>
-<div class="tw"><table class="sum">
-<thead><tr><th>Visual</th><th>Status</th><th>Mapping or gap</th></tr></thead>
-<tbody>
-<tr><td>Registered athletes · % of population · % women</td><td><span class="pill green">Live</span></td><td>Direct</td></tr>
-<tr><td>National and international achievements</td><td><span class="pill blue">Specced</span></td><td>Champion type and competing-countries count separate national from international</td></tr>
-<tr><td>Athletes by branch — women vs men</td><td><span class="pill green">Live</span></td><td>Direct</td></tr>
-<tr><td>Gender view (donut + trend)</td><td><span class="pill amber">Partial</span></td><td>Donut live; trend gated on B1</td></tr>
-<tr><td>Achievements by competition rank</td><td><span class="pill blue">Specced</span></td><td><code>competition_rank</code> — exactly the column this chart needed</td></tr>
-<tr><td>Multi-year achievements trend</td><td><span class="pill blue">Specced</span></td><td>Champion date gives a real time axis, independent of the request year</td></tr>
-<tr><td>Achievements by rank and gender</td><td><span class="pill blue">Specced</span></td><td>Release 1 fallback: the male/female achievement <em>scores</em> — a score view, not a medal count</td></tr>
-<tr><td>Participation vs population by age</td><td><span class="pill amber">Partial</span></td><td>Age is live; the denominator needs a LAMAS age-band table — <code>municipalities</code> has no age breakdown</td></tr>
-</tbody>
-</table></div>
-
-<h3>5.3 · Support payments — ~75%, rescoped</h3>
-<div class="tw"><table class="sum">
-<thead><tr><th>Visual</th><th>Status</th><th>Mapping or gap</th></tr></thead>
-<tbody>
-<tr><td>Total support · supported bodies · average per body</td><td><span class="pill amber">Partial</span></td><td>Real for this test only — must be relabelled (B3)</td></tr>
-<tr><td>Three-year growth · support trend · 2025 vs 2026</td><td><span class="pill amber">Partial</span></td><td>Gated on B1</td></tr>
-<tr><td>Support by purpose</td><td><span class="pill blue">Specced</span></td><td><strong>Now real</strong> — <code>fact_budget_pct</code>, or <code>area_name</code> straight off the request fact</td></tr>
-<tr><td>Budget stability of supported bodies</td><td><span class="pill red">Blocked</span></td><td>Financial reports plus accumulated years</td></tr>
-<tr><td>Funding sources</td><td><span class="pill red">Blocked</span></td><td>The registry gives a three-way split at best; the real breakdown is PDF-only</td></tr>
-<tr><td>Support composition — scoring vs corrections</td><td><span class="pill amber">Partial</span></td><td>The scoring half is fully available; the exceptions committee has no source</td></tr>
-</tbody>
-</table></div>
-
-<h3>5.4 · Links — 100%, days</h3>
-<p>Navigation tiles become QuickSight URL Actions. No data dependency. Ship with Release 1 so the strategic view links into the existing production dashboards.</p>
-
-<h3>5.5 · Impact &amp; efficiency — ~75%</h3>
-<div class="tw"><table class="sum">
-<thead><tr><th>Visual</th><th>Status</th><th>Mapping or gap</th></tr></thead>
-<tbody>
-<tr><td>National participation rate · by district vs target</td><td><span class="pill green">Live</span></td><td>Athletes ÷ population, by LAMAS or CRM district</td></tr>
-<tr><td>National 2028 target</td><td><span class="pill amber">Partial</span></td><td>A policy constant — needs an owner, then trivial</td></tr>
-<tr><td>Budget per registered athlete · cost ranking</td><td><span class="pill amber">Partial</span></td><td>Live within this test's scope (B3)</td></tr>
-<tr><td>Budget per achievement</td><td><span class="pill blue">Specced</span></td><td>Amount ÷ achievement count</td></tr>
-<tr><td>Periphery per-capita ratio</td><td><span class="pill green">Live</span></td><td>Direct</td></tr>
-<tr><td>Participation trend 2019–2028</td><td><span class="pill red">Blocked</span></td><td>History (B1) plus a forecast line</td></tr>
-<tr><td>Budget vs cost-per-athlete scatter</td><td><span class="pill blue">Specced</span></td><td>Bubble size now has a source</td></tr>
-</tbody>
-</table></div>
-
-<h3>5.6 · Policy levers &amp; inclusion — ~75% with the new facts</h3>
-<div class="tw"><table class="sum">
-<thead><tr><th>Visual</th><th>Status</th><th>Mapping or gap</th></tr></thead>
-<tbody>
-<tr><td>Gender premium, and premium as % of support</td><td><span class="pill amber">Partial</span></td><td>All scores present; the premium needs the test rule encoded — <strong>+30%</strong> per the associations test, not ×1.5</td></tr>
-<tr><td>Youth-cohort premium · age pyramid by branch</td><td><span class="pill green">Live</span></td><td>Age and age category; Silver formalises the bands</td></tr>
-<tr><td>National pipeline funnel</td><td><span class="pill amber">Partial</span></td><td>The athlete key is stable across years, so cohorts are computable — needs 2–3 loaded years (B1)</td></tr>
-<tr><td>Certified coaches · athletes per coach</td><td><span class="pill blue">Specced</span></td><td><code>fact_trainers</code>; role description separates coach / instructor / national coach. Fix B8 first</td></tr>
-<tr><td>Integrated athletes by branch and setting</td><td><span class="pill amber">Partial</span></td><td>Branch-level only (special-needs flag, paralympic sport type); athlete-level disability still absent</td></tr>
-<tr><td>Multiplier premium by support test</td><td><span class="pill amber">Partial</span></td><td>Needs B7</td></tr>
-<tr><td><em>New option:</em> women in official and governance roles</td><td><span class="pill blue">Specced</span></td><td><code>fact_office_roles_sport</code> carries gender × role — a visual the mockup didn't have</td></tr>
-</tbody>
-</table></div>
-
-<h3>5.7 · Supported body &amp; scoring engine — split in half</h3>
-<p><strong>Scoring-engine half — live or specced.</strong> "Attribution: budget by test and criterion" is precisely <code>fact_budget_pct</code> — purpose type, area, criterion, percentage and amount — joined to the request fact's per-criterion scores and approved amount. Within associations and clubs this is a defensible screen as soon as the fact lands.</p>
-<p><strong>Organisation-profile half — new source, Release 2.</strong> Income, employees, volunteers, members, status, classification and objectives come from the open nonprofit-registry API (CKAN, no credentials): days to weeks of ETL. On-screen caveat required — the dependency metric's numerator covers one test only, so it under-reports.</p>
-<p><strong>Blocked, long:</strong> GuideStar eligibility flags need an account; multi-year revenue needs accumulated snapshots; the expense breakdown is PDF-only.</p>
-
-<h3>5.8 · Program catalog — partial, and no longer hopeless</h3>
-<p>Silver now holds the two tables a catalog needs: the support tests themselves, and budget and percentage per test, per purpose, per criterion. Two gaps remain: Gold's <code>fact_budget_pct</code> drops the test code (B7), and it is unverified whether the CRM's test list covers all 17 tests in the mockup or only those administered in this system. The interim option stands — a hand-maintained table, dated and owned.</p>
-
-<h3>5.9 · SLA &amp; operations — blocked, or drop it</h3>
-<p>No source in the warehouse, and the meeting already concluded the volume is too thin to be meaningful (roughly six inquiries a year). Either connect the internal inquiry system first, or remove the tab from the deck.</p>
-
-<h3>5.10 · Resilience &amp; emergency — blocked, long</h3>
-<p>Four emergency tests plus shelter placement, which lives in the manually maintained facilities workbook. Nothing here is in the warehouse.</p>
-
-<h3>5.11 · A new screen the STT makes possible — the threshold funnel</h3>
-<div class="callout win">
-  <span class="clabel">Free in data terms</span>
-  <p>Both facts now carry per-level threshold flags with documented logic: athlete → team → society → association → total, and the rules differ by request type. That is a complete drop-off funnel — how many applicants fail, at which level, in which branch — with no new sourcing. It also answers the modelling question already explored in <code>אלטרנטיבות_מידול_תנאי_סף.html</code>. Worth pitching alongside Release 1.</p>
-</div>
-
-<h2 id="data-en">6 · What still needs acquiring</h2>
-<div class="tw"><table class="sum">
-<thead><tr><th>Dataset</th><th>Source</th><th>Effort</th><th>Unlocks</th></tr></thead>
-<tbody>
-<tr><td>Population by age band</td><td>LAMAS, public CSV</td><td>Days</td><td>Participation by age; youth-pipeline denominators</td></tr>
-<tr><td>Extra municipality columns</td><td>Already in Silver</td><td>Hours</td><td>Continuous periphery index, distance, density, growth</td></tr>
-<tr><td>Test code on the budget fact</td><td>Already in Silver (B7)</td><td>Hours</td><td>Per-test portfolio views; the catalog tab</td></tr>
-<tr><td>National participation target</td><td>Policy decision</td><td>Hours once owned</td><td>Impact target lines</td></tr>
-<tr><td>Nonprofit-registry snapshot</td><td>Open CKAN API</td><td>1–2 weeks</td><td>Supported-body profile; dependency metric</td></tr>
-<tr><td>The 17-test reference table</td><td>Support-test PDFs, by hand</td><td>Days</td><td>Catalog tab, if the CRM list proves incomplete</td></tr>
-<tr><td>GuideStar</td><td>API v1.4 — requires an account</td><td>Blocked on access</td><td>Eligibility flags</td></tr>
-<tr><td>Cross-test outcomes</td><td>New modelling effort</td><td>Quarters</td><td>True portfolio KPIs</td></tr>
-</tbody>
-</table></div>
-
-<h2 id="qs-en">7 · QuickSight notes</h2>
+<h2 id="notes-en">8 · Implementation notes</h2>
 <ul>
-  <li><strong>Athlete count beside budget:</strong> athlete fact as primary, full outer join on the request code, a distinct count of athletes, and the amount divided by the row count of that request so budget is counted once. Hide the raw request-level measures so nobody sums the inflated copy.</li>
-  <li><strong>Achievements join the same way</strong> — both facts carry the request code, and the personal one also carries the athlete's request code, so they attach at either grain. The same fan-out discipline applies.</li>
-  <li><strong>Map:</strong> the local-authority boundaries GeoJSON is already in the repo, as a custom shape map; district-level fallback available.</li>
-  <li><strong>Every Release 1 visual is QuickSight-native:</strong> KPI, bar, stacked and clustered bar, line, donut, scatter, table with data bars, filled map.</li>
-  <li><strong>Locality joins</strong> go through the fact or the authority dimension, never the society dimension's authority name.</li>
+  <li>Athlete count beside budget: join on <code>support_request_code</code> at athlete grain, count athletes distinctly, and divide <code>approved_amount</code> by the request's row count so it is counted once.</li>
+  <li>Achievement facts attach on <code>support_request_code</code>; the personal one also carries <code>athlete_support_request_code</code>, so either grain works.</li>
+  <li>Locality joins go through the fact or <code>dim_authority</code>, never <code>dim_society.authority_name</code> (marked irrelevant in the STT).</li>
+  <li>Every covered visual maps to a native QuickSight type: KPI, bar, stacked and clustered bar, line, donut, scatter, table with data bars, filled map.</li>
 </ul>
 
-<h2 id="questions-en">8 · Open questions</h2>
+<h2 id="q-en">9 · Open questions</h2>
 <ol>
-  <li><strong>Per-table build status</strong> for the 12 Gold tables — which are loaded, which are spec only? Everything marked <span class="pill blue">Specced</span> depends on this (B0).</li>
-  <li>How many years are actually loaded? (B1)</li>
-  <li>The Silver budget sheet maps society and team to <code>null</code> — is that the live behaviour, and is it being fixed? (B2)</li>
-  <li>Do we label Release 1 as associations and clubs rather than ministry-wide? (B3)</li>
-  <li>Association-level requests in the geographic view — exclude, or allocate by a rule? (B5)</li>
-  <li>Expose the test code on the budget fact, and promote the extra municipality columns? Both are hours of work with outsized payoff. (B7)</li>
-  <li>Fix the trainers and roles data types before the ETL is written? (B8)</li>
-  <li>Does the CRM's test list cover all 17 tests, or only those administered in this system?</li>
-  <li>SLA — drop from the deck, or keep as an aspirational screen?</li>
-  <li>Add the threshold funnel to Release 1?</li>
+  <li>How many years of <code>support_request_year</code> are loaded? Gates 7 trend visuals. (B1)</li>
+  <li>Is the <code>null</code> mapping of <code>society_id</code> / <code>team_number</code> on the Silver budget table live behaviour, and is it being fixed? (B2)</li>
+  <li>Do we label the dashboards as associations-and-clubs rather than ministry-wide? (B3)</li>
+  <li>Association-level requests in the geographic view — exclude, or allocate by rule? (B5)</li>
+  <li>Expose <code>support_test_type_code</code> on <code>fact_budget_pct</code>? One column, converts a whole tab. (B7)</li>
+  <li>Do the declared types on the trainers and roles facts match the live tables? (B8)</li>
+  <li>Does <code>new_supporttesttypes</code> cover all 17 tests, or only those administered in this system?</li>
+  <li>Promote the continuous socioeconomic and peripherality index values and ranks from Silver into <code>dim_authority</code>?</li>
+  <li>SLA and עמידות — remove from the deck, or keep as aspirational screens?</li>
+  <li>Add the threshold funnel? Fully covered and currently unbuilt.</li>
 </ol>
 
-<footer>Scored against <code>STT_Aigudim_Agudut_Gold.xlsx</code> and <code>STT_Aigudim_Agudut_Silver.xlsx</code>, revision of 20/08/2026, plus the production diagnostic queries and the QuickSight join guide. Generated by Claude Code.</footer>
+<footer>Scored against <code>STT_Aigudim_Agudut_Gold.xlsx</code> and <code>STT_Aigudim_Agudut_Silver.xlsx</code>, revision of 20/08/2026, in production. Warehouse contract only — no repo artefacts were treated as evidence. Generated by Claude Code.</footer>
 
 </div>
 </div>
 
-<!-- ============================= HEBREW ============================= -->
+<!-- ============================ HEBREW ============================ -->
 <div class="doc" data-lang="he" hidden>
 <div class="wrap">
 
 <header class="top">
-  <div class="kicker">אודיט היתכנות נתונים</div>
-  <h1>המוקאפ האסטרטגי — מה ניתן לבנות, ומתי</h1>
-  <p class="sub">כל ויזואל ב־<code>מוקאפ-אסטרטגי-מורן.html</code> נבחן מול חוזה מחסן הנתונים, כדי להפריד בין מה שנמסר בשבועיים־שלושה לבין מה שדורש רבעונים.</p>
+  <div class="kicker">אודיט כיסוי מול ה-DWH</div>
+  <h1>המוקאפ האסטרטגי — מה המחסן באמת יודע לענות</h1>
+  <p class="sub">כל 53 הוויזואלים ב־<code>מוקאפ-אסטרטגי-מורן.html</code> נבחנו מול ה-STT בלבד. ויזואל מקבל ציון גבוה אם ורק אם השדות שהוא צריך קיימים במחסן.</p>
   <div class="meta">
     <div><div class="k">נבחן מול</div><div class="v">STT Gold + Silver</div></div>
-    <div><div class="k">גרסת ה-STT</div><div class="v">20/08/2026 09:04</div></div>
-    <div><div class="k">ויזואלים שנסקרו</div><div class="v">53 כרטיסים · 54 KPI</div></div>
-    <div><div class="k">לשוניות</div><div class="v">10</div></div>
+    <div><div class="k">גרסה</div><div class="v">20/08/2026 · בפרודקשן</div></div>
+    <div><div class="k">ויזואלים</div><div class="v">53</div></div>
+    <div><div class="k">מכוסים במלואם</div><div class="v">21 · 40%</div></div>
   </div>
 </header>
 
 <div class="panel">
-  <p class="lead">ארבע לשוניות ניתנות לאספקה תוך שבועיים־שלושה, על טבלאות שכבר מוכחות בפרודקשן. חמש נוספות ייפתחו כשהפקטות החדשות ייטענו — בלי שום רכש נתונים נוסף. לשלוש לשוניות אין נתונים באף אופק.</p>
-  <p>גרסת ה-STT של 20/08 שינתה את התמונה מהותית: שכבת ה-Gold עברה <strong>מ-2 פקטות ל-7</strong>, ונוסף STT ל-Silver. חמישה מתוך ששת הפערים שסומנו בהערכה הקודמת מוגדרים עכשיו — הישגים, מאמנים, בעלי תפקידים, תקציב לפי ייעוד, והכסף כעמודת Gold מלאה.</p>
+  <p class="lead">שלוש לשוניות מכוסות ב-75% ומעלה וניתנות לבנייה מול המחסן כמות שהוא. לשלוש אין מקור במחסן כלל. השאר באמצע — וכמעט תמיד מה שחסר אינו הנדסת נתונים אלא החלטה, כלל, או מקור שממילא לא היה אמור לשבת במחסן.</p>
+  <p><strong>היקף האודיט: ה-DWH בלבד.</strong> שום דבר מהריפו אינו ראיה — לא המוקאפים, לא קובצי האקסל, לא שכבות הגבולות ולא שאילתות האבחון. כיסוי = השדה קיים ב-STT.</p>
 </div>
 
 <div class="stats">
-  <div class="stat"><div class="n">7</div><div class="l">פקטות Gold (היו 2)</div></div>
-  <div class="stat"><div class="n">5</div><div class="l">ממדי Gold</div></div>
-  <div class="stat"><div class="n">21</div><div class="l">טבלאות Silver</div></div>
-  <div class="stat"><div class="n">4</div><div class="l">לשוניות ב-Release 1</div></div>
-  <div class="stat"><div class="n">3</div><div class="l">לשוניות ללא מקור</div></div>
+  <div class="stat"><div class="n">21</div><div class="l">מכוסים במלואם</div></div>
+  <div class="stat"><div class="n">16</div><div class="l">חלקיים</div></div>
+  <div class="stat"><div class="n">16</div><div class="l">לא ב-DWH</div></div>
+  <div class="stat"><div class="n">7</div><div class="l">פקטות Gold</div></div>
+  <div class="stat"><div class="n">7</div><div class="l">גרפי מגמה תלויי עומק היסטוריה</div></div>
 </div>
 
-<h2 id="legend-he">איך כל ויזואל מדורג</h2>
+<h2 id="score-he">1 · איך כל ויזואל מדורג</h2>
 <table class="sum"><tbody>
-<tr><td><span class="pill green">בפרודקשן</span></td><td>נתמך גם בחוזה וגם בטבלאות שכבר רצות בפרודקשן. ניתן לבנייה עכשיו.</td></tr>
-<tr><td><span class="pill blue">במפרט</span></td><td>מוגדר ב-STT החדש, ה-ETL לא אושר כבנוי. אמיתי — אבל מועד האספקה הוא מועד ה-ETL.</td></tr>
-<tr><td><span class="pill amber">חלקי</span></td><td>דורש מדד חלופי, צמצום היקף, או פתיחת חוסם.</td></tr>
-<tr><td><span class="pill grey">מקור חדש</span></td><td>דורש מקור שטרם התחלנו להביא. שבועות.</td></tr>
-<tr><td><span class="pill red">חסום</span></td><td>דורש מערכת או הסכמה שאין לנו. רבעונים.</td></tr>
+<tr><td><span class="pill green">מכוסה</span></td><td>כל שדה שהוויזואל צריך קיים במחסן.</td></tr>
+<tr><td><span class="pill amber">חלקי</span></td><td>חלק מהשדות קיימים וחלק לא — או שנדרש כלל/החלטה שאינם נתון.</td></tr>
+<tr><td><span class="pill red">לא ב-DWH</span></td><td>המדד המרכזי חסר. נדרש מקור מחוץ למחסן.</td></tr>
+<tr><td><span class="pill grey">עומק היסטוריה</span></td><td>מכוסה סכמתית, אבל זהו גרף מגמה — התועלת תלויה בכמה שנים טעונות, וה-STT אינו אומר זאת.</td></tr>
 </tbody></table>
 
-<div class="callout warn">
-  <span class="clabel">הסתייגות שחלה על כל מה שלמטה</span>
-  <p>כל גיליון בשני הקבצים מסומן <strong>STT Status = In Progress</strong>, ותא <strong>ETL Status ריק בכל 12 טבלאות ה-Gold</strong>. החוזה סוכם; הפייפליין לא אושר כבנוי. לכן פריטי <span class="pill blue">במפרט</span> בטוחים לתכנון, אבל לא בטוחים להצגה עד שמישהו יאשר שהטבלאות טעונות.</p>
-</div>
-
-<h2 id="changed-he">1 · מה השתנה ב-STT החדש</h2>
+<h2 id="rank-he">2 · דירוג הלשוניות</h2>
 <div class="tw"><table class="sum">
-<thead><tr><th>חדש או שונה</th><th>מה זה פותח</th></tr></thead>
+<thead><tr><th>לשונית</th><th>מכוסה</th><th>הערה</th></tr></thead>
 <tbody>
-<tr><td><code>dwh_aa_fact_achievement_personal</code></td><td>סוג אליפות, מועד, מדינה מארחת, מספר מדינות מתחרות, <strong><code>competition_rank</code></strong>, מספר משתתפים, דגל מקצוע אולימפי, קטגוריית משקל/מקצוע, מגדר ושכבת גיל, ניקוד. ספירת מדליות אמיתית לפי דירוג — חמישה גרפים שסומנו קודם "אין מקור".</td></tr>
-<tr><td><code>dwh_aa_fact_achievement_group</code></td><td>אותו מבנה ברמת קבוצה, עם שם קבוצה, מועד סיום ודירוג.</td></tr>
-<tr><td><code>dwh_aa_fact_trainers</code></td><td>מאמנים ומדריכים מאוחדים, עם תיאור תפקיד (מאמן / מדריך / מאמן לאומי), מגדר, ענף, איגוד, אגודה, שנה. מנוף יחס ספורטאים־למאמן הופך לאמיתי.</td></tr>
-<tr><td><code>dwh_aa_fact_office_roles_sport</code></td><td>בעלי תפקידים באיגוד, <strong>כולל מגדר</strong> — מבט שוויון בממשל שלא היה במוקאפ, ושמזין גם את דשבורדי ספורט הנשים.</td></tr>
-<tr><td><code>dwh_aa_fact_budget_pct</code></td><td>הקצאת תקציב לפי <code>area_name</code> (ייעוד תחום) ו-<code>measurement_for_area</code> (אמת מידה), עם אחוז וסכום לשנה. מזין גם את דונאט "חלוקה לפי ייעוד" וגם את מסך הייחוס של מנוע הניקוד.</td></tr>
-<tr><td><code>approved_amount</code> + <code>area_name</code></td><td>כסף וייעוד הם עכשיו עמודות Gold על פקטת הבקשות, לא רק תוצרי ETL.</td></tr>
-<tr><td>דגלי תנאי סף רב-רמתיים</td><td>ספורטאי ← קבוצה ← אגודה ← איגוד ← כולל, עם לוגיקת ה-CASE המדויקת לכל סוג בקשה. מאפשר מסך משפך נשירה בחינם.</td></tr>
-<tr><td>הגדרת <code>age</code> שונתה</td><td>עכשיו <code>assessment_year − birth_year</code> (היה שנת הבקשה). כדאי לציין בכל ויזואל גיל.</td></tr>
-<tr><td>Silver <code>municipalities</code></td><td>כל מה שב-<code>dim_authority</code> <em>ובנוסף</em> מרחק מתל אביב, שטח, גידול אוכלוסייה, ערך ודירוג המדד החברתי-כלכלי, אשכול/ערך/דירוג קומפקטיות, וערך ודירוג הפריפריאליות.</td></tr>
-<tr><td>טבלאות המבחנים ב-Silver</td><td><code>new_supporttesttypes</code> ו-<code>new_allocationbudgetstoareaandm</code> — מבחני התמיכה כישויות, עם הקצאת תקציב לכל מבחן. לשונית הקטלוג כבר לא בלתי אפשרית.</td></tr>
+<tr><td>ביצועים ומגדר</td><td><strong>83%</strong> (5/6)</td><td>המכוסה ביותר — פקטות ההישגים נותנות דירוג, מגדר, שכבת גיל וציר זמן עצמאי</td></tr>
+<tr><td>הסתכלות גיאוגרפית</td><td><strong>75%</strong> (6/8)</td><td>ממד הרשות נושא כמעט הכל</td></tr>
+<tr><td>IMPACT ויעילות</td><td><strong>75%</strong> (3/4)</td><td>השתתפות ויעילות מכוסות במלואן</td></tr>
+<tr><td>קישורים</td><td>—</td><td>אין תלות בנתונים</td></tr>
+<tr><td>תמיכות</td><td><strong>50%</strong> (3/6)</td><td>הכסף והייעוד מכוסים; הפערים מחוץ למחסן לחלוטין</td></tr>
+<tr><td>מנופי מדיניות והכלה</td><td><strong>33%</strong> (3/9)</td><td>מאמנים וצנרת מכוסים; הפרמיות דורשות קידוד כללים</td></tr>
+<tr><td>גוף נתמך · מנוע הניקוד</td><td><strong>14%</strong> (1/7)</td><td>מנוע הניקוד מכוסה; פרופיל הארגון אינו נתון מחסן</td></tr>
+<tr><td>קטלוג התוכניות</td><td><strong>0%</strong> — הכל חלקי</td><td>כל כרטיס תלוי בעמודה אחת שקיימת ב-Silver ולא נחשפת ב-Gold</td></tr>
+<tr><td>SLA · תפעול</td><td><strong>0%</strong></td><td>אין מקור</td></tr>
+<tr><td>עמידות וחירום</td><td><strong>0%</strong></td><td>אין מקור</td></tr>
 </tbody>
 </table></div>
 
-<div class="callout win">
-  <span class="clabel">שני תיקונים להערכה הקודמת</span>
-  <p><strong>"ייעוד הוא חוצה-מבחנים ולא זמין"</strong> — כבר לא נכון. הוא קיים כממד גם על פקטת הבקשות וגם על <code>dim_branchs</code>.</p>
-  <p><strong>"לשונית הקטלוג בלתי אפשרית"</strong> — הוגזם. ב-Silver יש את המבחנים ואת הקצאות התקציב שלהם; פשוט <code>fact_budget_pct</code> ב-Gold משמיט את <code>support_test_type_code</code>. העמודה הבודדת הזו היא מה שמפריד בין "הייעודים של המבחן הזה" לבין "הפורטפוליו".</p>
-</div>
-
-<h2 id="contract-he">2 · חוזה מחסן הנתונים כפי שהוא היום</h2>
-
+<h2 id="contract-he">3 · מה יש במחסן</h2>
 <h3>פקטות Gold</h3>
 <dl class="kv">
-  <dt><code>fact_athlete</code></dt>
-  <dd>ספורטאי × בקשה. מגדר, ניקוד, גיל וקטגוריית גיל, ביטוח, בדיקה רפואית, ענף, רשות, אגודה, איגוד, קבוצה, ליגה, שנה, וכל מערך תנאי הסף (ספורטאי / קבוצה / אגודה / איגוד / כוללים).</dd>
-  <dt><code>fact_support_request_sport</code></dt>
-  <dd>רזולוציית בקשה. <code>approved_amount</code>, <code>area_name</code>, סוג בקשה (איגוד / אגודה / קבוצה / אישי / אליפות אירופה), כמויות וניקודי גברים ונשים, ניקודי הישגיות / מקצועיות / מאמנים / עלות ענף / קידום נשים / מרכזי מצוינות, כל דגלי תנאי הסף, שנה.</dd>
-  <dt><code>fact_achievement_personal</code></dt>
-  <dd>הישגי ספורטאים עם מקום בדירוג, סוג ומועד אליפות, מדינה מארחת, מספר מדינות, משתתפים, דגל מקצוע אולימפי, קטגוריית מקצוע/משקל, מגדר ושכבת גיל.</dd>
-  <dt><code>fact_achievement_group</code></dt>
-  <dd>הישגים קבוצתיים עם דירוג, מגדר, שכבת גיל, ניקוד, שם קבוצה ומועד סיום.</dd>
-  <dt><code>fact_trainers</code></dt>
-  <dd>מאמנים ומדריכים (איחוד מאמנים + בעלי תפקידים), עם תיאור תפקיד, מגדר, ענף, איגוד, אגודה, שנה.</dd>
-  <dt><code>fact_office_roles_sport</code></dt>
-  <dd>בעלי תפקידים עם מגדר ותיאור תפקיד, לפי איגוד וענף.</dd>
-  <dt><code>fact_budget_pct</code></dt>
-  <dd>סכום ואחוז הקצאה לפי סוג ייעוד, תחום ואמת מידה, לכל שנת תמיכה.</dd>
+  <dt><code>fact_athlete</code></dt><dd>ספורטאי × בקשה. מגדר, ניקוד, גיל וקטגוריית גיל, ביטוח, בדיקה רפואית, ענף, רשות, אגודה, איגוד, קבוצה, ליגה, שנה, וכל מערך תנאי הסף.</dd>
+  <dt><code>fact_support_request_sport</code></dt><dd>רזולוציית בקשה. <strong><code>approved_amount</code></strong>, <strong><code>area_name</code></strong>, סוג בקשה, כמויות וניקודי גברים ונשים, כל ניקודי אמות המידה, דגלי תנאי סף, שנה.</dd>
+  <dt><code>fact_achievement_personal</code></dt><dd><strong><code>competition_rank</code></strong>, סוג ומועד אליפות, מדינה מארחת, מספר מדינות, משתתפים, דגל מקצוע אולימפי, קטגוריית מקצוע/משקל, מגדר, שכבת גיל, ניקוד.</dd>
+  <dt><code>fact_achievement_group</code></dt><dd>דירוג, מגדר, שכבת גיל, ניקוד, שם קבוצה, מועד סיום.</dd>
+  <dt><code>fact_trainers</code></dt><dd>מאמנים ומדריכים עם תיאור תפקיד, מגדר, ענף, איגוד, אגודה, שנה.</dd>
+  <dt><code>fact_office_roles_sport</code></dt><dd>בעלי תפקידים עם מגדר ותיאור תפקיד.</dd>
+  <dt><code>fact_budget_pct</code></dt><dd>סכום ואחוז הקצאה לפי סוג ייעוד, תחום ואמת מידה, לכל שנה.</dd>
 </dl>
-<p><strong>קיימות בפרודקשן אך נעדרות מה-STT:</strong> <code>dwh_aa_fact_athlete_by_branch_society</code> ו-<code>mrr_aa_budgets</code> הגולמית — שתיהן מופיעות בשאילתות האבחון.</p>
-
 <h3>ממדי Gold</h3>
-<div class="tw"><table class="sum">
-<thead><tr><th>ממד</th><th>שדות רלוונטיים</th></tr></thead>
-<tbody>
-<tr><td><code>dim_authority</code></td><td>אוכלוסייה, סה"כ גברים/נשים, פילוחי מגזר, מחוז למ"ס ומחוז CRM, מעמד מוניציפלי, <strong>אשכול חברתי-כלכלי</strong>, <strong>אשכול פריפריאליות</strong>, ראש הרשות. הנכס החזק ביותר במחסן עבור המוקאפ הזה.</td></tr>
-<tr><td><code>dim_branchs</code></td><td>אישי מול קבוצתי, סוג ענף (מועדף / חשיבה / על / רגיל), דגל אולימפי, דגל צרכים מיוחדים, תת-ענף, סוג ספורט (כולל פראלימפי), ענף ראשי, <strong><code>branch_area</code></strong>.</td></tr>
-<tr><td><code>dim_association</code></td><td>מספר ספק במרכבה, ענף ראשי.</td></tr>
-<tr><td><code>dim_society</code></td><td>קוד רשות. השדה <code>authority_name</code> מסומן "לא רלוונטי" — יש לקחת את היישוב מהפקטה או מ-<code>dim_authority</code>.</td></tr>
-<tr><td><code>dim_teams</code></td><td>תוספת הישגיות, מספר קבוצה, אגודה.</td></tr>
-</tbody>
-</table></div>
-
-<h3>Silver — מוכן אך טרם נחשף ב-Gold</h3>
+<p><code>dim_authority</code> — אוכלוסייה, סה"כ לפי מגדר, פילוחי מגזר, מחוז למ"ס ו-CRM, מעמד מוניציפלי, <strong>אשכול חברתי-כלכלי</strong>, <strong>אשכול פריפריאליות</strong>. <code>dim_branchs</code> — אישי/קבוצתי, סוג ענף, אולימפי, צרכים מיוחדים, סוג ספורט, <strong><code>branch_area</code></strong>. ובנוסף <code>dim_association</code>, <code>dim_society</code>, <code>dim_teams</code>.</p>
+<h3>Silver — בפרודקשן, לא נחשף ב-Gold</h3>
 <ul>
-  <li><strong><code>municipalities</code></strong> (למ"ס) — ערכי ודירוגי המדד החברתי-כלכלי והפריפריאליות ברזולוציה רציפה, מרחק מתל אביב, שטח, צפיפות וגידול אוכלוסייה. ניתוח שוויון מדויק יותר הוא קידום עמודה, לא מקור חדש.</li>
-  <li><strong><code>new_supporttesttypes</code></strong> — מבחני התמיכה כישויות, לפי שנה ומערכת מנהלת.</li>
-  <li><strong><code>new_allocationbudgetstoareaandm</code></strong> — הקצאה לכל מבחן: קוד מבחן, שנה, סוג ייעוד, תחום, אמת מידה, אחוז, סכום, מסגרת תקציב.</li>
-  <li><strong><code>new_ageforgroups</code></strong> — הגדרות שכבות גיל פורמליות עם מגדר ותחולה לפי סוג ענף.</li>
-  <li><strong><code>budget</code></strong> — הסכומים המאושרים ממקור האקסל, כאשר <code>society_id</code> ו-<code>team_number</code> ממופים כרגע ל-<code>null</code>. זה בדיוק מנגנון נשירת השורות, גלוי בתוך החוזה עצמו.</li>
+  <li><code>municipalities</code> — <strong>ערכי ודירוגי</strong> המדד החברתי-כלכלי והפריפריאליות ברזולוציה רציפה, מרחק מתל אביב, שטח, קומפקטיות, גידול אוכלוסייה. עשיר ממה ש-<code>dim_authority</code> חושף.</li>
+  <li><code>new_supporttesttypes</code> — מבחני התמיכה כישויות.</li>
+  <li><code>new_allocationbudgetstoareaandm</code> — הקצאה לכל מבחן, נושאת <strong><code>support_test_type_code</code></strong> ש-<code>fact_budget_pct</code> משמיט.</li>
+  <li><code>new_ageforgroups</code> — הגדרות שכבות גיל. <code>budget</code> — סכומים מאושרים, עם <code>society_id</code> ו-<code>team_number</code> ממופים ל-<code>null</code>.</li>
 </ul>
 
 <div class="callout info">
-  <span class="clabel">גבול ההיקף — לקרוא לפני כל ניסוח הנהלה</span>
-  <p>שכבת ה-Gold היא <code>dwh_aa_*</code>: <strong>מבחן תמיכה אחד, איגודים ואגודות</strong>. היא אינה כוללת את תוצרי שאר המבחנים, מבחני חירום, ערוצי רכש ותקנות, מתקנים, או תקציב המשרד עצמו. המסגור של ₪148.1M / 476 גופים / 17 מבחנים נותר להמחשה בלבד.</p>
+  <span class="clabel">גבול ההיקף</span>
+  <p>שכבת ה-Gold היא <code>dwh_aa_*</code> — <strong>מבחן תמיכה אחד, איגודים ואגודות</strong>. תוצרי שאר המבחנים, מבחני חירום, ערוצי רכש, מתקנים ותקציב המשרד עצמו אינם בה. המסגור של ₪148.1M / 476 גופים / 17 מבחנים הוא להמחשה.</p>
 </div>
 
-<h2 id="blockers-he">3 · חוסמים רוחביים</h2>
+<h2 id="open-he">4 · פתוחים</h2>
 <div class="tw"><table class="sum">
-<thead><tr><th>#</th><th>חוסם</th><th>השפעה</th><th>סטטוס</th></tr></thead>
+<thead><tr><th>#</th><th>נושא</th><th>למה זה משנה</th></tr></thead>
 <tbody>
-<tr><td>B0</td><td>כל גיליון STT הוא <em>In Progress</em>, סטטוס ETL ריק</td><td>קובע אם הפקטות החדשות רחוקות שבועות או חודשים</td><td><span class="pill amber">לשאול את צוות ה-DWH</span></td></tr>
-<tr><td>B1</td><td>כמה שנים באמת טעונות</td><td>כל קו מגמה, KPI צמיחה ומשפך קוהורטות</td><td><span class="pill amber">לא אומת</span></td></tr>
-<tr><td>B2</td><td>שורות תקציב נושרות ב-join</td><td>כל ויזואל כספי מוצג בחסר בהיקף לא ידוע</td><td><span class="pill red">גלוי בגיליון <code>budget</code> ב-Silver: אגודה וקבוצה ממופות ל-<code>null</code></span></td></tr>
-<tr><td>B3</td><td>תיוג ההיקף חוצה-המבחנים</td><td>מנהל שקורא ₪148.1M בדשבורד חי קורא מספר שאין לו מקור</td><td><span class="pill amber">נדרשת החלטה</span></td></tr>
-<tr><td>B4</td><td>ספירת ספורטאים מדודפקת לצד תקציב לבקשה</td><td>הייתה מנפחת כל ויזואל משולב</td><td><span class="pill green">נפתר — הדפוס מתועד</span></td></tr>
-<tr><td>B5</td><td>בקשות איגוד הן ארציות, ללא רשות משמעותית</td><td>הלשונית הגיאוגרפית היא למעשה מבט אגודות</td><td><span class="pill amber">נדרש כלל לפני המפה</span></td></tr>
-<tr><td>B6</td><td><s>אין מודל הישגים</s></td><td>—</td><td><span class="pill green">נפתר בגרסה הזו</span></td></tr>
-<tr><td>B7</td><td><code>fact_budget_pct</code> משמיט את <code>support_test_type_code</code></td><td>חוסם מבטי פורטפוליו לפי מבחן ש-Silver כן יכול לתמוך בהם</td><td><span class="pill blue">בקשת עמודה אחת</span></td></tr>
-<tr><td>B8</td><td>שגיאות טיפוסים בפקטות המאמנים והתפקידים</td><td><code>first_name</code> ו-<code>branch_name</code> מוגדרים Int64; <code>branch_id</code> ו-<code>association_id</code> מוגדרים string</td><td><span class="pill blue">לתקן לפני כתיבת ה-ETL</span></td></tr>
+<tr><td>B1</td><td>כמה שנות <code>support_request_year</code> טעונות</td><td>שאלת <em>תוכן נתונים</em> שה-STT אינו יכול לענות עליה. חוסמת 7 גרפי מגמה, כולם מכוסים סכמתית</td></tr>
+<tr><td>B2</td><td>ב-Silver <code>budget</code> השדות <code>society_id</code> ו-<code>team_number</code> ממופים ל-<code>null</code></td><td>מפתח החיבור לא יכול להתאים, ולכן סכומים נושרים. גלוי בחוזה עצמו — וכעת זו בעיית פרודקשן</td></tr>
+<tr><td>B3</td><td>תיוג ההיקף</td><td>לכל מסגור כלל-משרדי בדשבורד חי אין מחסן מאחוריו</td></tr>
+<tr><td>B5</td><td>בקשות ברמת איגוד הן ארציות</td><td><code>authority_id</code> חסר משמעות עבורן; המבט הגיאוגרפי הוא מבט אגודות אלא אם ייקבע כלל הקצאה</td></tr>
+<tr><td>B7</td><td><code>fact_budget_pct</code> משמיט את <code>support_test_type_code</code></td><td>העמודה קיימת ב-Silver. חשיפתה הופכת לשונית שלמה מחלקית למכוסה</td></tr>
+<tr><td>B8</td><td>הצהרות הטיפוסים בפקטות המאמנים והתפקידים</td><td><code>first_name</code> ו-<code>branch_name</code> כ-Int64, <code>branch_id</code> ו-<code>association_id</code> כ-string. או שה-STT שגוי או שהטבלאות שגויות</td></tr>
 </tbody>
 </table></div>
 
-<h2 id="plan-he">4 · תוכנית שחרור</h2>
+<h2 id="order-he">5 · סדר בנייה</h2>
 <dl class="kv">
-  <dt>Release 1 — שבועיים־שלושה</dt>
-  <dd>רק טבלאות מוכחות בפרודקשן: <strong>הסתכלות גיאוגרפית · ביצועים ומגדר</strong> (בגרסאות מבוססות ניקוד) <strong>· תמיכות</strong> (בהיקף מצומצם) <strong>· קישורים</strong>. תנאים מקדימים: מענה ל-B1 ו-B2, החלטה על B3 ו-B5.</dd>
-  <dt>Release 1.5 — רוכב על ה-ETL</dt>
-  <dd>אפס רכש נתונים. ככל שכל פקטה נוחתת: הישגים (5 ויזואלים), מאמנים (2), תקציב לפי ייעוד (2–3), בעלי תפקידים (1 חדש). לתזמן מול B0, לא מול לוח שנה.</dd>
-  <dt>Release 2 — רכש אמיתי</dt>
-  <dd>snapshot מרשם העמותות · שכבות גיל מהלמ"ס · קידום עמודות ה-<code>municipalities</code> הנוספות · חשיפת קוד המבחן לקטלוג מבוסס-נתונים.</dd>
-  <dt>ארוך — רבעונים</dt>
-  <dd>מחסן חוצה-מבחנים מעבר לטבלת ההקצאות ב-CRM · חשבון גיידסטאר · צבירת snapshots רב-שנתיים · פענוח דוחות כספיים · מערכת הפניות · נתוני מתקנים וחירום.</dd>
+  <dt>גל 1 — המכוסות</dt><dd>ביצועים ומגדר · הסתכלות גיאוגרפית · IMPACT · קישורים. לבנות את המכוסים; להוריד או להחליף את הבודדים שלא.</dd>
+  <dt>גל 2 — החלטה אחת לכל אחת</dt><dd>תמיכות אחרי הכרעה ב-B3 ומענה ל-B1 · מנופי מדיניות אחרי קידוד כללי הפרמיה · קטלוג אחרי B7.</dd>
+  <dt>גל 3 — דורש מקור חיצוני</dt><dd>פרופיל גוף נתמך · SLA · עמידות וחירום.</dd>
 </dl>
 
-<h2 id="tabs-he">5 · לשונית אחר לשונית</h2>
+<h2 id="tabs-he">6 · לשונית אחר לשונית</h2>
 
-<h3>5.1 · הסתכלות גיאוגרפית — ~85% · לבנות ראשונה</h3>
+<h3>ביצועים ומגדר — 83%</h3>
+<div class="bar"><i style="width:83.3%;background:var(--green)"></i><i style="width:16.7%;background:var(--amber)"></i></div>
+<div class="tw"><table class="sum"><tbody>
+<tr><td>ספורטאים לפי ענף — נשים מול גברים</td><td><span class="pill green">מכוסה</span></td><td><code>male_cnt</code> / <code>female_cnt</code></td></tr>
+<tr><td>ראייה מגדרית</td><td><span class="pill green">מכוסה</span> <span class="pill grey">היסטוריה</span></td><td>מגדר בפקטת הספורטאים</td></tr>
+<tr><td>הישגים לפי דירוג בתחרות</td><td><span class="pill green">מכוסה</span></td><td><code>competition_rank</code></td></tr>
+<tr><td>מגמת הישגים רב-שנתית</td><td><span class="pill green">מכוסה</span></td><td><code>champion_date</code> — ציר זמן בלתי תלוי בשנת הבקשה</td></tr>
+<tr><td>הישגים לפי דירוג ומגדר</td><td><span class="pill green">מכוסה</span></td><td><code>competition_rank</code> × מגדר</td></tr>
+<tr><td>השתתפות ביחס לאוכלוסייה לפי גיל</td><td><span class="pill amber">חלקי</span></td><td>הגיל מכוסה; פילוח האוכלוסייה לפי גיל אינו ב-DWH</td></tr>
+</tbody></table></div>
+
+<h3>הסתכלות גיאוגרפית — 75%</h3>
+<div class="bar"><i style="width:75%;background:var(--green)"></i><i style="width:12.5%;background:var(--amber)"></i><i style="width:12.5%;background:var(--red)"></i></div>
+<div class="tw"><table class="sum"><tbody>
+<tr><td>כרטיס יישוב</td><td><span class="pill green">מכוסה</span></td><td>אוכלוסייה · תקציב · ספורטאים · הישגים · תמיכה לנפש</td></tr>
+<tr><td>ספורטאים לפי ענף</td><td><span class="pill green">מכוסה</span></td><td><code>fact_athlete</code> × <code>dim_branchs</code></td></tr>
+<tr><td>טבלת רשויות מובילות</td><td><span class="pill green">מכוסה</span></td><td>סכום + ספורטאים + % מהאוכלוסייה</td></tr>
+<tr><td>תקציב יישובי מול שיעור השתתפות</td><td><span class="pill green">מכוסה</span></td><td>גודל הבועה = הישגים</td></tr>
+<tr><td>תמיכה לנפש מול אשכול</td><td><span class="pill green">מכוסה</span></td><td><code>socioeconomic_cluster</code></td></tr>
+<tr><td>מגמת יחס פריפריה / מרכז</td><td><span class="pill green">מכוסה</span> <span class="pill grey">היסטוריה</span></td><td><code>peripherality_cluster</code></td></tr>
+<tr><td>מפת חום</td><td><span class="pill amber">חלקי</span></td><td>המדד מכוסה; <strong>הגאומטריה אינה נתון מחסן</strong> — שכבת גבולות חייבת להגיע מבחוץ</td></tr>
+<tr><td>רכיבי הנוסחה — משקלים</td><td><span class="pill red">לא ב-DWH</span></td><td>נוסחת מדיניות, לא מאגר</td></tr>
+</tbody></table></div>
+
+<h3>IMPACT ויעילות — 75%</h3>
+<div class="bar"><i style="width:75%;background:var(--green)"></i><i style="width:25%;background:var(--amber)"></i></div>
+<div class="tw"><table class="sum"><tbody>
+<tr><td>שיעור השתתפות לפי מחוז מול יעד</td><td><span class="pill green">מכוסה</span></td><td>ספורטאים ÷ אוכלוסייה לפי מחוז; היעד = פרמטר</td></tr>
+<tr><td>תקציב מול עלות לספורטאי — Scatter</td><td><span class="pill green">מכוסה</span></td><td><code>approved_amount</code> + הישגים</td></tr>
+<tr><td>עלות לספורטאי רשום — דירוג</td><td><span class="pill green">מכוסה</span></td><td><code>approved_amount</code> ÷ ספורטאים</td></tr>
+<tr><td>מגמת שיעור ההשתתפות 2019–2028</td><td><span class="pill amber">חלקי</span> <span class="pill grey">היסטוריה</span></td><td>הסדרה מכוסה; קו התחזית אינו נתון</td></tr>
+</tbody></table></div>
+
+<h3>תמיכות — 50%</h3>
+<div class="bar"><i style="width:50%;background:var(--green)"></i><i style="width:16.7%;background:var(--amber)"></i><i style="width:33.3%;background:var(--red)"></i></div>
+<div class="tw"><table class="sum"><tbody>
+<tr><td>חלוקת התמיכות לפי ייעוד</td><td><span class="pill green">מכוסה</span></td><td><code>fact_budget_pct</code> — סוג ייעוד, תחום, אמת מידה</td></tr>
+<tr><td>מגמת התמיכות</td><td><span class="pill green">מכוסה</span> <span class="pill grey">היסטוריה</span></td><td><code>approved_amount</code> × שנה</td></tr>
+<tr><td>תמיכות לפי איגוד · 2025 מול 2026</td><td><span class="pill green">מכוסה</span> <span class="pill grey">היסטוריה</span></td><td>סכום לפי איגוד ושנה</td></tr>
+<tr><td>הרכב התמיכה — ניקוד מול תיקונים</td><td><span class="pill amber">חלקי</span></td><td>הניקוד מכוסה; ועדת החריגים אינה ב-DWH</td></tr>
+<tr><td>יציבות תקציבית של הגופים</td><td><span class="pill red">לא ב-DWH</span></td><td>דוחות כספיים של עמותות</td></tr>
+<tr><td>מקורות מימון הגופים</td><td><span class="pill red">לא ב-DWH</span></td><td>פילוח הכנסות לפי מקור</td></tr>
+</tbody></table></div>
+
+<h3>מנופי מדיניות והכלה — 33%</h3>
+<div class="bar"><i style="width:33.3%;background:var(--green)"></i><i style="width:66.7%;background:var(--amber)"></i></div>
+<div class="tw"><table class="sum"><tbody>
+<tr><td>צנרת דור צעיר — פירמידת גיל</td><td><span class="pill green">מכוסה</span></td><td><code>age</code> · <code>athlete_age_category</code> · <code>new_ageforgroups</code></td></tr>
+<tr><td>משפך הצנרת הארצי</td><td><span class="pill green">מכוסה</span> <span class="pill grey">היסטוריה</span></td><td><code>athlete_code</code> יציב בין שנים — קוהורטות ניתנות לחישוב</td></tr>
+<tr><td>מקצועיות — ספורטאים למאמן</td><td><span class="pill green">מכוסה</span></td><td><code>fact_trainers</code> · <code>role_desc</code></td></tr>
+<tr><td>פרמיית מגדר · הפרמיה כאחוז מהתמיכה</td><td><span class="pill amber">חלקי ×2</span></td><td>הניקודים מכוסים; כלל ה-<strong>+30%</strong> דורש קידוד</td></tr>
+<tr><td>ספורטאים משולבים · חלוקה לפי מסגרת</td><td><span class="pill amber">חלקי ×2</span></td><td>ברמת ענף בלבד; אין מוגבלות ברמת ספורטאי</td></tr>
+<tr><td>פרמיית המכפילים לפי מבחן</td><td><span class="pill amber">חלקי</span></td><td>דורש B7</td></tr>
+<tr><td>מגמת השילוב</td><td><span class="pill amber">חלקי</span> <span class="pill grey">היסטוריה</span></td><td>פרוקסי ברמת ענף</td></tr>
+</tbody></table></div>
+<div class="callout win"><span class="clabel">מכוסה אך לא קיים במוקאפ</span>
+<p>נשים בתפקידי ניהול וממשל — <code>fact_office_roles_sport</code> נושא מגדר × תיאור תפקיד. אין מה לרכוש.</p></div>
+
+<h3>גוף נתמך · מנוע הניקוד — 14%</h3>
+<div class="bar"><i style="width:14.3%;background:var(--green)"></i><i style="width:14.3%;background:var(--amber)"></i><i style="width:71.4%;background:var(--red)"></i></div>
+<div class="tw"><table class="sum"><tbody>
+<tr><td>הייחוס — תקציב לפי מבחן ואמת מידה</td><td><span class="pill green">מכוסה</span></td><td><code>fact_budget_pct</code> + ניקודי אמות המידה בפקטת הבקשות</td></tr>
+<tr><td>חשיפה חוצת-תוכניות</td><td><span class="pill amber">חלקי</span></td><td>דורש B7</td></tr>
+<tr><td>תלות בתמיכה (Gauge · השוואה · טבלת דירוג) · הרכב המחזור · מחזור רב-שנתי</td><td><span class="pill red">לא ב-DWH ×5</span></td><td>מחזור העמותה, עובדים, מתנדבים וחברים אינם נתוני מחסן</td></tr>
+</tbody></table></div>
+
+<h3>קטלוג התוכניות — 0% מכוסה, 100% חלקי</h3>
+<p>כל חמשת הכרטיסים במרחק עמודה אחת. <code>new_supporttesttypes</code> ו-<code>new_allocationbudgetstoareaandm</code> בפרודקשן ב-Silver ונושאים <code>support_test_type_code</code>; <code>fact_budget_pct</code> משמיט אותו. שני פערים שנותרים: <strong>ערך נקודה</strong> אינו ב-DWH באף שכבה, ולא אומת אם רשימת המבחנים ב-CRM מכסה את כל 17 המבחנים או רק את המנוהלים במערכת הזו.</p>
+
+<h3>SLA · תפעול · עמידות וחירום — 0%</h3>
+<p>אין מקור במחסן לאף אחת מהן. מערכת הפניות, מבחני החירום ונתוני המתקנים — כולם מחוץ למחסן. שתיהן מועמדות להסרה מהמצגת.</p>
+
+<h3>מסך שה-DWH תומך בו ואינו קיים במוקאפ</h3>
+<div class="callout win"><span class="clabel">מכוסה במלואו, טרם נבנה</span>
+<p>שתי הפקטות נושאות דגלי תנאי סף לכל רמה עם לוגיקה מתועדת — ספורטאי ← קבוצה ← אגודה ← איגוד ← כולל, והכללים משתנים לפי סוג הבקשה. זהו משפך נשירה שלם: כמה מגישים נופלים, באיזו רמה, באיזה ענף. אין מה לרכוש.</p></div>
+
+<h2 id="outside-he">7 · מה חייב להגיע מחוץ למחסן</h2>
 <div class="tw"><table class="sum">
-<thead><tr><th>ויזואל</th><th>סטטוס</th><th>מיפוי או פער</th></tr></thead>
+<thead><tr><th>צורך</th><th>עבור</th></tr></thead>
 <tbody>
-<tr><td>אוכלוסייה, ספורטאים רשומים, אחוז מהאוכלוסייה</td><td><span class="pill green">בפרודקשן</span></td><td><code>total_population</code> וספירת ספורטאים מדודפקת</td></tr>
-<tr><td>תקציב יישובי</td><td><span class="pill amber">חלקי</span></td><td>דרך אגודה ← רשות; לא כולל כסף ברמת איגוד (B5); כפוף ל-B2</td></tr>
-<tr><td>אגודות פעילות</td><td><span class="pill green">בפרודקשן</span></td><td>ספירת אגודות ייחודיות</td></tr>
-<tr><td>הישגים ארציים</td><td><span class="pill blue">במפרט</span></td><td>שתי פקטות ההישגים, בספירה לפי דירוג</td></tr>
-<tr><td>תמיכה לנפש, לפי אשכול</td><td><span class="pill green">בפרודקשן</span></td><td>סכום ÷ אוכלוסייה, בפילוח אשכול חברתי-כלכלי</td></tr>
-<tr><td>יחס פריפריה / מרכז</td><td><span class="pill green">בפרודקשן</span></td><td>אשכול פריפריאליות; ב-Silver יש גם מדד רציף ומרחק</td></tr>
-<tr><td>מפת חום — ספורטאים ל-1,000</td><td><span class="pill green">בפרודקשן</span></td><td>ה-GeoJSON של גבולות הרשויות כבר בריפו; יש חלופה ברמת מחוז</td></tr>
-<tr><td>כרטיס יישוב</td><td><span class="pill green">בפרודקשן</span></td><td>לכל שורה יש מקור (שורת ההישגים במפרט)</td></tr>
-<tr><td>ספורטאים לפי ענף · טבלת רשויות מובילות</td><td><span class="pill green">בפרודקשן</span></td><td>ישיר</td></tr>
-<tr><td>Scatter תקציב מול השתתפות</td><td><span class="pill blue">במפרט</span></td><td>הצירים בפרודקשן; גודל הבועה (הישגים) קיבל מקור</td></tr>
-<tr><td>תמיכה לנפש מול אשכול</td><td><span class="pill green">בפרודקשן</span></td><td>ישיר</td></tr>
-<tr><td>רכיבי הנוסחה</td><td><span class="pill red">חסום</span></td><td>המשקלים הם נוסחת מדיניות, לא מאומתת מול נוסח המבחן — לא בעיית נתונים</td></tr>
-<tr><td>מגמת יחס פריפריה</td><td><span class="pill amber">חלקי</span></td><td>תלוי ב-B1</td></tr>
+<tr><td>גאומטריית גבולות רשויות</td><td>מפת החום</td></tr>
+<tr><td>אוכלוסייה לפי שכבות גיל</td><td>השתתפות לפי גיל; מכנים לצנרת</td></tr>
+<tr><td>רשם העמותות / נתונים כספיים</td><td>כל פרופיל הגוף הנתמך</td></tr>
+<tr><td>פרמטרי מדיניות — יעד לאומי, פרמיית ה-30%, מקדם התעדוף, ערך נקודה</td><td>קווי יעד, פרמיות וקטלוג</td></tr>
+<tr><td>החלטות ועדת חריגים</td><td>חצי התיקונים בגרף הרכב התמיכה</td></tr>
+<tr><td>מערכת הפניות</td><td>לשונית SLA</td></tr>
+<tr><td>מבחני חירום ומתקנים</td><td>לשונית עמידות</td></tr>
 </tbody>
 </table></div>
 
-<h3>5.2 · ביצועים ומגדר — ~95% עם הפקטות החדשות, ~60% בלעדיהן</h3>
-<div class="tw"><table class="sum">
-<thead><tr><th>ויזואל</th><th>סטטוס</th><th>מיפוי או פער</th></tr></thead>
-<tbody>
-<tr><td>ספורטאים רשומים · אחוז מהאוכלוסייה · אחוז נשים</td><td><span class="pill green">בפרודקשן</span></td><td>ישיר</td></tr>
-<tr><td>הישגים ארציים ובינ"ל</td><td><span class="pill blue">במפרט</span></td><td>סוג האליפות ומספר המדינות מפרידים ארצי מבינלאומי</td></tr>
-<tr><td>ספורטאים לפי ענף — נשים מול גברים</td><td><span class="pill green">בפרודקשן</span></td><td>ישיר</td></tr>
-<tr><td>ראייה מגדרית (דונאט + מגמה)</td><td><span class="pill amber">חלקי</span></td><td>הדונאט בפרודקשן; המגמה תלויה ב-B1</td></tr>
-<tr><td>הישגים לפי דירוג בתחרות</td><td><span class="pill blue">במפרט</span></td><td><code>competition_rank</code> — בדיוק העמודה שהגרף הזה דרש</td></tr>
-<tr><td>מגמת הישגים רב-שנתית</td><td><span class="pill blue">במפרט</span></td><td>מועד האליפות נותן ציר זמן אמיתי, בלתי תלוי בשנת הבקשה</td></tr>
-<tr><td>הישגים לפי דירוג ומגדר</td><td><span class="pill blue">במפרט</span></td><td>חלופה ל-Release 1: ניקודי ההישגיות לגברים ולנשים — מבט ניקוד, לא ספירת מדליות</td></tr>
-<tr><td>השתתפות מול אוכלוסייה לפי גיל</td><td><span class="pill amber">חלקי</span></td><td>הגיל בפרודקשן; המכנה דורש טבלת שכבות גיל מהלמ"ס — ב-<code>municipalities</code> אין פילוח גיל</td></tr>
-</tbody>
-</table></div>
-
-<h3>5.3 · תמיכות — ~75%, בהיקף מצומצם</h3>
-<div class="tw"><table class="sum">
-<thead><tr><th>ויזואל</th><th>סטטוס</th><th>מיפוי או פער</th></tr></thead>
-<tbody>
-<tr><td>סך התמיכות · גופים נתמכים · ממוצע לגוף</td><td><span class="pill amber">חלקי</span></td><td>אמיתי למבחן הזה בלבד — חובה לתייג מחדש (B3)</td></tr>
-<tr><td>צמיחה תלת-שנתית · מגמה · 2025 מול 2026</td><td><span class="pill amber">חלקי</span></td><td>תלוי ב-B1</td></tr>
-<tr><td>חלוקה לפי ייעוד</td><td><span class="pill blue">במפרט</span></td><td><strong>אמיתי עכשיו</strong> — <code>fact_budget_pct</code>, או <code>area_name</code> ישירות מפקטת הבקשות</td></tr>
-<tr><td>יציבות תקציבית של הגופים</td><td><span class="pill red">חסום</span></td><td>דוחות כספיים בתוספת שנים צבורות</td></tr>
-<tr><td>מקורות מימון</td><td><span class="pill red">חסום</span></td><td>רשם העמותות נותן פילוח 3-דרכי לכל היותר; הפירוק האמיתי קיים רק ב-PDF</td></tr>
-<tr><td>הרכב התמיכה — ניקוד מול תיקונים</td><td><span class="pill amber">חלקי</span></td><td>חצי הניקוד זמין במלואו; לוועדת החריגים אין מקור</td></tr>
-</tbody>
-</table></div>
-
-<h3>5.4 · קישורים — 100%, ימים</h3>
-<p>אריחי הניווט הופכים ל-URL Actions ב-QuickSight. אין תלות בנתונים. לשחרר יחד עם Release 1, כדי שהמבט האסטרטגי יקשר לדשבורדים הקיימים בפרודקשן.</p>
-
-<h3>5.5 · IMPACT ויעילות — ~75%</h3>
-<div class="tw"><table class="sum">
-<thead><tr><th>ויזואל</th><th>סטטוס</th><th>מיפוי או פער</th></tr></thead>
-<tbody>
-<tr><td>שיעור השתתפות ארצי · לפי מחוז מול יעד</td><td><span class="pill green">בפרודקשן</span></td><td>ספורטאים ÷ אוכלוסייה, לפי מחוז למ"ס או CRM</td></tr>
-<tr><td>יעד לאומי 2028</td><td><span class="pill amber">חלקי</span></td><td>קבוע מדיניות — דורש בעלים, ואז טריוויאלי</td></tr>
-<tr><td>תקציב לספורטאי רשום · דירוג עלות</td><td><span class="pill amber">חלקי</span></td><td>בפרודקשן בתוך היקף המבחן הזה (B3)</td></tr>
-<tr><td>תקציב להישג</td><td><span class="pill blue">במפרט</span></td><td>סכום ÷ ספירת הישגים</td></tr>
-<tr><td>יחס תמיכה לנפש פריפריה/מרכז</td><td><span class="pill green">בפרודקשן</span></td><td>ישיר</td></tr>
-<tr><td>מגמת השתתפות 2019–2028</td><td><span class="pill red">חסום</span></td><td>היסטוריה (B1) בתוספת קו תחזית</td></tr>
-<tr><td>Scatter תקציב מול עלות לספורטאי</td><td><span class="pill blue">במפרט</span></td><td>גודל הבועה קיבל מקור</td></tr>
-</tbody>
-</table></div>
-
-<h3>5.6 · מנופי מדיניות והכלה — ~75% עם הפקטות החדשות</h3>
-<div class="tw"><table class="sum">
-<thead><tr><th>ויזואל</th><th>סטטוס</th><th>מיפוי או פער</th></tr></thead>
-<tbody>
-<tr><td>פרמיית מגדר, והפרמיה כאחוז מהתמיכה</td><td><span class="pill amber">חלקי</span></td><td>כל הניקודים קיימים; הפרמיה דורשת קידוד כלל המבחן — <strong>+30%</strong> לפי מבחן האיגודים, לא ×1.5</td></tr>
-<tr><td>פרמיית שנתוני נוער · פירמידת גיל לפי ענף</td><td><span class="pill green">בפרודקשן</span></td><td>גיל וקטגוריית גיל; ב-Silver השכבות מוגדרות פורמלית</td></tr>
-<tr><td>משפך הצנרת הארצי</td><td><span class="pill amber">חלקי</span></td><td>מפתח הספורטאי יציב בין שנים, ולכן קוהורטות ניתנות לחישוב — דורש 2–3 שנים טעונות (B1)</td></tr>
-<tr><td>מאמנים מוסמכים · יחס ספורטאים למאמן</td><td><span class="pill blue">במפרט</span></td><td><code>fact_trainers</code>; תיאור התפקיד מפריד מאמן / מדריך / מאמן לאומי. לתקן קודם את B8</td></tr>
-<tr><td>ספורטאים משולבים לפי ענף ומסגרת</td><td><span class="pill amber">חלקי</span></td><td>ברמת ענף בלבד (דגל צרכים מיוחדים, סוג ספורט פראלימפי); מוגבלות ברמת ספורטאי עדיין חסרה</td></tr>
-<tr><td>פרמיית מכפילים לפי מבחן</td><td><span class="pill amber">חלקי</span></td><td>דורש את B7</td></tr>
-<tr><td><em>אפשרות חדשה:</em> נשים בתפקידי ניהול וממשל</td><td><span class="pill blue">במפרט</span></td><td><code>fact_office_roles_sport</code> נושא מגדר × תפקיד — ויזואל שלא היה במוקאפ</td></tr>
-</tbody>
-</table></div>
-
-<h3>5.7 · גוף נתמך ומנוע הניקוד — מתפצל לשניים</h3>
-<p><strong>חצי מנוע הניקוד — בפרודקשן או במפרט.</strong> "הייחוס: תקציב לפי מבחן ואמת מידה" הוא בדיוק <code>fact_budget_pct</code> — סוג ייעוד, תחום, אמת מידה, אחוז וסכום — בחיבור לניקודים לפי אמת מידה ולסכום המאושר בפקטת הבקשות. בתוך איגודים ואגודות זה מסך אמיתי ובר-הגנה ברגע שהפקטה נוחתת.</p>
-<p><strong>חצי פרופיל הארגון — מקור חדש, Release 2.</strong> הכנסות, עובדים, מתנדבים, חברים, סטטוס, סיווג ומטרות מגיעים מ-API הפתוח של רשם העמותות (CKAN, ללא הרשאות): ימים עד שבועות של ETL. נדרשת הסתייגות על המסך — המונה של מדד התלות מכסה מבחן אחד בלבד, ולכן מציג בחסר.</p>
-<p><strong>חסום, ארוך:</strong> דגלי הכשירות בגיידסטאר דורשים חשבון; מחזור רב-שנתי דורש snapshots צבורים; פירוט ההוצאות קיים רק ב-PDF.</p>
-
-<h3>5.8 · קטלוג התוכניות — חלקי, וכבר לא חסר תקווה</h3>
-<p>ב-Silver יש כעת את שתי הטבלאות שקטלוג דורש: מבחני התמיכה עצמם, ותקציב ואחוז לכל מבחן, לכל ייעוד, לכל אמת מידה. נותרו שני פערים: <code>fact_budget_pct</code> ב-Gold משמיט את קוד המבחן (B7), ולא אומת אם רשימת המבחנים ב-CRM מכסה את כל 17 המבחנים שבמוקאפ או רק את המנוהלים במערכת הזו. אפשרות הביניים עומדת בעינה — טבלה ידנית, מתוארכת ובעלת בעלים.</p>
-
-<h3>5.9 · SLA ותפעול — חסום, או להוריד</h3>
-<p>אין מקור במחסן, והפגישה כבר קבעה שהנפח דליל מכדי להיות משמעותי (כשש פניות בשנה). או לחבר קודם את מערכת הפניות הפנימית, או להסיר את הלשונית מהמצגת.</p>
-
-<h3>5.10 · עמידות וחירום — חסום, ארוך</h3>
-<p>ארבעה מבחני חירום ובנוסף הצבת מיגוניות, שנמצאת בקובץ המתקנים המנוהל ידנית. שום דבר כאן אינו במחסן.</p>
-
-<h3>5.11 · מסך חדש שה-STT מאפשר — משפך תנאי הסף</h3>
-<div class="callout win">
-  <span class="clabel">חינם מבחינת נתונים</span>
-  <p>שתי הפקטות נושאות כעת דגלי תנאי סף לכל רמה עם לוגיקה מתועדת: ספורטאי ← קבוצה ← אגודה ← איגוד ← כולל, והכללים משתנים לפי סוג הבקשה. זהו משפך נשירה שלם — כמה מגישים נופלים, באיזו רמה, באיזה ענף — ללא שום רכש נתונים. הוא גם עונה על שאלת המידול שכבר נבחנה ב-<code>אלטרנטיבות_מידול_תנאי_סף.html</code>. שווה להציע לצד Release 1.</p>
-</div>
-
-<h2 id="data-he">6 · מה עדיין דורש רכש</h2>
-<div class="tw"><table class="sum">
-<thead><tr><th>מקור נתונים</th><th>מאיפה</th><th>מאמץ</th><th>מה זה פותח</th></tr></thead>
-<tbody>
-<tr><td>אוכלוסייה לפי שכבות גיל</td><td>למ"ס, CSV ציבורי</td><td>ימים</td><td>השתתפות לפי גיל; מכנים לצנרת הנוער</td></tr>
-<tr><td>עמודות רשויות נוספות</td><td>כבר ב-Silver</td><td>שעות</td><td>מדד פריפריאליות רציף, מרחק, צפיפות, גידול</td></tr>
-<tr><td>קוד מבחן על פקטת התקציב</td><td>כבר ב-Silver (B7)</td><td>שעות</td><td>מבטי פורטפוליו לפי מבחן; לשונית הקטלוג</td></tr>
-<tr><td>יעד השתתפות לאומי</td><td>החלטת מדיניות</td><td>שעות, ברגע שיש בעלים</td><td>קווי יעד ב-IMPACT</td></tr>
-<tr><td>Snapshot מרשם העמותות</td><td>API פתוח (CKAN)</td><td>1–2 שבועות</td><td>פרופיל גוף נתמך; מדד תלות</td></tr>
-<tr><td>טבלת 17 המבחנים</td><td>קובצי מבחני התמיכה, ידנית</td><td>ימים</td><td>לשונית הקטלוג, אם רשימת ה-CRM חסרה</td></tr>
-<tr><td>גיידסטאר</td><td>API v1.4 — דורש חשבון</td><td>חסום בגישה</td><td>דגלי כשירות</td></tr>
-<tr><td>תוצרים חוצי-מבחנים</td><td>מאמץ מידול חדש</td><td>רבעונים</td><td>KPI פורטפוליו אמיתיים</td></tr>
-</tbody>
-</table></div>
-
-<h2 id="qs-he">7 · הערות QuickSight</h2>
+<h2 id="notes-he">8 · הערות מימוש</h2>
 <ul>
-  <li><strong>ספירת ספורטאים לצד תקציב:</strong> פקטת הספורטאים כ-Primary, FULL OUTER על קוד הבקשה, distinctCount על מפתח הספורטאי, והסכום מחולק במספר שורות אותה בקשה — כך שהתקציב נספר פעם אחת. להסתיר את המדדים הגולמיים ברמת הבקשה כדי שאיש לא יסכם את העותק המנופח.</li>
-  <li><strong>ההישגים מתחברים באותה דרך</strong> — שתי הפקטות נושאות את קוד הבקשה, והאישית נושאת גם את קוד הספורטאי בבקשה, כך שהן נצמדות בכל אחת מהרזולוציות. אותה משמעת fan-out.</li>
-  <li><strong>מפה:</strong> ה-GeoJSON של גבולות הרשויות כבר בריפו, כ-Custom Shape Map; קיימת חלופה ברמת מחוז.</li>
-  <li><strong>כל ויזואל ב-Release 1 הוא ילידי ל-QuickSight:</strong> KPI, עמודות, מוערם ומקובץ, קו, דונאט, Scatter, טבלה עם Data bars, ומפה מלאה.</li>
-  <li><strong>חיבורי יישוב</strong> עוברים דרך הפקטה או ממד הרשות, לעולם לא דרך שם הרשות בממד האגודה.</li>
+  <li>ספירת ספורטאים לצד תקציב: חיבור על <code>support_request_code</code> ברזולוציית ספורטאי, ספירה מדודפקת של הספורטאים, וחלוקת <code>approved_amount</code> במספר שורות הבקשה כך שייספר פעם אחת.</li>
+  <li>פקטות ההישגים נצמדות על <code>support_request_code</code>; האישית נושאת גם <code>athlete_support_request_code</code>, כך ששתי הרזולוציות עובדות.</li>
+  <li>חיבורי יישוב עוברים דרך הפקטה או <code>dim_authority</code>, לעולם לא דרך <code>dim_society.authority_name</code> (מסומן לא רלוונטי ב-STT).</li>
+  <li>כל ויזואל מכוסה ממופה לסוג ילידי ב-QuickSight: KPI, עמודות, מוערם ומקובץ, קו, דונאט, Scatter, טבלה עם Data bars, מפה מלאה.</li>
 </ul>
 
-<h2 id="questions-he">8 · שאלות פתוחות</h2>
+<h2 id="q-he">9 · שאלות פתוחות</h2>
 <ol>
-  <li><strong>סטטוס בנייה לכל טבלה</strong> מתוך 12 טבלאות ה-Gold — מי טעונה, ומי מפרט בלבד? כל מה שמסומן <span class="pill blue">במפרט</span> תלוי בזה (B0).</li>
-  <li>כמה שנים באמת טעונות? (B1)</li>
-  <li>גיליון ה-budget ב-Silver ממפה אגודה וקבוצה ל-<code>null</code> — האם זו ההתנהגות בפועל, והאם היא מתוקנת? (B2)</li>
-  <li>האם מתייגים את Release 1 כאיגודים ואגודות ולא כמשרד כולו? (B3)</li>
-  <li>בקשות ברמת איגוד במבט הגיאוגרפי — להחריג, או להקצות לפי כלל? (B5)</li>
-  <li>לחשוף את קוד המבחן על פקטת התקציב ולקדם את עמודות הרשויות הנוספות? שניהם שעות עבודה עם תשואה חריגה. (B7)</li>
-  <li>לתקן את טיפוסי הנתונים בפקטות המאמנים והתפקידים לפני כתיבת ה-ETL? (B8)</li>
-  <li>האם רשימת המבחנים ב-CRM מכסה את כל 17 המבחנים, או רק את המנוהלים במערכת הזו?</li>
-  <li>SLA — להוריד מהמצגת, או להשאיר כמסך שאיפה?</li>
-  <li>להוסיף את משפך תנאי הסף ל-Release 1?</li>
+  <li>כמה שנות <code>support_request_year</code> טעונות? חוסם 7 גרפי מגמה. (B1)</li>
+  <li>האם מיפוי ה-<code>null</code> של <code>society_id</code> / <code>team_number</code> בטבלת התקציב ב-Silver הוא ההתנהגות בפועל, והאם הוא מתוקן? (B2)</li>
+  <li>האם מתייגים את הדשבורדים כאיגודים ואגודות ולא כמשרד כולו? (B3)</li>
+  <li>בקשות ברמת איגוד במבט הגיאוגרפי — להחריג או להקצות לפי כלל? (B5)</li>
+  <li>לחשוף את <code>support_test_type_code</code> על <code>fact_budget_pct</code>? עמודה אחת, הופכת לשונית שלמה. (B7)</li>
+  <li>האם הטיפוסים המוצהרים בפקטות המאמנים והתפקידים תואמים לטבלאות בפועל? (B8)</li>
+  <li>האם <code>new_supporttesttypes</code> מכסה את כל 17 המבחנים, או רק את המנוהלים במערכת הזו?</li>
+  <li>לקדם את ערכי ודירוגי המדדים הרציפים מ-Silver אל <code>dim_authority</code>?</li>
+  <li>SLA ועמידות — להסיר מהמצגת או להשאיר כמסכי שאיפה?</li>
+  <li>להוסיף את משפך תנאי הסף? מכוסה במלואו וטרם נבנה.</li>
 </ol>
 
-<footer>נבחן מול <code>STT_Aigudim_Agudut_Gold.xlsx</code> ו-<code>STT_Aigudim_Agudut_Silver.xlsx</code>, גרסת 20/08/2026, בתוספת שאילתות האבחון בפרודקשן ומדריך ה-join ל-QuickSight. הופק ב-Claude Code.</footer>
+<footer>נבחן מול <code>STT_Aigudim_Agudut_Gold.xlsx</code> ו-<code>STT_Aigudim_Agudut_Silver.xlsx</code>, גרסת 20/08/2026, בפרודקשן. חוזה המחסן בלבד — שום תוצר מהריפו לא שימש כראיה. הופק ב-Claude Code.</footer>
 
 </div>
 </div>
