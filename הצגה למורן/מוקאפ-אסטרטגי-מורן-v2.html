@@ -95,18 +95,8 @@
   .st-sub { font-size:14px; font-weight:700; color:var(--ink); margin:22px 0 4px;
     padding-inline-start:9px; border-inline-start:3px solid var(--accent); }
   .st-subnote { font-size:11.5px; color:var(--ink-faint); margin:0 0 12px 12px; line-height:1.7; }
-  /* ── רשימת "טרם דווח" ── */
-  .miss-list { display:flex; flex-direction:column; gap:0; }
-  .miss-owner { display:flex; align-items:center; gap:8px; font-size:12px; font-weight:700; color:var(--ink);
-    background:var(--surface-soft); border-block:1px solid var(--line); padding:6px 10px; margin-top:8px; }
-  .miss-owner:first-child { margin-top:0; }
-  .miss-owner .cnt { font-weight:600; color:var(--ink-muted); font-size:11px; }
-  .miss-row { display:flex; align-items:flex-start; gap:10px; padding:7px 10px; border-bottom:1px solid var(--line-soft); flex-wrap:wrap; }
-  .miss-row .nm { font-size:12.5px; font-weight:500; color:var(--ink); min-width:180px; flex:0 0 auto; }
-  .miss-row .tags { display:flex; gap:5px; flex-wrap:wrap; }
   .miss-tag { display:inline-block; background:#F7E7E7; border:1px solid #E6C9C9; color:var(--danger);
     border-radius:999px; padding:1px 8px; font-size:10.5px; font-weight:600; white-space:nowrap; }
-  .miss-none { font-size:12.5px; color:var(--success); font-weight:600; padding:10px; }
   /* ── רצועת ניווט בתוך לשונית ── */
   .jump { display:flex; gap:7px; flex-wrap:wrap; align-items:center; background:var(--surface);
     border:1px solid var(--line); border-radius:var(--radius); padding:9px 12px; margin-bottom:16px; }
@@ -236,6 +226,7 @@
   .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 18px; }
   .kpis.k6 { grid-template-columns: repeat(6, 1fr); }
   .kpis.k3 { grid-template-columns: repeat(3, 1fr); }
+  .kpis.k2 { grid-template-columns: repeat(2, 1fr); }
   .kpi {
     background: var(--surface); border: 1px solid var(--line);
     border-radius: var(--radius-lg); padding: 13px 16px; position: relative; overflow: hidden;
@@ -346,7 +337,7 @@
 
   @media (max-width: 1100px) {
     .col-8,.col-7,.col-6,.col-5,.col-4,.col-3 { grid-column: span 12; }
-    .kpis, .kpis.k6, .kpis.k3 { grid-template-columns: repeat(2, 1fr); }
+    .kpis, .kpis.k6, .kpis.k3, .kpis.k2 { grid-template-columns: repeat(2, 1fr); }
     .two-col,.three-col { grid-template-columns: 1fr; }
     .map-wrap { flex-direction: column; }
   }
@@ -428,21 +419,17 @@
     </div>
 
     <h3 class="st-sub">דיווח סטטוס לפי גורם מקצועי</h3>
-    <p class="st-subnote">מי עדכן את הגיליון ומי טרם. שדה נדרש רק בשלב שבו הוא רלוונטי, כדי שלא ייספר פער על שדה שטרם הגיע זמנו: <strong>תמיד</strong> — תקנה · סטטוס מודל. <strong>למבחן שמתוכנן לפרסום</strong> — חלון קול קורא; ומשנקבע החלון — גם צפי בקשות, ומשנסגר החלון — גם מקדמות. <strong>למבחן שהמודל שלו טרם אושר</strong> — צפי אישור סופי. מבחן המסומן "לא מתוכנן לפרסום" אינו נספר על שדות הפרסום. העמודות <em>אישור מל"ס</em> ו<em>פרסום קול קורא</em> אינן נכללות בחישוב — הן מאוכלסות בגיליון רק לחלק מהמבחנים ואינן שדה חובה; הן מוצגות כלשונן בלוח הסטטוס למטה.</p>
-    <div class="kpis k3" id="st_rep_kpis"></div>
+    <p class="st-subnote">שדה נדרש רק בשלב שבו הוא רלוונטי: <strong>תמיד</strong> — תקנה · סטטוס מודל; <strong>מתוכנן לפרסום</strong> — חלון ק"ק, ומשנקבע — צפי בקשות, ומשנסגר — מקדמות; <strong>מודל שטרם אושר</strong> — צפי אישור סופי. <em>אישור מל"ס</em> ו<em>פרסום ק"ק</em> מחוץ לחישוב (מאוכלסים בגיליון לחלק מהמבחנים בלבד).</p>
+    <div class="kpis k2" id="st_rep_kpis"></div>
     <div class="grid">
-      <div class="card col-7"><div class="card-head"><span class="card-title">שלמות הדיווח לכל גורם מקצועי</span><span class="card-meta">Stacked Bar · מדורג לפי פערי דיווח <span class="qs-tag">QS: Horizontal Stacked Bar</span></span></div><div class="card-canvas-wrap h-300"><canvas id="st_report"></canvas></div></div>
-      <div class="card col-5"><div class="card-head"><span class="card-title">סטטוס אישור מודל</span><span class="card-meta">Donut</span></div><div class="card-canvas-wrap h-300"><canvas id="st_model"></canvas></div></div>
-      <div class="card col-12"><div class="card-head"><span class="card-title">טרם דווח — מבחנים עם שדות חסרים</span><span class="card-meta">Table · מקובץ לפי גורם מקצועי <span class="qs-tag">QS: Pivot Table</span></span></div><div id="st_missing" class="miss-list"></div></div>
-      <div class="card col-12"><div class="card-head"><span class="card-title">לוח סטטוס — מבחני תמיכה</span><span class="card-meta">Table · שורה לכל מבחן</span></div><div id="st_table"></div></div>
+      <div class="card col-12"><div class="card-head"><span class="card-title">שלמות הדיווח לכל גורם מקצועי</span><span class="card-meta">Stacked Bar · מדורג לפי פערי דיווח <span class="qs-tag">QS: Horizontal Stacked Bar</span></span></div><div class="card-canvas-wrap h-260"><canvas id="st_report"></canvas></div></div>
+      <div class="card col-12"><div class="card-head"><span class="card-title">לוח סטטוס — מבחני תמיכה</span><span class="card-meta">Table · שורה לכל מבחן · מבחנים עם פער דיווח בראש</span></div><div id="st_table"></div></div>
     </div>
 
     <h2 class="st-h">מבחני מתקנים · 2026</h2>
     <div class="kpis" id="stf_kpis"></div>
     <div class="grid">
       <div class="card col-12"><div class="card-head"><span class="card-title">גאנט מבחני מתקנים — חלון קול קורא</span><span class="card-meta">Gantt · צבע = אשכול</span></div><div id="stf_gantt" class="gantt-scroll"></div><div id="stf_legend"></div></div>
-      <div class="card col-6"><div class="card-head"><span class="card-title">תקציב לפי אשכול</span><span class="card-meta">Bar · מלש&quot;ח</span></div><div class="card-canvas-wrap h-280"><canvas id="stf_cluster"></canvas></div></div>
-      <div class="card col-6"><div class="card-head"><span class="card-title">סטטוס מבחן</span><span class="card-meta">Donut</span></div><div class="card-canvas-wrap h-280"><canvas id="stf_status"></canvas></div></div>
       <div class="card col-12"><div class="card-head"><span class="card-title">לוח סטטוס — מבחני מתקנים</span><span class="card-meta">Table</span></div><div id="stf_table"></div></div>
     </div>
     <div class="footer-note"><strong>מקור:</strong> גאנט תמיכות מעודכן 20-8-2026.xlsx (קובץ מחלקה פנימי). הגיליון מתוחזק ידנית ע&quot;י המחלקה והדשבורד משקף אותו; המבנה ניתן להתאמה קלה למילוי הארגון. חלונות קול קורא שהחלו ב-2025 מוצגים מתחילת 2026. נתוני דמה להמחשה.</div>
@@ -1622,8 +1609,7 @@
           gapFields=REP.reduce((a,x)=>a+x.miss.length,0);
     document.getElementById('st_rep_kpis').innerHTML=[
       ['מבחנים ללא דיווח מלא',noRep+partRep,'מתוך '+REP.length+(noRep?' · '+noRep+' עם 2+ שדות חסרים':'')],
-      ['גורמים מקצועיים עם פערי דיווח',gapOwners,'מתוך '+allOwners],
-      ['שדות חסרים בסך הכל',gapFields,'שדות מחזור-חיים בגיליון']
+      ['גורמים מקצועיים עם פערי דיווח',gapOwners,'מתוך '+allOwners+' · '+nFld(gapFields)]
     ].map(kcard).join('');
 
     // Stacked bar — מדורג לפי גודל הפער
@@ -1644,27 +1630,12 @@
         scales:{x:{stacked:true,...gridY,ticks:{color:COL.muted,stepSize:1,precision:0}},
                 y:{stacked:true,grid:{display:false},border:{display:false},ticks:{color:COL.ink,font:{weight:'600'}}}}}});
 
-    // רשימת "טרם דווח" — מקובצת לפי גורם מקצועי
-    const gaps=REP.filter(x=>x.miss.length>0)
-      .sort((a,b)=>{const d=oStat[b.owner].gap-oStat[a.owner].gap; return d||b.miss.length-a.miss.length;});
-    let mh='',curO=null;
-    gaps.forEach(x=>{
-      if(x.owner!==curO){ curO=x.owner;
-        const o=oStat[curO];
-        mh+=`<div class="miss-owner"><i class="g-dot" style="background:${o.none?REPC.none:REPC.part}"></i>${esc(curO)}<span class="cnt">· ${o.none+o.part} מתוך ${nTst(o.full+o.part+o.none)} · ${nFld(o.gap)}</span></div>`; }
-      mh+=`<div class="miss-row"><span class="nm">${esc(x.r.name)}</span><span class="tags">${x.miss.map(f=>`<span class="miss-tag">${esc(f)}</span>`).join('')}</span></div>`;
-    });
-    document.getElementById('st_missing').innerHTML=mh||'<div class="miss-none">✓ כל המבחנים דווחו במלואם</div>';
-
-    // ---- סטטוס מודל (Donut) ----
-    const ms=['אושר','מתוכנן','טרם'];
-    new Chart(document.getElementById('st_model'),{type:'doughnut',
-      data:{labels:ms,datasets:[{data:ms.map(m=>SUP.filter(s=>s.model===m).length),backgroundColor:ms.map(m=>STC[m]),borderWidth:2,borderColor:'#fff'}]},
-      options:{cutout:'58%',plugins:legBottom('bottom')}});
 
     // ---- טבלת סטטוס · תמיכה ----
-    let h='<table class="db-table"><thead><tr><th>מבחן</th><th>גורם מקצועי</th><th>תקנה</th><th>צפי בקשות</th><th>חלון ק"ק</th><th>מקדמות</th><th>סטטוס מודל</th><th>צפי אישור סופי</th><th>ממתין לאישור/השלמה</th></tr></thead><tbody>';
-    SUP.forEach(s=>{h+=`<tr><td style="text-align:right;font-weight:500">${s.name}</td><td>${s.owner||'—'}</td><td style="direction:ltr">${s.takana||'—'}</td><td>${s.exp==null?'—':s.exp}</td><td style="font-size:11px">${s.rfp||'—'}</td><td style="font-size:11px">${s.adv||'—'}</td><td>${chip(s.model,STC[s.model]||COL.rest)}</td><td style="font-size:11px">${s.finalEta||'—'}</td><td>${wtags(supWaiting(s),'✓ הושלם')}</td></tr>`;});
+    let h='<table class="db-table"><thead><tr><th>מבחן</th><th>גורם מקצועי</th><th>טרם דווח</th><th>תקנה</th><th>צפי בקשות</th><th>חלון ק"ק</th><th>מקדמות</th><th>סטטוס מודל</th><th>צפי אישור סופי</th><th>ממתין לאישור/השלמה</th></tr></thead><tbody>';
+    REP.slice().sort((a,b)=>b.miss.length-a.miss.length).forEach(x=>{const s=x.r;
+      const rep=x.miss.length?x.miss.map(f=>`<span class="miss-tag">${esc(f)}</span>`).join(' '):'<span class="wtag done">✓ דווח</span>';
+      h+=`<tr><td style="text-align:right;font-weight:500">${s.name}</td><td>${s.owner||'—'}</td><td>${rep}</td><td style="direction:ltr">${s.takana||'—'}</td><td>${s.exp==null?'—':s.exp}</td><td style="font-size:11px">${s.rfp||'—'}</td><td style="font-size:11px">${s.adv||'—'}</td><td>${chip(s.model,STC[s.model]||COL.rest)}</td><td style="font-size:11px">${s.finalEta||'—'}</td><td>${wtags(supWaiting(s),'✓ הושלם')}</td></tr>`;});
     document.getElementById('st_table').innerHTML=h+'</tbody></table>';
 
     // ===================== מתקנים =====================
@@ -1682,17 +1653,6 @@
     const clLeg=['הישגי','קהילתי','תחרותי'].map(c=>`<span><i style="background:${CLC[c]}"></i>${c}</span>`).join('');
     document.getElementById('stf_legend').innerHTML=`<div class="g-legend">${clLeg}<span><i class="td"></i>היום · 23/8/26</span></div>`+
       (facUn.length?`<div class="g-unscheduled"><b>ללא חלון ק"ק (${facUn.length}):</b> ${facUn.map(f=>esc(f.name)).join(' · ')}</div>`:'');
-
-    const cls=['הישגי','קהילתי','תחרותי'];
-    new Chart(document.getElementById('stf_cluster'),{type:'bar',
-      data:{labels:cls,datasets:[{data:cls.map(c=>FAC.filter(f=>f.cluster===c).reduce((a,f)=>a+(f.budget||0),0)),backgroundColor:cls.map(c=>CLC[c]),borderRadius:3,barPercentage:.6}]},
-      options:{plugins:noLeg,scales:{x:{...gridX},y:{...gridY,ticks:{color:COL.muted,callback:t=>'₪'+t+'M'}}}}});
-
-    const fss=[...new Set(FAC.map(f=>f.status||'לא הוגדר'))];
-    const fsC={'נדרש עדכון':v('--perf'),'נדרש מבחן חדש':v('--engine'),'לא הוגדר':COL.rest};
-    new Chart(document.getElementById('stf_status'),{type:'doughnut',
-      data:{labels:fss,datasets:[{data:fss.map(s=>FAC.filter(f=>(f.status||'לא הוגדר')===s).length),backgroundColor:fss.map(s=>fsC[s]||COL.rest),borderWidth:2,borderColor:'#fff'}]},
-      options:{cutout:'58%',plugins:legBottom('bottom')}});
 
     let fh='<table class="db-table"><thead><tr><th>מבחן</th><th>אשכול</th><th>אחראי</th><th>סטטוס</th><th>תקציב (מלש"ח)</th><th>צפי בקשות</th><th>חלון ק"ק</th><th>פורסם</th><th>ממתין לאישור/השלמה</th></tr></thead><tbody>';
     FAC.forEach(f=>{fh+=`<tr><td style="text-align:right;font-weight:500">${f.name}</td><td>${f.cluster||'—'}</td><td>${f.owner||'—'}</td><td style="font-size:11px">${f.status||'—'}</td><td>${f.budget==null?'—':'₪'+f.budget+'M'}</td><td>${f.exp==null?'—':f.exp}</td><td style="font-size:11px">${f.rfp||'—'}</td><td>${f.pub?chip('פורסם',COL.success):'<span style="color:var(--ink-faint)">—</span>'}</td><td>${wtags(facWaiting(f),'✓ פורסם')}</td></tr>`;});
