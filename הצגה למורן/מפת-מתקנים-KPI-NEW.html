@@ -84,6 +84,27 @@
   .vlgd .gbar-lbl{font-size:10.5px;margin-top:3px}
   .vlgd .legend2{margin-top:0;gap:8px 16px;font-size:11.5px;color:var(--ink)}
   #mapPoly,#mapFac{height:600px;z-index:1}
+  #mapRad{height:560px;z-index:1}
+  /* ── בורר נקודת עוגן (QuickSight: Parameter control · Dropdown מדאטהסט) ── */
+  .anch{position:relative;flex:1 1 340px;max-width:460px}
+  .anch input{width:100%;font:inherit;font-size:13px;padding:7px 11px;border:1px solid var(--border);
+    border-radius:8px;background:#fff;color:var(--ink)}
+  .anch input:focus{outline:none;border-color:var(--navy)}
+  .anch-pop{position:absolute;top:calc(100% + 4px);inset-inline-start:0;width:100%;max-height:260px;overflow:auto;
+    background:#fff;border:1px solid var(--border);border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,.12);z-index:1200;display:none}
+  .anch.open .anch-pop{display:block}
+  .anch-opt{padding:6px 11px;font-size:12.5px;cursor:pointer;display:flex;justify-content:space-between;gap:10px}
+  .anch-opt:hover,.anch-opt.sel{background:#EEF2F8}
+  .anch-opt .kind{font-size:10.5px;color:var(--ink-muted);border:1px solid var(--border);border-radius:999px;padding:1px 7px;flex:0 0 auto}
+  .anch-empty{padding:9px 11px;font-size:12px;color:var(--ink-muted)}
+  .rad-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0}
+  .mixbar{display:flex;gap:7px;flex-wrap:wrap;margin:2px 0 10px}
+  .mixbar .mi{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--ink);
+    background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:3px 10px}
+  .mixbar .mi b{font-weight:800}
+  .mixbar .dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+  .dist-cell{font-weight:700;color:var(--navy)}
+  @media(max-width:900px){.rad-kpis{grid-template-columns:repeat(2,1fr)}}
   .sec-gap{margin-top:26px;border-top:1px dashed var(--border);padding-top:4px}
   .maptitle{font-size:14px;font-weight:800;color:var(--navy);margin:18px 0 8px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
   .maptitle .qtag{font-size:10.5px;font-weight:700;color:var(--ink-muted);background:var(--bg);border:1px solid var(--border);border-radius:999px;padding:2px 9px}
@@ -177,6 +198,50 @@
       <div id="mapFac"></div>
     </div>
   </div>
+  <!-- ============ מפה 3 · רדיוס מנקודת עוגן ============ -->
+  <div class="maptitle sec-gap">🎯 מפה 3 · מרחק מנקודת עוגן<span class="qtag">QuickSight: Parameter controls + Calculated field (מרחק) + Filter</span></div>
+  <div class="panel">
+    <div class="frow">
+      <span class="lab">נקודת עוגן<span class="hint">Parameter · חיפוש רשות או מתקן</span></span>
+      <div class="anch" id="anchPick"><input type="text" id="anchInp" placeholder="הקלידו שם רשות או מתקן…" autocomplete="off"><div class="anch-pop" id="anchPop"></div></div>
+      <span class="lab" style="margin-inline-start:14px">רדיוס<span class="hint">Parameter · צעדים קבועים</span></span>
+      <button class="chip" data-rad="1">1 ק״מ</button>
+      <button class="chip on" data-rad="3">3 ק״מ</button>
+      <button class="chip" data-rad="5">5 ק״מ</button>
+      <button class="chip" data-rad="10">10 ק״מ</button>
+      <span class="count-note" id="cntRad"></span>
+    </div>
+    <div class="frow">
+      <span class="count-note" style="margin-inline-start:0;font-size:11px">
+        <b>המרחק מחושב ב-Calculated field ללא פונקציות טריגונומטריות</b> (ל-QuickSight אין כאלה):
+        <code style="direction:ltr;display:inline-block">111.195 * Sqrt( (lat-PinLat)² + (cos_lat*(lon-PinLon))² )</code> —
+        <b>cos_lat</b> מחושב פעם אחת ב-ETL כעמודה לכל מתקן. הקירוב שגוי בפחות מ-1% למרחקים עד ~50 ק״מ.
+        <b>בורר העוגן</b> = Parameter control מדאטהסט של נקודות עוגן (ערך <span style="direction:ltr">"lat,lon"</span> ⇒ Split + parseDecimal).
+        <b>הרדיוס בצעדים קבועים</b> — כך ניתן לייצר מראש את עיגולי ה-GeoJSON ל-Layer Map; רדיוס רציף או נעיצה חופשית במפה
+        ידרשו Custom visual content (iframe). המסנן הגלובלי של <b>סוג מתקן</b> חל כאן; מסנן המחוז לא — רדיוס חוצה מחוזות.
+      </span>
+    </div>
+  </div>
+  <div class="maprow">
+    <div class="visual">
+      <div class="vlgd"><span class="vlgd-t" id="radLegTitle">מתקנים ברדיוס</span><div class="vlgd-body legend2" id="radLegend"></div></div>
+      <div id="mapRad"></div>
+    </div>
+  </div>
+  <div class="rad-kpis">
+    <div class="kpi"><div class="n" id="rTot">–</div><div class="l">מתקנים ברדיוס</div></div>
+    <div class="kpi s"><div class="n" id="rNear">–</div><div class="l" id="rNearL">המתקן הקרוב ביותר</div></div>
+    <div class="kpi o"><div class="n" id="rAcc">–</div><div class="l">% נגישים לנכים</div></div>
+    <div class="kpi g"><div class="n" id="rOk">–</div><div class="l">% תקינים ופעילים</div></div>
+  </div>
+  <div class="card">
+    <h3 style="font-size:14px;color:var(--navy);font-weight:800;margin-bottom:8px">מתקנים ברדיוס — לפי קרבה <span style="font-weight:600;color:var(--ink-muted);font-size:11.5px">— Table · ממוין מהקרוב לרחוק</span></h3>
+    <div class="mixbar" id="radMix"></div>
+    <div class="tbl-scroll" style="max-height:340px"><table id="tblRad"><thead><tr>
+      <th>מתקן</th><th>סוג</th><th>רשות</th><th>מצב</th><th>נגיש</th><th>מרחק</th>
+    </tr></thead><tbody id="tbodyRad"></tbody></table></div>
+  </div>
+
   <div class="grid2">
     <div class="card chart-card"><h3 id="barTitle">15 רשויות מובילות</h3><div class="sc" id="barSub">Bar · QuickSight-native</div><div class="chart-wrap"><canvas id="barChart"></canvas></div></div>
     <div class="card chart-card"><h3>תמהיל סוגי מתקנים</h3><div class="sc">Donut · מקור: אקסל מפקחים (סוג מתקן)</div><div class="donut-wrap"><canvas id="donut"></canvas></div></div>
@@ -219,6 +284,7 @@ const FACCOLORS={
 };
 const DISTS=['תל אביב','מרכז','דרום','צפון','חיפה','מזרח'];
 const state={colorKpi:'pct_ok', facColor:'type', dists:new Set(), cats:new Set(), sort:'n', dir:-1};
+state.radiusKm=3; state.anchor=null;   // ניתוח רדיוס — נקודת עוגן + רדיוס בצעדים קבועים
 const FACR=4.5;   // רדיוס קבוע לנקודות המתקנים (ב-QuickSight: גודל נקודה קבוע בוויזואל)
 const authByName={}; MD.auth.forEach(a=>authByName[a.au]=a);
 const kpiOf=k=>KPIS.find(x=>x.k===k);
@@ -246,6 +312,7 @@ function baseMap(id){const m=L.map(id,{zoomControl:true,preferCanvas:true}).setV
 const mapPoly=baseMap('mapPoly');
 const polyLayer=L.layerGroup().addTo(mapPoly);   // מפה 1: גבולות רשויות (choropleth)
 const mapFac=baseMap('mapFac');
+const mapRad=baseMap('mapRad');
 const facLayer=L.layerGroup().addTo(mapFac);     // מפה 2: מתקנים כנקודות
 
 function facFilter(f){const a=authByName[f.au];
@@ -329,7 +396,103 @@ function updCount(){const nf=FAC.filter(facFilter).length.toLocaleString('en'),n
   document.getElementById('cnt').textContent=nf+' מתקנים · '+na+' רשויות';
   document.getElementById('cntAuth').textContent=na+' רשויות בתצוגה';
   document.getElementById('cntFac').textContent=nf+' מתקנים בתצוגה';}
-function renderAll(){drawPoly();drawPoints();drawLegend();drawCards();drawBar();drawDonut();drawTable();updCount();}
+/* ===================== מרחק מנקודת עוגן =====================
+   אותה נוסחה שתרוץ ב-QuickSight כ-Calculated field: קירוב equirectangular,
+   ללא sin/cos/acos (אין ל-QuickSight טריגונומטריה). כאן cos מחושב בזמן אמת;
+   בפרודקשן cos_lat הוא עמודה שמחושבת פעם אחת ב-ETL לכל מתקן. */
+const KM_PER_DEG = 111.195;   // 2*pi*R/360 (R=6371.0088) — הערך הממוצע, לא הקו-משווני
+function distKm(lat1,lon1,lat2,lon2){
+  const dLat = lat2-lat1, dLon = (lon2-lon1)*Math.cos(lat1*Math.PI/180);
+  return KM_PER_DEG*Math.sqrt(dLat*dLat + dLon*dLon);
+}
+const fmtDist = d => d<1 ? Math.round(d*1000)+' מ׳' : d.toFixed(1)+' ק״מ';
+// דאטהסט נקודות העוגן — רשויות (צנטרואיד) + מתקנים. ב-QuickSight: דאטהסט קטן שמזין את ה-Parameter control.
+const ANCHORS = MD.auth.map(a=>({name:a.au, kind:'רשות', la:+a.lat, lo:+a.lo}))
+  .concat(FAC.filter(f=>f.la&&f.lo).map(f=>({name:f.n||CAT[f.c]||'מתקן', kind:'מתקן', sub:f.au, la:+f.la, lo:+f.lo})));
+
+let radLayer=null;
+function radFacs(){
+  if(!state.anchor) return [];
+  const A=state.anchor;
+  return FAC.filter(f=>state.cats.size===0||state.cats.has(f.c))
+    .map(f=>({f:f, d:distKm(A.la,A.lo,+f.la,+f.lo)}))
+    .filter(o=>o.d<=state.radiusKm)
+    .sort((x,y)=>x.d-y.d);
+}
+function drawRadius(){
+  if(!radLayer){ radLayer=L.layerGroup().addTo(mapRad); }
+  radLayer.clearLayers();
+  const el=id=>document.getElementById(id);
+  if(!state.anchor){
+    el('rTot').textContent='–'; el('rNear').textContent='–'; el('rAcc').textContent='–'; el('rOk').textContent='–';
+    el('tbodyRad').innerHTML=''; el('radMix').innerHTML=''; el('cntRad').textContent='בחרו נקודת עוגן';
+    return;
+  }
+  const A=state.anchor, rows=radFacs(), R=state.radiusKm*1000;
+  // הטבעת — ב-QuickSight: Layer Map עם עיגולי GeoJSON שיוצרו מראש לצעדי הרדיוס הקבועים
+  radLayer.addLayer(L.circle([A.la,A.lo],{radius:R,color:'#1F3F6D',weight:1.5,opacity:.65,
+    fillColor:'#1F3F6D',fillOpacity:.06,dashArray:'5,5'}));
+  radLayer.addLayer(L.circleMarker([A.la,A.lo],{radius:7,weight:3,color:'#DA3439',fillColor:'#fff',fillOpacity:1})
+    .bindPopup('<div class="pop-t">'+A.name+'</div><div><span class="pop-k">נקודת עוגן</span> · '+A.kind+(A.sub?' · '+A.sub:'')+'</div>'));
+  const fc=FACCOLORS[state.facColor];
+  rows.forEach(function(o){
+    radLayer.addLayer(L.circleMarker([o.f.la,o.f.lo],{radius:FACR,weight:1,color:'#fff',fillColor:fc.col(o.f),fillOpacity:.9})
+      .bindPopup('<div class="pop-t">'+(o.f.n||CAT[o.f.c]||'מתקן')+'</div>'+
+        '<div><span class="pop-k">מרחק:</span> '+fmtDist(o.d)+'</div>'+
+        '<div><span class="pop-k">רשות:</span> '+o.f.au+' · <span class="pop-k">סוג:</span> '+(CAT[o.f.c]||o.f.c)+'</div>'));
+  });
+  mapRad.fitBounds(L.latLng(A.la,A.lo).toBounds(R*2.4),{padding:[20,20]});
+  var acc=rows.filter(function(o){return o.f.acc;}).length,
+      ok =rows.filter(function(o){return o.f.cond==='ok';}).length;
+  el('rTot').textContent=rows.length.toLocaleString('en');
+  el('rNear').textContent=rows.length?fmtDist(rows[0].d):'—';
+  el('rNearL').textContent=rows.length?('הקרוב ביותר · '+(rows[0].f.n||CAT[rows[0].f.c])):'המתקן הקרוב ביותר';
+  el('rAcc').textContent=rows.length?Math.round(acc/rows.length*100)+'%':'—';
+  el('rOk').textContent=rows.length?Math.round(ok/rows.length*100)+'%':'—';
+  el('cntRad').textContent=rows.length+' מתקנים · '+state.radiusKm+' ק״מ מ'+A.name;
+  var mix={}; rows.forEach(function(o){mix[o.f.c]=(mix[o.f.c]||0)+1;});
+  el('radMix').innerHTML=Object.keys(CAT).filter(function(k){return mix[k];}).map(function(k){
+    return '<span class="mi"><span class="dot" style="background:'+CATCOL[k]+'"></span>'+CAT[k]+' <b>'+mix[k]+'</b></span>';}).join('')
+    || '<span class="anch-empty" style="padding:0">אין מתקנים ברדיוס זה</span>';
+  el('tbodyRad').innerHTML=rows.map(function(o){
+    return '<tr><td>'+(o.f.n||CAT[o.f.c]||'מתקן')+'</td><td>'+(CAT[o.f.c]||o.f.c)+'</td><td>'+o.f.au+'</td>'+
+    '<td>'+({ok:'תקין ופעיל',fix:'זקוק לשיפוץ',bad:'לא פעיל'}[o.f.cond]||'—')+'</td><td>'+(o.f.acc?'כן':'לא')+'</td>'+
+    '<td class="num dist-cell">'+fmtDist(o.d)+'</td></tr>';}).join('');
+  var lg=el('radLegend'); lg.innerHTML='';
+  fc.items().forEach(function(pair){var sp=document.createElement('span');sp.className='li';
+    sp.innerHTML='<span class="dot" style="background:'+pair[0]+'"></span>'+pair[1];lg.appendChild(sp);});
+  el('radLegTitle').textContent='מתקנים ברדיוס · צבע לפי '+fc.t;
+}
+
+/* בורר העוגן — ב-QuickSight זהו Parameter control מסוג Dropdown שנטען מדאטהסט העוגנים */
+function buildAnchorPicker(){
+  var wrap=document.getElementById('anchPick'), inp=document.getElementById('anchInp'), pop=document.getElementById('anchPop');
+  function render(q){
+    q=(q||'').trim();
+    var hits = q ? ANCHORS.filter(function(a){return a.name.indexOf(q)>-1||(a.sub&&a.sub.indexOf(q)>-1);}).slice(0,60)
+                 : ANCHORS.filter(function(a){return a.kind==='רשות';}).slice(0,60);
+    pop.innerHTML = hits.length ? hits.map(function(a){
+      return '<div class="anch-opt" data-i="'+ANCHORS.indexOf(a)+'"><span>'+a.name+
+        (a.sub?' <span style="color:var(--ink-muted)">· '+a.sub+'</span>':'')+
+        '</span><span class="kind">'+a.kind+'</span></div>';}).join('')
+      : '<div class="anch-empty">לא נמצאו תוצאות</div>';
+    pop.querySelectorAll('.anch-opt').forEach(function(o){o.onclick=function(){
+      state.anchor=ANCHORS[+o.dataset.i]; inp.value=state.anchor.name;
+      wrap.classList.remove('open'); drawRadius();};});
+  }
+  inp.onfocus=function(){wrap.classList.add('open');render(inp.value);};
+  inp.oninput=function(){wrap.classList.add('open');render(inp.value);};
+  inp.onclick=function(e){e.stopPropagation();};
+  pop.onclick=function(e){e.stopPropagation();};
+  document.addEventListener('click',function(){wrap.classList.remove('open');});
+  document.querySelectorAll('[data-rad]').forEach(function(b){b.onclick=function(){
+    document.querySelectorAll('[data-rad]').forEach(function(x){x.classList.remove('on');});
+    b.classList.add('on'); state.radiusKm=+b.dataset.rad; drawRadius();};});
+  // ברירת מחדל — רשות מרכזית, כדי שהמסך לא ייפתח ריק
+  state.anchor = ANCHORS.filter(function(a){return a.kind==='רשות'&&a.name==='תל אביב-יפו';})[0] || ANCHORS[0];
+  inp.value = state.anchor ? state.anchor.name : '';
+}
+function renderAll(){drawPoly();drawPoints();drawLegend();drawCards();drawBar();drawDonut();drawTable();drawRadius();updCount();}
 
 function buildKpiBar(id,which){const bar=document.getElementById(id);
   KPIS.forEach(kp=>{const sb=SRC[kp.src],b=document.createElement('button');
@@ -394,16 +557,16 @@ function buildGlobalFilters(){
     onChange:()=>{fitDists();renderAll();}});
   buildMulti('fcCat',{label:'סוג מתקן',hint:'רב-בחירה',allLabel:'כל הסוגים',
     options:Object.keys(CAT).map(k=>({v:k,t:CAT[k]})),set:state.cats,
-    onChange:()=>{drawPoints();drawDonut();drawTable();updCount();}});
+    onChange:()=>{drawPoints();drawDonut();drawTable();drawRadius();updCount();}});
   document.getElementById('fcClear').onclick=()=>{
     state.dists.clear();state.cats.clear();MSCTL.forEach(c=>c.sync());fitDists();renderAll();};
 }
 function wireFacColor(){document.querySelectorAll('[data-faccolor]').forEach(b=>b.onclick=()=>{
   document.querySelectorAll('[data-faccolor]').forEach(x=>x.classList.remove('on'));b.classList.add('on');
-  state.facColor=b.dataset.faccolor;drawPoints();});}
+  state.facColor=b.dataset.faccolor;drawPoints();drawRadius();});}
 document.querySelectorAll('#tbl th').forEach(th=>th.onclick=()=>{const k=th.dataset.k;state.dir=(state.sort===k)?-state.dir:-1;state.sort=k;drawTable();});
-buildKpiBar('colorbar','colorKpi');buildGlobalFilters();wireFacColor();renderAll();
-setTimeout(()=>{mapPoly.invalidateSize();mapFac.invalidateSize();},250);
+buildKpiBar('colorbar','colorKpi');buildGlobalFilters();wireFacColor();buildAnchorPicker();renderAll();
+setTimeout(()=>{mapPoly.invalidateSize();mapFac.invalidateSize();mapRad.invalidateSize();drawRadius();},250);
 
 </script>
 </body>
