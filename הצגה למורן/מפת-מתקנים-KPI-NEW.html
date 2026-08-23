@@ -185,8 +185,7 @@
     <h3 style="font-size:14px;color:var(--navy);font-weight:800;margin-bottom:8px">טבלת פירוט לפי רשות <span style="font-weight:600;color:var(--ink-muted);font-size:11.5px">— לחיצה על כותרת למיון</span></h3>
     <div class="tbl-scroll"><table id="tbl"><thead><tr>
       <th data-k="au">רשות</th><th data-k="dist">מחוז</th><th data-k="n">מתקנים</th><th data-k="pct_ok">% תקין</th>
-      <th data-k="pct_acc">% נגיש</th><th data-k="pct_std">% תקני</th><th data-k="age">גיל חציוני</th>
-      <th data-k="perpop">ל-1000 תוש׳</th><th data-k="athf">ספורטאים/מתקן</th><th data-k="budf">תקצוב/מתקן ₪</th>
+      <th data-k="pct_acc">% נגיש</th><th data-k="pct_std">% תקני</th><th data-k="perpop">ל-1000 תוש׳</th><th data-k="athf">ספורטאים/מתקן</th><th data-k="budf">תקצוב/מתקן ₪</th>
     </tr></thead><tbody id="tbody"></tbody></table></div>
   </div>
   <div class="foot">מוקאפ · יעד: AWS QuickSight (Filled/Layer map · Points on map · KPI/Bar/Donut/Table). נקודות ומדדי אקסל מנתוני אמת; מדדי DW/מרכבה כ-placeholder עד חיבור המקורות. פלטת המשרד · RTL · Amazon Ember.</div>
@@ -207,7 +206,6 @@ const KPIS = [
   {k:'pct_ok', t:'% תקינים ופעילים',       src:'excel',   pal:'navy',   fmt:v=>Math.round(v)+'%'},
   {k:'pct_acc',t:'% נגישים לנכים',         src:'excel',   pal:'navy',   fmt:v=>Math.round(v)+'%'},
   {k:'pct_std',t:'% תקניים לתחרויות',      src:'excel',   pal:'navy',   fmt:v=>Math.round(v)+'%'},
-  {k:'age',    t:'גיל מתקן חציוני',        src:'excel',   pal:'navy', fmt:v=>Math.round(v)+' שנים'},
 ];
 const SRC={excel:{cls:'s-excel',txt:'אקסל מפקחים'},dw:{cls:'s-dw',txt:'DW'},merkava:{cls:'s-merkava',txt:'מרכבה'}};
 const CAT={field:'מגרש',hall:'אולם',pool:'בריכה',gym:'כושר',stadium:'אצטדיון',other:'אחר'};
@@ -273,7 +271,7 @@ function popupHTML(a){const ck=kpiOf(state.colorKpi);
   return '<div class="pop-t">'+a.au+' · מחוז '+(a.dist||'—')+'</div>'+
     '<div style="font-weight:700;color:#1F3F6D;margin:2px 0 4px">🎨 '+ck.t+': '+(cv==null?'—':ck.fmt(cv))+'</div>'+
     line('n','מתקנים')+line('pct_ok','% תקין')+line('pct_acc','% נגיש')+line('pct_std','% תקני')+
-    line('age','גיל חציוני')+line('perpop','ל-1000 תוש׳')+line('athf','ספורטאים/מתקן')+line('budf','תקצוב/מתקן');}
+    line('perpop','ל-1000 תוש׳')+line('athf','ספורטאים/מתקן')+line('budf','תקצוב/מתקן');}
 function drawPoly(){polyLayer.clearLayers();
   CDOM=domainOf(state.colorKpi);
   // מפה 1: גבולות רשויות (choropleth), צבע לפי המדד הנבחר
@@ -324,7 +322,7 @@ function drawTable(){const tb=document.getElementById('tbody');tb.innerHTML='';
   const f=(v,suf)=>v===''||v==null?'—':(v+(suf||''));
   rows.forEach(a=>{const tr=document.createElement('tr');
     tr.innerHTML='<td>'+a.au+'</td><td>'+(a.dist||'—')+'</td><td class="num">'+a.n+'</td><td class="num">'+f(a.pct_ok,'%')+'</td>'+
-      '<td class="num">'+f(a.pct_acc,'%')+'</td><td class="num">'+f(a.pct_std,'%')+'</td><td class="num">'+f(a.age)+'</td>'+
+      '<td class="num">'+f(a.pct_acc,'%')+'</td><td class="num">'+f(a.pct_std,'%')+'</td>'+
       '<td class="num">'+(+a.perpop).toFixed(2)+'</td><td class="num">'+a.athf+'</td><td class="num">'+a.budf.toLocaleString('en')+'</td>';
     tb.appendChild(tr);});}
 function updCount(){const nf=FAC.filter(facFilter).length.toLocaleString('en'),na=activeAuth().length;
