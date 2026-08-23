@@ -90,6 +90,45 @@
   .tab[data-tab="other"].active      { border-bottom-color: var(--links); }
   .fac-frame { width:100%; height: calc(100vh - 150px); min-height:520px; border:0;
     border-radius: var(--radius-lg); background: var(--surface); box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+  .st-h { font-size:16px; font-weight:700; color:var(--ink); margin:24px 0 12px;
+    padding-inline-start:10px; border-inline-start:4px solid var(--accent); }
+  .st-legend { display:flex; gap:16px; flex-wrap:wrap; margin-top:10px; font-size:12px; color:var(--ink-muted); }
+  .st-legend span { display:inline-flex; align-items:center; gap:6px; }
+  .st-legend i { width:11px; height:11px; border-radius:3px; display:inline-block; }
+
+  /* ── custom HTML/CSS Gantt ── */
+  .gantt-scroll { overflow-x:auto; padding-bottom:4px; }
+  .g-inner { min-width:780px; position:relative; }
+  .g-head { display:flex; align-items:flex-end; margin-bottom:2px; }
+  .g-mrow { min-height:20px; height:20px; }
+  .g-m { position:absolute; bottom:0; transform:translateX(-50%); font-size:10.5px; color:var(--ink-muted); font-weight:500; }
+  .g-todaylbl { position:absolute; bottom:0; transform:translateX(-50%); font-size:10px; font-weight:700; color:var(--danger); white-space:nowrap; }
+  .g-row { display:flex; align-items:stretch; min-height:30px; border-top:1px solid var(--line-soft); }
+  .g-row:last-child { border-bottom:1px solid var(--line-soft); }
+  .g-row:hover { background:rgba(31,63,109,.045); }
+  .g-label { flex:0 0 210px; padding-inline-end:10px; padding-inline-start:8px; overflow:hidden; align-self:center; }
+  .g-lname { font-weight:600; font-size:12px; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .g-lmeta { font-size:10.5px; color:var(--ink-muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; display:flex; align-items:center; gap:5px; }
+  .g-dot { width:9px; height:9px; border-radius:2px; display:inline-block; flex:0 0 auto; }
+  .g-track { position:relative; flex:1 1 auto; align-self:stretch; min-height:30px; }
+  .g-grid { position:absolute; inset:0; background-image:repeating-linear-gradient(to right, var(--line-soft) 0, var(--line-soft) 1px, transparent 1px, transparent 8.3333%); }
+  .g-today { position:absolute; top:0; bottom:0; left:var(--today); width:2px; background:var(--danger); opacity:.5; z-index:2; }
+  .g-bar { position:absolute; top:50%; transform:translateY(-50%); height:17px; border-radius:4px; display:flex; align-items:center; justify-content:center; box-shadow:0 1px 2px rgba(0,0,0,.12); z-index:3; overflow:hidden; }
+  .g-bar:hover { filter:brightness(1.07); }
+  .g-din { font-size:10px; color:#fff; font-weight:600; padding:0 6px; white-space:nowrap; }
+  .g-date { position:absolute; top:50%; transform:translateY(-50%); font-size:10px; color:var(--ink-muted); white-space:nowrap; z-index:3; }
+  .g-date.g-date-l { transform:translate(-100%,-50%); }
+  .g-ms { position:absolute; top:50%; width:9px; height:9px; background:#fff; border:2px solid var(--ink); transform:translate(-50%,-50%) rotate(45deg); z-index:4; }
+  .g-legend { display:flex; gap:16px; flex-wrap:wrap; margin-top:12px; font-size:12px; color:var(--ink-muted); align-items:center; }
+  .g-legend span { display:inline-flex; align-items:center; gap:6px; }
+  .g-legend i { width:11px; height:11px; border-radius:3px; display:inline-block; }
+  .g-legend i.ms { width:9px; height:9px; background:#fff; border:2px solid var(--ink); border-radius:0; transform:rotate(45deg); }
+  .g-legend i.td { width:2px; height:13px; background:var(--danger); border-radius:0; opacity:.7; }
+  .g-unscheduled { margin-top:8px; font-size:11.5px; color:var(--ink-muted); line-height:1.7; }
+  .g-unscheduled b { color:var(--ink); }
+  .wtag { display:inline-block; background:var(--surface-soft); border:1px solid var(--line);
+    border-radius:4px; padding:1px 7px; margin:1px 0; font-size:10.5px; color:var(--ink-muted); white-space:nowrap; }
+  .wtag.done { background:#E8F3EC; border-color:#B9DCC6; color:var(--success); font-weight:600; }
   /* סימון עדין ללשוניות החדשות מהסיעור */
   .tab .new-dot { display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--gold); margin-inline-start:6px; vertical-align:2px; }
 
@@ -356,8 +395,32 @@
 
 <main>
 
+  <!-- ===================== STATUS · סטטוס המינהל (מקור: גאנט תמיכות) ===================== -->
+  <section class="page active" id="page-status" data-tab="admin" data-init="status" style="--accent:var(--engine);">
+    <p class="page-intro">סטטוס המינהל — מעקב ניהולי אחר מחזור החיים של מבחני התמיכה לשנת 2026: פרסום קול קורא, אישור מודל, מקדמות וערעורים. <strong>מקור: גאנט תמיכות מעודכן 20-8-2026.xlsx (קובץ מחלקה פנימי · נתוני דמה להמחשה).</strong></p>
+
+    <h2 class="st-h">מבחני תמיכה · 2026</h2>
+    <div class="kpis k6" id="st_kpis"></div>
+    <div class="grid">
+      <div class="card col-12"><div class="card-head"><span class="card-title">גאנט מבחני תמיכה — חלון קול קורא לאורך 2026</span><span class="card-meta">Gantt · צבע = סטטוס מודל <span class="qs-tag">QS: Stacked Bar עם אופסט שקוף</span></span></div><div id="st_gantt" class="gantt-scroll"></div><div id="st_legend"></div></div>
+      <div class="card col-6"><div class="card-head"><span class="card-title">מבחנים לפי גורם מקצועי</span><span class="card-meta">Bar</span></div><div class="card-canvas-wrap h-300"><canvas id="st_owner"></canvas></div></div>
+      <div class="card col-6"><div class="card-head"><span class="card-title">סטטוס אישור מודל</span><span class="card-meta">Donut</span></div><div class="card-canvas-wrap h-300"><canvas id="st_model"></canvas></div></div>
+      <div class="card col-12"><div class="card-head"><span class="card-title">לוח סטטוס — מבחני תמיכה</span><span class="card-meta">Table · שורה לכל מבחן</span></div><div id="st_table"></div></div>
+    </div>
+
+    <h2 class="st-h">מבחני מתקנים · 2026</h2>
+    <div class="kpis" id="stf_kpis"></div>
+    <div class="grid">
+      <div class="card col-12"><div class="card-head"><span class="card-title">גאנט מבחני מתקנים — חלון קול קורא</span><span class="card-meta">Gantt · צבע = אשכול</span></div><div id="stf_gantt" class="gantt-scroll"></div><div id="stf_legend"></div></div>
+      <div class="card col-6"><div class="card-head"><span class="card-title">תקציב לפי אשכול</span><span class="card-meta">Bar · מלש&quot;ח</span></div><div class="card-canvas-wrap h-280"><canvas id="stf_cluster"></canvas></div></div>
+      <div class="card col-6"><div class="card-head"><span class="card-title">סטטוס מבחן</span><span class="card-meta">Donut</span></div><div class="card-canvas-wrap h-280"><canvas id="stf_status"></canvas></div></div>
+      <div class="card col-12"><div class="card-head"><span class="card-title">לוח סטטוס — מבחני מתקנים</span><span class="card-meta">Table</span></div><div id="stf_table"></div></div>
+    </div>
+    <div class="footer-note"><strong>מקור:</strong> גאנט תמיכות מעודכן 20-8-2026.xlsx (קובץ מחלקה פנימי). הגיליון מתוחזק ידנית ע&quot;י המחלקה והדשבורד משקף אותו; המבנה ניתן להתאמה קלה למילוי הארגון. חלונות קול קורא שהחלו ב-2025 מוצגים מתחילת 2026. נתוני דמה להמחשה.</div>
+  </section>
+
   <!-- ===================== BUDGET ===================== -->
-  <section class="page active" id="page-budget" data-tab="admin" data-init="budget" style="--accent:var(--budget);">
+  <section class="page" id="page-budget" data-tab="other" data-init="budget" style="--accent:var(--budget);">
     <p class="page-intro">תמיכות — התמיכות שהמשרד מחלק לאיגודים ולאגודות על פי מבחני התמיכה: פילוח לפי ייעוד, מגמות רב-שנתיות ויציבות הגופים הנתמכים. <strong>אין חיבור לתקציב המשרד עצמו — כל הנתונים מתייחסים לתמיכות המחולקות בלבד.</strong></p>
     <div class="filter-bar">
       <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
@@ -476,7 +539,7 @@
   </section>
 
   <!-- ===================== SUPPORTED BODY (GuideStar) ===================== -->
-  <section class="page" id="page-org" data-tab="admin" data-init="org" style="--accent:var(--org);">
+  <section class="page" id="page-org" data-tab="other" data-init="org" style="--accent:var(--org);">
     <p class="page-intro">כרטיסיית גוף נתמך — פרופיל הארגון ומדד <strong>תלות בתמיכה</strong> (התמיכה שלנו ÷ הכנסות העמותה). מקור נתונים: מאגר רשם העמותות הפתוח (data.gov.il · משרד המשפטים) + גיידסטאר. בהמשך המסך: <strong>מנוע הניקוד</strong> — יעד וייחוס לכל אחוז.</p>
     <div class="filter-bar">
       <span class="filter-bar-label">בחירת <strong>גוף נתמך</strong></span>
@@ -604,7 +667,7 @@
   </section>
 
   <!-- ===================== SLA ===================== -->
-  <section class="page" id="page-sla" data-tab="admin" data-init="sla" style="--accent:var(--sla);">
+  <section class="page" id="page-sla" data-tab="other" data-init="sla" style="--accent:var(--sla);">
     <p class="page-intro">SLA תפעולי — זמני טיפול, פניות פרטניות, בקשות חוזרות/השלמות, ותיקוני ועדת חריגים ועררים.</p>
     <div class="filter-bar">
       <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
@@ -633,7 +696,7 @@
   </section>
 
   <!-- ===================== IMPACT ===================== -->
-  <section class="page" id="page-impact" data-tab="admin" data-init="impact" style="--accent:var(--impact);">
+  <section class="page" id="page-impact" data-tab="other" data-init="impact" style="--accent:var(--impact);">
     <p class="page-intro">IMPACT — קידום תרבות ספורט: שיעור ההשתתפות מהאוכלוסייה מול יעד לאומי, ויעילות תקציבית (Budget for impact).</p>
     <div class="filter-bar">
       <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
@@ -681,7 +744,7 @@
   </section>
 
   <!-- ===================== CATALOG · קטלוג התוכניות (סיעור מוחות) ===================== -->
-  <section class="page" id="page-catalog" data-tab="admin" data-init="catalog" style="--accent:var(--catalog);">
+  <section class="page" id="page-catalog" data-tab="other" data-init="catalog" style="--accent:var(--catalog);">
     <p class="page-intro">קטלוג התוכניות — מפת כל מבחני התמיכה במבט-על אחד: תקציב, גופים נתמכים, ערך נקודה וקריטריון מוביל. <strong>תמונת הפורטפוליו של מורן</strong> — מענה לשאלה הפתוחה מהפגישה על מסך Overview ראשוני.</p>
     <div class="filter-bar">
       <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
@@ -709,7 +772,7 @@
   </section>
 
   <!-- ===================== POLICY LEVERS · מנופי מדיניות (סיעור מוחות) ===================== -->
-  <section class="page" id="page-levers" data-tab="admin" data-init="levers" style="--accent:var(--levers);">
+  <section class="page" id="page-levers" data-tab="other" data-init="levers" style="--accent:var(--levers);">
     <p class="page-intro">מנופי מדיניות — המבחנים לא רק מחלקים כסף, הם <strong>מכוונים התנהגות</strong>: תוספת ניקוד לנשים (+30% במבחן האיגודים), ניקוד מדורג לשנתוני נוער, תגמול מעטפת מקצועית ומכפיל הכלה ×1.5. המסך מודד כמה כסף כל מנוף באמת מזיז.</p>
     <div class="filter-bar">
       <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
@@ -753,7 +816,7 @@
   </section>
 
   <!-- ===================== RESILIENCE · עמידות וחירום (סיעור מוחות) ===================== -->
-  <section class="page" id="page-resil" data-tab="admin" data-init="resil" style="--accent:var(--resil);">
+  <section class="page" id="page-resil" data-tab="other" data-init="resil" style="--accent:var(--resil);">
     <p class="page-intro">עמידות וחירום — <strong>4 מבחני חירום</strong> פעלו בתקופת חרבות ברזל: פיצוי אובדן הכנסות ("שאגת הארי"), מרחב מוגן יביל, ספורט בחירום וסל תחום ג'. המסך מספר את סיפור העמידות של מערכת הספורט.</p>
     <div class="filter-bar">
       <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
@@ -1419,6 +1482,134 @@
     }
   };
   // איחוד לשוניות: התוכן המאומץ מאותחל יחד עם לשונית-האם
+  // ===================== INIT.status · סטטוס המינהל (מקור: גאנט תמיכות 20-8-2026) =====================
+  INIT.status = function(){
+    const SUP=[{"name":"עממי","owner":"נורית","takana":"19-43-03-12","fix":"כן","exp":20,"adv":"שולם 50%","model":"אושר","finalEta":"אושר","start":"2026-02-11","end":"2026-02-17","rfp":"11/2/26-17/2/26","mls":"","pubc":"","mPre":"אושר","mPost":"אושר","appEnd":"","appCom":""},{"name":"גופי רוחב תחרותי","owner":"נורית","takana":"19-43-03-12","fix":"לא","exp":3,"adv":"שולם 50%","model":"אושר","finalEta":"אושר","start":"2026-02-11","end":"2026-02-17","rfp":"11/2/26-17/2/26","mls":"","pubc":"","mPre":"אושר","mPost":"אושר","appEnd":"","appCom":""},{"name":"נשים","owner":"נורית","takana":"","fix":"חדש","exp":150,"adv":"לא","model":"מתוכנן","finalEta":"26.8.26","start":"2026-05-31","end":"2026-06-30","rfp":"31/05/26-30/6/26","mls":"אושר","pubc":"בוצע","mPre":"26.8.26","mPost":"2.9.26","appEnd":"","appCom":""},{"name":"מרכזי ספורט","owner":"נורית","takana":"19-43-03-42","fix":"כן","exp":5,"adv":"שולם 40%","model":"מתוכנן","finalEta":"2.9.26","start":"2025-10-23","end":"2025-11-18","rfp":"23/10/25-18/11/25","mls":"","pubc":"","mPre":"2.9.26","mPost":"23.9.26","appEnd":"","appCom":""},{"name":"איגודים אגודות - מאמנים","owner":"רועי/יניב","takana":"19-43-03-05","fix":"כן","exp":null,"adv":"שולם 40%","model":"מתוכנן","finalEta":"9.9.2026","start":"2025-12-24","end":"2026-02-12","rfp":"24/12/25-12/2/26","mls":"","pubc":"","mPre":"9.9.2026","mPost":"23.9.26","appEnd":"","appCom":""},{"name":"איגודים אגודות - איגודים ומועדפים","owner":"יניב","takana":"19-43-03-05","fix":"כן","exp":83,"adv":"שולם 60%","model":"אושר","finalEta":"אושר","start":"2025-12-24","end":"2026-02-12","rfp":"24/12/25-12/2/26","mls":"","pubc":"","mPre":"אושר","mPost":"אושר","appEnd":"","appCom":""},{"name":"איגודים אגודות - אגודות וגביע אירופה","owner":"יניב","takana":"19-43-03-05","fix":"כן","exp":1020,"adv":"אגודות - 40% גביע אירופה - לאחר אישור המודל","model":"אושר","finalEta":"אושר","start":"2025-12-24","end":"2026-02-12","rfp":"24/12/25-12/2/26","mls":"","pubc":"","mPre":"אושר","mPost":"2.9.26","appEnd":"","appCom":""},{"name":"החלפת ביתיות לאגודות ללא מתקן","owner":"יניב","takana":"19-43-03-46","fix":"כן","exp":null,"adv":"","model":"טרם","finalEta":"","start":null,"end":null,"rfp":"לא מתוכנן לפרסום","mls":"","pubc":"","mPre":"","mPost":"","appEnd":"","appCom":""},{"name":"אירוח משחקים ביתיים בחו\"ל - חרב\"ז","owner":"יניב","takana":"19-43-03-45","fix":"לא","exp":null,"adv":"","model":"טרם","finalEta":"","start":null,"end":null,"rfp":"לא מתוכנן לפרסום","mls":"","pubc":"","mPre":"","mPost":"","appEnd":"","appCom":""},{"name":"אירועים בינלאומיים","owner":"יניב","takana":"19-43-03-24","fix":"כן","exp":null,"adv":"","model":"טרם","finalEta":"","start":null,"end":null,"rfp":"לא מתוכנן לפרסום","mls":"","pubc":"","mPre":"","mPost":"","appEnd":"","appCom":""},{"name":"ארגוני גג - הישגי","owner":"ורד/יניב","takana":"19-43-03-12","fix":"—","exp":null,"adv":"שולם 40%","model":"אושר","finalEta":"אושר","start":"2026-01-29","end":"2026-03-15","rfp":"29/1/26-15/3/26","mls":"אושר","pubc":"","mPre":"אושר","mPost":"26.8.26","appEnd":"","appCom":""},{"name":"מרכזי אימון ותחרויות לספורטאי הישג","owner":"תשלום","takana":"19-43-03-22","fix":"לא","exp":3,"adv":"שולם 25%","model":"אושר","finalEta":"אושר","start":"2026-02-11","end":"2026-02-17","rfp":"11/2/26-17/2/26","mls":"","pubc":"","mPre":"אושר","mPost":"12.8.26","appEnd":"","appCom":""},{"name":"מלגות","owner":"ורד/יניב","takana":"19-43-03-12","fix":"כן","exp":null,"adv":"0.6","model":"אושר","finalEta":"אושר","start":"2026-06-17","end":"2026-07-17","rfp":"17/6/26-17/7/26","mls":"2026-04-14","pubc":"פורסם 29/3","mPre":"אושר","mPost":"26.8.26","appEnd":"","appCom":""},{"name":"תמריצים","owner":"ורד/יניב","takana":"19-43-03-12","fix":"כן","exp":null,"adv":"","model":"טרם","finalEta":"נובמבר","start":null,"end":null,"rfp":"","mls":"","pubc":"","mPre":"נובמבר","mPost":"","appEnd":"","appCom":""},{"name":"תמריצים - מגזר ערבי","owner":"ע'אזי/יניב","takana":"19-43-03-12","fix":"כן","exp":null,"adv":"","model":"טרם","finalEta":"נובמבר","start":null,"end":null,"rfp":"","mls":"","pubc":"","mPre":"נובמבר","mPost":"","appEnd":"","appCom":""},{"name":"שיטור וסדרנות ליגות מקצועיות","owner":"קארין/יניב","takana":"19-43-03-19","fix":"כן","exp":8,"adv":"שולם 50%","model":"אושר","finalEta":"25.3.26","start":"2026-02-11","end":"2026-02-17","rfp":"11/2/26-17/2/26","mls":"2026-04-14","pubc":"פורסם","mPre":"25.3.26","mPost":"מודל אושר","appEnd":"","appCom":""},{"name":"שיטור וסדרנות ליגות נמוכות","owner":"קארין/יניב","takana":"19-43-03-19","fix":"כן","exp":7,"adv":"שולם 50%","model":"אושר","finalEta":"15.4.26","start":"2026-02-11","end":"2026-02-17","rfp":"11/2/26-17/2/26","mls":"2026-04-14","pubc":"פורסם","mPre":"15.4.26","mPost":"מודל אושר","appEnd":"","appCom":""},{"name":"שחקן ישראלי","owner":"קארין/יניב","takana":"19-43-03-27","fix":"לא","exp":140,"adv":"שולם 60%","model":"אושר","finalEta":"אושר","start":"2026-02-11","end":"2026-02-17","rfp":"11/2/26-17/2/26","mls":"","pubc":"","mPre":"אושר","mPost":"19.8.26","appEnd":"","appCom":""},{"name":"ספורט מוטורי","owner":"דימה","takana":"19-43-03-31","fix":"כן","exp":2,"adv":"שולם 50%","model":"אושר","finalEta":"אפריל","start":"2026-01-21","end":"2026-03-19","rfp":"21/1/26-19/3/26","mls":"אושר","pubc":"בוצע","mPre":"אפריל","mPost":"מודל אושר","appEnd":"","appCom":""},{"name":"סל הספורט","owner":"אבי","takana":"19-43-03-07","fix":"כן","exp":265,"adv":"50% באוגוסט","model":"טרם","finalEta":"דצמבר","start":"2026-04-26","end":"2026-05-26","rfp":"26/04/26-26/5/26","mls":"2026-03-17","pubc":"פורסם","mPre":"דצמבר","mPost":"","appEnd":"","appCom":""},{"name":"מכביה","owner":"אבי","takana":"19-43-03-24","fix":"כן","exp":null,"adv":"0","model":"טרם","finalEta":"יוני","start":"2026-04-15","end":"2026-04-24","rfp":"15/04/26-24/4/26","mls":"","pubc":"","mPre":"יוני","mPost":"","appEnd":"","appCom":""},{"name":"מבחן פעילות ספורט יישובי תקומה","owner":"אבי","takana":"","fix":"כן","exp":5,"adv":"50% באוגוסט","model":"טרם","finalEta":"דצמבר","start":"2026-06-08","end":"2026-06-22","rfp":"8-22/6/2026","mls":"2026-04-14","pubc":"פורסם","mPre":"דצמבר","mPost":"","appEnd":"","appCom":""},{"name":"מיגוניות","owner":"אבי","takana":"19-43-03-27","fix":"חדש","exp":17,"adv":"0","model":"טרם","finalEta":"יוני","start":"2026-03-31","end":"2026-04-30","rfp":"31/3/26-30/4/26","mls":"2026-03-29","pubc":"פורסם","mPre":"יוני","mPost":"","appEnd":"","appCom":""},{"name":"העתקת אימונים בענפי כדור קבוצתיים אולימפיים","owner":"יניב","takana":"19-43-03-45","fix":"חדש","exp":null,"adv":"0","model":"אושר","finalEta":"אושר","start":"2026-04-30","end":"2026-05-07","rfp":"30/4/26-7/5/26","mls":"2026-03-29","pubc":"פורסם","mPre":"אושר","mPost":"19.8.26","appEnd":"","appCom":""},{"name":"אובדן הכנסות \"שאגת הארי\"","owner":"יניב","takana":"19-43-03-45","fix":"חדש","exp":null,"adv":"0","model":"אושר","finalEta":"אושר","start":"2026-04-30","end":"2026-05-31","rfp":"30/4/26-31/5/26","mls":"2026-04-14","pubc":"פורסם","mPre":"אושר","mPost":"19.8.26","appEnd":"","appCom":""}];
+    const FAC=[{"name":"הישגי","cluster":"הישגי","owner":"הוליה","status":"נדרש עדכון","budget":5,"exp":50,"start":null,"end":null,"rfp":"ממתין לאישור אוצר","pub":false,"dossier":"לא נדרש","actions":"מל\"ס + ה\"צ הכנת מסמכים נדרשים"},{"name":"תכנון שדרוג אצטדיון לאומי+  אצטדיוני ליגת העל","cluster":"הישגי","owner":"דפנה","status":"נדרש מבחן חדש","budget":30,"exp":5,"start":null,"end":null,"rfp":"נדרש דיון ה\"צ","pub":false,"dossier":"לא נדרש","actions":"מל\"ס + ה\"צ הכנת מסמכים נדרשים"},{"name":"מרכז מצוינות בכדורגל","cluster":"הישגי","owner":"מורן","status":"נדרש מבחן חדש","budget":0,"exp":1,"start":null,"end":null,"rfp":"","pub":false,"dossier":"נדרש","actions":"מל\"ס + ה\"צ הכנת מסמכים נדרשים"},{"name":"קהילתי","cluster":"קהילתי","owner":"הוליה","status":"נדרש עדכון","budget":80,"exp":231,"start":"2026-05-07","end":"2026-06-07","rfp":"7/5/26-7/6/26","pub":true,"dossier":"לא נדרש","actions":"מל\"ס + ה\"צ הכנת מסמכים נדרשים"},{"name":"בריכות טיפוליות","cluster":"קהילתי","owner":"מורן","status":"נדרש עדכון","budget":24,"exp":24,"start":"2026-05-11","end":"2026-06-11","rfp":"11/5/26-11/6/26","pub":true,"dossier":"לא נדרש","actions":"מל\"ס + ה\"צ הכנת מסמכים נדרשים"},{"name":"אולמות ספורט","cluster":"תחרותי","owner":"מורן","status":"נדרש עדכון","budget":73,"exp":86,"start":"2026-05-11","end":"2026-06-11","rfp":"11/5/26-11/6/26","pub":true,"dossier":"נדרש עדכון","actions":"מל\"ס + ה\"צ הכנת מסמכים נדרשים"},{"name":"הקמה/שדרוג מגרשי כדורגל","cluster":"תחרותי","owner":"הוליה","status":"נדרש מבחן חדש","budget":120,"exp":116,"start":"2026-05-11","end":"2026-06-11","rfp":"11/5/26-11/6/26","pub":true,"dossier":"נדרש עדכון","actions":"מל\"ס + ה\"צ הכנת מסמכים נדרשים"},{"name":"תחרותי שוטף","cluster":"תחרותי","owner":"מורן","status":"נדרש עדכון","budget":60,"exp":400,"start":"2026-05-21","end":"2026-06-21","rfp":"21/5/26-21/6/26","pub":true,"dossier":"לא נדרש","actions":"מל\"ס + ה\"צ הכנת מסמכים נדרשים"},{"name":"צורך ספורטיבי מיוחד","cluster":"תחרותי","owner":"הוליה","status":"נדרש עדכון","budget":12,"exp":30,"start":"2026-06-21","end":"2026-05-21","rfp":"21/6/26-21/5/26","pub":true,"dossier":"לא נדרש","actions":"מל\"ס + ה\"צ הכנת מסמכים נדרשים"},{"name":"הסרת חסמים גדולים","cluster":"תחרותי","owner":"מורן","status":"נדרש מבחן חדש","budget":0,"exp":6,"start":null,"end":null,"rfp":"תקציב הופחת ל-0","pub":false,"dossier":"לא נדרש","actions":"מל\"ס + ה\"צ הכנת מסמכים נדרשים"},{"name":"מוטורי","cluster":"תחרותי","owner":"מורן","status":"נדרש מבחן חדש","budget":10,"exp":5,"start":null,"end":null,"rfp":"ממתין לתיק מוצר","pub":false,"dossier":"נדרש","actions":"מל\"ס + ה\"צ הכנת מסמכים נדרשים"},{"name":"מבחן ייעודי ערי ליבה","cluster":"","owner":"","status":"","budget":null,"exp":7,"start":null,"end":null,"rfp":"","pub":false,"dossier":"נדרש א\"ק","actions":"אישור אוצר+ מל\"ס + ה\"צ הכנת מסמכים נדרשים"},{"name":"מבחן ייעודי לרשויות חברה ערבית 550","cluster":"תחרותי","owner":"","status":"נדרש מבחן חדש","budget":null,"exp":null,"start":null,"end":null,"rfp":"","pub":false,"dossier":"","actions":""}];
+
+    const STC={'אושר':COL.success,'מתוכנן':v('--perf'),'טרם':COL.rest};
+    const MON=['ינו','פבר','מרץ','אפר','מאי','יונ','יול','אוג','ספט','אוק','נוב','דצמ'];
+    const mf=iso=>{ if(!iso) return null; const p=iso.split('-').map(Number); return (p[1]-1)+(p[2]-1)/30+(p[0]-2026)*12; };
+    const fmtInt=n=>n==null?'—':n.toLocaleString('he-IL');
+    const chip=(t,c)=>`<span style="display:inline-block;padding:2px 9px;border-radius:999px;font-size:11px;font-weight:600;color:#fff;background:${c}">${t}</span>`;
+    const kcard=k=>`<div class="kpi"><div class="kpi-label">${k[0]}</div><div class="kpi-value">${k[1]}</div><div class="kpi-sub">${k[2]||''}</div></div>`;
+
+    // ---- KPIs · תמיכה ----
+    const total=SUP.length, appr=SUP.filter(s=>s.model==='אושר').length, plan=SUP.filter(s=>s.model==='מתוכנן').length,
+          pend=SUP.filter(s=>s.model==='טרם').length, sumReq=SUP.reduce((a,s)=>a+(s.exp||0),0),
+          adv=SUP.filter(s=>/שולם|%/.test(s.adv||'') && (s.adv||'').trim()!=='0').length;
+    document.getElementById('st_kpis').innerHTML=[
+      ['סך מבחני תמיכה',total],['מודל אושר',appr,'מתוך '+total],['בתהליך אישור',plan],
+      ['טרם / ממתין',pend],['סך צפי בקשות',fmtInt(sumReq),'מצטבר'],['מקדמות ששולמו',adv,'מבחנים']
+    ].map(kcard).join('');
+
+    // ---- Gantt · HTML/CSS (משותף לתמיכה + מתקנים) ----
+    const esc=s=>(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    const dmy=iso=>{const p=iso.split('-');return (+p[2])+'/'+(+p[1]);};
+    const pct=x=>Math.max(0,Math.min(12,x))/12*100;
+    const TODAY=7+(23-1)/30;  // 2026-08-23
+    const MNAME={'ינואר':0,'פברואר':1,'מרץ':2,'אפריל':3,'מאי':4,'יוני':5,'יולי':6,'אוגוסט':7,'ספטמבר':8,'אוקטובר':9,'נובמבר':10,'דצמבר':11};
+    const parseEta=s=>{s=(s||'').trim();if(!s||s==='אושר')return null;let m=s.match(/(\d{1,2})[.\/](\d{1,2})[.\/](\d{2,4})/);if(m){let d=+m[1],mo=+m[2],y=+m[3];y=y<100?2000+y:y;return (mo-1)+(d-1)/30+(y-2026)*12;}for(const k in MNAME){if(s.indexOf(k)>-1)return MNAME[k]+0.5;}return null;};
+    const sched=r=>r.start&&r.end&&mf(r.end)>=0;
+    const pOwner=s=>{let o=(s.owner||'—').split('/')[0].trim();return o==='תשלום'?'אחר':o;};
+    // "ממתין ל…" — שערי האישור/השלמה שטרם נסגרו (נגזר מעמודות מחזור החיים בגיליון)
+    const _done=x=>/אושר|בוצע/.test(x||'');
+    function supWaiting(s){
+      const w=[], adv=(s.adv||'').trim(), paid=/שולם\s*(\d+)%/.exec(adv);
+      const advPending = adv==='0'||adv==='לא'||adv===''||/באוגוסט|לאחר אישור/.test(adv)||(paid&&+paid[1]<100);
+      if(!s.start){ if(!_done(s.mls)&&!/\d/.test(s.mls||'')) w.push('אישור מל"ס'); w.push('פרסום קול קורא'); }
+      else{
+        if(s.model==='טרם') w.push('אישור מודל');
+        else if(s.model==='מתוכנן') w.push('אישור מודל סופי'+(s.finalEta&&s.finalEta!=='אושר'?' · צפי '+s.finalEta:''));
+        if((s.appEnd||'').trim()||(s.appCom||'').trim()) w.push('סיום/ועדת ערעורים');
+      }
+      if(advPending) w.push('תשלום/השלמת מקדמות');
+      return w;
+    }
+    function facWaiting(f){
+      if(f.pub) return [];
+      const w=[], r=(f.rfp||'').trim();
+      if(/ממתין|נדרש|דיון|אוצר|תיק מוצר|הופחת/.test(r)) w.push(r);
+      if(/חדש/.test(f.status||'')) w.push('אישור מבחן חדש'); else if(/עדכון/.test(f.status||'')) w.push('עדכון ואישור מבחן');
+      if(/נדרש/.test(f.dossier||'')) w.push('תיק מוצר/מפרט טכני');
+      (f.actions||'').split(/[+\n]/).map(x=>x.trim()).filter(Boolean).forEach(x=>w.push(x));
+      return [...new Set(w)].slice(0,6);
+    }
+    const wtags=(w,done)=>w.length?w.map(x=>`<span class="wtag">${esc(x)}</span>`).join(' '):`<span class="wtag done">${done}</span>`;
+    function renderGantt(elId,rows,colorFn,metaFn,withMs,waitFn){
+      const hdr=MON.map((m,i)=>`<span class="g-m" style="left:${100-(i+0.5)/12*100}%">${m}</span>`).join('')+`<span class="g-todaylbl" style="left:${100-pct(TODAY)}%">היום</span>`;
+      let html=`<div class="g-inner" style="--today:${100-pct(TODAY)}%"><div class="g-head"><div class="g-label"></div><div class="g-track g-mrow">${hdr}</div></div>`;
+      rows.forEach(r=>{
+        let a=mf(r.start),b=mf(r.end);if(a>b){const t=a;a=b;b=t;}
+        const L=pct(a),R=pct(b),W=Math.max(R-L,1.2),mL=100-R,mR=100-L,wide=W>=16,dtxt=(a<0?'«':'')+dmy(r.start)+'–'+dmy(r.end);
+        let dl='';
+        if(!wide) dl=(R<=82)?`<span class="g-date g-date-l" style="left:calc(${mL}% - 5px)">${dtxt}</span>`:`<span class="g-date" style="left:calc(${mR}% + 5px)">${dtxt}</span>`;
+        const wl=waitFn?waitFn(r):[]; const wtxt=wl.length?'&#10;ממתין ל: '+wl.map(esc).join(' · '):'';
+        const bar=`<div class="g-bar" style="left:${mL}%;width:${W}%;background:${colorFn(r)}" title="${esc(r.name)} · חלון ק&quot;ק: ${esc(r.rfp)}${wtxt}">`+(wide?`<span class="g-din">${dtxt}</span>`:'')+`</div>`+dl;
+        let ms='';
+        if(withMs){const e=parseEta(r.finalEta);if(e!=null&&e>=0&&e<=12)ms=`<span class="g-ms" style="left:${100-pct(e)}%" title="אישור מודל סופי: ${esc(r.finalEta)}"></span>`;}
+        html+=`<div class="g-row"><div class="g-label"><div class="g-lname" title="${esc(r.name)}">${esc(r.name)}</div><div class="g-lmeta">${metaFn(r)}</div></div><div class="g-track"><div class="g-grid"></div><div class="g-today"></div>${bar}${ms}</div></div>`;
+      });
+      document.getElementById(elId).innerHTML=html+'</div>';
+    }
+    const supRows=SUP.filter(sched).sort((a,b)=>mf(a.start)-mf(b.start));
+    renderGantt('st_gantt',supRows,r=>STC[r.model]||COL.rest,
+      r=>{const w=supWaiting(r);return `<i class="g-dot" style="background:${STC[r.model]||COL.rest}"></i>${pOwner(r)} · ${w.length?'⏳ '+esc(w[0]):'✓ הושלם'}`;},true,supWaiting);
+    const supUn=SUP.filter(s=>!sched(s));
+    document.getElementById('st_legend').innerHTML=
+      `<div class="g-legend">`+Object.entries(STC).map(([k,c])=>`<span><i style="background:${c}"></i>${k}</span>`).join('')+`<span><i class="ms"></i>אישור מודל סופי</span><span><i class="td"></i>היום · 23/8/26</span></div>`+
+      (supUn.length?`<div class="g-unscheduled"><b>ללא חלון ק"ק ב-2026 (${supUn.length}):</b> ${supUn.map(s=>esc(s.name)).join(' · ')}</div>`:'');
+
+    // ---- לפי גורם מקצועי ----
+    const oc={}; SUP.forEach(s=>{const o=pOwner(s);oc[o]=(oc[o]||0)+1;});
+    const ok=Object.keys(oc).sort((a,b)=>oc[b]-oc[a]);
+    new Chart(document.getElementById('st_owner'),{type:'bar',
+      data:{labels:ok,datasets:[{data:ok.map(o=>oc[o]),backgroundColor:v('--engine'),borderRadius:3,barPercentage:.7}]},
+      options:{plugins:noLeg,scales:{x:{...gridX},y:{...gridY,ticks:{color:COL.muted,stepSize:1}}}}});
+
+    // ---- סטטוס מודל (Donut) ----
+    const ms=['אושר','מתוכנן','טרם'];
+    new Chart(document.getElementById('st_model'),{type:'doughnut',
+      data:{labels:ms,datasets:[{data:ms.map(m=>SUP.filter(s=>s.model===m).length),backgroundColor:ms.map(m=>STC[m]),borderWidth:2,borderColor:'#fff'}]},
+      options:{cutout:'58%',plugins:legBottom('bottom')}});
+
+    // ---- טבלת סטטוס · תמיכה ----
+    let h='<table class="db-table"><thead><tr><th>מבחן</th><th>גורם מקצועי</th><th>תקנה</th><th>צפי בקשות</th><th>חלון ק"ק</th><th>מקדמות</th><th>סטטוס מודל</th><th>צפי אישור סופי</th><th>ממתין לאישור/השלמה</th></tr></thead><tbody>';
+    SUP.forEach(s=>{h+=`<tr><td style="text-align:right;font-weight:500">${s.name}</td><td>${s.owner||'—'}</td><td style="direction:ltr">${s.takana||'—'}</td><td>${s.exp==null?'—':s.exp}</td><td style="font-size:11px">${s.rfp||'—'}</td><td style="font-size:11px">${s.adv||'—'}</td><td>${chip(s.model,STC[s.model]||COL.rest)}</td><td style="font-size:11px">${s.finalEta||'—'}</td><td>${wtags(supWaiting(s),'✓ הושלם')}</td></tr>`;});
+    document.getElementById('st_table').innerHTML=h+'</tbody></table>';
+
+    // ===================== מתקנים =====================
+    const CLC={'הישגי':v('--impact'),'קהילתי':v('--muni'),'תחרותי':v('--perf'),'':COL.rest};
+    const fTot=FAC.length, fPub=FAC.filter(f=>f.pub).length, fBud=FAC.reduce((a,f)=>a+(f.budget||0),0),
+          fReq=FAC.reduce((a,f)=>a+(f.exp||0),0), fNew=FAC.filter(f=>/חדש/.test(f.status||'')).length;
+    document.getElementById('stf_kpis').innerHTML=[
+      ['סך מבחני מתקנים',fTot,fNew+' נדרש מבחן חדש'],['פורסמו',fPub,'מתוך '+fTot],['סך תקציב','₪'+fBud+'M','בתקנות'],['סך צפי בקשות',fmtInt(fReq)]
+    ].map(kcard).join('');
+
+    const facRows=FAC.filter(sched).sort((a,b)=>mf(a.start)-mf(b.start));
+    renderGantt('stf_gantt',facRows,r=>CLC[r.cluster]||COL.rest,
+      r=>{const w=facWaiting(r);return `<i class="g-dot" style="background:${CLC[r.cluster]||COL.rest}"></i>${r.cluster||'—'} · ${w.length?'⏳ '+esc(w[0]):'✓ פורסם'}`;},false,facWaiting);
+    const facUn=FAC.filter(f=>!sched(f));
+    const clLeg=['הישגי','קהילתי','תחרותי'].map(c=>`<span><i style="background:${CLC[c]}"></i>${c}</span>`).join('');
+    document.getElementById('stf_legend').innerHTML=`<div class="g-legend">${clLeg}<span><i class="td"></i>היום · 23/8/26</span></div>`+
+      (facUn.length?`<div class="g-unscheduled"><b>ללא חלון ק"ק (${facUn.length}):</b> ${facUn.map(f=>esc(f.name)).join(' · ')}</div>`:'');
+
+    const cls=['הישגי','קהילתי','תחרותי'];
+    new Chart(document.getElementById('stf_cluster'),{type:'bar',
+      data:{labels:cls,datasets:[{data:cls.map(c=>FAC.filter(f=>f.cluster===c).reduce((a,f)=>a+(f.budget||0),0)),backgroundColor:cls.map(c=>CLC[c]),borderRadius:3,barPercentage:.6}]},
+      options:{plugins:noLeg,scales:{x:{...gridX},y:{...gridY,ticks:{color:COL.muted,callback:t=>'₪'+t+'M'}}}}});
+
+    const fss=[...new Set(FAC.map(f=>f.status||'לא הוגדר'))];
+    const fsC={'נדרש עדכון':v('--perf'),'נדרש מבחן חדש':v('--engine'),'לא הוגדר':COL.rest};
+    new Chart(document.getElementById('stf_status'),{type:'doughnut',
+      data:{labels:fss,datasets:[{data:fss.map(s=>FAC.filter(f=>(f.status||'לא הוגדר')===s).length),backgroundColor:fss.map(s=>fsC[s]||COL.rest),borderWidth:2,borderColor:'#fff'}]},
+      options:{cutout:'58%',plugins:legBottom('bottom')}});
+
+    let fh='<table class="db-table"><thead><tr><th>מבחן</th><th>אשכול</th><th>אחראי</th><th>סטטוס</th><th>תקציב (מלש"ח)</th><th>צפי בקשות</th><th>חלון ק"ק</th><th>פורסם</th><th>ממתין לאישור/השלמה</th></tr></thead><tbody>';
+    FAC.forEach(f=>{fh+=`<tr><td style="text-align:right;font-weight:500">${f.name}</td><td>${f.cluster||'—'}</td><td>${f.owner||'—'}</td><td style="font-size:11px">${f.status||'—'}</td><td>${f.budget==null?'—':'₪'+f.budget+'M'}</td><td>${f.exp==null?'—':f.exp}</td><td style="font-size:11px">${f.rfp||'—'}</td><td>${f.pub?chip('פורסם',COL.success):'<span style="color:var(--ink-faint)">—</span>'}</td><td>${wtags(facWaiting(f),'✓ פורסם')}</td></tr>`;});
+    document.getElementById('stf_table').innerHTML=fh+'</tbody></table>';
+  };
+
   const WRAP={budget:[EX.budget], muni:[INIT.geo,EX.muni], org:[INIT.engine], perf:[EX.perf], levers:[INIT.incl]};
   Object.keys(WRAP).forEach(k=>{
     const orig=INIT[k], extras=WRAP[k];
