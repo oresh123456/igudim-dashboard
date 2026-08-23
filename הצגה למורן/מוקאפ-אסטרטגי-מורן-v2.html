@@ -92,6 +92,28 @@
     border-radius: var(--radius-lg); background: var(--surface); box-shadow: 0 1px 3px rgba(0,0,0,.06); }
   .st-h { font-size:16px; font-weight:700; color:var(--ink); margin:24px 0 12px;
     padding-inline-start:10px; border-inline-start:4px solid var(--accent); }
+  .st-sub { font-size:14px; font-weight:700; color:var(--ink); margin:22px 0 4px;
+    padding-inline-start:9px; border-inline-start:3px solid var(--accent); }
+  .st-subnote { font-size:11.5px; color:var(--ink-faint); margin:0 0 12px 12px; line-height:1.7; }
+  /* ── רשימת "טרם דווח" ── */
+  .miss-list { display:flex; flex-direction:column; gap:0; }
+  .miss-owner { display:flex; align-items:center; gap:8px; font-size:12px; font-weight:700; color:var(--ink);
+    background:var(--surface-soft); border-block:1px solid var(--line); padding:6px 10px; margin-top:8px; }
+  .miss-owner:first-child { margin-top:0; }
+  .miss-owner .cnt { font-weight:600; color:var(--ink-muted); font-size:11px; }
+  .miss-row { display:flex; align-items:flex-start; gap:10px; padding:7px 10px; border-bottom:1px solid var(--line-soft); flex-wrap:wrap; }
+  .miss-row .nm { font-size:12.5px; font-weight:500; color:var(--ink); min-width:180px; flex:0 0 auto; }
+  .miss-row .tags { display:flex; gap:5px; flex-wrap:wrap; }
+  .miss-tag { display:inline-block; background:#F7E7E7; border:1px solid #E6C9C9; color:var(--danger);
+    border-radius:999px; padding:1px 8px; font-size:10.5px; font-weight:600; white-space:nowrap; }
+  .miss-none { font-size:12.5px; color:var(--success); font-weight:600; padding:10px; }
+  /* ── רצועת ניווט בתוך לשונית ── */
+  .jump { display:flex; gap:7px; flex-wrap:wrap; align-items:center; background:var(--surface);
+    border:1px solid var(--line); border-radius:var(--radius); padding:9px 12px; margin-bottom:16px; }
+  .jump b { font-size:11.5px; font-weight:600; color:var(--ink-faint); margin-inline-end:4px; }
+  .jump a { font-size:12px; font-weight:600; color:var(--ink-muted); text-decoration:none;
+    background:var(--surface-soft); border:1px solid var(--line); border-radius:999px; padding:3px 11px; }
+  .jump a:hover { color:var(--ink); border-color:var(--ink-faint); }
   .st-legend { display:flex; gap:16px; flex-wrap:wrap; margin-top:10px; font-size:12px; color:var(--ink-muted); }
   .st-legend span { display:inline-flex; align-items:center; gap:6px; }
   .st-legend i { width:11px; height:11px; border-radius:3px; display:inline-block; }
@@ -403,8 +425,15 @@
     <div class="kpis k6" id="st_kpis"></div>
     <div class="grid">
       <div class="card col-12"><div class="card-head"><span class="card-title">גאנט מבחני תמיכה — חלון קול קורא לאורך 2026</span><span class="card-meta">Gantt · צבע = סטטוס מודל <span class="qs-tag">QS: Stacked Bar עם אופסט שקוף</span></span></div><div id="st_gantt" class="gantt-scroll"></div><div id="st_legend"></div></div>
-      <div class="card col-6"><div class="card-head"><span class="card-title">מבחנים לפי גורם מקצועי</span><span class="card-meta">Bar</span></div><div class="card-canvas-wrap h-300"><canvas id="st_owner"></canvas></div></div>
-      <div class="card col-6"><div class="card-head"><span class="card-title">סטטוס אישור מודל</span><span class="card-meta">Donut</span></div><div class="card-canvas-wrap h-300"><canvas id="st_model"></canvas></div></div>
+    </div>
+
+    <h3 class="st-sub">דיווח סטטוס לפי גורם מקצועי</h3>
+    <p class="st-subnote">מי עדכן את הגיליון ומי טרם. שדה נדרש רק בשלב שבו הוא רלוונטי, כדי שלא ייספר פער על שדה שטרם הגיע זמנו: <strong>תמיד</strong> — תקנה · סטטוס מודל. <strong>למבחן שמתוכנן לפרסום</strong> — חלון קול קורא; ומשנקבע החלון — גם צפי בקשות, ומשנסגר החלון — גם מקדמות. <strong>למבחן שהמודל שלו טרם אושר</strong> — צפי אישור סופי. מבחן המסומן "לא מתוכנן לפרסום" אינו נספר על שדות הפרסום. העמודות <em>אישור מל"ס</em> ו<em>פרסום קול קורא</em> אינן נכללות בחישוב — הן מאוכלסות בגיליון רק לחלק מהמבחנים ואינן שדה חובה; הן מוצגות כלשונן בלוח הסטטוס למטה.</p>
+    <div class="kpis k3" id="st_rep_kpis"></div>
+    <div class="grid">
+      <div class="card col-7"><div class="card-head"><span class="card-title">שלמות הדיווח לכל גורם מקצועי</span><span class="card-meta">Stacked Bar · מדורג לפי פערי דיווח <span class="qs-tag">QS: Horizontal Stacked Bar</span></span></div><div class="card-canvas-wrap h-300"><canvas id="st_report"></canvas></div></div>
+      <div class="card col-5"><div class="card-head"><span class="card-title">סטטוס אישור מודל</span><span class="card-meta">Donut</span></div><div class="card-canvas-wrap h-300"><canvas id="st_model"></canvas></div></div>
+      <div class="card col-12"><div class="card-head"><span class="card-title">טרם דווח — מבחנים עם שדות חסרים</span><span class="card-meta">Table · מקובץ לפי גורם מקצועי <span class="qs-tag">QS: Pivot Table</span></span></div><div id="st_missing" class="miss-list"></div></div>
       <div class="card col-12"><div class="card-head"><span class="card-title">לוח סטטוס — מבחני תמיכה</span><span class="card-meta">Table · שורה לכל מבחן</span></div><div id="st_table"></div></div>
     </div>
 
@@ -420,7 +449,8 @@
   </section>
 
   <!-- ===================== BUDGET ===================== -->
-  <section class="page" id="page-budget" data-tab="other" data-init="budget" style="--accent:var(--budget);">
+  <section class="page" id="page-budget" data-tab="sport" data-init="budget" style="--accent:var(--budget);">
+    <nav class="jump"><b>במסך זה</b><a href="#" onclick="gotoTab('budget');return false">תמיכות</a><a href="#" onclick="gotoTab('catalog');return false">קטלוג התוכניות</a><a href="#" onclick="gotoTab('muni');return false">הסתכלות גיאוגרפית</a><a href="#" onclick="gotoTab('perf');return false">ביצועים ומגדר</a><a href="#" onclick="gotoTab('impact');return false">IMPACT ויעילות</a><a href="#" onclick="gotoTab('levers');return false">מנופי מדיניות והכלה</a></nav>
     <p class="page-intro">תמיכות — התמיכות שהמשרד מחלק לאיגודים ולאגודות על פי מבחני התמיכה: פילוח לפי ייעוד, מגמות רב-שנתיות ויציבות הגופים הנתמכים. <strong>אין חיבור לתקציב המשרד עצמו — כל הנתונים מתייחסים לתמיכות המחולקות בלבד.</strong></p>
     <div class="filter-bar">
       <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
@@ -449,6 +479,33 @@
       <div class="card col-12"><div class="card-head"><span class="card-title">הרכב התמיכה — ניקוד לפי אמות מידה מול תיקונים</span><span class="card-meta"><span class="need-data">פנימי · לדוגמה</span></span></div><div class="card-canvas-wrap h-260"><canvas id="b_corrections"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">"התיקונים" — תקרות תמיכה, מקדמים וועדת חריגים — אינם נגזרים מהניקוד (ר' מנוע הניקוד בלשונית גוף נתמך). הפער בין החישוב לתשלום בפועל, במספר אחד. הסכומים מסתכמים למגמת התמיכות שלמעלה.</div></div>
     </div>
     <div class="footer-note"><strong>הבהרת תכולה:</strong> הנתונים משקפים את ה<em>תמיכות</em> שהמשרד מחלק לאיגודים ולאגודות על פי מבחני התמיכה — ולא את תקציב המשרד עצמו (אין לכך חיבור נתונים). <strong>מקורות מימון</strong> מוצג ממקורות רשמיים בלבד (תמיכת המשרד · תרומות מדינה זרה מ-data.gov.il · יתר עצמי); הפילוח המלא של ה"יתר" ו<strong>יציבות תקציבית</strong> רב-שנתית קיימים רק בדוחות הכספיים (PDF) ואינם זמינים ב-API — מסומנים בהתאם. כל הוויזואלים נתמכים ב-QuickSight.</div>
+  </section>
+  <!-- ===================== CATALOG · קטלוג התוכניות (סיעור מוחות) ===================== -->
+  <section class="page" id="page-catalog" data-tab="sport" data-init="catalog" style="--accent:var(--catalog);">
+    <p class="page-intro">קטלוג התוכניות — מפת כל מבחני התמיכה במבט-על אחד: תקציב, גופים נתמכים, ערך נקודה וקריטריון מוביל. <strong>תמונת הפורטפוליו של מורן</strong> — מענה לשאלה הפתוחה מהפגישה על מסך Overview ראשוני.</p>
+    <div class="filter-bar">
+      <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
+      <div class="filter"><label>שנת תקציב</label><select><option>2026</option><option>2025</option><option>2024</option></select></div>
+      <div class="filter"><label>תחום</label><select><option>הכל</option><option>הישגי</option><option>קהילה ועממי</option><option>הכלה ושוויון</option><option>תשתית ומעטפת</option><option>חירום ועמידות</option></select></div>
+      <div class="filter"><label>אוכלוסיית יעד</label><select><option>הכל</option><option>איגודים</option><option>אגודות</option><option>רשויות מקומיות</option><option>ארגוני גג</option></select></div>
+      <div class="filter"><label>מיון לפי</label><select><option>תקציב</option><option>גופים נתמכים</option><option>ערך נקודה</option></select></div>
+      <button class="filter-reset">איפוס פילטרים</button>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi"><div class="kpi-label">מבחני תמיכה פעילים</div><div class="kpi-value">17</div><div class="kpi-sub">בנויים על מנגנון משותף אחד</div></div>
+      <div class="kpi"><div class="kpi-label">סך תקציב המבחנים</div><div class="kpi-value">₪148.1M</div><div class="kpi-sub">זהה לסך התמיכות בלשונית "תמיכות"</div></div>
+      <div class="kpi"><div class="kpi-label">גופים נתמכים (ייחודיים)</div><div class="kpi-value">476</div><div class="kpi-sub">גוף יכול להיתמך מכמה מבחנים</div></div>
+      <div class="kpi"><div class="kpi-label">ערך נקודה חציוני</div><div class="kpi-value">₪300</div><div class="kpi-sub">כמה ₪ שווה כל נקודת ניקוד · טווח ₪150–₪850</div></div>
+    </div>
+
+    <div class="grid">
+      <div class="card col-7"><div class="card-head"><span class="card-title">תקציב לפי מבחן תמיכה</span><span class="card-meta">Bar · צבע = תחום <span class="qs-tag">QS</span></span></div><div class="card-canvas-wrap h-420"><canvas id="c_byTest"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6"><span class="src-real">קיים בתיק יישוב</span> מקבילה תפעולית — "תקציב לפי תקנה &gt; מרכז קרנות/רצועה" (ברמת תקנה, תרבות+ספורט). כאן: ברמת מבחן תמיכה, ספורט בלבד, עם תחום וערך נקודה.</div></div>
+      <div class="card col-5"><div class="card-head"><span class="card-title">תעדוף ענפים מועדפים — כמה כסף המקדם מזיז</span><span class="card-meta">Stacked Bar · בסיס + תוספת תעדוף</span></div><div class="card-canvas-wrap h-320"><canvas id="c_priority"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">"ענף מועדף" מקבל מקדם ניקוד מוגדל — הרצועה הבהירה היא הכסף שהמקדם הזיז. מוצגים 8 הענפים המובילים מתוך מבחן האיגודים; הסכומים תואמים ללשונית "תמיכות".</div></div>
+
+      <div class="card col-12"><div class="card-head"><span class="card-title">קטלוג המבחנים המלא</span><span class="card-meta">Table · Data bars <span class="qs-tag">QS</span></span></div><div id="c_table"></div></div>
+    </div>
+    <div class="footer-note"><strong>מהסיעור (★ מומלץ לפתיחת הפגישה):</strong> קטלוג תוכניות התמיכה — תמונת פורטפוליו אחת למורן, מענה לשאלה הפתוחה מהפגישה איך לבנות מסך Overview ראשוני. 13 מבחנים נקראו לעומק ועוד 4 הושלמו מרשימות המשרד — יחד 17 (נתוני דמה להמחשה — הרשימה והסכומים כפופים לאימות). "אמת המידה המובילה" = הקריטריון שמניב את רוב הניקוד במבחן. Bar · Donut · Scatter · Table נתמכים ילידית ב-QuickSight.</div>
   </section>
 
   <!-- ===================== MUNICIPALITY ===================== -->
@@ -696,7 +753,7 @@
   </section>
 
   <!-- ===================== IMPACT ===================== -->
-  <section class="page" id="page-impact" data-tab="other" data-init="impact" style="--accent:var(--impact);">
+  <section class="page" id="page-impact" data-tab="sport" data-init="impact" style="--accent:var(--impact);">
     <p class="page-intro">IMPACT — קידום תרבות ספורט: שיעור ההשתתפות מהאוכלוסייה מול יעד לאומי, ויעילות תקציבית (Budget for impact).</p>
     <div class="filter-bar">
       <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
@@ -743,36 +800,9 @@
     <div class="footer-note"><strong>מימוש ב-QuickSight:</strong> כל אריח הוא URL Action או כפתור ניווט המפנה לדשבורד/מקור נתונים — יכולת ילידית של QuickSight. רעיון "MAYBE" מהסיכום — שער נוח שמחבר את הדשבורד האסטרטגי לתפעול.</div>
   </section>
 
-  <!-- ===================== CATALOG · קטלוג התוכניות (סיעור מוחות) ===================== -->
-  <section class="page" id="page-catalog" data-tab="other" data-init="catalog" style="--accent:var(--catalog);">
-    <p class="page-intro">קטלוג התוכניות — מפת כל מבחני התמיכה במבט-על אחד: תקציב, גופים נתמכים, ערך נקודה וקריטריון מוביל. <strong>תמונת הפורטפוליו של מורן</strong> — מענה לשאלה הפתוחה מהפגישה על מסך Overview ראשוני.</p>
-    <div class="filter-bar">
-      <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
-      <div class="filter"><label>שנת תקציב</label><select><option>2026</option><option>2025</option><option>2024</option></select></div>
-      <div class="filter"><label>תחום</label><select><option>הכל</option><option>הישגי</option><option>קהילה ועממי</option><option>הכלה ושוויון</option><option>תשתית ומעטפת</option><option>חירום ועמידות</option></select></div>
-      <div class="filter"><label>אוכלוסיית יעד</label><select><option>הכל</option><option>איגודים</option><option>אגודות</option><option>רשויות מקומיות</option><option>ארגוני גג</option></select></div>
-      <div class="filter"><label>מיון לפי</label><select><option>תקציב</option><option>גופים נתמכים</option><option>ערך נקודה</option></select></div>
-      <button class="filter-reset">איפוס פילטרים</button>
-    </div>
-
-    <div class="kpis">
-      <div class="kpi"><div class="kpi-label">מבחני תמיכה פעילים</div><div class="kpi-value">17</div><div class="kpi-sub">בנויים על מנגנון משותף אחד</div></div>
-      <div class="kpi"><div class="kpi-label">סך תקציב המבחנים</div><div class="kpi-value">₪148.1M</div><div class="kpi-sub">זהה לסך התמיכות בלשונית "תמיכות"</div></div>
-      <div class="kpi"><div class="kpi-label">גופים נתמכים (ייחודיים)</div><div class="kpi-value">476</div><div class="kpi-sub">גוף יכול להיתמך מכמה מבחנים</div></div>
-      <div class="kpi"><div class="kpi-label">ערך נקודה חציוני</div><div class="kpi-value">₪300</div><div class="kpi-sub">כמה ₪ שווה כל נקודת ניקוד · טווח ₪150–₪850</div></div>
-    </div>
-
-    <div class="grid">
-      <div class="card col-7"><div class="card-head"><span class="card-title">תקציב לפי מבחן תמיכה</span><span class="card-meta">Bar · צבע = תחום <span class="qs-tag">QS</span></span></div><div class="card-canvas-wrap h-420"><canvas id="c_byTest"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6"><span class="src-real">קיים בתיק יישוב</span> מקבילה תפעולית — "תקציב לפי תקנה &gt; מרכז קרנות/רצועה" (ברמת תקנה, תרבות+ספורט). כאן: ברמת מבחן תמיכה, ספורט בלבד, עם תחום וערך נקודה.</div></div>
-      <div class="card col-5"><div class="card-head"><span class="card-title">תעדוף ענפים מועדפים — כמה כסף המקדם מזיז</span><span class="card-meta">Stacked Bar · בסיס + תוספת תעדוף</span></div><div class="card-canvas-wrap h-320"><canvas id="c_priority"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">"ענף מועדף" מקבל מקדם ניקוד מוגדל — הרצועה הבהירה היא הכסף שהמקדם הזיז. מוצגים 8 הענפים המובילים מתוך מבחן האיגודים; הסכומים תואמים ללשונית "תמיכות".</div></div>
-
-      <div class="card col-12"><div class="card-head"><span class="card-title">קטלוג המבחנים המלא</span><span class="card-meta">Table · Data bars <span class="qs-tag">QS</span></span></div><div id="c_table"></div></div>
-    </div>
-    <div class="footer-note"><strong>מהסיעור (★ מומלץ לפתיחת הפגישה):</strong> קטלוג תוכניות התמיכה — תמונת פורטפוליו אחת למורן, מענה לשאלה הפתוחה מהפגישה איך לבנות מסך Overview ראשוני. 13 מבחנים נקראו לעומק ועוד 4 הושלמו מרשימות המשרד — יחד 17 (נתוני דמה להמחשה — הרשימה והסכומים כפופים לאימות). "אמת המידה המובילה" = הקריטריון שמניב את רוב הניקוד במבחן. Bar · Donut · Scatter · Table נתמכים ילידית ב-QuickSight.</div>
-  </section>
 
   <!-- ===================== POLICY LEVERS · מנופי מדיניות (סיעור מוחות) ===================== -->
-  <section class="page" id="page-levers" data-tab="other" data-init="levers" style="--accent:var(--levers);">
+  <section class="page" id="page-levers" data-tab="sport" data-init="levers" style="--accent:var(--levers);">
     <p class="page-intro">מנופי מדיניות — המבחנים לא רק מחלקים כסף, הם <strong>מכוונים התנהגות</strong>: תוספת ניקוד לנשים (+30% במבחן האיגודים), ניקוד מדורג לשנתוני נוער, תגמול מעטפת מקצועית ומכפיל הכלה ×1.5. המסך מודד כמה כסף כל מנוף באמת מזיז.</p>
     <div class="filter-bar">
       <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
@@ -1560,12 +1590,71 @@
       `<div class="g-legend">`+Object.entries(STC).map(([k,c])=>`<span><i style="background:${c}"></i>${k}</span>`).join('')+`<span><i class="ms"></i>אישור מודל סופי</span><span><i class="td"></i>היום · 23/8/26</span></div>`+
       (supUn.length?`<div class="g-unscheduled"><b>ללא חלון ק"ק ב-2026 (${supUn.length}):</b> ${supUn.map(s=>esc(s.name)).join(' · ')}</div>`:'');
 
-    // ---- לפי גורם מקצועי ----
-    const oc={}; SUP.forEach(s=>{const o=pOwner(s);oc[o]=(oc[o]||0)+1;});
-    const ok=Object.keys(oc).sort((a,b)=>oc[b]-oc[a]);
-    new Chart(document.getElementById('st_owner'),{type:'bar',
-      data:{labels:ok,datasets:[{data:ok.map(o=>oc[o]),backgroundColor:v('--engine'),borderRadius:3,barPercentage:.7}]},
-      options:{plugins:noLeg,scales:{x:{...gridX},y:{...gridY,ticks:{color:COL.muted,stepSize:1}}}}});
+    // ---- דיווח סטטוס לפי גורם מקצועי ----
+    // כלל השלמות: שדות שנדרשים תמיד + שדות שנדרשים רק אם המבחן מתוכנן לפרסום.
+    const NOPUB=r=>/לא מתוכנן לפרסום/.test(r.rfp||'');
+    const blank=x=>x==null||String(x).trim()==='';
+    const TODAY_ISO='2026-08-23';
+    function missingOf(r){
+      const m=[];
+      if(blank(r.takana)) m.push('תקנה');
+      if(blank(r.model))  m.push('סטטוס מודל');
+      if(!NOPUB(r)){
+        if(blank(r.rfp)||blank(r.start)) m.push('חלון קול קורא');
+        else{
+          if(blank(r.exp)) m.push('צפי בקשות');
+          if((r.end||'')<TODAY_ISO && blank(r.adv)) m.push('מקדמות');
+        }
+      }
+      if(r.model!=='אושר' && blank(r.finalEta)) m.push('צפי אישור סופי');
+      return m;
+    }
+    const REP=SUP.map(r=>({r,miss:missingOf(r),owner:pOwner(r)}));
+    const nFld=n=>n===1?'שדה אחד חסר':n+' שדות חסרים';
+    const nTst=n=>n===1?'1 מבחן':n+' מבחנים';
+    const REPC={full:COL.success, part:v('--band-final'), none:COL.danger};
+
+    // KPIs של הדיווח
+    const noRep=REP.filter(x=>x.miss.length>=2).length,
+          partRep=REP.filter(x=>x.miss.length===1).length,
+          gapOwners=[...new Set(REP.filter(x=>x.miss.length>0).map(x=>x.owner))].length,
+          allOwners=[...new Set(REP.map(x=>x.owner))].length,
+          gapFields=REP.reduce((a,x)=>a+x.miss.length,0);
+    document.getElementById('st_rep_kpis').innerHTML=[
+      ['מבחנים ללא דיווח מלא',noRep+partRep,'מתוך '+REP.length+(noRep?' · '+noRep+' עם 2+ שדות חסרים':'')],
+      ['גורמים מקצועיים עם פערי דיווח',gapOwners,'מתוך '+allOwners],
+      ['שדות חסרים בסך הכל',gapFields,'שדות מחזור-חיים בגיליון']
+    ].map(kcard).join('');
+
+    // Stacked bar — מדורג לפי גודל הפער
+    const oStat={};
+    REP.forEach(x=>{ const o=oStat[x.owner]||(oStat[x.owner]={full:0,part:0,none:0,gap:0});
+      if(x.miss.length===0) o.full++; else if(x.miss.length===1) o.part++; else o.none++;
+      o.gap+=x.miss.length; });
+    const ok=Object.keys(oStat).sort((a,b)=>oStat[b].gap-oStat[a].gap||oStat[b].none-oStat[a].none);
+    new Chart(document.getElementById('st_report'),{type:'bar',
+      data:{labels:ok,datasets:[
+        {label:'2+ שדות חסרים',data:ok.map(o=>oStat[o].none),backgroundColor:REPC.none,borderRadius:2,barPercentage:.72},
+        {label:'שדה אחד חסר',data:ok.map(o=>oStat[o].part),backgroundColor:REPC.part,borderRadius:2,barPercentage:.72},
+        {label:'דווח במלואו',data:ok.map(o=>oStat[o].full),backgroundColor:REPC.full,borderRadius:2,barPercentage:.72}
+      ]},
+      options:{indexAxis:'y',
+        plugins:{...legBottom('bottom'),tooltip:{rtl:true,callbacks:{
+          afterBody:it=>{const o=it[0].label;return 'סה"כ '+nTst(oStat[o].full+oStat[o].part+oStat[o].none)+' · '+nFld(oStat[o].gap);}}}},
+        scales:{x:{stacked:true,...gridY,ticks:{color:COL.muted,stepSize:1,precision:0}},
+                y:{stacked:true,grid:{display:false},border:{display:false},ticks:{color:COL.ink,font:{weight:'600'}}}}}});
+
+    // רשימת "טרם דווח" — מקובצת לפי גורם מקצועי
+    const gaps=REP.filter(x=>x.miss.length>0)
+      .sort((a,b)=>{const d=oStat[b.owner].gap-oStat[a.owner].gap; return d||b.miss.length-a.miss.length;});
+    let mh='',curO=null;
+    gaps.forEach(x=>{
+      if(x.owner!==curO){ curO=x.owner;
+        const o=oStat[curO];
+        mh+=`<div class="miss-owner"><i class="g-dot" style="background:${o.none?REPC.none:REPC.part}"></i>${esc(curO)}<span class="cnt">· ${o.none+o.part} מתוך ${nTst(o.full+o.part+o.none)} · ${nFld(o.gap)}</span></div>`; }
+      mh+=`<div class="miss-row"><span class="nm">${esc(x.r.name)}</span><span class="tags">${x.miss.map(f=>`<span class="miss-tag">${esc(f)}</span>`).join('')}</span></div>`;
+    });
+    document.getElementById('st_missing').innerHTML=mh||'<div class="miss-none">✓ כל המבחנים דווחו במלואם</div>';
 
     // ---- סטטוס מודל (Donut) ----
     const ms=['אושר','מתוכנן','טרם'];
