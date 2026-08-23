@@ -84,16 +84,12 @@
   }
   .tab:hover { color: var(--ink); }
   .tab.active { color: var(--ink); font-weight: 600; }
-  .tab[data-tab="budget"].active { border-bottom-color: var(--budget); }
-  .tab[data-tab="muni"].active   { border-bottom-color: var(--muni); }
-  .tab[data-tab="perf"].active   { border-bottom-color: var(--perf); }
-  .tab[data-tab="sla"].active    { border-bottom-color: var(--sla); }
-  .tab[data-tab="impact"].active { border-bottom-color: var(--impact); }
-  .tab[data-tab="org"].active    { border-bottom-color: var(--org); }
-  .tab[data-tab="links"].active  { border-bottom-color: var(--links); }
-  .tab[data-tab="catalog"].active { border-bottom-color: var(--catalog); }
-  .tab[data-tab="levers"].active  { border-bottom-color: var(--levers); }
-  .tab[data-tab="resil"].active   { border-bottom-color: var(--resil); }
+  .tab[data-tab="admin"].active      { border-bottom-color: var(--budget); }
+  .tab[data-tab="sport"].active      { border-bottom-color: var(--perf); }
+  .tab[data-tab="facilities"].active { border-bottom-color: var(--muni); }
+  .tab[data-tab="other"].active      { border-bottom-color: var(--links); }
+  .fac-frame { width:100%; height: calc(100vh - 150px); min-height:520px; border:0;
+    border-radius: var(--radius-lg); background: var(--surface); box-shadow: 0 1px 3px rgba(0,0,0,.06); }
   /* סימון עדין ללשוניות החדשות מהסיעור */
   .tab .new-dot { display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--gold); margin-inline-start:6px; vertical-align:2px; }
 
@@ -352,22 +348,16 @@
 </header>
 
 <nav class="tabs">
-  <button class="tab active" data-tab="budget">תמיכות</button>
-  <button class="tab" data-tab="catalog">קטלוג התוכניות<span class="new-dot"></span></button>
-  <button class="tab hidden-tab" data-tab="muni">הסתכלות גיאוגרפית</button>
-  <button class="tab" data-tab="org">גוף נתמך · מנוע הניקוד<span class="new-dot"></span></button>
-  <button class="tab" data-tab="perf">ביצועים ומגדר</button>
-  <button class="tab" data-tab="levers">מנופי מדיניות והכלה<span class="new-dot"></span></button>
-  <button class="tab" data-tab="sla">SLA · תפעול</button>
-  <button class="tab" data-tab="resil">עמידות וחירום<span class="new-dot"></span></button>
-  <button class="tab" data-tab="impact">IMPACT ויעילות</button>
-  <button class="tab" data-tab="links">קישורים</button>
+  <button class="tab active" data-tab="admin">סטטוס המינהל</button>
+  <button class="tab" data-tab="sport">מצב הספורט בישראל</button>
+  <button class="tab" data-tab="facilities">מתקנים</button>
+  <button class="tab" data-tab="other">אחר</button>
 </nav>
 
 <main>
 
   <!-- ===================== BUDGET ===================== -->
-  <section class="page active" id="page-budget" data-tab="budget" style="--accent:var(--budget);">
+  <section class="page active" id="page-budget" data-tab="admin" data-init="budget" style="--accent:var(--budget);">
     <p class="page-intro">תמיכות — התמיכות שהמשרד מחלק לאיגודים ולאגודות על פי מבחני התמיכה: פילוח לפי ייעוד, מגמות רב-שנתיות ויציבות הגופים הנתמכים. <strong>אין חיבור לתקציב המשרד עצמו — כל הנתונים מתייחסים לתמיכות המחולקות בלבד.</strong></p>
     <div class="filter-bar">
       <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
@@ -399,7 +389,7 @@
   </section>
 
   <!-- ===================== MUNICIPALITY ===================== -->
-  <section class="page" id="page-muni" data-tab="muni" style="--accent:var(--muni);">
+  <section class="page" id="page-muni" data-tab="sport" data-init="muni" style="--accent:var(--muni);">
     <p class="page-intro">הסתכלות גיאוגרפית — האבולוציה של דשבורד "תיק יישוב" הקיים בפרודקשן (ר' קישורים): ראייה הוליסטית סביב הרשות: תקציב, ספורטאים, אגודות, הישגים, ואחוז מהאוכלוסייה (נתוני למ"ס · Drill-down).</p>
     <div class="filter-bar">
       <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
@@ -486,7 +476,7 @@
   </section>
 
   <!-- ===================== SUPPORTED BODY (GuideStar) ===================== -->
-  <section class="page" id="page-org" data-tab="org" style="--accent:var(--org);">
+  <section class="page" id="page-org" data-tab="admin" data-init="org" style="--accent:var(--org);">
     <p class="page-intro">כרטיסיית גוף נתמך — פרופיל הארגון ומדד <strong>תלות בתמיכה</strong> (התמיכה שלנו ÷ הכנסות העמותה). מקור נתונים: מאגר רשם העמותות הפתוח (data.gov.il · משרד המשפטים) + גיידסטאר. בהמשך המסך: <strong>מנוע הניקוד</strong> — יעד וייחוס לכל אחוז.</p>
     <div class="filter-bar">
       <span class="filter-bar-label">בחירת <strong>גוף נתמך</strong></span>
@@ -581,7 +571,7 @@
   </section>
 
   <!-- ===================== PERFORMANCE ===================== -->
-  <section class="page" id="page-perf" data-tab="perf" style="--accent:var(--perf);">
+  <section class="page" id="page-perf" data-tab="sport" data-init="perf" style="--accent:var(--perf);">
     <p class="page-intro">דשבורד ביצועים אחד — כמות ספורטאים, הישגים וראייה מגדרית, במבט מאוחד וביחס לאוכלוסייה.</p>
     <div class="filter-bar">
       <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
@@ -614,7 +604,7 @@
   </section>
 
   <!-- ===================== SLA ===================== -->
-  <section class="page" id="page-sla" data-tab="sla" style="--accent:var(--sla);">
+  <section class="page" id="page-sla" data-tab="admin" data-init="sla" style="--accent:var(--sla);">
     <p class="page-intro">SLA תפעולי — זמני טיפול, פניות פרטניות, בקשות חוזרות/השלמות, ותיקוני ועדת חריגים ועררים.</p>
     <div class="filter-bar">
       <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
@@ -643,7 +633,7 @@
   </section>
 
   <!-- ===================== IMPACT ===================== -->
-  <section class="page" id="page-impact" data-tab="impact" style="--accent:var(--impact);">
+  <section class="page" id="page-impact" data-tab="admin" data-init="impact" style="--accent:var(--impact);">
     <p class="page-intro">IMPACT — קידום תרבות ספורט: שיעור ההשתתפות מהאוכלוסייה מול יעד לאומי, ויעילות תקציבית (Budget for impact).</p>
     <div class="filter-bar">
       <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
@@ -673,7 +663,7 @@
   </section>
 
   <!-- ===================== LINKS ===================== -->
-  <section class="page" id="page-links" data-tab="links" style="--accent:var(--links);">
+  <section class="page" id="page-links" data-tab="other" style="--accent:var(--links);">
     <p class="page-intro">דף ניווט — שער מרכזי למקורות המידע ולדשבורדים התפעוליים. ב-QuickSight כל אריח נבנה כ-<strong>URL Action</strong> (או כפתור ניווט) על גבי ויזואל.</p>
     <div class="link-grid">
       <a class="link-card"><div class="ic" style="background:var(--muni-soft); color:var(--muni)">🗂</div><div class="lt">תיק יישוב <span class="src-real">בפרודקשן</span></div><div class="ld">הדשבורד הקיים למנהלי המשרד (QuickSight): בקשות וסכום מאושר לפי רשות, תקנה ומחוז · נתוני למ"ס · מסמכי סיור שר. "הסתכלות גיאוגרפית" היא האבולוציה שלו.</div></a>
@@ -691,7 +681,7 @@
   </section>
 
   <!-- ===================== CATALOG · קטלוג התוכניות (סיעור מוחות) ===================== -->
-  <section class="page" id="page-catalog" data-tab="catalog" style="--accent:var(--catalog);">
+  <section class="page" id="page-catalog" data-tab="admin" data-init="catalog" style="--accent:var(--catalog);">
     <p class="page-intro">קטלוג התוכניות — מפת כל מבחני התמיכה במבט-על אחד: תקציב, גופים נתמכים, ערך נקודה וקריטריון מוביל. <strong>תמונת הפורטפוליו של מורן</strong> — מענה לשאלה הפתוחה מהפגישה על מסך Overview ראשוני.</p>
     <div class="filter-bar">
       <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
@@ -719,7 +709,7 @@
   </section>
 
   <!-- ===================== POLICY LEVERS · מנופי מדיניות (סיעור מוחות) ===================== -->
-  <section class="page" id="page-levers" data-tab="levers" style="--accent:var(--levers);">
+  <section class="page" id="page-levers" data-tab="admin" data-init="levers" style="--accent:var(--levers);">
     <p class="page-intro">מנופי מדיניות — המבחנים לא רק מחלקים כסף, הם <strong>מכוונים התנהגות</strong>: תוספת ניקוד לנשים (+30% במבחן האיגודים), ניקוד מדורג לשנתוני נוער, תגמול מעטפת מקצועית ומכפיל הכלה ×1.5. המסך מודד כמה כסף כל מנוף באמת מזיז.</p>
     <div class="filter-bar">
       <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
@@ -763,7 +753,7 @@
   </section>
 
   <!-- ===================== RESILIENCE · עמידות וחירום (סיעור מוחות) ===================== -->
-  <section class="page" id="page-resil" data-tab="resil" style="--accent:var(--resil);">
+  <section class="page" id="page-resil" data-tab="admin" data-init="resil" style="--accent:var(--resil);">
     <p class="page-intro">עמידות וחירום — <strong>4 מבחני חירום</strong> פעלו בתקופת חרבות ברזל: פיצוי אובדן הכנסות ("שאגת הארי"), מרחב מוגן יביל, ספורט בחירום וסל תחום ג'. המסך מספר את סיפור העמידות של מערכת הספורט.</p>
     <div class="filter-bar">
       <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
@@ -791,9 +781,13 @@
     <div class="footer-note"><strong>מהסיעור + הפגישה:</strong> עמידות וחירום הוצע כאלטרנטיבה חיובית ל-SLA ה"רך" (רק 6 פניות השנה) — תוכן חירום עם יותר דאטה ורלוונטיות לתקופה. מקורות: שאגת הארי · מרחב מוגן יביל · ספורט בחירום · סל הספורט תחום ג' — נתונים פנימיים, דמה להמחשה. הסכומים תואמים לתחום "חירום ועמידות" בקטלוג התוכניות (₪7.1M). Stacked · Bar · Line ילידיים ב-QuickSight.</div>
   </section>
 
-</main>
+  <!-- ===================== FACILITIES · מתקנים (iframe) ===================== -->
+  <section class="page" id="page-facilities" data-tab="facilities" style="--accent:var(--muni);">
+    <p class="page-intro">מתקנים — דשבורד מתקני הספורט (מפת רשויות + מפת מתקנים), משובץ כמסך עצמאי.</p>
+    <iframe class="fac-frame" src="מפת-מתקנים-KPI-NEW.html" loading="lazy" title="מפת מתקני ספורט"></iframe>
+  </section>
 
-<div class="reveal-footer"><button id="revealBtn" class="reveal-btn" title="חשיפת מסך מוסתר">⋯ הצג מסך מוסתר</button></div>
+</main>
 
 <script>/*!
  * Chart.js v4.4.1
@@ -1434,25 +1428,29 @@
 
   // ================= tab wiring =================
   const done={};
+  // כל section נושא data-init=מפתח ה-INIT המקורי שלו; קבוצת הלשונית = data-tab.
+  // אתחול עצל פר-section: כשלשונית מוצגת, כל ה-sections שלה נטענים פעם אחת.
+  function initSection(p){
+    const k=p.dataset.init;
+    if(k && !done[k] && INIT[k]){ requestAnimationFrame(()=>{ INIT[k](); done[k]=true; }); }
+  }
   function show(tab){
     document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===tab));
-    document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.dataset.tab===tab));
-    if(!done[tab] && INIT[tab]){ requestAnimationFrame(()=>{INIT[tab](); done[tab]=true;}); }
-  }
-  document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>show(t.dataset.tab)));
-  window.gotoTab=show;
-
-  // reveal / hide the hidden sheet
-  const revealBtn=document.getElementById('revealBtn');
-  if(revealBtn){
-    revealBtn.addEventListener('click',()=>{
-      const shown=document.body.classList.toggle('reveal-hidden');
-      revealBtn.textContent = shown ? '✕ הסתר שוב' : '⋯ הצג מסך מוסתר';
-      if(shown){ const h=document.querySelector('.tab.hidden-tab'); if(h) show(h.dataset.tab); }
-      else if(document.querySelector('.tab.hidden-tab.active')){ show('budget'); }
+    document.querySelectorAll('.page').forEach(p=>{
+      const on = p.dataset.tab===tab;
+      p.classList.toggle('active',on);
+      if(on) initSection(p);
     });
   }
-  INIT.budget(); done.budget=true;
+  document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>show(t.dataset.tab)));
+  // gotoTab מקבל id של section (למשל 'catalog') → פותח את הלשונית שלו וגולל אליו, או שם לשונית ישיר
+  window.gotoTab=function(x){
+    const sec=document.getElementById('page-'+x);
+    if(sec){ show(sec.dataset.tab); sec.scrollIntoView({behavior:'smooth',block:'start'}); }
+    else show(x);
+  };
+
+  show('admin');   // לשונית ברירת המחדל — מאתחלת את כל ה-sections שלה
 })();
 </script>
 
