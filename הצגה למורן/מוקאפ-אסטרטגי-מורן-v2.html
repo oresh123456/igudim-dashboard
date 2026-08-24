@@ -92,6 +92,20 @@
     border-radius: var(--radius-lg); background: var(--surface); box-shadow: 0 1px 3px rgba(0,0,0,.06); }
   .st-h { font-size:16px; font-weight:700; color:var(--ink); margin:24px 0 12px;
     padding-inline-start:10px; border-inline-start:4px solid var(--accent); }
+  .spec { background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    padding:12px 14px; margin:12px 0 0; font-size:11.5px; color:var(--ink-muted); line-height:1.75; }
+  .spec > summary { font-size:12.5px; font-weight:700; color:var(--ink); cursor:pointer; list-style:none; }
+  .spec > summary::-webkit-details-marker { display:none; }
+  .spec > summary::before { content:'▸ '; color:var(--ink-faint); }
+  .spec[open] > summary::before { content:'▾ '; }
+  .spec[open] > summary { margin-bottom:8px; }
+  .spec code { direction:ltr; display:block; unicode-bidi:isolate; background:var(--surface-soft);
+    border:1px solid var(--line); border-radius:5px; padding:9px 11px; margin:7px 0;
+    font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:11px; color:var(--ink);
+    white-space:pre; overflow-x:auto; text-align:left; }
+  .spec .ok  { color:var(--success); font-weight:700; }
+  .spec .warn{ color:#8A6D3B; font-weight:700; }
+  .spec .no  { color:var(--danger); font-weight:700; }
   .st-sub { font-size:14px; font-weight:700; color:var(--ink); margin:22px 0 4px;
     padding-inline-start:9px; border-inline-start:3px solid var(--accent); }
   .st-subnote { font-size:11.5px; color:var(--ink-faint); margin:0 0 12px 12px; line-height:1.7; }
@@ -415,7 +429,7 @@
     <h2 class="st-h">מבחני תמיכה · 2026</h2>
     <div class="kpis k6" id="st_kpis"></div>
     <div class="grid">
-      <div class="card col-12"><div class="card-head"><span class="card-title">גאנט מבחני תמיכה — חלון קול קורא לאורך 2026</span><span class="card-meta">Gantt · צבע = סטטוס מודל <span class="qs-tag">QS: Stacked Bar עם אופסט שקוף</span></span></div><div id="st_gantt" class="gantt-scroll"></div><div id="st_legend"></div></div>
+      <div class="card col-12"><div class="card-head"><span class="card-title">גאנט מבחני תמיכה — חלון קול קורא לאורך 2026</span><span class="card-meta">Gantt · צבע = סטטוס מודל <span class="qs-tag">QS: Highcharts visual · xrange (או Bar מוערם עם אופסט rgba(0,0,0,0))</span></span></div><div id="st_gantt" class="gantt-scroll"></div><div id="st_legend"></div></div>
     </div>
 
     <h3 class="st-sub">דיווח סטטוס לפי גורם מקצועי</h3>
@@ -429,9 +443,39 @@
     <h2 class="st-h">מבחני מתקנים · 2026</h2>
     <div class="kpis" id="stf_kpis"></div>
     <div class="grid">
-      <div class="card col-12"><div class="card-head"><span class="card-title">גאנט מבחני מתקנים — חלון קול קורא</span><span class="card-meta">Gantt · צבע = אשכול</span></div><div id="stf_gantt" class="gantt-scroll"></div><div id="stf_legend"></div></div>
+      <div class="card col-12"><div class="card-head"><span class="card-title">גאנט מבחני מתקנים — חלון קול קורא</span><span class="card-meta">Gantt · צבע = אשכול <span class="qs-tag">QS: Highcharts visual · אותה סכימה</span></span></div><div id="stf_gantt" class="gantt-scroll"></div><div id="stf_legend"></div></div>
       <div class="card col-12"><div class="card-head"><span class="card-title">לוח סטטוס — מבחני מתקנים</span><span class="card-meta">Table</span></div><div id="stf_table"></div></div>
     </div>
+    <details class="spec"><summary>בניית הגאנט ב-QuickSight — Highcharts visual <span style="font-weight:400;color:var(--ink-faint)">· מפרט לצוות הפיתוח</span></summary>
+      ל-QuickSight אין סוג ויזואל Gantt מובנה, אבל ה-<strong>Highcharts visual</strong> (מובנה, ללא עלות נוספת, נכתב כ-JSON) מכסה את כל מה שמופיע כאן.
+      ה-JSON נכתב מול <strong>Highcharts Core</strong>, ושדות מוזרקים בביטויי QuickSight (<code style="display:inline;padding:1px 5px;margin:0;border:0;background:none">getColumn</code>).
+      <code>{
+  "chart":   { "type": "bar" },
+  "plotOptions": { "series": { "stacking": "normal", "pointWidth": 14, "borderWidth": 0 } },
+  "xAxis":   { "categories": ["getColumn", 0], "reversed": true },
+  "yAxis":   {
+    "categories": ["ינו","פבר","מרץ","אפר","מאי","יונ","יול","אוג","ספט","אוק","נוב","דצמ"],
+    "min": 0, "max": 12, "title": { "text": null },
+    "plotLines": [{ "value": 7.73, "color": "#B23A3A", "width": 2,
+                    "dashStyle": "Dash", "zIndex": 5,
+                    "label": { "text": "היום · 23/8/26" } }]
+  },
+  "series": [
+    { "name": "offset", "data": ["getColumn", 1],
+      "color": "rgba(0,0,0,0)", "enableMouseTracking": false, "showInLegend": false },
+    { "name": "חלון קול קורא", "data": ["getColumn", 2] },
+    { "type": "scatter", "name": "אישור מודל סופי", "data": ["getColumn", 3],
+      "marker": { "symbol": "diamond", "radius": 6,
+                  "fillColor": "#FFFFFF", "lineColor": "#1A1A1A", "lineWidth": 2 } }
+  ]
+}</code>
+      <strong>איך זה עובד:</strong> הסדרה הראשונה היא האופסט מתחילת השנה ועד תחילת החלון, בצבע <code style="display:inline;padding:1px 5px;margin:0;border:0;background:none">rgba(0,0,0,0)</code> — <span class="ok">שקיפות אמיתית</span>, ולא הלבן-על-לבן שנדרש בוויזואל המובנה. הסדרה השנייה היא אורך החלון. הסדרה השלישית (scatter, סמל diamond) היא יהלום אישור המודל הסופי — <span class="ok">אפשרי כאן, לא אפשרי בוויזואל המובנה</span>. קו "היום" הוא <code style="display:inline;padding:1px 5px;margin:0;border:0;background:none">plotLines</code>, JSON רגיל.
+      <br><strong>עמודות שצריך להכין ב-ETL:</strong> <span class="warn">שם המבחן</span> · <span class="warn">אופסט</span> (חלקי-חודש מ-1/1) · <span class="warn">משך</span> · <span class="warn">מיקום היהלום</span> — כולם <strong>מספרים</strong>, כי <span class="no">JSON של Highcharts ב-QuickSight אינו מקבל Dates</span>. אלה בדיוק הערכים ש-<code style="display:inline;padding:1px 5px;margin:0;border:0;background:none">mf()</code> מחשב במוקאפ הזה.
+      <br><strong>מגבלות שצריך להכיר:</strong> <span class="no">אין Functions</span> (ולכן אין formatters מותאמים — הכול קונפיגורציה סטטית) · <span class="no">אין Dates</span> · אין קישור לתמונות/GeoJSON · תקרה של 10,000 נקודות דאטה (25 מבחנים × 3 סדרות — לא קרוב). <strong>Tooltip עשיר כן נתמך</strong> דרך <code style="display:inline;padding:1px 5px;margin:0;border:0;background:none">useHTML: true</code>, וכך גם תוויות שורה דו-שורתיות (גורם מקצועי + "ממתין ל…").
+      <br><strong>לבדוק בפועל:</strong> האם מודול <code style="display:inline;padding:1px 5px;margin:0;border:0;background:none">xrange</code> נכלל בהתקנה. אם כן — הוא גאנט אמיתי ומייתר את סדרת האופסט (<code style="display:inline;padding:1px 5px;margin:0;border:0;background:none">{x, x2, y}</code> לכל שורה). אם לא — הסכימה שלמעלה עובדת כמות שהיא ב-Highcharts Core; ההבדל קוסמטי בלבד. <span class="warn">Highcharts Gantt הוא מוצר נפרד של Highcharts</span> ואינו חלק מ-Core.
+      <br><strong>בונוס:</strong> ויזואלי Highcharts תומכים ב-<strong>custom actions</strong> וב-<strong>cross-visual highlighting</strong> — לחיצה על שורה בגאנט יכולה לסנן את לוח הסטטוס שמתחתיו.
+      <br><strong>נפילה לאחור</strong> (אם Highcharts לא זמין): Bar מוערם מובנה + אופסט בלבן + <strong>Reference line</strong> ל"היום" (נתמך בגרפי עמודות, קבוע או מחושב, עם תווית טקסט). המחיר: <span class="no">בלי יהלום</span>, ציר מספרי (0/30/60) במקום שמות חודשים, ותווית שורה בשורה אחת.
+    </details>
     <div class="footer-note"><strong>מקור:</strong> גאנט תמיכות מעודכן 20-8-2026.xlsx (קובץ מחלקה פנימי). הגיליון מתוחזק ידנית ע&quot;י המחלקה והדשבורד משקף אותו; המבנה ניתן להתאמה קלה למילוי הארגון. חלונות קול קורא שהחלו ב-2025 מוצגים מתחילת 2026. נתוני דמה להמחשה.</div>
   </section>
 
