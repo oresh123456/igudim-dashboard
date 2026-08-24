@@ -87,11 +87,22 @@
   .tab[data-tab="admin"].active      { border-bottom-color: var(--budget); }
   .tab[data-tab="sport"].active      { border-bottom-color: var(--perf); }
   .tab[data-tab="facilities"].active { border-bottom-color: var(--muni); }
+  .tab[data-tab="orgcard"].active    { border-bottom-color: var(--org); }
+  .tab[data-tab="authcard"].active   { border-bottom-color: var(--geo); }
   .tab[data-tab="other"].active      { border-bottom-color: var(--links); }
   .fac-frame { width:100%; height: calc(100vh - 150px); min-height:520px; border:0;
     border-radius: var(--radius-lg); background: var(--surface); box-shadow: 0 1px 3px rgba(0,0,0,.06); }
   .st-h { font-size:16px; font-weight:700; color:var(--ink); margin:24px 0 12px;
     padding-inline-start:10px; border-inline-start:4px solid var(--accent); }
+  /* ── פס זהות בראש כרטיס ── */
+  .idstrip { display:flex; flex-wrap:wrap; gap:0; background:var(--surface); border:1px solid var(--line);
+    border-radius:var(--radius); overflow:hidden; margin-bottom:16px; }
+  .idstrip .f { flex:1 1 130px; padding:10px 14px; border-inline-start:1px solid var(--line-soft); }
+  .idstrip .f:first-child { border-inline-start:0; }
+  .idstrip .f .k { font-size:10.5px; color:var(--ink-faint); font-weight:600; }
+  .idstrip .f .val { font-size:13.5px; color:var(--ink); font-weight:700; margin-top:2px; }
+  .idstrip .f.hero { flex:0 0 auto; min-width:190px; background:var(--surface-soft); }
+  .idstrip .f.hero .val { font-size:16px; }
   .spec { background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
     padding:12px 14px; margin:12px 0 0; font-size:11.5px; color:var(--ink-muted); line-height:1.75; }
   .spec > summary { font-size:12.5px; font-weight:700; color:var(--ink); cursor:pointer; list-style:none; }
@@ -417,6 +428,8 @@
   <button class="tab active" data-tab="admin">סטטוס המינהל</button>
   <button class="tab" data-tab="sport">מצב הספורט בישראל</button>
   <button class="tab" data-tab="facilities">מתקנים</button>
+  <button class="tab" data-tab="orgcard">כרטיס גוף</button>
+  <button class="tab" data-tab="authcard">כרטיס רשות</button>
   <button class="tab" data-tab="other">אחר</button>
 </nav>
 
@@ -903,6 +916,50 @@
       <div class="card col-5"><div class="card-head"><span class="card-title">פיצוי אובדן הכנסות לפי ענף</span><span class="card-meta">Bar · "שאגת הארי" · אלפי ₪</span></div><div class="card-canvas-wrap h-280"><canvas id="r_lion"></canvas></div></div>
     </div>
     <div class="footer-note"><strong>מהסיעור + הפגישה:</strong> עמידות וחירום הוצע כאלטרנטיבה חיובית ל-SLA ה"רך" (רק 6 פניות השנה) — תוכן חירום עם יותר דאטה ורלוונטיות לתקופה. מקורות: שאגת הארי · מרחב מוגן יביל · ספורט בחירום · סל הספורט תחום ג' — נתונים פנימיים, דמה להמחשה. הסכומים תואמים לתחום "חירום ועמידות" בקטלוג התוכניות (₪7.1M). Stacked · Bar · Line ילידיים ב-QuickSight.</div>
+  </section>
+
+  <!-- ===================== ORG CARD · כרטיס גוף (תקציב המשרד בלבד) ===================== -->
+  <section class="page" id="page-orgcard" data-tab="orgcard" data-init="orgcard" style="--accent:var(--org);">
+    <p class="page-intro">כרטיס גוף — כל מה שהמשרד יודע על גוף נתמך אחד, <strong>מתוך נתוני המשרד בלבד</strong>: תמיכה, ניקוד, ספורטאים והישגים. <strong>ללא נתוני רשם העמותות/גיידסטאר</strong> — אין כאן מחזור, עובדים, מתנדבים או "תלות בתמיכה", ולכן <strong>אין תלות ב-API חיצוני</strong>. (הכרטיס מבוסס-גיידסטאר נשאר בלשונית "אחר" → גוף נתמך.)</p>
+    <div class="filter-bar">
+      <span class="filter-bar-label">בחירת <strong>גוף</strong></span>
+      <div class="filter"><label>גוף נתמך</label><select id="oc_sel"></select></div>
+      <div class="filter"><label>שנת תקציב</label><select><option>2026</option><option>2025</option><option>2024</option></select></div>
+      <span style="font-size:11px;color:var(--ink-faint);align-self:center">ב-QuickSight: Parameter control (Dropdown מדאטהסט הגופים) שמסנן את כל הוויזואלים בדף</span>
+    </div>
+    <div class="idstrip" id="oc_id"></div>
+    <div class="kpis k6" id="oc_kpis"></div>
+    <div class="grid">
+      <div class="card col-7"><div class="card-head"><span class="card-title">מאילו מבחנים הגוף נתמך</span><span class="card-meta">Bar · מלש&quot;ח <span class="qs-tag">QS</span></span></div><div class="card-canvas-wrap h-280"><canvas id="oc_tests"></canvas></div></div>
+      <div class="card col-5"><div class="card-head"><span class="card-title">הרכב הניקוד לפי אמות מידה</span><span class="card-meta">Donut · % מהניקוד</span></div><div class="card-canvas-wrap h-280"><canvas id="oc_score"></canvas></div></div>
+      <div class="card col-7"><div class="card-head"><span class="card-title">מגמת התמיכה</span><span class="card-meta">Line · מלש&quot;ח <span class="src-real">קיים בדשבורד האיגודים</span></span></div><div class="card-canvas-wrap h-260"><canvas id="oc_trend"></canvas></div></div>
+      <div class="card col-5"><div class="card-head"><span class="card-title">ספורטאים לפי שכבת גיל</span><span class="card-meta">Stacked · נשים תכלת / גברים נייבי <span class="src-real">קיים בדשבורד האיגודים</span></span></div><div class="card-canvas-wrap h-260"><canvas id="oc_age"></canvas></div></div>
+      <div class="card col-12"><div class="card-head"><span class="card-title">הישגים — השתתפויות מול תוצאות</span><span class="card-meta">Clustered Bar · 5 עונות <span class="src-real">קיים בדשבורד ההישגיות</span></span></div><div class="card-canvas-wrap h-260"><canvas id="oc_ach"></canvas></div></div>
+      <div class="card col-12"><div class="card-head"><span class="card-title">אגודות וקבוצות תחת הגוף</span><span class="card-meta">Table</span></div><div id="oc_table"></div></div>
+    </div>
+    <div class="footer-note"><strong>מקורות:</strong> תמיכות · ניקוד · אמות מידה — פנימי (מרכבה + מערכת התמיכות). ספורטאים ומגדר — דשבורד האיגודים/אגודות בפרודקשן. הישגים — דשבורד ההישגיות. <strong>לא נכללים כאן</strong> נתוני רשם העמותות וגיידסטאר (מחזור, עובדים, מתנדבים, ניהול תקין, סעיף 46) — הם חיים בכרטיס "גוף נתמך" שבלשונית "אחר" וממתינים לחשבון API. נתוני דמה להמחשה.</div>
+  </section>
+
+  <!-- ===================== AUTH CARD · כרטיס רשות ===================== -->
+  <section class="page" id="page-authcard" data-tab="authcard" data-init="authcard" style="--accent:var(--geo);">
+    <p class="page-intro">כרטיס רשות — תמונה מלאה על רשות מקומית אחת: תקציב, ספורטאים, אגודות, מתקנים והישגים, <strong>מול הרשויות שדומות לה</strong> (אותו אשכול חברתי-כלכלי). הלשונית "מצב הספורט בישראל" → הסתכלות גיאוגרפית עונה על שאלת המדיניות הארצית; כאן מתמקדים ברשות אחת.</p>
+    <div class="filter-bar">
+      <span class="filter-bar-label">בחירת <strong>רשות</strong></span>
+      <div class="filter"><label>רשות מקומית</label><select id="ac_sel"></select></div>
+      <div class="filter"><label>שנת תקציב</label><select><option>2026</option><option>2025</option><option>2024</option></select></div>
+      <span style="font-size:11px;color:var(--ink-faint);align-self:center">ב-QuickSight: Parameter control (Dropdown מדאטהסט הרשויות) שמסנן את כל הוויזואלים בדף</span>
+    </div>
+    <div class="idstrip" id="ac_id"></div>
+    <div class="kpis k6" id="ac_kpis"></div>
+    <div class="grid">
+      <div class="card col-7"><div class="card-head"><span class="card-title">ספורטאים לפי ענף</span><span class="card-meta">Bar <span class="src-real">קיים בתיק יישוב</span></span></div><div class="card-canvas-wrap h-300"><canvas id="ac_branch"></canvas></div></div>
+      <div class="card col-5"><div class="card-head"><span class="card-title">תקציב לפי מבחן</span><span class="card-meta">Bar · מלש&quot;ח <span class="src-real">קיים בתיק יישוב</span></span></div><div class="card-canvas-wrap h-300"><canvas id="ac_tests"></canvas></div></div>
+      <div class="card col-12"><div class="card-head"><span class="card-title">מול הרשויות הדומות — אותו אשכול חברתי-כלכלי</span><span class="card-meta">Clustered Bar · הרשות · ממוצע האשכול · ממוצע ארצי <span class="qs-tag">QS</span></span></div><div class="card-canvas-wrap h-280"><canvas id="ac_bench"></canvas></div><div style="font-size:11px;color:var(--ink-faint);margin-top:6px;line-height:1.6"><strong>ממוצע האשכול = 100.</strong> ארבעת המדדים מוצגים כמדד יחסי כדי שיישבו על אותו סולם (₪ לנפש, אחוזים ויחסים ל-1,000 אינם ברי-השוואה בציר אחד); הערכים המוחלטים ב-Tooltip. ההשוואה היא מול <strong>רשויות באותו אשכול</strong> ולא מול הממוצע הארצי — רשות באשכול 3 שנמצאת מתחת לממוצע הארצי עשויה להיות מובילה בין שוותיה, ולהפך. זו השאלה שמנהלת שואלת לפני הקצאה.</div></div>
+      <div class="card col-5"><div class="card-head"><span class="card-title">מתקנים לפי סוג</span><span class="card-meta">Donut <span class="src-real">קיים בדשבורד המתקנים</span></span></div><div class="card-canvas-wrap h-260"><canvas id="ac_fac"></canvas></div></div>
+      <div class="card col-7"><div class="card-head"><span class="card-title">נגישות המתקנים ברשות</span><span class="card-meta">Bar · % <span class="src-real">קיים בדשבורד המתקנים</span></span></div><div class="card-canvas-wrap h-260"><canvas id="ac_facq"></canvas></div><div style="font-size:11px;color:var(--ink-faint);margin-top:6px;line-height:1.6">מדד "המתקן הקרוב ביותר" נלקח מניתוח הרדיוס בדשבורד המתקנים (מפה 3) — מרחק חציוני מכתובת מגורים למתקן הקרוב.</div></div>
+      <div class="card col-12"><div class="card-head"><span class="card-title">אגודות פעילות ברשות</span><span class="card-meta">Table</span></div><div id="ac_table"></div></div>
+    </div>
+    <div class="footer-note"><strong>מקורות:</strong> תקציב ותמיכות — פנימי (מרכבה). אוכלוסייה, אשכול חברתי-כלכלי ומדד פריפריאליות — הלמ"ס. ספורטאים ואגודות — דשבורד האיגודים/אגודות. מתקנים — אקסל המפקחים ודשבורד המתקנים. נתוני דמה להמחשה.</div>
   </section>
 
   <!-- ===================== FACILITIES · מתקנים (iframe) ===================== -->
@@ -1701,6 +1758,219 @@
     let fh='<table class="db-table"><thead><tr><th>מבחן</th><th>אשכול</th><th>אחראי</th><th>סטטוס</th><th>תקציב (מלש"ח)</th><th>צפי בקשות</th><th>חלון ק"ק</th><th>פורסם</th><th>ממתין לאישור/השלמה</th></tr></thead><tbody>';
     FAC.forEach(f=>{fh+=`<tr><td style="text-align:right;font-weight:500">${f.name}</td><td>${f.cluster||'—'}</td><td>${f.owner||'—'}</td><td style="font-size:11px">${f.status||'—'}</td><td>${f.budget==null?'—':'₪'+f.budget+'M'}</td><td>${f.exp==null?'—':f.exp}</td><td style="font-size:11px">${f.rfp||'—'}</td><td>${f.pub?chip('פורסם',COL.success):'<span style="color:var(--ink-faint)">—</span>'}</td><td>${wtags(facWaiting(f),'✓ פורסם')}</td></tr>`;});
     document.getElementById('stf_table').innerHTML=fh+'</tbody></table>';
+  };
+
+  // ===================== INIT.orgcard · כרטיס גוף (תקציב המשרד בלבד) =====================
+  INIT.orgcard = function(){
+    const money=x=>'₪'+(x>=1?x.toFixed(1)+'M':Math.round(x*1000)+'K');
+    const kc=(l,v,sub,cls)=>`<div class="kpi"><div class="kpi-label">${l}</div><div class="kpi-value">${v}</div><div class="kpi-sub ${cls||''}">${sub||''}</div></div>`;
+    // shares מסתכמים ל-1 — הסכומים תמיד מתלכדים לסך התמיכה
+    const BODIES=[
+      {n:'איגוד הכדורסל',kind:'איגוד',br:'כדורסל',ol:'אולימפי',ty:'קבוצתי',home:'תל אביב-יפו',tot:22.5,yoy:6.2,rank:2,adv:'60%',ath:18400,w:34,
+       tests:[['תמיכה באיגודי ספורט',.63],['הישגיות — סל ספורטאי',.16],['קידום שילוב ספורטאים ישראלים',.11],['ליגות ומפעלים',.06],['קידום ספורט נשים',.04]],
+       score:[42,27,14,9,8], ach:[[118,9,31],[126,11,34],[131,8,29],[140,14,38],[147,12,41]],
+       clubs:[['מכבי תל אביב','ליגת העל',9,640],['הפועל ירושלים','ליגת העל',8,520],['הפועל חולון','ליגת העל',7,470],['מכבי חיפה','ליגה לאומית',6,390],['הפועל גליל עליון','ליגה לאומית',6,355],['עירוני נס ציונה','ליגת העל',5,310]]},
+      {n:'ההתאחדות לכדורגל',kind:'איגוד',br:'כדורגל',ol:'אולימפי',ty:'קבוצתי',home:'רמת גן',tot:31.2,yoy:4.1,rank:1,adv:'60%',ath:42100,w:12,
+       tests:[['תמיכה באיגודי ספורט',.68],['קידום שילוב ספורטאים ישראלים',.14],['ליגות ומפעלים',.10],['קידום ספורט נשים',.08]],
+       score:[48,21,17,8,6], ach:[[96,6,22],[102,7,25],[108,5,21],[112,9,27],[119,8,29]],
+       clubs:[['מכבי חיפה','ליגת העל',14,880],['מכבי תל אביב','ליגת העל',13,830],['הפועל באר שבע','ליגת העל',12,760],['בית"ר ירושלים','ליגת העל',12,745],['הפועל תל אביב','ליגה לאומית',11,690],['בני סכנין','ליגת העל',10,610]]},
+      {n:'איגוד השחייה',kind:'איגוד',br:'שחייה',ol:'אולימפי',ty:'אישי',home:'תל אביב-יפו',tot:9.8,yoy:9.4,rank:3,adv:'50%',ath:11250,w:48,
+       tests:[['תמיכה באיגודי ספורט',.55],['הישגיות — סל ספורטאי',.21],['אקדמיות למצוינות',.11],['קידום ספורט נשים',.08],['ספורט פראלימפי',.05]],
+       score:[36,33,12,11,8], ach:[[142,14,44],[151,17,48],[158,15,46],[166,21,53],[174,19,57]],
+       clubs:[['מכבי חיפה שחייה','ארצי',5,410],['הפועל קריית ביאליק','ארצי',4,330],['מכבי ראשון לציון','ארצי',4,305],['עירוני מודיעין','מחוזי',3,240],['הפועל אשקלון','מחוזי',3,215]]},
+      {n:'איגוד האתלטיקה',kind:'איגוד',br:'אתלטיקה',ol:'אולימפי',ty:'אישי',home:'תל אביב-יפו',tot:7.4,yoy:3.2,rank:4,adv:'50%',ath:9600,w:44,
+       tests:[['תמיכה באיגודי ספורט',.58],['הישגיות — סל ספורטאי',.19],['אקדמיות למצוינות',.12],['קידום ספורט נשים',.11]],
+       score:[38,31,13,10,8], ach:[[131,11,36],[138,13,39],[144,10,35],[149,15,42],[156,13,44]],
+       clubs:[['מכבי תל אביב אתלטיקה','ארצי',4,290],['הפועל ירושלים','ארצי',4,265],['מכבי באר שבע','מחוזי',3,205],['עירוני כרמיאל','מחוזי',3,180]]},
+      {n:'איגוד הג\'ודו',kind:'איגוד',br:'ג\'ודו',ol:'אולימפי',ty:'אישי',home:'תל אביב-יפו',tot:6.1,yoy:2.4,rank:5,adv:'60%',ath:8150,w:38,
+       tests:[['תמיכה באיגודי ספורט',.57],['הישגיות — סל ספורטאי',.24],['אקדמיות למצוינות',.12],['קידום ספורט נשים',.07]],
+       score:[34,37,12,9,8], ach:[[88,12,31],[93,15,34],[97,13,30],[101,18,37],[106,16,39]],
+       clubs:[['מכבי חיפה ג\'ודו','ארצי',4,275],['הפועל פתח תקווה','ארצי',3,230],['עירוני נתניה','מחוזי',3,195]]},
+      {n:'איגוד ההתעמלות',kind:'איגוד',br:'התעמלות',ol:'אולימפי',ty:'אישי',home:'תל אביב-יפו',tot:5.9,yoy:11.8,rank:6,adv:'40%',ath:7300,w:71,
+       tests:[['תמיכה באיגודי ספורט',.52],['הישגיות — סל ספורטאי',.22],['קידום ספורט נשים',.15],['אקדמיות למצוינות',.11]],
+       score:[33,34,11,14,8], ach:[[76,10,26],[81,13,29],[86,11,27],[92,16,33],[98,15,36]],
+       clubs:[['מכבי תל אביב התעמלות','ארצי',4,310],['הפועל ראשון לציון','ארצי',3,255],['עירוני מודיעין','מחוזי',3,200]]},
+      {n:'מכבי חיפה (אגודה)',kind:'אגודה',br:'כדורגל',ol:'אולימפי',ty:'קבוצתי',home:'חיפה',tot:1.9,yoy:5.0,rank:41,adv:'40%',ath:1180,w:22,
+       tests:[['תמיכה באיגודי ספורט',.61],['ליגות ומפעלים',.21],['קידום ספורט נשים',.18]],
+       score:[45,24,18,8,5], ach:[[34,3,9],[37,4,11],[39,3,10],[42,5,13],[45,4,14]],
+       clubs:[['בוגרים','ליגת העל',1,32],['נוער','ליגת נוער',2,58],['נערים','ליגת נערים',3,84],['ילדים','ליגת ילדים',4,112]]}
+    ];
+    const SCORE_LBL=['מספר ספורטאים','הישגים','מסגרות נוער','פעילות נשים','מאמנים מוסמכים'];
+    const SCORE_COL=[v('--budget'),v('--perf'),v('--muni'),COL.women,v('--org')];
+    const AGE=['עד 12','13–14','15–16','17–18','19–22','23+'];
+    const AGE_SHARE=[.27,.19,.17,.14,.13,.10];
+    // מפצל סך לשכבות גיל כך שהסכום שווה בדיוק למקור (השכבה האחרונה סופגת את השארית)
+    const split=tot=>{const a=AGE_SHARE.slice(0,-1).map(x=>Math.round(tot*x));
+      a.push(Math.round(tot)-a.reduce((x,y)=>x+y,0)); return a;};
+
+    const sel=document.getElementById('oc_sel');
+    sel.innerHTML=BODIES.map((b,i)=>`<option value="${i}">${b.n}</option>`).join('');
+    let C1,C2,C3,C4,C5;
+    function paint(){
+      const b=BODIES[+sel.value];
+      document.getElementById('oc_id').innerHTML=
+        `<div class="f hero"><div class="k">גוף נתמך</div><div class="val">${b.n}</div></div>`+
+        [['סוג',b.kind],['ענף',b.br],['סיווג',b.ol],['סוג ענף',b.ty],['רשות בית',b.home]]
+          .map(x=>`<div class="f"><div class="k">${x[0]}</div><div class="val">${x[1]}</div></div>`).join('');
+      document.getElementById('oc_kpis').innerHTML=
+        kc('תמיכה השנה',money(b.tot),'מתוך ₪148.1M')+
+        kc('שינוי מול 2025',(b.yoy>0?'▲ ':'▼ ')+Math.abs(b.yoy).toFixed(1)+'%','',b.yoy>0?'up':'down')+
+        kc('דירוג תמיכה','#'+b.rank,'מתוך 476 גופים')+
+        kc('נתמך מ־',b.tests.length+' מבחנים','מתוך 17')+
+        kc('מקדמות ששולמו',b.adv,'מהתמיכה')+
+        kc('ספורטאים',b.ath.toLocaleString('he-IL'),b.w+'% נשים');
+      // מאילו מבחנים
+      // הסכומים מתלכדים בדיוק לסך התמיכה — הפריט האחרון סופג את שארית העיגול
+      const tl=b.tests.map(t=>t[0]), tv=b.tests.map(t=>+(b.tot*t[1]).toFixed(1));
+      tv[tv.length-1]=+(b.tot-tv.slice(0,-1).reduce((x,y)=>x+y,0)).toFixed(1);
+      if(C1)C1.destroy(); C1=new Chart(document.getElementById('oc_tests'),{type:'bar',
+        data:{labels:tl,datasets:[{data:tv,backgroundColor:v('--org'),borderRadius:3,barPercentage:.7}]},
+        options:{indexAxis:'y',plugins:{...noLeg,tooltip:{rtl:true,callbacks:{label:c=>money(c.raw)}}},
+          scales:{x:{...gridY,ticks:{color:COL.muted,callback:x=>'₪'+x+'M'}},y:{grid:{display:false},border:{display:false},ticks:{color:COL.ink,font:{size:11}}}}}});
+      // הרכב ניקוד
+      if(C2)C2.destroy(); C2=new Chart(document.getElementById('oc_score'),{type:'doughnut',
+        data:{labels:SCORE_LBL,datasets:[{data:b.score,backgroundColor:SCORE_COL,borderWidth:2,borderColor:'#fff'}]},
+        options:{cutout:'56%',plugins:{...legBottom('bottom'),tooltip:{rtl:true,callbacks:{label:c=>c.label+': '+c.raw+'%'}}}}});
+      // מגמה
+      const yrs=['2022','2023','2024','2025','2026'],base=b.tot/(1+b.yoy/100);
+      const trend=[+(base*.82).toFixed(1),+(base*.88).toFixed(1),+(base*.94).toFixed(1),+base.toFixed(1),b.tot];
+      if(C3)C3.destroy(); C3=new Chart(document.getElementById('oc_trend'),{type:'line',
+        data:{labels:yrs,datasets:[{data:trend,borderColor:v('--org'),backgroundColor:hx(v('--org'),.12),fill:true,tension:.35,pointRadius:3}]},
+        options:{plugins:{...noLeg,tooltip:{rtl:true,callbacks:{label:c=>money(c.raw)}}},
+          scales:{x:{...gridX},y:{...gridY,ticks:{color:COL.muted,callback:x=>'₪'+x+'M'}}}}});
+      // ספורטאים לפי גיל ומגדר
+      const wTot=b.ath*b.w/100, mTot=b.ath-wTot;
+      if(C4)C4.destroy(); C4=new Chart(document.getElementById('oc_age'),{type:'bar',
+        data:{labels:AGE,datasets:[
+          {label:'נשים',data:split(wTot),backgroundColor:COL.women,borderRadius:2},
+          {label:'גברים',data:split(mTot),backgroundColor:COL.men,borderRadius:2}]},
+        options:{plugins:{...legBottom('bottom'),tooltip:{rtl:true}},
+          scales:{x:{stacked:true,...gridX},y:{stacked:true,...gridY,ticks:{color:COL.muted}}}}});
+      // הישגים
+      if(C5)C5.destroy(); C5=new Chart(document.getElementById('oc_ach'),{type:'bar',
+        data:{labels:yrs,datasets:[
+          {label:'השתתפויות',data:b.ach.map(a=>a[0]),backgroundColor:COL.rest,borderRadius:3},
+          {label:'8 הראשונים',data:b.ach.map(a=>a[2]),backgroundColor:v('--perf'),borderRadius:3},
+          {label:'פודיום',data:b.ach.map(a=>a[1]),backgroundColor:COL.success,borderRadius:3}]},
+        options:{plugins:{...legBottom('bottom'),tooltip:{rtl:true}},
+          scales:{x:{...gridX},y:{...gridY,ticks:{color:COL.muted}}}}});
+      // טבלה
+      document.getElementById('oc_table').innerHTML=
+        '<table class="db-table"><thead><tr><th>'+(b.kind==='איגוד'?'אגודה':'קבוצה')+'</th><th>מסגרת</th><th>קבוצות</th><th>ספורטאים</th><th>חלק מהספורטאים</th></tr></thead><tbody>'+
+        b.clubs.map(c=>`<tr><td style="text-align:right;font-weight:500">${c[0]}</td><td>${c[1]}</td><td>${c[2]}</td><td>${c[3].toLocaleString('he-IL')}</td><td>${(c[3]/b.ath*100).toFixed(1)}%</td></tr>`).join('')+
+        '</tbody></table>';
+    }
+    sel.onchange=paint; paint();
+  };
+
+  // ===================== INIT.authcard · כרטיס רשות =====================
+  INIT.authcard = function(){
+    const kc=(l,val,sub,cls)=>`<div class="kpi"><div class="kpi-label">${l}</div><div class="kpi-value">${val}</div><div class="kpi-sub ${cls||''}">${sub||''}</div></div>`;
+    const AUTHS=[
+      {n:'חדרה',dist:'חיפה',cl:6,per:5,pop:99700,bud:4.2,ath:6240,clubs:18,fac:47,ach:41,
+       br:[['כדורגל',1580],['כדורסל',1120],['שחייה',760],['אתלטיקה',540],['התעמלות',430],['ג\'ודו',380],['טניס',290],['אחר',1140]],
+       tests:[['סל הספורט לרשויות',1.9],['ספורט עממי-קהילתי',1.1],['קידום ספורט נשים',.6],['ספורט פראלימפי',.4],['ספורט בחירום',.2]],
+       facmix:[18,12,4,7,2,4], facq:[86,61,38], nearest:640,
+       list:[['מכבי חדרה','כדורגל',9,540],['הפועל חדרה','כדורסל',7,410],['מועדון השחייה חדרה','שחייה',5,320],['אתלטיקה חדרה','אתלטיקה',4,240],['ג\'ודו חדרה','ג\'ודו',3,180]]},
+      {n:'באר שבע',dist:'דרום',cl:5,per:3,pop:214600,bud:8.9,ath:12980,clubs:31,fac:86,ach:73,
+       br:[['כדורגל',3240],['כדורסל',2180],['שחייה',1420],['אתלטיקה',1080],['התעמלות',760],['ג\'ודו',690],['טניס',480],['אחר',3130]],
+       tests:[['סל הספורט לרשויות',4.1],['ספורט עממי-קהילתי',2.2],['קידום ספורט נשים',1.1],['ספורט פראלימפי',.9],['ספורט בחירום',.6]],
+       facmix:[31,22,7,14,3,9], facq:[81,54,31], nearest:720,
+       list:[['הפועל באר שבע','כדורגל',14,880],['מכבי באר שבע','כדורסל',9,520],['מועדון שחייה נגב','שחייה',7,430],['אתלטיקה הנגב','אתלטיקה',6,360],['ג\'ודו באר שבע','ג\'ודו',4,240]]},
+      {n:'נצרת',dist:'צפון',cl:3,per:4,pop:78300,bud:2.4,ath:3120,clubs:11,fac:26,ach:14,
+       br:[['כדורגל',1140],['כדורסל',620],['אתלטיקה',310],['שחייה',180],['ג\'ודו',210],['התעמלות',140],['טניס',90],['אחר',430]],
+       tests:[['סל הספורט לרשויות',1.3],['ספורט עממי-קהילתי',.6],['קידום ספורט נשים',.3],['ספורט פראלימפי',.2]],
+       facmix:[12,7,1,4,1,1], facq:[68,34,17], nearest:1180,
+       list:[['הפועל נצרת','כדורגל',8,420],['מכבי נצרת','כדורסל',5,260],['אתלטיקה נצרת','אתלטיקה',3,150],['ג\'ודו נצרת','ג\'ודו',2,110]]},
+      {n:'מודיעין',dist:'מרכז',cl:8,per:8,pop:96400,bud:3.6,ath:7480,clubs:22,fac:53,ach:38,
+       br:[['כדורגל',1720],['כדורסל',1310],['שחייה',940],['התעמלות',680],['אתלטיקה',520],['טניס',410],['ג\'ודו',330],['אחר',1570]],
+       tests:[['סל הספורט לרשויות',1.4],['ספורט עממי-קהילתי',1.1],['קידום ספורט נשים',.6],['ספורט פראלימפי',.3],['ספורט בחירום',.2]],
+       facmix:[19,15,5,8,2,4], facq:[93,72,44], nearest:510,
+       list:[['עירוני מודיעין','כדורגל',10,610],['מכבי מודיעין','כדורסל',8,470],['מועדון שחייה מודיעין','שחייה',6,380],['התעמלות מודיעין','התעמלות',5,290],['טניס מודיעין','טניס',3,190]]},
+      {n:'אשקלון',dist:'דרום',cl:4,per:4,pop:148700,bud:5.1,ath:7920,clubs:24,fac:61,ach:29,
+       br:[['כדורגל',2140],['כדורסל',1380],['שחייה',890],['אתלטיקה',640],['ג\'ודו',470],['התעמלות',380],['טניס',260],['אחר',1760]],
+       tests:[['סל הספורט לרשויות',2.4],['ספורט עממי-קהילתי',1.2],['קידום ספורט נשים',.6],['ספורט בחירום',.5],['ספורט פראלימפי',.4]],
+       facmix:[23,16,4,10,2,6], facq:[76,49,26], nearest:830,
+       list:[['הפועל אשקלון','כדורגל',11,640],['מכבי אשקלון','כדורסל',7,390],['שחייה אשקלון','שחייה',5,300],['אתלטיקה אשקלון','אתלטיקה',4,220]]},
+      {n:'כרמיאל',dist:'צפון',cl:6,per:6,pop:46800,bud:1.8,ath:3410,clubs:12,fac:24,ach:16,
+       br:[['כדורגל',780],['כדורסל',620],['שחייה',410],['אתלטיקה',340],['התעמלות',280],['ג\'ודו',190],['טניס',140],['אחר',650]],
+       tests:[['סל הספורט לרשויות',.8],['ספורט עממי-קהילתי',.5],['קידום ספורט נשים',.3],['ספורט פראלימפי',.2]],
+       facmix:[9,7,2,3,1,2], facq:[88,57,29], nearest:690,
+       list:[['הפועל כרמיאל','כדורגל',6,300],['מכבי כרמיאל','כדורסל',5,250],['שחייה כרמיאל','שחייה',4,190],['אתלטיקה כרמיאל','אתלטיקה',3,140]]}
+    ];
+    // ממוצע ארצי — משוקלל אוכלוסייה על פני כל האשכולות, ולכן נופל בתוך טווח ממוצעי האשכולות
+    // (אשכולות נמוכים מחזיקים נתח אוכלוסייה גדול ומושכים את הממוצע כלפי מטה).
+    const NAT={budpp:32.0,athpct:4.8,facpk:0.52,clubpk:0.21};
+    const CLAVG={3:{budpp:26.4,athpct:3.6,facpk:0.41,clubpk:0.17},4:{budpp:31.2,athpct:5.1,facpk:0.44,clubpk:0.17},
+                 5:{budpp:35.8,athpct:5.7,facpk:0.42,clubpk:0.15},6:{budpp:38.1,athpct:6.0,facpk:0.48,clubpk:0.19},
+                 8:{budpp:33.4,athpct:7.2,facpk:0.55,clubpk:0.22}};
+    const FACLBL=['מגרש','אולם','בריכה','כושר','אצטדיון','אחר'];
+    const FACCOL=[v('--budget'),v('--levers'),COL.rest,v('--perf'),COL.gold,'#9aa8bd'];
+
+    const sel=document.getElementById('ac_sel');
+    sel.innerHTML=AUTHS.map((a,i)=>`<option value="${i}">${a.n}</option>`).join('');
+    let D1,D2,D3,D4,D5;
+    function paint(){
+      const a=AUTHS[+sel.value], cl=CLAVG[a.cl]||CLAVG[6];
+      const budpp=a.bud*1e6/a.pop, athpct=a.ath/a.pop*100, facpk=a.fac/a.pop*1000, clubpk=a.clubs/a.pop*1000;
+      document.getElementById('ac_id').innerHTML=
+        `<div class="f hero"><div class="k">רשות מקומית</div><div class="val">${a.n}</div></div>`+
+        [['מחוז',a.dist],['אשכול חברתי-כלכלי',a.cl+' מתוך 10'],['מדד פריפריאליות',a.per+' מתוך 10'],
+         ['אוכלוסייה (למ"ס)',a.pop.toLocaleString('he-IL')],['הישגים ארציים',a.ach]]
+          .map(x=>`<div class="f"><div class="k">${x[0]}</div><div class="val">${x[1]}</div></div>`).join('');
+      const cmp=(x,y)=>x>=y?'up':'down', arr=(x,y)=>(x>=y?'▲ ':'▼ ');
+      document.getElementById('ac_kpis').innerHTML=
+        kc('תקציב יישובי','₪'+a.bud.toFixed(1)+'M','תמיכות המשרד')+
+        kc('ספורטאים רשומים',a.ath.toLocaleString('he-IL'))+
+        kc('% מהאוכלוסייה',athpct.toFixed(1)+'%',arr(athpct,NAT.athpct)+'ארצי '+NAT.athpct+'%',cmp(athpct,NAT.athpct))+
+        kc('אגודות פעילות',a.clubs)+
+        kc('מתקנים',a.fac,facpk.toFixed(2)+' ל-1,000 תוש׳')+
+        kc('תקציב לנפש','₪'+budpp.toFixed(1),arr(budpp,cl.budpp)+'אשכול '+a.cl+': ₪'+cl.budpp,cmp(budpp,cl.budpp));
+      // ספורטאים לפי ענף
+      if(D1)D1.destroy(); D1=new Chart(document.getElementById('ac_branch'),{type:'bar',
+        data:{labels:a.br.map(x=>x[0]),datasets:[{data:a.br.map(x=>x[1]),backgroundColor:v('--geo'),borderRadius:3,barPercentage:.7}]},
+        options:{indexAxis:'y',plugins:{...noLeg,tooltip:{rtl:true}},
+          scales:{x:{...gridY,ticks:{color:COL.muted}},y:{grid:{display:false},border:{display:false},ticks:{color:COL.ink}}}}});
+      // תקציב לפי מבחן
+      if(D2)D2.destroy(); D2=new Chart(document.getElementById('ac_tests'),{type:'bar',
+        data:{labels:a.tests.map(x=>x[0]),datasets:[{data:a.tests.map(x=>x[1]),backgroundColor:v('--budget'),borderRadius:3,barPercentage:.65}]},
+        options:{indexAxis:'y',plugins:{...noLeg,tooltip:{rtl:true,callbacks:{label:c=>'₪'+c.raw+'M'}}},
+          scales:{x:{...gridY,ticks:{color:COL.muted,callback:x=>'₪'+x+'M'}},y:{grid:{display:false},border:{display:false},ticks:{color:COL.ink,font:{size:11}}}}}});
+      // בנצ'מרק מול האשכול
+      // מדד: ממוצע האשכול = 100. כל ארבעת המדדים על אותו סולם, בלי ציר לוגריתמי.
+      const M=['תקציב לנפש','% מהאוכלוסייה','מתקנים ל-1,000','אגודות ל-1,000'];
+      const raw=[budpp,athpct,facpk,clubpk], clv=[cl.budpp,cl.athpct,cl.facpk,cl.clubpk],
+            ntv=[NAT.budpp,NAT.athpct,NAT.facpk,NAT.clubpk], UNIT=['₪','%','',''];
+      const idx=(arr)=>arr.map((x,i)=>Math.round(x/clv[i]*100));
+      if(D3)D3.destroy(); D3=new Chart(document.getElementById('ac_bench'),{type:'bar',
+        data:{labels:M,datasets:[
+          {label:a.n,data:idx(raw),backgroundColor:v('--geo'),borderRadius:3},
+          {label:'ממוצע אשכול '+a.cl+' = 100',data:[100,100,100,100],backgroundColor:v('--perf'),borderRadius:3},
+          {label:'ממוצע ארצי',data:idx(ntv),backgroundColor:COL.rest,borderRadius:3}]},
+        options:{plugins:{...legBottom('bottom'),tooltip:{rtl:true,callbacks:{
+          label:c=>{const i=c.dataIndex, src=c.datasetIndex===0?raw:(c.datasetIndex===1?clv:ntv);
+            const val=src[i], f=i===0?('₪'+val.toFixed(1)):(i===1?val.toFixed(1)+'%':val.toFixed(2));
+            return c.dataset.label+': '+f+'  (מדד '+c.raw+')';}}}},
+          scales:{x:{...gridX},y:{...gridY,ticks:{color:COL.muted,callback:x=>x}},
+            }}});
+      // מתקנים לפי סוג
+      if(D4)D4.destroy(); D4=new Chart(document.getElementById('ac_fac'),{type:'doughnut',
+        data:{labels:FACLBL,datasets:[{data:a.facmix,backgroundColor:FACCOL,borderWidth:2,borderColor:'#fff'}]},
+        options:{cutout:'56%',plugins:{...legBottom('bottom'),tooltip:{rtl:true}}}});
+      // איכות ונגישות
+      if(D5)D5.destroy(); D5=new Chart(document.getElementById('ac_facq'),{type:'bar',
+        data:{labels:['% תקינים ופעילים','% נגישים לנכים','% תקניים לתחרויות'],datasets:[
+          {label:a.n,data:a.facq,backgroundColor:[COL.success,v('--perf'),COL.rest],borderRadius:3,barPercentage:.6}]},
+        options:{plugins:{...noLeg,tooltip:{rtl:true,callbacks:{label:c=>c.raw+'%'}}},
+          scales:{x:{...gridX},y:{...gridY,max:100,ticks:{color:COL.muted,callback:x=>x+'%'}}}}});
+      // טבלה
+      document.getElementById('ac_table').innerHTML=
+        '<table class="db-table"><thead><tr><th>אגודה</th><th>ענף</th><th>קבוצות</th><th>ספורטאים</th><th>חלק מספורטאי הרשות</th></tr></thead><tbody>'+
+        a.list.map(c=>`<tr><td style="text-align:right;font-weight:500">${c[0]}</td><td>${c[1]}</td><td>${c[2]}</td><td>${c[3].toLocaleString('he-IL')}</td><td>${(c[3]/a.ath*100).toFixed(1)}%</td></tr>`).join('')+
+        `<tr><td colspan="5" style="font-size:11px;color:var(--ink-faint);text-align:right">מוצגות ${a.list.length} מתוך ${a.clubs} אגודות · המתקן הקרוב ביותר (חציון): ${a.nearest} מ׳ — מניתוח הרדיוס בדשבורד המתקנים</td></tr>`+
+        '</tbody></table>';
+    }
+    sel.onchange=paint; paint();
   };
 
   const WRAP={budget:[EX.budget], muni:[INIT.geo,EX.muni], org:[INIT.engine], perf:[EX.perf], levers:[INIT.incl]};
