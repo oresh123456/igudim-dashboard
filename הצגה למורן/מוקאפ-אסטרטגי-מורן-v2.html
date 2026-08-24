@@ -1470,7 +1470,7 @@
 
     new Chart(document.getElementById('l_pipeline'),{type:'bar',
       data:{labels:['כדורגל','כדורסל','שחייה','ג\'ודו','אתלטיקה','התעמלות'],datasets:[
-        {label:'ילדים 6–12',data:[28500,16400,8200,7400,6800,5900],backgroundColor:L,borderRadius:3},
+        {label:'ילדים 6–12',data:[28500,16400,8200,7400,6800,5900],backgroundColor:COL.navy,borderRadius:3},
         {label:'נוער 13–18',data:[15200,8900,4100,3000,3300,2600],backgroundColor:COL.purple,borderRadius:3},
         {label:'הישגי 19+',data:[4100,2400,1150,760,900,540],backgroundColor:COL.sky,borderRadius:3}]},
       options:{plugins:legBottom('bottom'),scales:{x:gridX,y:{...gridY,ticks:{color:COL.muted,callback:t=>(t/1000)+'K'}}}}});
