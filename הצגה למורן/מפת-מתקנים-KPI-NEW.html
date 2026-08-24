@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
 <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
 <style>
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
   :root{
@@ -263,6 +264,25 @@ const AUTHGEO = {"ירושלים":[[[[31.79026,35.1311],[31.79051,35.13211],[31.
 </script>
 <script>
 'use strict';
+/* תוויות נתונים — הילה, לא תיבה (עקרונות העיצוב).
+   דונאט: תווית במרכז המקטע, מקטעים קטנים מוסתרים. Bar של 15 רשויות = צפוף ⇒ Tooltip בלבד. */
+Chart.register(ChartDataLabels);
+Chart.defaults.plugins.datalabels = { display:false };
+const dlLight = ctx => { const b=ctx.dataset.backgroundColor;
+  let h=String((Array.isArray(b)?b[ctx.dataIndex]:b)||'').trim().replace('#','');
+  if(h.length===3) h=h.split('').map(x=>x+x).join('');
+  if(!/^[0-9a-fA-F]{6}$/.test(h)) return false;
+  const r=parseInt(h.slice(0,2),16),g=parseInt(h.slice(2,4),16),b2=parseInt(h.slice(4,6),16);
+  return (0.299*r+0.587*g+0.114*b2)/255 > 0.62; };
+(function(){ const o=Chart.overrides.doughnut||(Chart.overrides.doughnut={});
+  (o.plugins||(o.plugins={})).datalabels = {
+    display(ctx){ const d=ctx.dataset.data.map(Number), t=d.reduce((a,b)=>a+(b||0),0);
+      return t>0 && (Number(d[ctx.dataIndex])/t)>=0.07; },
+    color: ctx=>dlLight(ctx)?'#1A1A2E':'#FFFFFF',
+    textStrokeColor: ctx=>dlLight(ctx)?'#FFFFFF':'rgba(26,26,46,.55)',
+    textStrokeWidth:3, font:{weight:'700',size:11},
+    formatter: v => Number(v).toLocaleString('he-IL')
+  }; })();
 const KPIS = [
   {k:'n',      t:'מס׳ מתקנים',           src:'excel',   pal:'navy',   fmt:v=>Math.round(v).toLocaleString('en')},
   {k:'perpop', t:'מתקנים ל-1,000 תושבים', src:'dw',      pal:'navy',   fmt:v=>(+v).toFixed(2)},
