@@ -1,0 +1,555 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]: ת״ס
+    - generic [ref=e4]:
+      - generic [ref=e5]: משרד התרבות והספורט · מינהל הספורט
+      - generic [ref=e6]: אגף מתקנים · דשבורד מתקני ספורט
+    - generic [ref=e7]: מסכים למורן · מפת מתקנים
+  - generic [ref=e8]:
+    - generic [ref=e9]:
+      - heading "מפת מתקני ספורט — Heatmap לפי מדדים" [level=1] [ref=e10]
+      - paragraph [ref=e11]: "ויזואל אחד (QuickSight Layer map) עם שתי שכבות GeoJSON: שכבה 1 — אזורים צבועים, כל רשות לפי המדד הנבחר (choropleth) · שכבה 2 — מתקנים בודדים כנקודות, בצבע לפי סוג/מצב/נגישות, עם הצג-הסתר וכוונון גודל. ניתן לסנן לפי מחוז/סוג. כל מדד מסומן במקור הנתון."
+    - generic [ref=e12]:
+      - generic [ref=e13]:
+        - generic [ref=e14]: 8,507
+        - generic [ref=e15]: סה״כ מתקנים ממופים
+      - generic [ref=e16]:
+        - generic [ref=e17]: "1"
+        - generic [ref=e18]: רשויות מקומיות
+      - generic [ref=e19]:
+        - generic [ref=e20]: 84%
+        - generic [ref=e21]: "% תקינים ופעילים"
+      - generic [ref=e22]:
+        - generic [ref=e23]: 59%
+        - generic [ref=e24]: "% נגישים לנכים"
+      - generic [ref=e25]:
+        - generic [ref=e26]: 100%
+        - generic [ref=e27]: ממוצע · % תקינים ופעילים
+    - generic [ref=e28]:
+      - generic [ref=e29]:
+        - generic [ref=e30]:
+          - text: פילטרים גלובליים
+          - generic [ref=e31]: Sheet filters · זהה למסכי הספורט
+        - generic [ref=e32]:
+          - generic [ref=e33]:
+            - generic [ref=e34]: שנה
+            - combobox [ref=e35] [cursor=pointer]:
+              - option "2026" [selected]
+              - option "2025"
+          - generic [ref=e36]:
+            - generic [ref=e37]: רשות מקומית
+            - combobox [ref=e38] [cursor=pointer]:
+              - option "הכל"
+              - option "אבו גוש"
+              - option "אבו סנאן"
+              - option "אבן יהודה"
+              - option "אום אל-פחם"
+              - option "אופקים"
+              - option "אור יהודה"
+              - option "אור עקיבא"
+              - option "אורנית"
+              - option "אזור"
+              - option "אילת"
+              - option "אכסאל"
+              - option "אל קסום"
+              - option "אל-בטוף"
+              - option "אלונה"
+              - option "אליכין"
+              - option "אלעד"
+              - option "אלפי מנשה"
+              - option "אלקנה"
+              - option "אעבלין"
+              - option "אפרת"
+              - option "אריאל"
+              - option "אשדוד"
+              - option "אשכול"
+              - option "אשקלון"
+              - option "באקה אל גרביה"
+              - option "באר טוביה"
+              - option "באר יעקב"
+              - option "באר שבע"
+              - option "בוסתאן אל מרג'"
+              - option "בועיינה-נוג'ידאת"
+              - option "בוקעתא"
+              - option "ביר אל-מכסור"
+              - option "בית אל"
+              - option "בית אריה"
+              - option "בית ג'ן"
+              - option "בית דגן"
+              - option "בית שאן"
+              - option "בית שמש"
+              - option "ביתר עילית"
+              - option "בני ברק"
+              - option "בני עייש"
+              - option "בני שמעון"
+              - option "בנימינה-גבעת עדה"
+              - option "בסמ\"ה"
+              - option "בסמת טבעון"
+              - option "בענה"
+              - option "בקעת הירדן"
+              - option "ברנר"
+              - option "בת ים"
+              - option "ג'דיידה-מכר"
+              - option "ג'וליס"
+              - option "ג'לג'וליה"
+              - option "ג'סר א-זרקא"
+              - option "ג'ש (גוש חלב)"
+              - option "ג'ת"
+              - option "גבעת זאב"
+              - option "גבעת שמואל"
+              - option "גבעתיים"
+              - option "גדרה"
+              - option "גדרות"
+              - option "גולן"
+              - option "גוש עציון"
+              - option "גזר"
+              - option "גן יבנה"
+              - option "גן רוה"
+              - option "גני תקווה"
+              - option "דאלית אל כרמל"
+              - option "דבוריה"
+              - option "דימונה"
+              - option "דיר אל אסד"
+              - option "דיר חנא"
+              - option "דרום השרון"
+              - option "הגלבוע"
+              - option "הגליל העליון"
+              - option "הגליל התחתון"
+              - option "הוד השרון"
+              - option "הערבה התיכונה"
+              - option "הר אדר"
+              - option "הר חברון"
+              - option "הרצליה"
+              - option "זבולון"
+              - option "זכרון יעקב"
+              - option "זמר"
+              - option "זרזיר"
+              - option "חבל אילות"
+              - option "חבל יבנה"
+              - option "חבל מודיעין"
+              - option "חדרה"
+              - option "חולון"
+              - option "חוף אשקלון"
+              - option "חוף הכרמל"
+              - option "חוף השרון"
+              - option "חורה"
+              - option "חורפיש"
+              - option "חיפה" [selected]
+              - option "חצור הגלילית"
+              - option "חריש"
+              - option "טבריה"
+              - option "טובא-זנגריה"
+              - option "טורעאן"
+              - option "טייבה"
+              - option "טירה"
+              - option "טירת כרמל"
+              - option "טמרה"
+              - option "יאנוח-ג'ת"
+              - option "יבנאל"
+              - option "יבנה"
+              - option "יהוד"
+              - option "יואב"
+              - option "יסוד המעלה"
+              - option "יפיע"
+              - option "יקנעם עילית"
+              - option "ירוחם"
+              - option "ירושלים"
+              - option "ירכא"
+              - option "כאבול"
+              - option "כאוכב אבו אל-היג'א"
+              - option "כוכב יאיר"
+              - option "כסיפה"
+              - option "כסרא סמיע"
+              - option "כעביה-טבאש-חג'אג'רה"
+              - option "כפר ברא"
+              - option "כפר ורדים"
+              - option "כפר יאסיף"
+              - option "כפר יונה"
+              - option "כפר כמא"
+              - option "כפר כנא"
+              - option "כפר מנדא"
+              - option "כפר סבא"
+              - option "כפר קאסם"
+              - option "כפר קרע"
+              - option "כפר שמריהו"
+              - option "כפר תבור"
+              - option "כרמיאל"
+              - option "לב השרון"
+              - option "להבים"
+              - option "לוד"
+              - option "לכיש"
+              - option "לקיה"
+              - option "מבואות החרמון"
+              - option "מבשרת ציון"
+              - option "מג'ד אל כרום"
+              - option "מג'דל שמס"
+              - option "מגדל"
+              - option "מגדל העמק"
+              - option "מגידו"
+              - option "מגילות ים המלח"
+              - option "מודיעין עילית"
+              - option "מודיעין-מכבים-רעות"
+              - option "מזכרת בתיה"
+              - option "מזרעה"
+              - option "מטה אשר"
+              - option "מטה בנימין"
+              - option "מטה יהודה"
+              - option "מטולה"
+              - option "מיתר"
+              - option "מנשה"
+              - option "מסעדה"
+              - option "מע'אר"
+              - option "מעיליא"
+              - option "מעלה אדומים"
+              - option "מעלה אפרים"
+              - option "מעלה יוסף"
+              - option "מעלה עירון"
+              - option "מעלות-תרשיחא"
+              - option "מצפה רמון"
+              - option "מרום הגליל"
+              - option "מרחבים"
+              - option "משגב"
+              - option "משהד"
+              - option "נהריה"
+              - option "נווה מדבר"
+              - option "נוף הגליל"
+              - option "נחל שורק"
+              - option "נחף"
+              - option "נס ציונה"
+              - option "נצרת"
+              - option "נשר"
+              - option "נתיבות"
+              - option "נתניה"
+              - option "סאג'ור"
+              - option "סביון"
+              - option "סח'נין"
+              - option "ע'ג'ר"
+              - option "עומר"
+              - option "עיילבון"
+              - option "עילוט"
+              - option "עין מאהל"
+              - option "עין קנייא"
+              - option "עכו"
+              - option "עמנואל"
+              - option "עמק הירדן"
+              - option "עמק המעיינות"
+              - option "עמק חפר"
+              - option "עמק יזרעאל"
+              - option "עספיא"
+              - option "עפולה"
+              - option "עראבה"
+              - option "ערד"
+              - option "ערערה"
+              - option "ערערה-בנגב"
+              - option "פוריידיס"
+              - option "פסוטה"
+              - option "פקיעין"
+              - option "פרדס חנה-כרכור"
+              - option "פרדסיה"
+              - option "פתח תקווה"
+              - option "צפת"
+              - option "קדומים"
+              - option "קדימה צורן"
+              - option "קלנסווה"
+              - option "קצרין"
+              - option "קרית אונו"
+              - option "קרית ארבע"
+              - option "קרית אתא"
+              - option "קרית ביאליק"
+              - option "קרית גת"
+              - option "קרית טבעון"
+              - option "קרית ים"
+              - option "קרית יערים"
+              - option "קרית מוצקין"
+              - option "קרית מלאכי"
+              - option "קרית עקרון"
+              - option "קרית שמונה"
+              - option "קרני שומרון"
+              - option "ראמה"
+              - option "ראש העין"
+              - option "ראש פינה"
+              - option "ראשון לציון"
+              - option "רהט"
+              - option "רחובות"
+              - option "ריינה"
+              - option "רכסים"
+              - option "רמלה"
+              - option "רמת גן"
+              - option "רמת הנגב"
+              - option "רמת השרון"
+              - option "רמת ישי"
+              - option "רעננה"
+              - option "שגב שלום"
+              - option "שדות דן"
+              - option "שדות נגב"
+              - option "שדרות"
+              - option "שוהם"
+              - option "שומרון"
+              - option "שיבלי אום אלג'נם"
+              - option "שלומי"
+              - option "שעב"
+              - option "שער הנגב"
+              - option "שפיר"
+              - option "שפרעם"
+              - option "תל אביב-יפו"
+              - option "תל מונד"
+              - option "תל שבע"
+              - option "תמר"
+          - generic [ref=e39]:
+            - generic [ref=e40]: מדד סוציו-אקונומי
+            - combobox [ref=e41] [cursor=pointer]:
+              - option "הכל" [selected]
+              - option "אשכול 1–3"
+              - option "אשכול 4–6"
+              - option "אשכול 7–10"
+          - generic [ref=e42]:
+            - generic [ref=e43]: איגוד
+            - combobox [ref=e44] [cursor=pointer]:
+              - option "הכל" [selected]
+          - generic [ref=e45]:
+            - generic [ref=e46]: אגודה
+            - combobox [ref=e47] [cursor=pointer]:
+              - option "הכל" [selected]
+          - generic [ref=e48]:
+            - generic [ref=e49]: ענף
+            - combobox [ref=e50] [cursor=pointer]:
+              - option "הכל" [selected]
+              - option "כדורגל"
+              - option "כדורסל"
+              - option "שחייה"
+              - option "אתלטיקה"
+              - option "טניס"
+              - option "כדורעף"
+              - option "התעמלות"
+              - option "ג'ודו"
+          - generic [ref=e51]:
+            - generic [ref=e52]: סיווג אולימפי
+            - combobox [ref=e53] [cursor=pointer]:
+              - option "הכל" [selected]
+              - option "אולימפי"
+              - option "פרה-אולימפי"
+              - option "לא אולימפי"
+          - generic [ref=e54]:
+            - generic [ref=e55]: סוג ענף
+            - combobox [ref=e56] [cursor=pointer]:
+              - option "הכל" [selected]
+              - option "אישי"
+              - option "קבוצתי"
+          - button "איפוס" [ref=e57] [cursor=pointer]
+      - generic [ref=e58]:
+        - generic [ref=e59]:
+          - text: מדד הצבע
+          - generic [ref=e60]: Color · צביעת הרשויות
+        - generic [ref=e61]:
+          - button "מס׳ מתקנים אקסל מפקחים" [ref=e62] [cursor=pointer]:
+            - generic [ref=e63]: מס׳ מתקנים
+            - generic [ref=e64]: אקסל מפקחים
+          - button "מתקנים ל-1,000 תושבים DW" [ref=e65] [cursor=pointer]:
+            - generic [ref=e66]: מתקנים ל-1,000 תושבים
+            - generic [ref=e67]: DW
+          - button "ספורטאים / מתקן DW" [ref=e68] [cursor=pointer]:
+            - generic [ref=e69]: ספורטאים / מתקן
+            - generic [ref=e70]: DW
+          - button "תקצוב / מתקן מרכבה" [ref=e71] [cursor=pointer]:
+            - generic [ref=e72]: תקצוב / מתקן
+            - generic [ref=e73]: מרכבה
+          - button "% תקינים ופעילים אקסל מפקחים" [ref=e74] [cursor=pointer]:
+            - generic [ref=e75]: "% תקינים ופעילים"
+            - generic [ref=e76]: אקסל מפקחים
+          - button "% נגישים לנכים אקסל מפקחים" [ref=e77] [cursor=pointer]:
+            - generic [ref=e78]: "% נגישים לנכים"
+            - generic [ref=e79]: אקסל מפקחים
+          - button "% תקניים לתחרויות אקסל מפקחים" [ref=e80] [cursor=pointer]:
+            - generic [ref=e81]: "% תקניים לתחרויות"
+            - generic [ref=e82]: אקסל מפקחים
+          - button "גיל מתקן חציוני אקסל מפקחים" [ref=e83] [cursor=pointer]:
+            - generic [ref=e84]: גיל מתקן חציוני
+            - generic [ref=e85]: אקסל מפקחים
+      - generic [ref=e86]:
+        - generic [ref=e87]:
+          - text: תצוגת מפה
+          - generic [ref=e88]: Layer map יחיד
+        - generic [ref=e89]: "מפה אחת (QuickSight Layer map) עם שתי שכבות GeoJSON: שכבה 1 — גבולות רשויות צבועים לפי המדד · שכבה 2 — מתקנים כעיגול-פוליגון זעיר (צבע לפי מצב). כך המתקנים מוצגים על אותה מפה בלי ויזואל שני."
+      - generic [ref=e90]:
+        - generic [ref=e91]:
+          - text: מחוז
+          - generic [ref=e92]: רב-בחירה
+        - button "כל הארץ" [ref=e93] [cursor=pointer]
+        - generic [ref=e94]:
+          - button "תל אביב" [ref=e95] [cursor=pointer]
+          - button "מרכז" [ref=e96] [cursor=pointer]
+          - button "דרום" [ref=e97] [cursor=pointer]
+          - button "צפון" [ref=e98] [cursor=pointer]
+          - button "חיפה" [ref=e99] [cursor=pointer]
+          - button "מזרח" [ref=e100] [cursor=pointer]
+      - generic [ref=e101]:
+        - generic [ref=e102]:
+          - text: סוג מתקן
+          - generic [ref=e103]: רב-בחירה
+        - button "הכל" [ref=e104] [cursor=pointer]
+        - button "מגרשים" [ref=e105] [cursor=pointer]
+        - button "אולמות" [ref=e106] [cursor=pointer]
+        - button "בריכות" [ref=e107] [cursor=pointer]
+        - button "כושר" [ref=e108] [cursor=pointer]
+        - button "אצטדיון" [ref=e109] [cursor=pointer]
+        - button "אחר" [ref=e110] [cursor=pointer]
+        - generic [ref=e111]: 218 מתקנים · 1 רשויות
+      - generic [ref=e112]:
+        - generic [ref=e113]:
+          - text: שכבת מתקנים
+          - generic [ref=e114]: שכבה 2 · הצג/הסתר
+        - button "👁️ מתקנים מוצגים" [ref=e115] [cursor=pointer]
+        - generic [ref=e116]: "מתג הצג/הסתר לשכבת המתקנים. ב-QuickSight: פקד (Button/Dropdown) המחובר לפרמטר שמסנן את שכבת המתקנים — הצ׳ורופלת׳ נשאר."
+      - generic [ref=e117]:
+        - generic [ref=e118]:
+          - text: צבע הנקודות
+          - generic [ref=e119]: שכבה 2 · לפי מה לצבוע
+        - button "סוג מתקן" [ref=e120] [cursor=pointer]
+        - button "מצב המתקן" [ref=e121] [cursor=pointer]
+        - button "נגישות לנכים" [ref=e122] [cursor=pointer]
+        - generic [ref=e123]: בורר לדוגמה — בשכבת המתקנים אפשר לצבוע לפי כל שדה (סוג / מצב / נגישות / כל KPI).
+      - generic [ref=e124]:
+        - generic [ref=e125]:
+          - text: גודל הנקודות
+          - generic [ref=e126]: שקיפות + גודל
+        - slider [ref=e127]: "4"
+        - generic [ref=e128]: "4.0"
+        - generic [ref=e129]: "ב-QuickSight (Layer map) הגודל נקבע פעם אחת ברדיוס ה-buffer של ה-GeoJSON — אין סליידר גודל חי; מה שכן חי: שקיפות וגבול. הסליידר כאן = לבחירת הגודל הקבוע."
+    - generic [ref=e130]:
+      - text: 🗺️ אזורים צבועים + מתקנים — Layer map יחיד (2 שכבות GeoJSON)
+      - generic [ref=e131]: Choropleth רשויות · נקודות מתקנים (צבע לפי בחירה)
+    - generic [ref=e132]:
+      - generic [ref=e133]:
+        - generic:
+          - generic [ref=e135]:
+            - button "Zoom in" [ref=e136] [cursor=pointer]: +
+            - button "Zoom out" [ref=e137] [cursor=pointer]: −
+          - generic [ref=e138]:
+            - link "Leaflet" [ref=e139] [cursor=pointer]:
+              - /url: https://leafletjs.com
+            - text: "| © OSM · © CARTO"
+      - generic [ref=e144]:
+        - generic [ref=e145]:
+          - heading "צביעת רשויות · % תקינים ופעילים" [level=3] [ref=e146]
+          - generic [ref=e147]:
+            - generic [ref=e3082]: 101%
+            - generic [ref=e3084]: 101%
+            - generic [ref=e3086]: 101%
+            - generic [ref=e3088]: 100%
+            - generic [ref=e3090]: 100%
+          - generic [ref=e158]: נקודות מתקנים · סוג מתקן
+          - generic [ref=e159]:
+            - generic [ref=e3092]: מגרש
+            - generic [ref=e3094]: אולם
+            - generic [ref=e3096]: בריכה
+            - generic [ref=e3098]: כושר
+            - generic [ref=e3100]: אצטדיון
+            - generic [ref=e3102]: אחר
+          - generic [ref=e172]: "שכבה 1: גבולות רשויות (משרד הפנים) — צבע = מדד הצבע. שכבה 2: מתקנים — צבע לפי השדה הנבחר (סוג / מצב / נגישות / כל KPI). סקאלה: אחוזון 5–95 של הרשויות המסוננות."
+        - generic [ref=e173]:
+          - heading "המדדים הנבחרים" [level=3] [ref=e174]
+          - generic [ref=e175]:
+            - text: 🎨 שכבה 1 · % תקינים ופעילים
+            - generic [ref=e3104]: אקסל מפקחים
+            - text: "⬤ שכבה 2 · מתקנים — צבע לפי סוג מתקןסקאלה: אחוזון 5–95 של הרשויות המסוננות."
+    - generic [ref=e177]:
+      - generic [ref=e178]:
+        - heading "15 רשויות מובילות · % תקינים ופעילים" [level=3] [ref=e179]
+        - generic [ref=e180]:
+          - text: Bar · QuickSight-native ·
+          - generic [ref=e3105]: אקסל מפקחים
+      - generic [ref=e184]:
+        - heading "תמהיל סוגי מתקנים" [level=3] [ref=e185]
+        - generic [ref=e186]: "Donut · מקור: אקסל מפקחים (סוג מתקן)"
+    - generic [ref=e189]:
+      - heading "טבלת פירוט לפי רשות — לחיצה על כותרת למיון" [level=3] [ref=e190]
+      - table [ref=e192]:
+        - rowgroup [ref=e193]:
+          - row [ref=e194]:
+            - columnheader "רשות" [ref=e195] [cursor=pointer]
+            - columnheader "מחוז" [ref=e196] [cursor=pointer]
+            - columnheader "מתקנים" [ref=e197] [cursor=pointer]
+            - columnheader "% תקין" [ref=e198] [cursor=pointer]
+            - columnheader "% נגיש" [ref=e199] [cursor=pointer]
+            - columnheader "% תקני" [ref=e200] [cursor=pointer]
+            - columnheader "גיל חציוני" [ref=e201] [cursor=pointer]
+            - columnheader "ל-1000 תוש׳" [ref=e202] [cursor=pointer]
+            - columnheader "ספורטאים/מתקן" [ref=e203] [cursor=pointer]
+            - columnheader "תקצוב/מתקן ₪" [ref=e204] [cursor=pointer]
+        - rowgroup [ref=e205]:
+          - row [ref=e3106]:
+            - cell "חיפה" [ref=e3107]
+            - cell "חיפה" [ref=e3108]
+            - cell "218" [ref=e3109]
+            - cell "100%" [ref=e3110]
+            - cell "75%" [ref=e3111]
+            - cell "70%" [ref=e3112]
+            - cell "36" [ref=e3113]
+            - cell "0.41" [ref=e3114]
+            - cell "159" [ref=e3115]
+            - cell "60,678" [ref=e3116]
+    - generic [ref=e3011]:
+      - generic [ref=e3012]: מימוש ב-QuickSight — נבדק
+      - heading "איך המסך הזה נבנה ב-QuickSight (ואיך בוחרים כמה מדדים יחד)" [level=3] [ref=e3013]
+      - generic [ref=e3014]:
+        - generic [ref=e3015]:
+          - text: ויזואל אחד — Layer map ✓
+          - paragraph [ref=e3016]: ויזואל מסוג Layer map יחיד. שכבה 1 = גבולות רשויות (GeoJSON) בצביעת gradient לפי המדד. אין צורך בשני ויזואלים.
+        - generic [ref=e3017]:
+          - text: המתקנים = שכבת GeoJSON שנייה ✓
+          - paragraph [ref=e3018]: Layer map תומך בכמה שכבות. מוסיפים שכבה 2 של המתקנים כ-GeoJSON, צבע לפי מצב (תקין/לשיפוץ/לא פעיל) דרך שדה המפתח של השכבה.
+        - generic [ref=e3019]:
+          - text: הטריק (הכנה חד-פעמית)
+          - paragraph [ref=e3020]: Layer map לא מקבל נקודות — לכן כל מתקן נשמר כפוליגון-עיגול זעיר (buffer ~90 מ׳). המרה חד-פעמית מנ״צ ל-GeoJSON, בלי שלבי BI מורכבים.
+        - generic [ref=e3021]:
+          - text: בורר המדד = Parameter control
+          - paragraph [ref=e3022]: בורר הצבע = פרמטר + Calculated field שמחליף את המדד. מסננים (מחוז/סוג) = פקדי סינון רב-בחירה. שכבת המתקנים = toggle הצג/הסתר.
+    - generic [ref=e3023]:
+      - heading "מקור נתון לכל מדד — הכול מהאקסל של המפקחים או מה-DW" [level=3] [ref=e3024]
+      - table [ref=e3025]:
+        - rowgroup [ref=e3026]:
+          - row [ref=e3027]:
+            - columnheader "ויזואל / מדד" [ref=e3028] [cursor=pointer]
+            - columnheader "מקור" [ref=e3029] [cursor=pointer]
+            - columnheader "שדה / חישוב" [ref=e3030] [cursor=pointer]
+          - row [ref=e3031]:
+            - cell "נקודות מתקנים" [ref=e3032]
+            - cell "אקסל מפקחים" [ref=e3033]
+            - cell "שם המתקן + כתובת → geocode (נ״צ)" [ref=e3035]
+          - row [ref=e3036]:
+            - cell "מס׳ מתקנים לרשות" [ref=e3037]
+            - cell "אקסל מפקחים" [ref=e3038]
+            - cell "COUNT לפי רשות מקומית" [ref=e3040]
+          - row [ref=e3041]:
+            - cell "% תקינים ופעילים" [ref=e3042]
+            - cell "אקסל מפקחים" [ref=e3043]
+            - cell "מצב המתקן = \"תקין ופעיל\"" [ref=e3045]
+          - row [ref=e3046]:
+            - cell "% נגישים לנכים" [ref=e3047]
+            - cell "אקסל מפקחים" [ref=e3048]
+            - cell "נגישות לנכים = \"כן\"" [ref=e3050]
+          - row [ref=e3051]:
+            - cell "% תקניים לתחרויות" [ref=e3052]
+            - cell "אקסל מפקחים" [ref=e3053]
+            - cell "מתקן תקני לתחרויות (מתחיל ב\"תקני\")" [ref=e3055]
+          - row [ref=e3056]:
+            - cell "גיל מתקן חציוני" [ref=e3057]
+            - cell "אקסל מפקחים" [ref=e3058]
+            - cell "2026 − חציון שנת הקמה" [ref=e3060]
+          - row [ref=e3061]:
+            - cell "תמהיל סוגי מתקנים" [ref=e3062]
+            - cell "אקסל מפקחים" [ref=e3063]
+            - cell "סוג מתקן (טקסונומיה)" [ref=e3065]
+          - row [ref=e3066]:
+            - cell "מתקנים ל-1,000 תושבים" [ref=e3067]
+            - cell "DW" [ref=e3068]
+            - cell "מתקנים ÷ אוכלוסייה (למ״ס) ×1000" [ref=e3070]
+          - row [ref=e3071]:
+            - cell "ספורטאים רשומים / מתקן" [ref=e3072]
+            - cell "DW" [ref=e3073]
+            - cell "ספורטאים רשומים (DW) ÷ מתקנים" [ref=e3075]
+          - row [ref=e3076]:
+            - cell "תקצוב לרשות למתקן" [ref=e3077]
+            - cell "מרכבה" [ref=e3078]
+            - cell "תמיכות ששולמו ÷ מתקנים — דורש אינטגרציית מרכבה" [ref=e3080]
+    - generic [ref=e3081]: "מוקאפ · יעד: AWS QuickSight (Points on map · Layer map/GeoJSON · KPI/Bar/Donut/Table). נקודות ומדדי אקסל מנתוני אמת; שכבות DW/מרכבה כ-placeholder עד חיבור המקורות. פלטת המשרד · RTL · Amazon Ember."

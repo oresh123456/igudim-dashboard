@@ -6,90 +6,89 @@
 <title>מוקאפ אסטרטגי · דשבורד ניהולי — משרד התרבות והספורט</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --bg: #F5F1EB; --surface: #FFFFFF; --surface-soft: #FBF8F2;
-    --ink: #1A1A1A; --ink-muted: #6B6B6B; --ink-faint: #9A9A9A;
-    --line: #E5E1D8; --line-soft: #EFEBE3;
-    /* theme accents per sheet */
-    --budget:  #0D5F73; --budget-soft:  #E3EEF1;
-    --muni:    #2F7D5B; --muni-soft:    #E4F0EA;
-    --perf:    #B45309; --perf-soft:    #F7EBD8;
-    --sla:     #3B5E8C; --sla-soft:     #E6ECF4;
-    --impact:  #86198F; --impact-soft:  #F4E4F7;
-    --org:     #8A6D3B; --org-soft:     #F0E9DC;
-    --links:   #5A5348; --links-soft:   #EEEAE1;
-    /* new sheets — רעיונות סיעור המוחות */
-    --catalog: #8C3B54; --catalog-soft: #F3E4E9;
-    --engine:  #1F3F6D; --engine-soft:  #E4EAF3;
-    --geo:     #5F7A2E; --geo-soft:     #ECF1E0;
-    --levers:  #5B4E8E; --levers-soft:  #E9E6F3;
-    --incl:    #2E7D74; --incl-soft:    #E1F0EE;
-    --resil:   #9C4536; --resil-soft:   #F5E7E3;
-    /* achievement bands (from design principles) */
-    --band-podium: #248A3D; --band-final: #F8C33E; --band-16: #E07B39; --band-rest: #7A8FA6;
-    /* semantic + gender */
-    --success: #2F7D5B; --danger: #B23A3A;
-    --men: #1F3F6D; --women: #2D9CDB;
-    --gold: #F8C33E; --sky: #2D9CDB;
+    /* ═══ פלטת משרד התרבות והספורט — מקור: עקרונות עיצוב.docx ═══ */
+    /* ראשיים */
+    --navy:   #1F3F6D;   /* מותג ראשי · כותרות · KPI · גרפים מרכזיים · גברים */
+    --green:  #248A3D;   /* ערכים חיוביים · עמידה ביעדים */
+    --red:    #DA3439;   /* התראות · חריגות */
+    /* מידע וקטגוריות */
+    --sky:    #2D9CDB;   /* נשים · קטגוריות */
+    --purple: #6B4FA0;
+    --orange: #E07B39;
+    --slate:  #7A8FA6;
+    --gold:   #F8C33E;
+    /* ממשק */
+    --bg:        #F2F4F7;
+    --surface:   #FFFFFF;
+    --border:    #E5E9F0;
+    --ink:       #1A1A2E;
+    --ink-muted: #6B7280;
+
+    /* ── נגזרים לשימוש פנימי (נשענים על הפלטה בלבד) ── */
+    --surface-soft: #F7F9FC;
+    --ink-faint: #9AA3B2;
+    --line: var(--border); --line-soft: #EEF1F6;
+    --accent: var(--navy);              /* כרום אחיד — נייבי בכל המסכים */
+
+    /* ── צבעי סדרות לגרפים ──
+       שמות הלשוניות נשמרו כדי לא לשבור את קוד ה-JS, אך כל ערך הוא צבע מהפלטה.
+       ההקצאה נבחרה כך שבכל גרף שמשתמש בכמה מהם — הצבעים נשארים נבדלים. */
+    --budget:  var(--navy);    --budget-soft:  #E4EAF3;
+    --engine:  var(--navy);    --engine-soft:  #E4EAF3;
+    --muni:    var(--sky);     --muni-soft:    #E3F1FB;
+    --incl:    var(--gold);    --incl-soft:    #FDF3D9;
+    --perf:    var(--orange);  --perf-soft:    #FBEEE3;
+    --impact:  var(--purple);  --impact-soft:  #EDE7F5;
+    --catalog: var(--purple);  --catalog-soft: #EDE7F5;
+    --levers:  var(--purple);  --levers-soft:  #EDE7F5;
+    --org:     var(--slate);   --org-soft:     #EAEEF2;
+    --sla:     var(--slate);   --sla-soft:     #EAEEF2;
+    --links:   var(--slate);   --links-soft:   #EAEEF2;
+    --geo:     var(--green);   --geo-soft:     #E3F1E8;
+    --resil:   var(--red);     --resil-soft:   #FAE6E7;
+
+    /* דירוגי הישגים — כבר תואמי פלטה */
+    --band-podium: var(--green); --band-final: var(--gold);
+    --band-16: var(--orange);    --band-rest: var(--slate);
+    /* סמנטי + מגדר */
+    --success: var(--green); --danger: var(--red);
+    --men: var(--navy); --women: var(--sky);
     --radius: 6px; --radius-lg: 10px;
   }
   html { font-size: 15px; }
   body {
-    font-family: 'Heebo', system-ui, sans-serif;
+    font-family: "Amazon Ember", "Heebo", system-ui, sans-serif;
     background: var(--bg); color: var(--ink); line-height: 1.55;
     min-height: 100vh; -webkit-font-smoothing: antialiased;
     font-feature-settings: "tnum" 1;
   }
 
   /* ── top brand bar ── */
-  .brand {
-    display: flex; align-items: center; gap: 14px;
-    padding: 14px 32px 12px;
-    background: var(--surface);
-    border-bottom: 1px solid var(--line);
-  }
-  .brand-logo {
-    width: 40px; height: 40px; border-radius: 9px; flex-shrink: 0;
-    background: linear-gradient(135deg, var(--budget), #12798f);
-    display: flex; align-items: center; justify-content: center;
-    color: #fff; font-weight: 700; font-size: 19px; letter-spacing: -.02em;
-  }
-  .brand-txt { display: flex; flex-direction: column; gap: 1px; }
-  .brand-txt .t1 { font-size: 15px; font-weight: 600; color: var(--ink); }
-  .brand-txt .t2 { font-size: 11.5px; color: var(--ink-muted); }
-  .brand-badge {
-    margin-inline-start: auto;
-    font-size: 11px; color: var(--perf); font-weight: 600;
-    background: var(--perf-soft); border: 1px solid #EBD9BF;
-    padding: 5px 12px; border-radius: 999px; white-space: nowrap;
-  }
-
-  .tabs {
-    display: flex; align-items: stretch; gap: 0;
-    padding: 12px 32px 0;
-    background: var(--bg);
-    border-bottom: 1px solid var(--line);
-    overflow-x: auto;
-  }
-  .tab {
-    background: transparent; border: none;
-    padding: 12px 18px;
-    font-family: inherit; font-size: 14px; color: var(--ink-muted);
-    cursor: pointer; transition: color 0.15s ease;
-    font-weight: 400; border-bottom: 2px solid transparent;
-    margin-bottom: -1px; white-space: nowrap;
-  }
-  .tab:hover { color: var(--ink); }
-  .tab.active { color: var(--ink); font-weight: 600; }
-  .tab[data-tab="admin"].active      { border-bottom-color: var(--budget); }
-  .tab[data-tab="sport"].active      { border-bottom-color: var(--perf); }
-  .tab[data-tab="facilities"].active { border-bottom-color: var(--muni); }
-  .tab[data-tab="orgcard"].active    { border-bottom-color: var(--org); }
-  .tab[data-tab="authcard"].active   { border-bottom-color: var(--geo); }
-  .tab[data-tab="other"].active      { border-bottom-color: var(--links); }
+  .brand { display:flex; align-items:center; gap:14px; padding:12px 26px;
+    background: var(--navy); border-bottom: 3px solid var(--gold); }
+  .brand-logo { height:38px; width:auto; flex-shrink:0; background:#fff;
+    border-radius:6px; padding:4px 7px; }
+  .brand-txt .t1 { display:block; font-size:15px; font-weight:700; color:#fff; letter-spacing:.1px; }
+  .brand-txt .t2 { display:block; font-size:11.5px; color:#C7D3E6; margin-top:1px; }
+  .brand-badge { margin-inline-start:auto; font-size:11.5px; font-weight:600; color:#fff;
+    background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.28);
+    padding:5px 13px; border-radius:999px; }
+  .tabs { display:flex; gap:2px; padding:0 26px; background:var(--surface);
+    border-bottom:1px solid var(--border); position:sticky; top:0; z-index:40;
+    overflow-x:auto; box-shadow:0 1px 3px rgba(31,63,109,.04); }
+  .tab { flex:0 0 auto; appearance:none; border:0; background:none; cursor:pointer;
+    font:inherit; font-size:13.5px; color:var(--ink-muted); padding:13px 18px;
+    border-bottom:3px solid transparent; white-space:nowrap; transition:.15s; }
+  .tab[data-tab="admin"].active      { border-bottom-color: var(--navy); }
+  .tab[data-tab="sport"].active      { border-bottom-color: var(--navy); }
+  .tab[data-tab="facilities"].active { border-bottom-color: var(--navy); }
+  .tab[data-tab="orgcard"].active    { border-bottom-color: var(--navy); }
+  .tab[data-tab="authcard"].active   { border-bottom-color: var(--navy); }
+  .tab[data-tab="other"].active      { border-bottom-color: var(--navy); }
   .fac-frame { width:100%; height: calc(100vh - 150px); min-height:520px; border:0;
     border-radius: var(--radius-lg); background: var(--surface); box-shadow: 0 1px 3px rgba(0,0,0,.06); }
   .st-h { font-size:16px; font-weight:700; color:var(--ink); margin:24px 0 12px;
@@ -115,12 +114,12 @@
     font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:11px; color:var(--ink);
     white-space:pre; overflow-x:auto; text-align:left; }
   .spec .ok  { color:var(--success); font-weight:700; }
-  .spec .warn{ color:#8A6D3B; font-weight:700; }
+  .spec .warn{ color:var(--orange); font-weight:700; }
   .spec .no  { color:var(--danger); font-weight:700; }
   .st-sub { font-size:14px; font-weight:700; color:var(--ink); margin:22px 0 4px;
     padding-inline-start:9px; border-inline-start:3px solid var(--accent); }
   .st-subnote { font-size:11.5px; color:var(--ink-faint); margin:0 0 12px 12px; line-height:1.7; }
-  .miss-tag { display:inline-block; background:#F7E7E7; border:1px solid #E6C9C9; color:var(--danger);
+  .miss-tag { display:inline-block; background:#FAE6E7; border:1px solid #F0C7C9; color:var(--danger);
     border-radius:999px; padding:1px 8px; font-size:10.5px; font-weight:600; white-space:nowrap; }
   /* ── רצועת ניווט בתוך לשונית ── */
   .jump { display:flex; gap:7px; flex-wrap:wrap; align-items:center; background:var(--surface);
@@ -165,7 +164,7 @@
   .g-unscheduled b { color:var(--ink); }
   .wtag { display:inline-block; background:var(--surface-soft); border:1px solid var(--line);
     border-radius:4px; padding:1px 7px; margin:1px 0; font-size:10.5px; color:var(--ink-muted); white-space:nowrap; }
-  .wtag.done { background:#E8F3EC; border-color:#B9DCC6; color:var(--success); font-weight:600; }
+  .wtag.done { background:#E3F1E8; border-color:#B7DCC3; color:var(--success); font-weight:600; }
   /* סימון עדין ללשוניות החדשות מהסיעור */
   .tab .new-dot { display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--gold); margin-inline-start:6px; vertical-align:2px; }
 
@@ -189,7 +188,7 @@
   .e-xhead { margin:14px 2px 6px; padding-top:10px; border-top:1px dashed var(--line); font-size:12.5px; font-weight:600; color:var(--ink-muted); }
   .e-xhead span { font-weight:400; font-size:10.5px; color:var(--ink-faint); margin-inline-start:6px; }
   .e-xrow { display:flex; align-items:center; gap:10px; padding:7px 13px; border:1px dashed var(--line); border-radius:var(--radius); margin-bottom:6px; background:var(--surface-soft); }
-  .e-xrow .xt { font-size:10.5px; font-weight:600; color:var(--ink-muted); background:#EEF1F4; border:1px solid var(--line); border-radius:999px; padding:1px 9px; white-space:nowrap; }
+  .e-xrow .xt { font-size:10.5px; font-weight:600; color:var(--ink-muted); background:var(--surface-soft); border:1px solid var(--line); border-radius:999px; padding:1px 9px; white-space:nowrap; }
   .e-xrow .xn { font-size:12.5px; color:var(--ink); flex:1; }
   .e-xrow .xa { font-size:12.5px; font-weight:600; direction:ltr; }
   /* מתג מצב תצוגה למפה */
@@ -262,9 +261,9 @@
   .kpi-sub { font-size: 11px; margin-top: 4px; color: var(--ink-faint); }
   .kpi-sub.up { color: var(--success); } .kpi-sub.down { color: var(--danger); }
   .src-label { font-size: 11px; color: var(--ink-muted); margin: 2px 2px 8px; display:flex; align-items:center; gap:8px; }
-  .src-real { font-size: 10px; font-weight:600; color: var(--success); background:#E9F3EC; border:1px solid #CDE6D5; padding:1px 8px; border-radius:999px; }
+  .src-real { font-size: 10px; font-weight:600; color: var(--success); background:#E3F1E8; border:1px solid #B7DCC3; padding:1px 8px; border-radius:999px; }
   .src-demo { font-size: 10px; font-weight:600; color: var(--ink-faint); background:var(--surface-soft); border:1px solid var(--line); padding:1px 8px; border-radius:999px; }
-  .need-data { font-size: 10.5px; font-weight:600; color:#9B6A1C; background:#FaF1DF; border:1px solid #EAD8AE; padding:2px 9px; border-radius:999px; }
+  .need-data { font-size: 10.5px; font-weight:600; color:var(--navy); background:#FDF3D9; border:1px solid #F0DFA8; padding:2px 9px; border-radius:999px; }
 
   .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 14px; }
   .col-12 { grid-column: span 12; } .col-8 { grid-column: span 8; }
@@ -309,9 +308,9 @@
   .elig-strip { display:flex; flex-wrap:wrap; gap:8px; margin-top:4px; }
   .badge { display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:600; padding:6px 12px; border-radius:999px; border:1px solid var(--line); background:var(--surface-soft); color:var(--ink); }
   .badge .dot { width:8px; height:8px; border-radius:50%; }
-  .badge.ok { background:#E9F3EC; border-color:#CDE6D5; color:#1E6B44; }
+  .badge.ok { background:#E3F1E8; border-color:#B7DCC3; color:var(--green); }
   .badge.ok .dot { background:var(--success); }
-  .badge.no { background:#FBEBEB; border-color:#F0D2D2; color:#9B2C2C; }
+  .badge.no { background:#FAE6E7; border-color:#F0C7C9; color:var(--red); }
   .badge.no .dot { background:var(--danger); }
   .badge.neutral .dot { background:var(--ink-faint); }
   /* status KPI tiles (QuickSight-native representation of the profile flags) */
@@ -333,7 +332,7 @@
   /* ── SVG map ── */
   .map-wrap { display: flex; gap: 14px; align-items: stretch; }
   .map-legend { display: flex; flex-direction: column; justify-content: center; gap: 6px; font-size: 11px; color: var(--ink-muted); min-width: 92px; }
-  .lg-scale { height: 120px; width: 12px; border-radius: 3px; background: linear-gradient(to top, #E4F0EA, #2F7D5B); }
+  .lg-scale { height: 120px; width: 12px; border-radius: 3px; background: linear-gradient(to top, #E3F1E8, var(--green)); }
   .lg-row { display: flex; align-items: center; gap: 6px; }
   .map-region { stroke: #fff; stroke-width: 1.5; cursor: pointer; transition: opacity .15s; }
   .map-region:hover { opacity: .82; }
@@ -416,7 +415,7 @@
 </div>
 
 <header class="brand">
-  <div class="brand-logo">ת<span style="font-size:12px">ס</span></div>
+  <img class="brand-logo" alt="משרד התרבות והספורט" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIwAAABKCAYAAABpcbyXAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjI3QzU1NjQ4QjIzMTExRTdCRUMxOUYzMjJFRjk3QzU4IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjI3QzU1NjQ5QjIzMTExRTdCRUMxOUYzMjJFRjk3QzU4Ij4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MjdDNTU2NDZCMjMxMTFFN0JFQzE5RjMyMkVGOTdDNTgiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MjdDNTU2NDdCMjMxMTFFN0JFQzE5RjMyMkVGOTdDNTgiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz5t0+6wAAAl2ElEQVR42ux9CZxcRbX+qaq79T5LZjKZCRNCEoMBAigEECEoiywqD0VBRPG5AiIP9w3FB4qCPBcWwf97uKFPhSf6cAFU/oKgJOybgUASyL7NTE/vd616p25Xz9zp6Z7pmQwgv99UfpXbc/e+9d3vfOfUqWoCs2Xmy2H9AMvmAXD/TIgbZwEXx+DaEljanVDyb4Sntt8LqzY2PPS0Cw+Hg962H2S35EbWCawEa4wPvHMDecPnntD/9WQD8jsI8D26TSEIUD0A3QzAKLkgCJ4RL0RxGw8oaMQFXAUBaCAYAS3n4qfZMvOl7FLoSdwKg6VTESy1tSmw/XMgqZ8D/ZmrYLDn08AZIkGMHudzGA4SwAoWEMcbWU2wYQUVYLP4d7rImnk97IWrXC11NhOOgtP0CsVru4KCI4yWj5kFTCvlmAWt7ScbHxsAOlI3IThOBUrlawxjqKKMQJib/BS8tethCNgvxgCm4EOpNwZQHMQ3PYicF+TbfzoDPs8HU3icnUnAPZ+RSl6E3DP1Io8KAg2vw0IWmQXMTJZDl2GLtUD/QvK5vxx8+ywo2ACMjm8lWVw8l1+6CZvsdgRRbmSb46KRYeBbaWxMvw6LwWWUB9jAlh2AFWM8OF8w9g1pVqaOFgQpmhzw0dToUzt+FjCtlF1FbHzWAmCwEZh/MmjeeLCMFxAaeNYKNEt/GmEZRwddwyZBXQFMhA1L5DkDejTuvy9F1nH8WMWnRgyocyFQ9g0yDbAIgVzl6ghNjjgVs4CZ8TL0FMCCpagEW2KZdKgcJ91PqljaA4RW/5AMhiZsodcFsa0ZSCLbEE4hQPDZ6ewP5Sll41YqSRJojJtonrhPXysoebjlNpfnQBNJUFdRwqclf2YB00oZjlfNiIXisL0i1WLV/IxnDdnoBZiM5mVD6chYFWdH1dHBFU4AbUkdFs0nMFjJg6/zansycS428T4SLFxQ7roWIUT4aIoMvNZHTM/7MPWDlr6GZyKpcQNxEyC7iIiNnAXMjJYTL3or3PH4LyCW7oXKhiSCBx92Ahuc8rHAqX78X6jA5SEQmrWHhY89b1fg/o33g4daRVq7bACHnHUo0DkxKAwU8FDJLm5KI87VFMUpw2u5ZVNUykmiaT6TpkV3/PcW08kLK3HLnpguqjeSyeaBuR4Ig0wLLLOAabHs+zYKd7wtC53gwvE3ngR/3FqCrcMFbGgdwNTq22UNOPbPUbW+q8pETdrP9j8I7bFiqHUGUPMcjoL2Q8NwN1qYykIH8okSvPFvB/3atC3d032UUD4SUhxsN6ZRFnCpjknATTtufiY3J3UpGpmGekSuoaFWAUjmyqAJb9pgmQVMiyUP5XBZzBN4NYlDfEUJHn3ehDUP6TDsFqqg0RU4pCYh7CwgvmynM8b5rHJ70fsaaPy/Yf8ugFwF5i2YB0eeG4fVr74fhuwydA+3w8rVyz/NAjg20Kq6idIASqWU8H2DESWS3ZgBHTuyn+7dvP1yNDZopmgDbApwGXpDBPfQDNTVWih2px27mYVDq1EL/B+V5xA6tXliw+v2aYOPH9oPR+yblhsASn7VXZWvoEZk8O5McMTbQUMvCGAd1uew/gpPdRh6NxdDycW1g9CT0OD81y2ENjQ5ZBuDhVvnwvytnSfO3951JUVvJqDVxuWc+uVySiBYkNaqKJTi1dP0pBennyVxNDUJv64im+DSjWtQicXQiSOh6N2TMsswU4WODJX7BHZWPMig9njzsjZY2mvAw8/b8ORWZKKKkDHdqgAm5FYEzK3g+1WtQ6quMpTx75IHhxw2H07ECjkfhgcCOGXTEdC/rXtFKebcnm3Lh16S3F3XXWSXTFAoZKje7hEnwlqodBCXsa9UNPNHnNKtgai6/wx8kF0HNGDhPnvajTALmD0sUp6UPA6logd9aQMWv8aC/XstWLXRhucHi2jHHAQOkgHKjbB7IMDqVoETN3U47tjFcPj+3ZArVsDOIxt0c8hmCkcmytbdjuGhnh4lf6Z5oljMEMeO6Trj49wbNDsa+OwXMVI+ykLFLXewSRI8YaGT5YcxHTFD3/vFBkxM+gQwsYQfVsu2Jttlh0lFfdaldlOf5TpbfU5D1dcQkfPV9q2tky2QUX/LfQfVfp2R5+BH1o82GLCmhkrWbDmAAr7B+3YhcLpisHYwBo+tEbCpKKo3yCVLUOjtTMI+6AXt35OEjoQJu3IOshUygeVBVy71AdQ9/+VpwXhGC3RklzYhdYwYEUX1j5S+3hD84hipfFVuCiCBEp0CzBhUXnzAyC/2FNa5E+xjqXvYH+uqJvtIYHwJ6w1Y/xXrt9T632J9F9a40gcJrLIX7XCsj2D9HtazQD67KqDei/VadaxUsedg/RDWkyNaTgLmbrVupOgh9iY2U7JdBkoBilMBr55jwZKjF0A2ZyMLIXugWxxD0dk+B98gQ4dy0YVdyECGSZGpWNyz3O/FXP0c6en4qHRJxFXXNBfQlQ6KxTTR9TIEZMRhJ2Mb0oMipC4bhvQWIviPdBTXct1MlxcTMCuw7tPivu9QDd6oyPUXKcC8IbLfIRFgdkf271DLgxWYak/tLZFj5fIPDa4lkXGSAvBTtZU3we/CZc70gcqgrAyvh2F7Mg440mAMogBmaLMSyCqZmIkusQE+wr7gVFDr4nEul9sznIv3oAz9PCO011edjdFzyn4iDc1RPt8uXHSJ4rQgLVugGJKMdZ/DyA0YAn6o2vW/5DryCgKM7FS7okrIIxzKFTiWYn0A62fUtsewfiPCn7W3SL7pB2EtqPU/w9qD9Ris89S6hZFrXoj1HvV5jlrerpY/lZ4o1jPV3/LBrlWAktc6FOsZalt79IsUnE2QJgyMkhUrMvI6jZONqDHWNev3qwIHzZHHw29CCRKXR2VXEw3vnZJjcZ/zEBHtExkMhmzjupaXzXbhZ4+oLgcu/fZJuP0/8VEuUMz8igHMM1g/12D9fAWYeyKN+2tV64vMMvp+BHTyVd+tzFeNLd6olg9jvSYColpOwiORa5QUYLZifX/dtZIRwIxxKbZ9Zx7E2/aCbdR4+xUJ96ZKYQ70+sGmciK3DbnmGWSF56r3RcrKhAbhs6VE3mObAN4POj+cCbo3gqSv1Q5mw3BgYGAeoOA1TLNSVXNEnXuyIsTFyDAnIMd8Af+465UAmGYl04AZJts3Wsp15udI9fnyyPpDIp9/Hvl8bJ3QjpZ5Y3RudEMO/7QyeDPBms+IAfhPswOe1/T+DvD6UwIOJ2MCumL0D0rUGtnHJBr3P03Y5sCzw52yu5COkjRpuYsZd1uBx/4ZOL2HEIEMTu6KmOjR6zS9rbrLoL19Od3q1BQCi1HVuTPy+USs71Sfb42s76+RA9ZnG+ibUoNr8WaAAdQgEHjy+T2yLFe64Rtx59z/iWXK96bisLmixZM2h4wZNO0JmKRVmrJLqZT28rkOauh21N5N3e0RZCWibiUCdyul5P8jkB5SjLxLOnkIwYryRuXzNiV74z4ZFOHSg1yCdRl+sS5hsi0vJ2CsKewbBYz8khuUoK55TB+u2/8Etfxr3fqaNhlqcA2/WQRcLD4MxCDKnWQXCC12numUTnp3fnDBSVDIreq3hv4WxBMbtli67xGaNDgk0DVmZM8cWnSh+cDuXu55lmFZxarMEiOAme6p+/Dw9+BJ3iNIVbwzH2wWuBVBiAQNQyKUjoJFqNBF2KeN0MHXR5gaBDp9WRlG34N9n1SAGcDaW8cOb4kA5ra643rU8oUG19jSDDB8/+PB/93dQBAw4Hrg2/6bgGrPdGRF5uQg7xyzpGQ/usLw1w5YxvodMb65pFM7oFoM1XFc46DTqbVvNbKb9oey3bquO2SMQxQCZkZ9HwsZxkIAtUcDIkKjwPWqM2ZwG+iuSkAq/MJXKmB2q+UOJX6XKlf4X7CeGtnnljq9tjQipmss16tEalczwLBFxwLruhI/bUfCtmRqw1rPJf9etsUltGCa8dXcOPJVtnPkwSV/56s0umWbGTw5ELM3FEx9Z1knOyua7JqkJsOWwWqwiTJxiQSM2LZtb+44lhGPFyGahilehO4/rpEQILKGSVY+ckvJA32wAtZQAZx12m1WvnQRW86efzkAI+r0RCtljnJ9a8dujojYfIP9NyuWiZqZroirXQOM9OIuaRJ0HC1tKInefATA4D3VXBYSgO7wr/D7E2/lvjjYThDC1hpWsE04yeUBLF9aMg/qK1mFnOZtLRv+1pLubywY/rayzgZtTWQdjbk8dI1pDAEkgST1jzRjRpVdnMHBHmIYLozL2ZU7kmnYu2oieXi8HDISggOqHZhIh8ByDrCyD9qwHYKF5R3QbWcLdcmFu9f1/5r0BJBIei+LSVqklq2EITvVsqiEqB9xoRuVp7H+AOt1ke6EWokGEder5UebnMcch/LyvwD/ywOogrpDAUsYkzrjdK4V18sewiCNbVHBtv+bFthbaKV8EKc0w61Fhq3v116GQBBW8ChHwCCADD/vMY7s479QMCDnMsMJCBQcRpKWLwZze5MiiZnxVFEeV+2zxO0iCEAYlHKNERqoYC+Jatsq6kSt94CooJAQnPicSObAJbCiL7ScS1jRJdRFsBRcoGUP5Ge5XaaKCoP8gBvkQk6tEiQoUJkByMlLDhj5Fa5SfUCrWtj/JhV4e0aZjVq5TwX6pLJfoxgD7QVsmuBcso/o41jvV4CT9/LvqjshrwBWUW77g+MAw/vAH9Sw4XSoeblE1zdQm1zJzeJniMmBx/CUpmDWCySuDzG7tJyUhxbgo3eZxvDF1ZhgPXFfX5hywy4Ezok25DBv2NVEyUVBmbL9x9d1VW68e5GVjnGfWaYvKOhCEw43uUddZhKHykbmWP2q56xslBA2CYRHnSAuOzzxM4Qgwc/IIJyVPUaqgCC04hNm+yQMS5NRc8RlXo8Vhps/wYj4tqgmAY9xzAjMlhbiIfjANn4T4NHL0FOaM8a4CnwbnU1zimI4liBGMPJUqUz9dYlfWcyd0nJOeQxirBiJYdfcZwSO1DRSGBuLd4ufXXqye8P1r9f7+gdJmConIzhMOOizBMT1dGd+W+As7GRUUpKkOgmYsGWFiyAJiMdNNDM0TK8QVZMDavBBaM5Ck0RDs9TodSZCvI0T/msWspQcDmPAtud7oK19CKwVfDa9oXVf4i8ABxQA0jImE4x547Ri+ip3R+YSYlRGgIQAAW4IzVpHNH03q5QO5GWnH0neJhp1RkGDWgZsn8K8vbLw0O3L7Bt/+Vq9c2GWciPM6meqf8kiHuLHRjPoQkArHkOWUOcgo2ZUwiaiT6ZCCUEVnach8/1GYo01yRGfBUyrxb0OvBtOQTNkAYmlRge2SY2RdL5J24pfDt2NmhqtJtNCkMFFGWLp+6hv70McBE6A60xWqL7A4WgTywfhU/+nNx1OHEfXYrE8YpKONJiMl8hzCT2QA8+Y0DXUM2KG2JMAw+un3PK5eln8Rl7STXJABw0CB0FUJ7pbAUwtn0U0icR6EX1BlAtc634PIuK20XmoErJ+XZRVr4ut0LpzTefeaiXWYF30fSQwmmczWvZaCOTsL4Fz66fQrUaNQGjUMpVooP8GV5027k4k28RDxwrZhmr6ILFLB/CK04/aBh0TPBLa+gbE728+xF29aqE1H5kmBEtzD5OPi0Tvoaq0s/FbO0n5+wbqnQBtl1kJIJdPgIumKxlzJ3AfxxcZdv9eHSDqj5cE+yOsF0O1w++ByIOXHX9vUiH8mxo0LFGNejNUUxhkWa08KV63n6/OfTZUe6/l8jtTuLda98HRdeeud/dlY7w/GvQTkTxY+zr05H0XiJEYcyAV3lFcuH+d8JFKCVEKc4N9exF3S/sJ2ragYO16ts39t/PeJcoV3WzvKEsx3Dj6a/vc6UcN09+uU3vPc12kmGU6OnVrFiTKpfgImYQaF59qZ/8u6O4bhBee2hvaO3ejhpm8L+kNEdd2ovJF1ShSEXY3cKGPiMRAGpXzFGCkO7tigv3eCtXUht+qOMtU7k2W01p8lk07RtncxcCfuwuI1jfmwSO1o+dFXOV1NeUHLnEWCC22lmpmNrCNBC9c9eM30qe3diVeu2QLeMGk5MFnLIsOERI4+tV9S7ZyUddFRdT3ChwNXwb06Hz0ENnkcZifqYY+Xb3hl0XiG/IKK7G+Wf2dVJFXmYNxvHqTa302f1A0H9S9ze/BegDW5yMm8gt1+8n6Kqhmx0VjJD9WZufd6p6+WmeyXq8AFigzVIHRdAtRxyxCsemhyuW+uXFT4SPQ9OorSMc+XnQqytgA9yMbrZw0bInHem0CYtSzvBu63SNXlYPnFgw6G9yM2cdK+BC4GknUkBZmBivIYsz0PWq6V4ad36SJvtF86F72AjDUTFQzJgXMfSr0frqi8Uvrtj+kACO3tan+mK8qcBwdCbGvVrW+zFeAqRlK2Yv89Sb3UgNMTe/cpUzTu9W6y+v2/60CDFdgloC5YoLv2q0As0nFdMYXOw+wdQ1Qcw6aFTbO3qAC2IDv4spJLb30QuIBVGzTyT/RHT8j86x2hLWlcn1xv8pdTp/eRhytE12pAMhkMejp98tYHhSG0ndkB9ODZBJRrOl++NoFG42WOibmR/pzeuu2RXNI/LqHP65PpkFJNji2Udm7yfoFEfHbOcG91YvcpYp1oqUj0g3R5CnHgaOXxDn6thIeY6pM0Ba5VlqUaPi2GoFfeqiTe0VT22ZZMJ+UYl9Pr9YvST3kWoTb64N0yDI0SoZkBhmmSpIPSF/cmKCaMnjsy8FvGuAtT8mtJg06AUkEGFqdp9PK+xC02E1AJ/HsWIP1NLJ/bdspymQubgB+iLwYzXgc3UwPFx4yjDeONghlPkyWqS/ZJeXx8lPtrvN82tLSbrhuh4ijrQ20U2IbtOV6tnJ9aVn5z06fmSYu66L2CNvIWcZmAjCeo0OirfBEe/fQlBTRVOMwE+1vNAHSRMVvkWEm7OdR19FbALpMfThMaSt3yoCRb5sZA2HFgFixcdpCeJ4h+3uasUDYF9PmgLs97hUenGMQC/1nWo3ISibx8P+tfgZ6aTF2eXq1f7Td7/6gvC9dF2TMflaQM83RmWIY2TUReNou29NmHDD5lh7m2HPRFgFTO/fwVGKukc/DLd5bbdvOCLOZyu2eCPjjEEOIFtbxj052+skuSL8xsUpmSfjAbc0r3N9N5WBnanrjMvFkytJOjmxDAu1Ea4N2sD5gX1far/xHe76R4kxLg5gRhpHgJZaLX8WfkiyaDDCpiIaZ5GGOaTDSxJTU3nZN8XZNd8jEpjFDO1owT6k6bdPqvUHkHqYIGAq84oAolYEEDXZjYikQ2hAsxEBFovMgf0+v8AZMQ+vASzeLt0i2QVxsDTKA5si6NP2Af7Sx3ft/w0u9TWJOrAv4HjvWmuFDKZeY7xSNqR03wTYZO7kTqmN7monH6H3HG5yjJiRlNv63FWDMyHVrovc1UE12evUEzmitSA9G5rasrxOuvIV7q61rU4ArNTi+p+lb6eTB5yUQhg5k3JMTcsaYwxryEhOSXXjx4TmBszGpa20utDJLlWSbAW4hgrl2nPWCdkh6e+kC460PPMH7V+wtBsM0hukCR85A5bvxA1yRvGUqcZ2JAHMcjE/Urg+ZRz2KqApcrJa1tMdP1nktjcrGCbZFB7kNKFe+/t7q81/aGtxbjS3dBqwTvWfSULmWBOi78fKxdnx12Fg+tfyVvM6pGWn4tCcqT7cFpUc6NZr0SJOzN2UbaTQk2/TpQ4nPVlZfcB7rdhyN/gKtyaunkxMeikaXQbp7eLmTi4Vz8rYKvYkA84wKq+9WWkMG1zbX7fOk8jr+OxJ8k0WOAfqjOl4WOZ5IDlYrq8aq1ZKKpZSbxGlqZVCF62VcSI4B2kede5c6fh2MHU0gywtYP6+Ya4NaJ6fekKMIftJg/5+pgN1NzZrTc66G4OAdQJMcokmWRHZEbmi7CMoor6Jjo4USudviQWF1F5MiV7rU06EFyTbbaQccMLxx7jntD/7ue20rlvXlK9fiyT4ajnCkUzsv0dHslbQT6AZos4g7HPDWpNFsPkxLMQsB4tGbwb/zXUD6lowGMtRSGGa3X+jYSWxQeQEQmhyGpsfPmnz4zj4QLqU04U15uEmd4w5tfuUUj5I/fGDBO2ALTUNnUD5KM/k1gUcOFJy23KJCVDmlqyN7fjzuXO+LWcDMKGDg+yuRRdaiKtsrQkAiBIZP9G+7KesiOS1qtT+ZSDOEApnx7J3zIRg2KGtzWtItkzWWw8QJ/c7An27LHAhf7DoRFpm7EZRJKDva15IdhS8IlbrZyvy9BHWMx42ngkriAB3vnbcAmlnAtAiY4I//AcF9PwQyZ+no5P9SP1jlVBDYw+AH1RiJBEvGBV7WAJlF+DmTsLSzR8wSLXj6o3Xw723zbfhYz6nwaG8XtK0zoRRo0N2/+2DXNq8QnB9f1TZkEsAIcNHb6/AKx2T03D0un3wgx8uR0yteiaBhS/cB+hTKotTgyLcgrg5OceEPhYlOB6lmTLKUh94Ug9xdveAPG0SCZ6bAEopgARUP/SYdvbVzhh6Ch+edDK5O0RJy0K3g0d075pzAgvIn2udlL/ddzZyIaeQ2nXlQ1PUbXehYnEyVJ6UQTQnSmjv7H1DNf9kPqvkgoq6xZT7Jp6Gah/KWBtu5Er/vUaJSDo4/GUbfyTcpgfosjE4ARBq4w0SJ5LdDtXPx0haAJo+RPc2y11nOEPENmHwuUinOPwXVxPTTIteWAvueMXu7jwNZiho9roLSjEFQSp8WrKVvp+oHKCRYuM1g+E8IlkELmcaZUbDUvEGZTLlLT8MRxQ1wVu5JuEE/FuY5w+Gwa+4jCCh8C5nmV+gJXWEl7TO4z6Dp1HZhXjJZ5JWsTz/34KJvikkiyRIwp0T+PlQtO6Hx3C61PJF/m+Cc0j2Vk/d8E+sFDVxfmUiyZAoP6HRofZ6ZWizl7S0ec7xanlcXRxo/ZmoVvgdbVgBkevGpIVjKpW7X924hcTe8KssgWIpohv7cB/6Q+WKBRaI5nIwgIBSZJQ7nDq6CO/hBsFlrg3liV+gtEY1D4LGNyCBneo5xMyX+NUznvb6nNRyaLedd5Bpcuct0f8r14nbT5BMCRjLGZ1QwrDZcUjLAFSpQJ4/+GFRnUqgN47i4Lg4i/YNu9WaakYDclxV7vSsSt5Fxjl+qYJ7s07myjl0kQ7xWucyyfF+BUEaC/wFjZ2OogeQDUE3Wui/i1m9swDDyPpcpBpLueG1c0qXq/Gc3jDetfRwgvw1gwYEAiQAEmgN3e+VPwHwmJy6UYAlyBpqheWiGTJhpMxQNnwgixyNUpwoa0JPQW94Kp5f/AZf1vSFM5B6JLCMwwqEsHru1WDRu101yeaq9cJHvs3FPJcB1Mu/lsOOe/OOT9+5/wMCGnqa3X1stc0vkPCsPRVgmWooqeCaZ5eoJvpAcSLYvVHNTvhgJoGXVZ5mfIvNUZJLR3SqSfGLdOb6kGlDGZQ5X66R5+SzIaUurjFNfsEVhuQL/VZM89GUKeDvrorpGpKtAsu7IDFViAC2p+Avyjgnizv3BeTzzIxHPn0M0LYyzeDstGEbNIoWu9I5eRJVWJMCRoUW+GuYhYHIf2jwbPrLX2+DR7j6Ib4iBppXAiLmhGdL0AAa2poEyDRYs3nR4sRT7Lge2otr4Y/PIDMuHHev2ura0u/NjcibZmoFmuj9O9D4fiYSyui6AN0YirQ9PGioYH6bfp0HE9TUR03e8CgDuaBDSh0hkVpYDG2yT5zhAfd5Vty2tXopcZN3ekehxHEbnm1k0JsA65gp3VtPyduODKRa+yb3EOczAtzLlgLMxCfl758o4S0tgkR4XmX6PMwKaeCPzBuO1KsSEdlqE9+Uehie7esGmbITea8KWMoSInCCa81W+zw8zdHIB3saXkZG6RkFDwC6b0LPv8xeYyzY8GxsQ18iApAQlZcE4wDwbMRltMHYmyWhIf8ekkezx3lcjT2y5Wh6iIsJyXrk76sxB9Kk+G2nsTB0AOiP7botoEBkJPkqZwzsa3IOparnBfY4PSDy8F9g/WfE5snDgU1pvCajFofSPDig8OBddJA9oyhtCn1dOgfZ3bMn78EnvUpFs+QKmsVkORL/7RELJkYKL1DQDGnKGPK++62CX1g6vy62HUwpPw3XGCXCAN9w08CerRvxrOYOfBL5xjdKb1XPJ3zMoxeRFri4Cf1ZP8zuDARP+dutKqGXzapHQe+3vVB1gYpGG3NriFzOaxHpIpN9oh2KiomKYWik0aMAXIuv2ViaoESAfi4D8LZOEDnTFMtkG9zkGMMHmNIihxHtJZ+nrYcehROx9PWCvSQ3pRum3IsFuQ1cDzSsvNfNLESR3E419VzNYp+vY78T9P1nHai0BBv3qcblDsq8JPWj4UHYVurYrIKvFUZDmoNkcEVXgQJ4SOAdZ6kZ08r6GRPT6MH1DuVOBSe7QknBckCN3DRY7xj2YwQnertqUYH+HRuN1JgdMo2y5r6hGlR7T0jog7ow0aK1EGaWtyf1JXTIwSt1jzFKzkmhyn2OetHvTIbr/3Nwf668ahKCiS7d5nft0x2d1s7xQr+x+H8rLW6HxrFaNyiBe6XpgYjE2zrVC/qBWyyaKeCSQ47vHVhYwGKRtMLcwAGfseAK2s3TrBCbgr4LwozQmLkR3PVuL21DZk+oFfxbeWBlA697gmo6JKXEovaf3qfW3TOFNaMYwzWLPlmo8maP74YiArpVs3f3pysU/PyLCf9fk3KkWATMmThf9Y/vjceFto9d56zI/z9829yxnW2qJ0W5fSRjkBZnGmLJQEBH5G6EfI4XsWcILoLXfbhR2OOKyQSUigJLfhpRxHxxurEfb3Na467wJ42iUX2NRfxEl/EpRnUdPdk6iTnMf2e+ox1bUv/FPK9OQVC4pgbFTj8oclB9O4ZG0NwFJ7Rv8HkYnLmRqn9pM3bXy7cjn3Ypl5HY5lce3YOz4J66Cjo1KTxNhXtM/je5zTP7l4OM7/IzeeYFXQWrOol6Z54GYAU+II7PEcwM/Zx2sUKaJ38q2nwQ2jmDNYyTDIgZ95k74eOEeeF/8bPDkVLEtZr+GSeFEZCkJPqsTfj0n9Arfo+/UTJ8eePxDq0vZzKJiNrmBRig8FxGM7ZGGuFm52k4LkdYlETe8kUnIKoCcrBq8WzVaex1YZPR11VjvYMQcZurAIt3zg2B0VqoaY9V7WI3ALJow0RjzYmTwvdIQKHE5zbuAGfmdB2whLyDgx9KgG+x3Hodz+eSAcUU4MUPjKhtzgMyBI/Mb4OThtbBFa51lRohPdm9Q/gL45IyKn3ydJ6xf5rZnvNec9PcvHnP2nWME4UfVg7dVw0o98ACMnfttMg9JKm4p0aOTEW5Sgb57sf5NNeZlCow2VJNgPVUdpZWebnD+c5V3VVbXGFT7PdNg3yEVk3kcxk+MKNNAP6lC/4/XaaeL1fXvHQOYrm50m4dmZkSzHEUoXdV0CrrkHHLd7WHCZQeB71fs4CQnXzyVyalfKB33PqIRcxto3rECWOohX8D5pbvhwZ5uKHjWlB2yEDiBnFnCut/UvfvBdk27os2Rv5M621vdQvnHiSdDd0cB7XwPeJs5eBkLDDTzwnGAFnPgzplb9S6EmvyFjJ+Tl8s5blHgspgJbm4QUkMD4a+ahP5K9adysF1423CifTOkM0niNxp5I25D0JzaSgfCXH8QvjfvGPhubCV0bSsB0XTo698Mw4UYxA0ELQ1/9CKcP8bH+7U0DhqixEYBbeBnOQxlGDVRMoNkW7TDaUQYI7M/sPVSl+qsYgxcx4eh4TIM5CowkLdhYLgCZdsd1jT6hWYHIh53B64IpwyeqHpYi34c3r3jQViS3wG7WHJKpmmiMjs/zEtYZNSU2x5aDAPcxQc0DGpT276WuM6lhNK2MYH7IAAtZg1QZKhWfg65gtKxC1nmXG0tfERfgECyZ+Q7zDLMSwYWKtMOQupPWQQyvIy1Mq6mTC5MU786gIa+XV7OS0Na+Mew5rR2eHPwCKy018NG1r5Hv/U4yzAvJVhQLWquD9rOgXDYEp1o2tRw0ktyFc20f15Qotcir0Rj4JedspsvtRzok/GVDMnC++3H4OGeRVAh+ixgXgGqBc0JB5/6UEyarcVvCBQo4X8ggp0a9a6YDkXNoC2nTshLDaGbfZx4DM4058P/8iXQJ7Iw+zPE/+QilwjULTIcZLKWUh/QhwEdglsoaKdGf60RmackxNR8e0f+Mq1uwPsLD8KDqR40UzGYC/YsYP7pCgpTbiCjGBoKRRN0koLWU5pl1r/4PbcdjwRCr5kgJJnS1CPMAnbitRcUt8M7hp6Er3YeAz2iMm2WmQXMi6VbDAuM7ADQcl5BZGoNhJAZ9tu61gSJxIHE92uAGZrezQCUtBS8OfsM/E9iP9iVSMIcXmw6M+QsYF5ytFR/E1JLJ0ALZ2Kdxk8cMTkzt/EbP+AH1qDGqNg0zRuCPLNgnjMInxi+Hy5OHB/2M80yzD+NzMV/ngPFeBxEKgPTytmU3Qflyu3M8S5R3QRDeNrt04+fcMgaaTi2uA5+X14K96b3hl6/NOU7mwXMDCtc6REFclIhbGSSK+1p38sGge40DWdpEOuDumy7qZYyutXtUIYzhh+Hu1P7gIsso0/RMM0CZiYtkR8AtVC7JGLyB0RmAoC7g2J5jXC9ZWiPtjUexjUVlkEBbCThsMJGODX7NPw6sz/sHWRnAfOygEUtLRqATuWUkzMCGDmQ6wkHyDLGoRhm8pM96xOSQ1GCQIMP7loND8T6UduYYHFnFjAvdZGzbXBNhyKyDAzmZgyElLInNEbPFAF9mgdkj6e4k2poF22DvtIQHJ9bDz+Y8xrYy7VnAfNSy1xBwinJqr9Fz9gMnZVIIP6Ke/yDrsFv4RbZU4IZAaJtEFjhrYffeEtRy2hgQmvy6P8EGAAZa2AMLbbmxQAAAABJRU5ErkJggg==">
   <div class="brand-txt">
     <span class="t1">משרד התרבות והספורט · מינהל הספורט</span>
     <span class="t2">מוקאפ אסטרטגי — דשבורד ניהולי (רעיוני)</span>
@@ -436,7 +435,7 @@
 <main>
 
   <!-- ===================== STATUS · סטטוס המינהל (מקור: גאנט תמיכות) ===================== -->
-  <section class="page active" id="page-status" data-tab="admin" data-init="status" style="--accent:var(--engine);">
+  <section class="page active" id="page-status" data-tab="admin" data-init="status" style="--accent:var(--navy);">
     <p class="page-intro">סטטוס המינהל — מעקב ניהולי אחר מחזור החיים של מבחני התמיכה לשנת 2026: פרסום קול קורא, אישור מודל, מקדמות וערעורים. <strong>מקור: גאנט תמיכות מעודכן 20-8-2026.xlsx (קובץ מחלקה פנימי · נתוני דמה להמחשה).</strong></p>
 
     <h2 class="st-h">מבחני תמיכה · 2026</h2>
@@ -493,7 +492,7 @@
   </section>
 
   <!-- ===================== BUDGET ===================== -->
-  <section class="page" id="page-budget" data-tab="sport" data-init="budget" style="--accent:var(--budget);">
+  <section class="page" id="page-budget" data-tab="sport" data-init="budget" style="--accent:var(--navy);">
     <nav class="jump"><b>במסך זה</b><a href="#" onclick="gotoTab('budget');return false">תמיכות</a><a href="#" onclick="gotoTab('catalog');return false">קטלוג התוכניות</a><a href="#" onclick="gotoTab('muni');return false">הסתכלות גיאוגרפית</a><a href="#" onclick="gotoTab('perf');return false">ביצועים ומגדר</a><a href="#" onclick="gotoTab('impact');return false">IMPACT ויעילות</a><a href="#" onclick="gotoTab('levers');return false">מנופי מדיניות והכלה</a></nav>
     <p class="page-intro">תמיכות — התמיכות שהמשרד מחלק לאיגודים ולאגודות על פי מבחני התמיכה: פילוח לפי ייעוד, מגמות רב-שנתיות ויציבות הגופים הנתמכים. <strong>אין חיבור לתקציב המשרד עצמו — כל הנתונים מתייחסים לתמיכות המחולקות בלבד.</strong></p>
     <div class="filter-bar">
@@ -525,7 +524,7 @@
     <div class="footer-note"><strong>הבהרת תכולה:</strong> הנתונים משקפים את ה<em>תמיכות</em> שהמשרד מחלק לאיגודים ולאגודות על פי מבחני התמיכה — ולא את תקציב המשרד עצמו (אין לכך חיבור נתונים). <strong>מקורות מימון</strong> מוצג ממקורות רשמיים בלבד (תמיכת המשרד · תרומות מדינה זרה מ-data.gov.il · יתר עצמי); הפילוח המלא של ה"יתר" ו<strong>יציבות תקציבית</strong> רב-שנתית קיימים רק בדוחות הכספיים (PDF) ואינם זמינים ב-API — מסומנים בהתאם. כל הוויזואלים נתמכים ב-QuickSight.</div>
   </section>
   <!-- ===================== CATALOG · קטלוג התוכניות (סיעור מוחות) ===================== -->
-  <section class="page" id="page-catalog" data-tab="sport" data-init="catalog" style="--accent:var(--catalog);">
+  <section class="page" id="page-catalog" data-tab="sport" data-init="catalog" style="--accent:var(--navy);">
     <p class="page-intro">קטלוג התוכניות — מפת כל מבחני התמיכה במבט-על אחד: תקציב, גופים נתמכים, ערך נקודה וקריטריון מוביל. <strong>תמונת הפורטפוליו של מורן</strong> — מענה לשאלה הפתוחה מהפגישה על מסך Overview ראשוני.</p>
     <div class="filter-bar">
       <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
@@ -553,7 +552,7 @@
   </section>
 
   <!-- ===================== MUNICIPALITY ===================== -->
-  <section class="page" id="page-muni" data-tab="sport" data-init="muni" style="--accent:var(--muni);">
+  <section class="page" id="page-muni" data-tab="sport" data-init="muni" style="--accent:var(--navy);">
     <p class="page-intro">הסתכלות גיאוגרפית — האבולוציה של דשבורד "תיק יישוב" הקיים בפרודקשן (ר' קישורים): ראייה הוליסטית סביב הרשות: תקציב, ספורטאים, אגודות, הישגים, ואחוז מהאוכלוסייה (נתוני למ"ס · Drill-down).</p>
     <div class="filter-bar">
       <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
@@ -640,7 +639,7 @@
   </section>
 
   <!-- ===================== SUPPORTED BODY (GuideStar) ===================== -->
-  <section class="page" id="page-org" data-tab="other" data-init="org" style="--accent:var(--org);">
+  <section class="page" id="page-org" data-tab="other" data-init="org" style="--accent:var(--navy);">
     <p class="page-intro">כרטיסיית גוף נתמך — פרופיל הארגון ומדד <strong>תלות בתמיכה</strong> (התמיכה שלנו ÷ הכנסות העמותה). מקור נתונים: מאגר רשם העמותות הפתוח (data.gov.il · משרד המשפטים) + גיידסטאר. בהמשך המסך: <strong>מנוע הניקוד</strong> — יעד וייחוס לכל אחוז.</p>
     <div class="filter-bar">
       <span class="filter-bar-label">בחירת <strong>גוף נתמך</strong></span>
@@ -735,7 +734,7 @@
   </section>
 
   <!-- ===================== PERFORMANCE ===================== -->
-  <section class="page" id="page-perf" data-tab="sport" data-init="perf" style="--accent:var(--perf);">
+  <section class="page" id="page-perf" data-tab="sport" data-init="perf" style="--accent:var(--navy);">
     <p class="page-intro">דשבורד ביצועים אחד — כמות ספורטאים, הישגים וראייה מגדרית, במבט מאוחד וביחס לאוכלוסייה.</p>
     <div class="filter-bar">
       <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
@@ -768,7 +767,7 @@
   </section>
 
   <!-- ===================== SLA ===================== -->
-  <section class="page" id="page-sla" data-tab="other" data-init="sla" style="--accent:var(--sla);">
+  <section class="page" id="page-sla" data-tab="other" data-init="sla" style="--accent:var(--navy);">
     <p class="page-intro">SLA תפעולי — זמני טיפול, פניות פרטניות, בקשות חוזרות/השלמות, ותיקוני ועדת חריגים ועררים.</p>
     <div class="filter-bar">
       <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
@@ -797,7 +796,7 @@
   </section>
 
   <!-- ===================== IMPACT ===================== -->
-  <section class="page" id="page-impact" data-tab="sport" data-init="impact" style="--accent:var(--impact);">
+  <section class="page" id="page-impact" data-tab="sport" data-init="impact" style="--accent:var(--navy);">
     <p class="page-intro">IMPACT — קידום תרבות ספורט: שיעור ההשתתפות מהאוכלוסייה מול יעד לאומי, ויעילות תקציבית (Budget for impact).</p>
     <div class="filter-bar">
       <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
@@ -827,7 +826,7 @@
   </section>
 
   <!-- ===================== LINKS ===================== -->
-  <section class="page" id="page-links" data-tab="other" style="--accent:var(--links);">
+  <section class="page" id="page-links" data-tab="other" style="--accent:var(--navy);">
     <p class="page-intro">דף ניווט — שער מרכזי למקורות המידע ולדשבורדים התפעוליים. ב-QuickSight כל אריח נבנה כ-<strong>URL Action</strong> (או כפתור ניווט) על גבי ויזואל.</p>
     <div class="link-grid">
       <a class="link-card"><div class="ic" style="background:var(--muni-soft); color:var(--muni)">🗂</div><div class="lt">תיק יישוב <span class="src-real">בפרודקשן</span></div><div class="ld">הדשבורד הקיים למנהלי המשרד (QuickSight): בקשות וסכום מאושר לפי רשות, תקנה ומחוז · נתוני למ"ס · מסמכי סיור שר. "הסתכלות גיאוגרפית" היא האבולוציה שלו.</div></a>
@@ -846,7 +845,7 @@
 
 
   <!-- ===================== POLICY LEVERS · מנופי מדיניות (סיעור מוחות) ===================== -->
-  <section class="page" id="page-levers" data-tab="sport" data-init="levers" style="--accent:var(--levers);">
+  <section class="page" id="page-levers" data-tab="sport" data-init="levers" style="--accent:var(--navy);">
     <p class="page-intro">מנופי מדיניות — המבחנים לא רק מחלקים כסף, הם <strong>מכוונים התנהגות</strong>: תוספת ניקוד לנשים (+30% במבחן האיגודים), ניקוד מדורג לשנתוני נוער, תגמול מעטפת מקצועית ומכפיל הכלה ×1.5. המסך מודד כמה כסף כל מנוף באמת מזיז.</p>
     <div class="filter-bar">
       <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
@@ -890,7 +889,7 @@
   </section>
 
   <!-- ===================== RESILIENCE · עמידות וחירום (סיעור מוחות) ===================== -->
-  <section class="page" id="page-resil" data-tab="other" data-init="resil" style="--accent:var(--resil);">
+  <section class="page" id="page-resil" data-tab="other" data-init="resil" style="--accent:var(--navy);">
     <p class="page-intro">עמידות וחירום — <strong>4 מבחני חירום</strong> פעלו בתקופת חרבות ברזל: פיצוי אובדן הכנסות ("שאגת הארי"), מרחב מוגן יביל, ספורט בחירום וסל תחום ג'. המסך מספר את סיפור העמידות של מערכת הספורט.</p>
     <div class="filter-bar">
       <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
@@ -919,7 +918,7 @@
   </section>
 
   <!-- ===================== ORG CARD · כרטיס גוף (תקציב המשרד בלבד) ===================== -->
-  <section class="page" id="page-orgcard" data-tab="orgcard" data-init="orgcard" style="--accent:var(--org);">
+  <section class="page" id="page-orgcard" data-tab="orgcard" data-init="orgcard" style="--accent:var(--navy);">
     <p class="page-intro">כרטיס גוף — כל מה שהמשרד יודע על גוף נתמך אחד, <strong>מתוך נתוני המשרד בלבד</strong>: תמיכה, ניקוד, ספורטאים והישגים. <strong>ללא נתוני רשם העמותות/גיידסטאר</strong> — אין כאן מחזור, עובדים, מתנדבים או "תלות בתמיכה", ולכן <strong>אין תלות ב-API חיצוני</strong>. (הכרטיס מבוסס-גיידסטאר נשאר בלשונית "אחר" → גוף נתמך.)</p>
     <div class="filter-bar">
       <span class="filter-bar-label">בחירת <strong>גוף</strong></span>
@@ -941,7 +940,7 @@
   </section>
 
   <!-- ===================== AUTH CARD · כרטיס רשות ===================== -->
-  <section class="page" id="page-authcard" data-tab="authcard" data-init="authcard" style="--accent:var(--geo);">
+  <section class="page" id="page-authcard" data-tab="authcard" data-init="authcard" style="--accent:var(--navy);">
     <p class="page-intro">כרטיס רשות — תמונה מלאה על רשות מקומית אחת: תקציב, ספורטאים, אגודות, מתקנים והישגים, <strong>מול הרשויות שדומות לה</strong> (אותו אשכול חברתי-כלכלי). הלשונית "מצב הספורט בישראל" → הסתכלות גיאוגרפית עונה על שאלת המדיניות הארצית; כאן מתמקדים ברשות אחת.</p>
     <div class="filter-bar">
       <span class="filter-bar-label">בחירת <strong>רשות</strong></span>
@@ -963,7 +962,7 @@
   </section>
 
   <!-- ===================== FACILITIES · מתקנים (iframe) ===================== -->
-  <section class="page" id="page-facilities" data-tab="facilities" style="--accent:var(--muni);">
+  <section class="page" id="page-facilities" data-tab="facilities" style="--accent:var(--navy);">
     <p class="page-intro">מתקנים — דשבורד מתקני הספורט (מפת רשויות + מפת מתקנים), משובץ כמסך עצמאי.</p>
     <iframe class="fac-frame" src="מפת-מתקנים-KPI-NEW.html" loading="lazy" title="מפת מתקני ספורט"></iframe>
   </section>
@@ -994,11 +993,12 @@
     ink:v('--ink'), muted:v('--ink-muted'), faint:v('--ink-faint'), line:v('--line'), soft:v('--line-soft'),
     men:v('--men'), women:v('--women'), success:v('--success'), danger:v('--danger'),
     podium:v('--band-podium'), final:v('--band-final'), b16:v('--band-16'), rest:v('--band-rest'),
-    gold:v('--gold'), sky:v('--sky')
+    gold:v('--gold'), sky:v('--sky'),
+    navy:v('--navy'), purple:v('--purple'), orange:v('--orange'), slate:v('--slate'), green:v('--green'), red:v('--red')
   };
   const hx = (h,a)=>{h=h.replace('#','');return `rgba(${parseInt(h.slice(0,2),16)},${parseInt(h.slice(2,4),16)},${parseInt(h.slice(4,6),16)},${a})`;};
 
-  Chart.defaults.font.family = "'Heebo', system-ui, sans-serif";
+  Chart.defaults.font.family = '"Amazon Ember", "Heebo", system-ui, sans-serif';
   Chart.defaults.font.size = 12;
   Chart.defaults.color = COL.muted;
   Chart.defaults.plugins.legend.labels.boxWidth = 12;
@@ -1028,7 +1028,7 @@
   INIT.budget = function(){
     new Chart(document.getElementById('b_donut'),{type:'doughnut',
       data:{labels:['אגודות','איגודים','הישגיות','ספורט נשים','ספורט עממי','פרויקטים ייעודיים'],
-        datasets:[{data:[52,38,22,14,12,10],backgroundColor:[COL.budget,'#12798f','#3fa3b5','#8fc9d3',COL.gold,COL.rest],borderWidth:2,borderColor:'#fff'}]},
+        datasets:[{data:[52,38,22,14,12,10],backgroundColor:[COL.navy,COL.sky,COL.purple,COL.orange,COL.gold,COL.rest],borderWidth:2,borderColor:'#fff'}]},
       options:{cutout:'58%',plugins:{...legBottom('bottom'),tooltip:{callbacks:{label:c=>` ${c.label}: ₪${c.raw}M`}}}}});
 
     new Chart(document.getElementById('b_trend'),{type:'line',
@@ -1046,7 +1046,7 @@
 
     new Chart(document.getElementById('b_mix'),{type:'doughnut',
       data:{labels:['תמיכת המשרד','תרומות מדינה זרה','יתר עצמי'],
-        datasets:[{data:[38,1,61],backgroundColor:[COL.budget,'#7A8FA6','#C9BFA6'],borderWidth:2,borderColor:'#fff'}]},
+        datasets:[{data:[38,1,61],backgroundColor:[COL.navy,COL.slate,COL.gold],borderWidth:2,borderColor:'#fff'}]},
       options:{cutout:'58%',plugins:{...legBottom('bottom'),tooltip:{callbacks:{label:c=>` ${c.label}: ${c.raw}%`}}}}});
 
     const fed=['כדורגל','כדורסל','שחייה','אתלטיקה','התעמלות','טניס','כדורעף','ג\'ודו','אופניים','חתירה'];
@@ -1257,7 +1257,7 @@
 
     // revenue split donut
     new Chart(document.getElementById('o_split'),{type:'doughnut',
-      data:{labels:['תמיכת המשרד','תרומות מדינה זרה','יתר עצמי'],datasets:[{data:[38.5,0,61.5],backgroundColor:[ORG,'#7A8FA6','#C9BFA6'],borderWidth:2,borderColor:'#fff'}]},
+      data:{labels:['תמיכת המשרד','תרומות מדינה זרה','יתר עצמי'],datasets:[{data:[38.5,0,61.5],backgroundColor:[ORG,COL.slate,COL.gold],borderWidth:2,borderColor:'#fff'}]},
       options:{cutout:'60%',plugins:{legend:{position:'bottom'},tooltip:{callbacks:{label:c=>` ${c.label}: ${c.raw}%`+(c.raw===0?' (אומת)':'')}}}}});
 
     // dependency ranking table
@@ -1408,7 +1408,7 @@
       if(splitChart) splitChart.destroy();
       const xlabels=b.tests.map(t=>t.test).concat((b.extra||[]).map(x=>x.t+' — '+x.name));
       const xdata=b.tests.map(t=>t.criteria.reduce((a,c)=>a+c.amt,0)).concat((b.extra||[]).map(x=>x.amt));
-      const xcols=[v('--engine'),'#4A6A9C','#8CA3C6','#B9C7DC'].slice(0,b.tests.length).concat((b.extra||[]).map((x,i)=>['#9AA7B4','#C6CFD8'][i%2]));
+      const xcols=[COL.navy,COL.sky,COL.purple,COL.orange].slice(0,b.tests.length).concat((b.extra||[]).map((x,i)=>[COL.slate,COL.gold][i%2]));
       splitChart=new Chart(document.getElementById('e_split'),{type:'doughnut',
         data:{labels:xlabels,datasets:[{data:xdata,backgroundColor:xcols,borderWidth:2,borderColor:'#fff'}]},
         options:{cutout:'58%',plugins:{...legBottom('bottom'),tooltip:{callbacks:{label:c=>` ${c.label}: ${NIS(c.raw)}`}}}}});
@@ -1471,14 +1471,14 @@
     new Chart(document.getElementById('l_pipeline'),{type:'bar',
       data:{labels:['כדורגל','כדורסל','שחייה','ג\'ודו','אתלטיקה','התעמלות'],datasets:[
         {label:'ילדים 6–12',data:[28500,16400,8200,7400,6800,5900],backgroundColor:L,borderRadius:3},
-        {label:'נוער 13–18',data:[15200,8900,4100,3000,3300,2600],backgroundColor:'#8F84B8',borderRadius:3},
-        {label:'הישגי 19+',data:[4100,2400,1150,760,900,540],backgroundColor:'#C9C2E0',borderRadius:3}]},
+        {label:'נוער 13–18',data:[15200,8900,4100,3000,3300,2600],backgroundColor:COL.purple,borderRadius:3},
+        {label:'הישגי 19+',data:[4100,2400,1150,760,900,540],backgroundColor:COL.sky,borderRadius:3}]},
       options:{plugins:legBottom('bottom'),scales:{x:gridX,y:{...gridY,ticks:{color:COL.muted,callback:t=>(t/1000)+'K'}}}}});
 
     const fun=[58000,38400,21300,1420];
     new Chart(document.getElementById('l_funnel'),{type:'bar',
       data:{labels:['ילדים רשומים 6–12','מתמידים לנוער 13–18','פעילים בבגרות (תחרותי)','סגלים לאומיים'],
-        datasets:[{data:fun,backgroundColor:[L,'#7A6FA6','#9A90C0','#C9C2E0'],borderRadius:3,barPercentage:.68}]},
+        datasets:[{data:fun,backgroundColor:[L,COL.orange,COL.sky,COL.slate],borderRadius:3,barPercentage:.68}]},
       options:{indexAxis:'y',plugins:{...noLeg,tooltip:{callbacks:{label:c=>{const i=c.dataIndex;return i?` ${fun[i].toLocaleString('en-US')} · ${(fun[i]/fun[i-1]*100).toFixed(0)}% מעבר מהשלב הקודם`:` ${fun[i].toLocaleString('en-US')} רשומים`;}}}},
         scales:{x:{...gridY,ticks:{color:COL.muted,callback:t=>(t/1000)+'K'}},y:gridX}}});
 
@@ -1796,7 +1796,8 @@
        clubs:[['בוגרים','ליגת העל',1,32],['נוער','ליגת נוער',2,58],['נערים','ליגת נערים',3,84],['ילדים','ליגת ילדים',4,112]]}
     ];
     const SCORE_LBL=['מספר ספורטאים','הישגים','מסגרות נוער','פעילות נשים','מאמנים מוסמכים'];
-    const SCORE_COL=[v('--budget'),v('--perf'),v('--muni'),COL.women,v('--org')];
+    // חמש אמות מידה — חמישה צבעי פלטה נבדלים
+    const SCORE_COL=[v('--navy'),v('--orange'),v('--green'),v('--purple'),v('--slate')];
     const AGE=['עד 12','13–14','15–16','17–18','19–22','23+'];
     const AGE_SHARE=[.27,.19,.17,.14,.13,.10];
     // מפצל סך לשכבות גיל כך שהסכום שווה בדיוק למקור (השכבה האחרונה סופגת את השארית)
@@ -1824,7 +1825,7 @@
       const tl=b.tests.map(t=>t[0]), tv=b.tests.map(t=>+(b.tot*t[1]).toFixed(1));
       tv[tv.length-1]=+(b.tot-tv.slice(0,-1).reduce((x,y)=>x+y,0)).toFixed(1);
       if(C1)C1.destroy(); C1=new Chart(document.getElementById('oc_tests'),{type:'bar',
-        data:{labels:tl,datasets:[{data:tv,backgroundColor:v('--org'),borderRadius:3,barPercentage:.7}]},
+        data:{labels:tl,datasets:[{data:tv,backgroundColor:COL.navy,borderRadius:3,barPercentage:.7}]},
         options:{indexAxis:'y',plugins:{...noLeg,tooltip:{rtl:true,callbacks:{label:c=>money(c.raw)}}},
           scales:{x:{...gridY,ticks:{color:COL.muted,callback:x=>'₪'+x+'M'}},y:{grid:{display:false},border:{display:false},ticks:{color:COL.ink,font:{size:11}}}}}});
       // הרכב ניקוד
@@ -1835,7 +1836,7 @@
       const yrs=['2022','2023','2024','2025','2026'],base=b.tot/(1+b.yoy/100);
       const trend=[+(base*.82).toFixed(1),+(base*.88).toFixed(1),+(base*.94).toFixed(1),+base.toFixed(1),b.tot];
       if(C3)C3.destroy(); C3=new Chart(document.getElementById('oc_trend'),{type:'line',
-        data:{labels:yrs,datasets:[{data:trend,borderColor:v('--org'),backgroundColor:hx(v('--org'),.12),fill:true,tension:.35,pointRadius:3}]},
+        data:{labels:yrs,datasets:[{data:trend,borderColor:COL.navy,backgroundColor:hx(COL.navy,.12),fill:true,tension:.35,pointRadius:3}]},
         options:{plugins:{...noLeg,tooltip:{rtl:true,callbacks:{label:c=>money(c.raw)}}},
           scales:{x:{...gridX},y:{...gridY,ticks:{color:COL.muted,callback:x=>'₪'+x+'M'}}}}});
       // ספורטאים לפי גיל ומגדר
@@ -1905,7 +1906,8 @@
                  5:{budpp:35.8,athpct:5.7,facpk:0.42,clubpk:0.15},6:{budpp:38.1,athpct:6.0,facpk:0.48,clubpk:0.19},
                  8:{budpp:33.4,athpct:7.2,facpk:0.55,clubpk:0.22}};
     const FACLBL=['מגרש','אולם','בריכה','כושר','אצטדיון','אחר'];
-    const FACCOL=[v('--budget'),v('--levers'),COL.rest,v('--perf'),COL.gold,'#9aa8bd'];
+    // שישה סוגי מתקן — שישה צבעי קטגוריה מהפלטה
+    const FACCOL=[v('--navy'),v('--purple'),v('--sky'),v('--orange'),v('--gold'),v('--slate')];
 
     const sel=document.getElementById('ac_sel');
     sel.innerHTML=AUTHS.map((a,i)=>`<option value="${i}">${a.n}</option>`).join('');
@@ -1928,7 +1930,7 @@
         kc('תקציב לנפש','₪'+budpp.toFixed(1),arr(budpp,cl.budpp)+'אשכול '+a.cl+': ₪'+cl.budpp,cmp(budpp,cl.budpp));
       // ספורטאים לפי ענף
       if(D1)D1.destroy(); D1=new Chart(document.getElementById('ac_branch'),{type:'bar',
-        data:{labels:a.br.map(x=>x[0]),datasets:[{data:a.br.map(x=>x[1]),backgroundColor:v('--geo'),borderRadius:3,barPercentage:.7}]},
+        data:{labels:a.br.map(x=>x[0]),datasets:[{data:a.br.map(x=>x[1]),backgroundColor:COL.navy,borderRadius:3,barPercentage:.7}]},
         options:{indexAxis:'y',plugins:{...noLeg,tooltip:{rtl:true}},
           scales:{x:{...gridY,ticks:{color:COL.muted}},y:{grid:{display:false},border:{display:false},ticks:{color:COL.ink}}}}});
       // תקציב לפי מבחן
@@ -1944,8 +1946,8 @@
       const idx=(arr)=>arr.map((x,i)=>Math.round(x/clv[i]*100));
       if(D3)D3.destroy(); D3=new Chart(document.getElementById('ac_bench'),{type:'bar',
         data:{labels:M,datasets:[
-          {label:a.n,data:idx(raw),backgroundColor:v('--geo'),borderRadius:3},
-          {label:'ממוצע אשכול '+a.cl+' = 100',data:[100,100,100,100],backgroundColor:v('--perf'),borderRadius:3},
+          {label:a.n,data:idx(raw),backgroundColor:COL.navy,borderRadius:3},
+          {label:'ממוצע אשכול '+a.cl+' = 100',data:[100,100,100,100],backgroundColor:COL.purple,borderRadius:3},
           {label:'ממוצע ארצי',data:idx(ntv),backgroundColor:COL.rest,borderRadius:3}]},
         options:{plugins:{...legBottom('bottom'),tooltip:{rtl:true,callbacks:{
           label:c=>{const i=c.dataIndex, src=c.datasetIndex===0?raw:(c.datasetIndex===1?clv:ntv);

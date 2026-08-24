@@ -1,0 +1,139 @@
+- generic [active] [ref=f1e1]:
+  - generic [ref=f1e2]: "עותק מסומן — היתכנות מול ה-DWH. ליד כל ויזואל: מצב הנתונים. בראש כל לשונית: ציון הלשונית. נבחן מול STT Gold+Silver מ-20/08/2026 · הדוח המלא: היתכנות-לפי-לשונית.html"
+  - banner [ref=f1e3]:
+    - generic [ref=f1e4]:
+      - text: ת
+      - generic [ref=f1e5]: ס
+    - generic [ref=f1e6]:
+      - generic [ref=f1e7]: משרד התרבות והספורט · מינהל הספורט
+      - generic [ref=f1e8]: מוקאפ אסטרטגי — דשבורד ניהולי (רעיוני)
+    - generic [ref=f1e9]: מוקאפ לפגישה · נתוני דמה להמחשה
+  - navigation [ref=f1e10]:
+    - button "תמיכות" [ref=f1e11] [cursor=pointer]
+    - button "קטלוג התוכניות" [ref=f1e12] [cursor=pointer]
+    - button "גוף נתמך · מנוע הניקוד" [ref=f1e14] [cursor=pointer]
+    - button "ביצועים ומגדר" [ref=f1e16] [cursor=pointer]
+    - button "מנופי מדיניות והכלה" [ref=f1e17] [cursor=pointer]
+    - button "SLA · תפעול" [ref=f1e19] [cursor=pointer]
+    - button "עמידות וחירום" [ref=f1e20] [cursor=pointer]
+    - button "IMPACT ויעילות" [ref=f1e22] [cursor=pointer]
+    - button "קישורים" [ref=f1e23] [cursor=pointer]
+  - main [ref=f1e24]:
+    - generic [ref=f1e25]:
+      - generic [ref=f1e26]:
+        - generic [ref=f1e27]:
+          - generic [ref=f1e28]: ניתן לבנייה היום 0%
+          - generic [ref=f1e29]: אחרי ה-ETL החדש 17%
+          - generic [ref=f1e30]: 6 ויזואלים
+          - generic [ref=f1e31]:
+            - generic [ref=f1e32]: במפרט · ETL 1
+            - generic [ref=f1e33]: חלקי 3
+            - generic [ref=f1e34]: חסום 2
+        - generic [ref=f1e39]: "הכסף קיים בחוזה (approved_amount) והייעוד נפתח ב-STT החדש. הפער האמיתי: היסטוריה רב-שנתית ונתוני עמותה."
+      - paragraph [ref=f1e40]:
+        - text: "תמיכות — התמיכות שהמשרד מחלק לאיגודים ולאגודות על פי מבחני התמיכה: פילוח לפי ייעוד, מגמות רב-שנתיות ויציבות הגופים הנתמכים."
+        - strong [ref=f1e41]: אין חיבור לתקציב המשרד עצמו — כל הנתונים מתייחסים לתמיכות המחולקות בלבד.
+      - generic [ref=f1e42]:
+        - generic [ref=f1e43]:
+          - text: פילטרים על
+          - strong [ref=f1e44]: כל הדף
+        - generic [ref=f1e45]:
+          - generic [ref=f1e46]: שנת תקציב
+          - combobox [ref=f1e47] [cursor=pointer]:
+            - option "2026" [selected]
+            - option "2025"
+            - option "2024"
+            - option "הכל"
+        - generic [ref=f1e48]:
+          - generic [ref=f1e49]: מקור מימון
+          - combobox [ref=f1e50] [cursor=pointer]:
+            - option "הכל" [selected]
+            - option "תמיכות משרד"
+            - option "מפעל הפיס / טוטו"
+            - option "רשויות מקומיות"
+            - option "הכנסות עצמיות"
+        - generic [ref=f1e51]:
+          - generic [ref=f1e52]: ענף / איגוד
+          - combobox [ref=f1e53] [cursor=pointer]:
+            - option "הכל" [selected]
+            - option "כדורגל"
+            - option "כדורסל"
+            - option "שחייה"
+            - option "אתלטיקה"
+            - option "התעמלות"
+        - generic [ref=f1e54]:
+          - generic [ref=f1e55]: מחוז
+          - combobox [ref=f1e56] [cursor=pointer]:
+            - option "הכל" [selected]
+            - option "צפון"
+            - option "חיפה"
+            - option "מרכז"
+            - option "תל אביב"
+            - option "ירושלים"
+            - option "דרום"
+        - button "איפוס פילטרים" [ref=f1e57] [cursor=pointer]
+      - generic [ref=f1e58]:
+        - generic [ref=f1e59]:
+          - generic [ref=f1e60]: סך התמיכות
+          - generic [ref=f1e61]: ₪148.1M
+          - generic [ref=f1e62]: ▲ 8.4% מול 2025
+        - generic [ref=f1e63]:
+          - generic [ref=f1e64]: גופים נתמכים
+          - generic [ref=f1e65]: "476"
+          - generic [ref=f1e66]: 64 איגודים · 412 אגודות
+        - generic [ref=f1e67]:
+          - generic [ref=f1e68]: תמיכה ממוצעת לגוף
+          - generic [ref=f1e69]: ₪311K
+          - generic [ref=f1e70]: חציון ₪186K
+        - generic [ref=f1e71]:
+          - generic [ref=f1e72]: צמיחה תלת-שנתית
+          - generic [ref=f1e73]: +12.6%
+          - generic [ref=f1e74]: 2023 → 2026
+      - generic [ref=f1e75]:
+        - generic [ref=f1e76]:
+          - generic [ref=f1e77]:
+            - generic [ref=f1e78]: חלוקת התמיכות לפי ייעוד
+            - generic "fact_budget_pct · goal_type/area_name" [ref=f1e79]: במפרט · ETL
+            - generic [ref=f1e80]:
+              - text: Donut · מיליוני ₪
+              - generic [ref=f1e81]: QS
+          - 'link "↩ לפירוט מלא — קטלוג התוכניות · ב-QuickSight: URL Action" [ref=f1e85] [cursor=pointer]':
+            - /url: "#"
+        - generic [ref=f1e86]:
+          - generic [ref=f1e87]:
+            - generic [ref=f1e88]: מגמת התמיכות
+            - generic "תלוי בכמה שנים טעונות (B1)" [ref=f1e89]: חלקי
+            - generic [ref=f1e90]: Line · מיליוני ₪ קיים בתיק יישוב
+          - generic [ref=f1e93]: "קיים היום בתיק יישוב כ\"תקציב שאושר לפי שנים\" (עמודות, תרבות+ספורט). כאן: קו רב-שנתי לתמיכות הספורט בלבד."
+        - generic [ref=f1e94]:
+          - generic [ref=f1e95]:
+            - generic [ref=f1e96]: יציבות תקציבית של הגופים הנתמכים
+            - generic "דורש דוחות כספיים + שנים צבורות" [ref=f1e97]: חסום
+            - generic [ref=f1e98]: דורש דוח כספי · צבירת נתונים
+          - generic [ref=f1e101]: פילוח ההכנסות העצמיות לאורך השנים קיים רק בדוחות הכספיים (PDF) ואינו זמין ב-API. כאן להמחשה.
+        - generic [ref=f1e102]:
+          - generic [ref=f1e103]:
+            - generic [ref=f1e104]: מקורות מימון הגופים הנתמכים · 2024
+            - generic "פילוח הכנסות קיים רק ב-PDF" [ref=f1e105]: חסום
+            - generic [ref=f1e106]: Donut · % · שנת הדיווח הכספי האחרונה
+          - generic [ref=f1e109]: "ממקורות רשמיים בלבד: תמיכת המשרד (פנימי) · תרומות מדינה זרה (data.gov.il) · יתר עצמי. פירוט ה\"יתר\" — רק בדוח הכספי (PDF)."
+        - generic [ref=f1e111]:
+          - generic [ref=f1e112]: תמיכות לפי איגוד · השוואת 2025 ל-2026
+          - generic "תלוי בקיום 2 שנים (B1)" [ref=f1e113]: חלקי
+          - generic [ref=f1e114]: Clustered Bar · 10 המובילים מתוך 64 איגודים
+        - generic [ref=f1e117]:
+          - generic [ref=f1e118]:
+            - generic [ref=f1e119]: הרכב התמיכה — ניקוד לפי אמות מידה מול תיקונים
+            - generic "חצי הניקוד קיים; לוועדת חריגים אין מקור" [ref=f1e120]: חלקי
+            - generic [ref=f1e121]: פנימי · לדוגמה
+          - generic [ref=f1e124]: "\"התיקונים\" — תקרות תמיכה, מקדמים וועדת חריגים — אינם נגזרים מהניקוד (ר' מנוע הניקוד בלשונית גוף נתמך). הפער בין החישוב לתשלום בפועל, במספר אחד. הסכומים מסתכמים למגמת התמיכות שלמעלה."
+      - generic [ref=f1e125]:
+        - strong [ref=f1e126]: "הבהרת תכולה:"
+        - text: הנתונים משקפים את ה
+        - emphasis [ref=f1e127]: תמיכות
+        - text: שהמשרד מחלק לאיגודים ולאגודות על פי מבחני התמיכה — ולא את תקציב המשרד עצמו (אין לכך חיבור נתונים).
+        - strong [ref=f1e128]: מקורות מימון
+        - text: מוצג ממקורות רשמיים בלבד (תמיכת המשרד · תרומות מדינה זרה מ-data.gov.il · יתר עצמי); הפילוח המלא של ה"יתר" ו
+        - strong [ref=f1e129]: יציבות תקציבית
+        - text: רב-שנתית קיימים רק בדוחות הכספיים (PDF) ואינם זמינים ב-API — מסומנים בהתאם. כל הוויזואלים נתמכים ב-QuickSight.
+  - button "⋯ הצג מסך מוסתר" [ref=f1e131] [cursor=pointer]

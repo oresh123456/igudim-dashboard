@@ -1,0 +1,144 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - text: "עותק מסומן — כיסוי מול ה-DWH בלבד. ליד כל ויזואל: האם השדות קיימים במחסן. בראש כל לשונית: ציון הכיסוי. נבחן מול STT Gold+Silver (בפרודקשן) מ-20/08/2026 · תג"
+    - generic [ref=e3]: עומק היסטוריה
+    - text: = מכוסה סכמתית, תלוי בכמה שנים טעונות
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - text: ת
+      - generic [ref=e6]: ס
+    - generic [ref=e7]:
+      - generic [ref=e8]: משרד התרבות והספורט · מינהל הספורט
+      - generic [ref=e9]: מוקאפ אסטרטגי — דשבורד ניהולי (רעיוני)
+    - generic [ref=e10]: מוקאפ לפגישה · נתוני דמה להמחשה
+  - navigation [ref=e11]:
+    - button "תמיכות" [ref=e12] [cursor=pointer]
+    - button "קטלוג התוכניות" [ref=e13] [cursor=pointer]
+    - button "גוף נתמך · מנוע הניקוד" [ref=e15] [cursor=pointer]
+    - button "ביצועים ומגדר" [ref=e17] [cursor=pointer]
+    - button "מנופי מדיניות והכלה" [ref=e18] [cursor=pointer]
+    - button "SLA · תפעול" [ref=e20] [cursor=pointer]
+    - button "עמידות וחירום" [ref=e21] [cursor=pointer]
+    - button "IMPACT ויעילות" [ref=e23] [cursor=pointer]
+    - button "קישורים" [ref=e24] [cursor=pointer]
+  - main [ref=e25]:
+    - generic [ref=e26]:
+      - generic [ref=e27]:
+        - generic [ref=e28]:
+          - generic [ref=e29]: מכוסה במלואו ב-DWH 50%
+          - generic [ref=e30]: 6 ויזואלים
+          - generic [ref=e31]:
+            - generic [ref=e32]: מכוסה ב-DWH 3
+            - generic [ref=e33]: חלקי 1
+            - generic [ref=e34]: לא ב-DWH 2
+            - generic [ref=e35]: עומק היסטוריה 2
+        - generic [ref=e40]: "הכסף והייעוד מכוסים במלואם ב-DWH. מה שחסר אינו במחסן כלל: דוחות כספיים של העמותות ותיקוני ועדת חריגים."
+      - paragraph [ref=e41]:
+        - text: "תמיכות — התמיכות שהמשרד מחלק לאיגודים ולאגודות על פי מבחני התמיכה: פילוח לפי ייעוד, מגמות רב-שנתיות ויציבות הגופים הנתמכים."
+        - strong [ref=e42]: אין חיבור לתקציב המשרד עצמו — כל הנתונים מתייחסים לתמיכות המחולקות בלבד.
+      - generic [ref=e43]:
+        - generic [ref=e44]:
+          - text: פילטרים על
+          - strong [ref=e45]: כל הדף
+        - generic [ref=e46]:
+          - generic [ref=e47]: שנת תקציב
+          - combobox [ref=e48] [cursor=pointer]:
+            - option "2026" [selected]
+            - option "2025"
+            - option "2024"
+            - option "הכל"
+        - generic [ref=e49]:
+          - generic [ref=e50]: מקור מימון
+          - combobox [ref=e51] [cursor=pointer]:
+            - option "הכל" [selected]
+            - option "תמיכות משרד"
+            - option "מפעל הפיס / טוטו"
+            - option "רשויות מקומיות"
+            - option "הכנסות עצמיות"
+        - generic [ref=e52]:
+          - generic [ref=e53]: ענף / איגוד
+          - combobox [ref=e54] [cursor=pointer]:
+            - option "הכל" [selected]
+            - option "כדורגל"
+            - option "כדורסל"
+            - option "שחייה"
+            - option "אתלטיקה"
+            - option "התעמלות"
+        - generic [ref=e55]:
+          - generic [ref=e56]: מחוז
+          - combobox [ref=e57] [cursor=pointer]:
+            - option "הכל" [selected]
+            - option "צפון"
+            - option "חיפה"
+            - option "מרכז"
+            - option "תל אביב"
+            - option "ירושלים"
+            - option "דרום"
+        - button "איפוס פילטרים" [ref=e58] [cursor=pointer]
+      - generic [ref=e59]:
+        - generic [ref=e60]:
+          - generic [ref=e61]: סך התמיכות
+          - generic [ref=e62]: ₪148.1M
+          - generic [ref=e63]: ▲ 8.4% מול 2025
+        - generic [ref=e64]:
+          - generic [ref=e65]: גופים נתמכים
+          - generic [ref=e66]: "476"
+          - generic [ref=e67]: 64 איגודים · 412 אגודות
+        - generic [ref=e68]:
+          - generic [ref=e69]: תמיכה ממוצעת לגוף
+          - generic [ref=e70]: ₪311K
+          - generic [ref=e71]: חציון ₪186K
+        - generic [ref=e72]:
+          - generic [ref=e73]: צמיחה תלת-שנתית
+          - generic [ref=e74]: +12.6%
+          - generic [ref=e75]: 2023 → 2026
+      - generic [ref=e76]:
+        - generic [ref=e77]:
+          - generic [ref=e78]:
+            - generic [ref=e79]: חלוקת התמיכות לפי ייעוד
+            - generic "fact_budget_pct — goal_type · area_name · measurement_for_area" [ref=e80]: מכוסה ב-DWH
+            - generic [ref=e81]:
+              - text: Donut · מיליוני ₪
+              - generic [ref=e82]: QS
+          - 'link "↩ לפירוט מלא — קטלוג התוכניות · ב-QuickSight: URL Action" [ref=e86] [cursor=pointer]':
+            - /url: "#"
+        - generic [ref=e87]:
+          - generic [ref=e88]:
+            - generic [ref=e89]: מגמת התמיכות
+            - generic "approved_amount × support_request_year" [ref=e90]: מכוסה ב-DWH
+            - generic "מכוסה סכמתית — תלוי בכמה שנות נתונים טעונות" [ref=e91]: עומק היסטוריה
+            - generic [ref=e92]: Line · מיליוני ₪ קיים בתיק יישוב
+          - generic [ref=e95]: "קיים היום בתיק יישוב כ\"תקציב שאושר לפי שנים\" (עמודות, תרבות+ספורט). כאן: קו רב-שנתי לתמיכות הספורט בלבד."
+        - generic [ref=e96]:
+          - generic [ref=e97]:
+            - generic [ref=e98]: יציבות תקציבית של הגופים הנתמכים
+            - generic "דוחות כספיים של עמותות — לא ב-DWH" [ref=e99]: לא ב-DWH
+            - generic [ref=e100]: דורש דוח כספי · צבירת נתונים
+          - generic [ref=e103]: פילוח ההכנסות העצמיות לאורך השנים קיים רק בדוחות הכספיים (PDF) ואינו זמין ב-API. כאן להמחשה.
+        - generic [ref=e104]:
+          - generic [ref=e105]:
+            - generic [ref=e106]: מקורות מימון הגופים הנתמכים · 2024
+            - generic "פילוח הכנסות לפי מקור — לא ב-DWH" [ref=e107]: לא ב-DWH
+            - generic [ref=e108]: Donut · % · שנת הדיווח הכספי האחרונה
+          - generic [ref=e111]: "ממקורות רשמיים בלבד: תמיכת המשרד (פנימי) · תרומות מדינה זרה (data.gov.il) · יתר עצמי. פירוט ה\"יתר\" — רק בדוח הכספי (PDF)."
+        - generic [ref=e113]:
+          - generic [ref=e114]: תמיכות לפי איגוד · השוואת 2025 ל-2026
+          - generic "approved_amount לפי איגוד ושנה" [ref=e115]: מכוסה ב-DWH
+          - generic "מכוסה סכמתית — תלוי בכמה שנות נתונים טעונות" [ref=e116]: עומק היסטוריה
+          - generic [ref=e117]: Clustered Bar · 10 המובילים מתוך 64 איגודים
+        - generic [ref=e120]:
+          - generic [ref=e121]:
+            - generic [ref=e122]: הרכב התמיכה — ניקוד לפי אמות מידה מול תיקונים
+            - generic "רכיבי הניקוד מכוסים; תיקוני ועדת חריגים אינם ב-DWH" [ref=e123]: חלקי
+            - generic [ref=e124]: פנימי · לדוגמה
+          - generic [ref=e127]: "\"התיקונים\" — תקרות תמיכה, מקדמים וועדת חריגים — אינם נגזרים מהניקוד (ר' מנוע הניקוד בלשונית גוף נתמך). הפער בין החישוב לתשלום בפועל, במספר אחד. הסכומים מסתכמים למגמת התמיכות שלמעלה."
+      - generic [ref=e128]:
+        - strong [ref=e129]: "הבהרת תכולה:"
+        - text: הנתונים משקפים את ה
+        - emphasis [ref=e130]: תמיכות
+        - text: שהמשרד מחלק לאיגודים ולאגודות על פי מבחני התמיכה — ולא את תקציב המשרד עצמו (אין לכך חיבור נתונים).
+        - strong [ref=e131]: מקורות מימון
+        - text: מוצג ממקורות רשמיים בלבד (תמיכת המשרד · תרומות מדינה זרה מ-data.gov.il · יתר עצמי); הפילוח המלא של ה"יתר" ו
+        - strong [ref=e132]: יציבות תקציבית
+        - text: רב-שנתית קיימים רק בדוחות הכספיים (PDF) ואינם זמינים ב-API — מסומנים בהתאם. כל הוויזואלים נתמכים ב-QuickSight.
+  - button "⋯ הצג מסך מוסתר" [ref=e134] [cursor=pointer]

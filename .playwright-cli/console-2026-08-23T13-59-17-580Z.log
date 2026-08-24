@@ -1,0 +1,6 @@
+[     369ms] TypeError: Cannot read properties of undefined (reading 'gap')
+    at http://127.0.0.1:8899/%D7%9E%D7%95%D7%A7%D7%90%D7%A4-%D7%90%D7%A1%D7%98%D7%A8%D7%98%D7%92%D7%99-%D7%9E%D7%95%D7%A8%D7%9F-v2.html:1647:57
+    at Array.sort (<anonymous>)
+    at INIT.status (http://127.0.0.1:8899/%D7%9E%D7%95%D7%A7%D7%90%D7%A4-%D7%90%D7%A1%D7%98%D7%A8%D7%98%D7%92%D7%99-%D7%9E%D7%95%D7%A8%D7%9F-v2.html:1647:8)
+    at http://127.0.0.1:8899/%D7%9E%D7%95%D7%A7%D7%90%D7%A4-%D7%90%D7%A1%D7%98%D7%A8%D7%98%D7%92%D7%99-%D7%9E%D7%95%D7%A8%D7%9F-v2.html:1713:70
+[     468ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://127.0.0.1:8899/favicon.ico:0

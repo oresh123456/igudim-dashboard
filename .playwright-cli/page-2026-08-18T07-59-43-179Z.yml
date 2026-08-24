@@ -1,0 +1,3349 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]: ת״ס
+    - generic [ref=e4]:
+      - generic [ref=e5]: משרד התרבות והספורט · מינהל הספורט
+      - generic [ref=e6]: אגף מתקנים · דשבורד מתקני ספורט
+    - generic [ref=e7]: מסכים למורן · מפת מתקנים
+  - generic [ref=e8]:
+    - generic [ref=e9]:
+      - heading "מפת מתקני ספורט — Heatmap לפי מדדים" [level=1] [ref=e10]
+      - paragraph [ref=e11]: "ויזואל אחד (QuickSight Layer map) עם שתי שכבות GeoJSON: שכבה 1 — אזורים צבועים, כל רשות לפי המדד הנבחר (choropleth) · שכבה 2 — מתקנים בודדים כנקודות, בצבע לפי סוג/מצב/נגישות, עם הצג-הסתר וכוונון גודל. ניתן לסנן לפי מחוז/סוג. כל מדד מסומן במקור הנתון."
+    - generic [ref=e12]:
+      - generic [ref=e13]:
+        - generic [ref=e14]: 8,507
+        - generic [ref=e15]: סה״כ מתקנים ממופים
+      - generic [ref=e16]:
+        - generic [ref=e17]: "255"
+        - generic [ref=e18]: רשויות מקומיות
+      - generic [ref=e19]:
+        - generic [ref=e20]: 84%
+        - generic [ref=e21]: "% תקינים ופעילים"
+      - generic [ref=e22]:
+        - generic [ref=e23]: 59%
+        - generic [ref=e24]: "% נגישים לנכים"
+      - generic [ref=e25]:
+        - generic [ref=e26]: 84%
+        - generic [ref=e27]: ממוצע · % תקינים ופעילים
+    - generic [ref=e28]:
+      - generic [ref=e29]:
+        - generic [ref=e30]:
+          - text: פילטרים גלובליים
+          - generic [ref=e31]: Sheet filters · זהה למסכי הספורט
+        - generic [ref=e32]:
+          - generic [ref=e33]:
+            - generic [ref=e34]: שנה
+            - combobox [ref=e35] [cursor=pointer]:
+              - option "2026" [selected]
+              - option "2025"
+          - generic [ref=e36]:
+            - generic [ref=e37]: רשות מקומית
+            - combobox [ref=e38] [cursor=pointer]:
+              - option "הכל" [selected]
+              - option "אבו גוש"
+              - option "אבו סנאן"
+              - option "אבן יהודה"
+              - option "אום אל-פחם"
+              - option "אופקים"
+              - option "אור יהודה"
+              - option "אור עקיבא"
+              - option "אורנית"
+              - option "אזור"
+              - option "אילת"
+              - option "אכסאל"
+              - option "אל קסום"
+              - option "אל-בטוף"
+              - option "אלונה"
+              - option "אליכין"
+              - option "אלעד"
+              - option "אלפי מנשה"
+              - option "אלקנה"
+              - option "אעבלין"
+              - option "אפרת"
+              - option "אריאל"
+              - option "אשדוד"
+              - option "אשכול"
+              - option "אשקלון"
+              - option "באקה אל גרביה"
+              - option "באר טוביה"
+              - option "באר יעקב"
+              - option "באר שבע"
+              - option "בוסתאן אל מרג'"
+              - option "בועיינה-נוג'ידאת"
+              - option "בוקעתא"
+              - option "ביר אל-מכסור"
+              - option "בית אל"
+              - option "בית אריה"
+              - option "בית ג'ן"
+              - option "בית דגן"
+              - option "בית שאן"
+              - option "בית שמש"
+              - option "ביתר עילית"
+              - option "בני ברק"
+              - option "בני עייש"
+              - option "בני שמעון"
+              - option "בנימינה-גבעת עדה"
+              - option "בסמ\"ה"
+              - option "בסמת טבעון"
+              - option "בענה"
+              - option "בקעת הירדן"
+              - option "ברנר"
+              - option "בת ים"
+              - option "ג'דיידה-מכר"
+              - option "ג'וליס"
+              - option "ג'לג'וליה"
+              - option "ג'סר א-זרקא"
+              - option "ג'ש (גוש חלב)"
+              - option "ג'ת"
+              - option "גבעת זאב"
+              - option "גבעת שמואל"
+              - option "גבעתיים"
+              - option "גדרה"
+              - option "גדרות"
+              - option "גולן"
+              - option "גוש עציון"
+              - option "גזר"
+              - option "גן יבנה"
+              - option "גן רוה"
+              - option "גני תקווה"
+              - option "דאלית אל כרמל"
+              - option "דבוריה"
+              - option "דימונה"
+              - option "דיר אל אסד"
+              - option "דיר חנא"
+              - option "דרום השרון"
+              - option "הגלבוע"
+              - option "הגליל העליון"
+              - option "הגליל התחתון"
+              - option "הוד השרון"
+              - option "הערבה התיכונה"
+              - option "הר אדר"
+              - option "הר חברון"
+              - option "הרצליה"
+              - option "זבולון"
+              - option "זכרון יעקב"
+              - option "זמר"
+              - option "זרזיר"
+              - option "חבל אילות"
+              - option "חבל יבנה"
+              - option "חבל מודיעין"
+              - option "חדרה"
+              - option "חולון"
+              - option "חוף אשקלון"
+              - option "חוף הכרמל"
+              - option "חוף השרון"
+              - option "חורה"
+              - option "חורפיש"
+              - option "חיפה"
+              - option "חצור הגלילית"
+              - option "חריש"
+              - option "טבריה"
+              - option "טובא-זנגריה"
+              - option "טורעאן"
+              - option "טייבה"
+              - option "טירה"
+              - option "טירת כרמל"
+              - option "טמרה"
+              - option "יאנוח-ג'ת"
+              - option "יבנאל"
+              - option "יבנה"
+              - option "יהוד"
+              - option "יואב"
+              - option "יסוד המעלה"
+              - option "יפיע"
+              - option "יקנעם עילית"
+              - option "ירוחם"
+              - option "ירושלים"
+              - option "ירכא"
+              - option "כאבול"
+              - option "כאוכב אבו אל-היג'א"
+              - option "כוכב יאיר"
+              - option "כסיפה"
+              - option "כסרא סמיע"
+              - option "כעביה-טבאש-חג'אג'רה"
+              - option "כפר ברא"
+              - option "כפר ורדים"
+              - option "כפר יאסיף"
+              - option "כפר יונה"
+              - option "כפר כמא"
+              - option "כפר כנא"
+              - option "כפר מנדא"
+              - option "כפר סבא"
+              - option "כפר קאסם"
+              - option "כפר קרע"
+              - option "כפר שמריהו"
+              - option "כפר תבור"
+              - option "כרמיאל"
+              - option "לב השרון"
+              - option "להבים"
+              - option "לוד"
+              - option "לכיש"
+              - option "לקיה"
+              - option "מבואות החרמון"
+              - option "מבשרת ציון"
+              - option "מג'ד אל כרום"
+              - option "מג'דל שמס"
+              - option "מגדל"
+              - option "מגדל העמק"
+              - option "מגידו"
+              - option "מגילות ים המלח"
+              - option "מודיעין עילית"
+              - option "מודיעין-מכבים-רעות"
+              - option "מזכרת בתיה"
+              - option "מזרעה"
+              - option "מטה אשר"
+              - option "מטה בנימין"
+              - option "מטה יהודה"
+              - option "מטולה"
+              - option "מיתר"
+              - option "מנשה"
+              - option "מסעדה"
+              - option "מע'אר"
+              - option "מעיליא"
+              - option "מעלה אדומים"
+              - option "מעלה אפרים"
+              - option "מעלה יוסף"
+              - option "מעלה עירון"
+              - option "מעלות-תרשיחא"
+              - option "מצפה רמון"
+              - option "מרום הגליל"
+              - option "מרחבים"
+              - option "משגב"
+              - option "משהד"
+              - option "נהריה"
+              - option "נווה מדבר"
+              - option "נוף הגליל"
+              - option "נחל שורק"
+              - option "נחף"
+              - option "נס ציונה"
+              - option "נצרת"
+              - option "נשר"
+              - option "נתיבות"
+              - option "נתניה"
+              - option "סאג'ור"
+              - option "סביון"
+              - option "סח'נין"
+              - option "ע'ג'ר"
+              - option "עומר"
+              - option "עיילבון"
+              - option "עילוט"
+              - option "עין מאהל"
+              - option "עין קנייא"
+              - option "עכו"
+              - option "עמנואל"
+              - option "עמק הירדן"
+              - option "עמק המעיינות"
+              - option "עמק חפר"
+              - option "עמק יזרעאל"
+              - option "עספיא"
+              - option "עפולה"
+              - option "עראבה"
+              - option "ערד"
+              - option "ערערה"
+              - option "ערערה-בנגב"
+              - option "פוריידיס"
+              - option "פסוטה"
+              - option "פקיעין"
+              - option "פרדס חנה-כרכור"
+              - option "פרדסיה"
+              - option "פתח תקווה"
+              - option "צפת"
+              - option "קדומים"
+              - option "קדימה צורן"
+              - option "קלנסווה"
+              - option "קצרין"
+              - option "קרית אונו"
+              - option "קרית ארבע"
+              - option "קרית אתא"
+              - option "קרית ביאליק"
+              - option "קרית גת"
+              - option "קרית טבעון"
+              - option "קרית ים"
+              - option "קרית יערים"
+              - option "קרית מוצקין"
+              - option "קרית מלאכי"
+              - option "קרית עקרון"
+              - option "קרית שמונה"
+              - option "קרני שומרון"
+              - option "ראמה"
+              - option "ראש העין"
+              - option "ראש פינה"
+              - option "ראשון לציון"
+              - option "רהט"
+              - option "רחובות"
+              - option "ריינה"
+              - option "רכסים"
+              - option "רמלה"
+              - option "רמת גן"
+              - option "רמת הנגב"
+              - option "רמת השרון"
+              - option "רמת ישי"
+              - option "רעננה"
+              - option "שגב שלום"
+              - option "שדות דן"
+              - option "שדות נגב"
+              - option "שדרות"
+              - option "שוהם"
+              - option "שומרון"
+              - option "שיבלי אום אלג'נם"
+              - option "שלומי"
+              - option "שעב"
+              - option "שער הנגב"
+              - option "שפיר"
+              - option "שפרעם"
+              - option "תל אביב-יפו"
+              - option "תל מונד"
+              - option "תל שבע"
+              - option "תמר"
+          - generic [ref=e39]:
+            - generic [ref=e40]: מדד סוציו-אקונומי
+            - combobox [ref=e41] [cursor=pointer]:
+              - option "הכל" [selected]
+              - option "אשכול 1–3"
+              - option "אשכול 4–6"
+              - option "אשכול 7–10"
+          - generic [ref=e42]:
+            - generic [ref=e43]: איגוד
+            - combobox [ref=e44] [cursor=pointer]:
+              - option "הכל" [selected]
+          - generic [ref=e45]:
+            - generic [ref=e46]: אגודה
+            - combobox [ref=e47] [cursor=pointer]:
+              - option "הכל" [selected]
+          - generic [ref=e48]:
+            - generic [ref=e49]: ענף
+            - combobox [ref=e50] [cursor=pointer]:
+              - option "הכל" [selected]
+              - option "כדורגל"
+              - option "כדורסל"
+              - option "שחייה"
+              - option "אתלטיקה"
+              - option "טניס"
+              - option "כדורעף"
+              - option "התעמלות"
+              - option "ג'ודו"
+          - generic [ref=e51]:
+            - generic [ref=e52]: סיווג אולימפי
+            - combobox [ref=e53] [cursor=pointer]:
+              - option "הכל" [selected]
+              - option "אולימפי"
+              - option "פרה-אולימפי"
+              - option "לא אולימפי"
+          - generic [ref=e54]:
+            - generic [ref=e55]: סוג ענף
+            - combobox [ref=e56] [cursor=pointer]:
+              - option "הכל" [selected]
+              - option "אישי"
+              - option "קבוצתי"
+          - button "איפוס" [ref=e57] [cursor=pointer]
+      - generic [ref=e58]:
+        - generic [ref=e59]:
+          - text: מדד הצבע
+          - generic [ref=e60]: Color · צביעת הרשויות
+        - generic [ref=e61]:
+          - button "מס׳ מתקנים אקסל מפקחים" [ref=e62] [cursor=pointer]:
+            - generic [ref=e63]: מס׳ מתקנים
+            - generic [ref=e64]: אקסל מפקחים
+          - button "מתקנים ל-1,000 תושבים DW" [ref=e65] [cursor=pointer]:
+            - generic [ref=e66]: מתקנים ל-1,000 תושבים
+            - generic [ref=e67]: DW
+          - button "ספורטאים / מתקן DW" [ref=e68] [cursor=pointer]:
+            - generic [ref=e69]: ספורטאים / מתקן
+            - generic [ref=e70]: DW
+          - button "תקצוב / מתקן מרכבה" [ref=e71] [cursor=pointer]:
+            - generic [ref=e72]: תקצוב / מתקן
+            - generic [ref=e73]: מרכבה
+          - button "% תקינים ופעילים אקסל מפקחים" [ref=e74] [cursor=pointer]:
+            - generic [ref=e75]: "% תקינים ופעילים"
+            - generic [ref=e76]: אקסל מפקחים
+          - button "% נגישים לנכים אקסל מפקחים" [ref=e77] [cursor=pointer]:
+            - generic [ref=e78]: "% נגישים לנכים"
+            - generic [ref=e79]: אקסל מפקחים
+          - button "% תקניים לתחרויות אקסל מפקחים" [ref=e80] [cursor=pointer]:
+            - generic [ref=e81]: "% תקניים לתחרויות"
+            - generic [ref=e82]: אקסל מפקחים
+          - button "גיל מתקן חציוני אקסל מפקחים" [ref=e83] [cursor=pointer]:
+            - generic [ref=e84]: גיל מתקן חציוני
+            - generic [ref=e85]: אקסל מפקחים
+      - generic [ref=e86]:
+        - generic [ref=e87]:
+          - text: תצוגת מפה
+          - generic [ref=e88]: Layer map יחיד
+        - generic [ref=e89]: "מפה אחת (QuickSight Layer map) עם שתי שכבות GeoJSON: שכבה 1 — גבולות רשויות צבועים לפי המדד · שכבה 2 — מתקנים כעיגול-פוליגון זעיר (צבע לפי מצב). כך המתקנים מוצגים על אותה מפה בלי ויזואל שני."
+      - generic [ref=e90]:
+        - generic [ref=e91]:
+          - text: מחוז
+          - generic [ref=e92]: רב-בחירה
+        - button "כל הארץ" [ref=e93] [cursor=pointer]
+        - generic [ref=e94]:
+          - button "תל אביב" [ref=e95] [cursor=pointer]
+          - button "מרכז" [ref=e96] [cursor=pointer]
+          - button "דרום" [ref=e97] [cursor=pointer]
+          - button "צפון" [ref=e98] [cursor=pointer]
+          - button "חיפה" [ref=e99] [cursor=pointer]
+          - button "מזרח" [ref=e100] [cursor=pointer]
+      - generic [ref=e101]:
+        - generic [ref=e102]:
+          - text: סוג מתקן
+          - generic [ref=e103]: רב-בחירה
+        - button "הכל" [ref=e104] [cursor=pointer]
+        - button "מגרשים" [ref=e105] [cursor=pointer]
+        - button "אולמות" [ref=e106] [cursor=pointer]
+        - button "בריכות" [ref=e107] [cursor=pointer]
+        - button "כושר" [ref=e108] [cursor=pointer]
+        - button "אצטדיון" [ref=e109] [cursor=pointer]
+        - button "אחר" [ref=e110] [cursor=pointer]
+        - generic [ref=e111]: 8,507 מתקנים · 255 רשויות
+      - generic [ref=e112]:
+        - generic [ref=e113]:
+          - text: שכבת מתקנים
+          - generic [ref=e114]: שכבה 2 · הצג/הסתר
+        - button "👁️ מתקנים מוצגים" [ref=e115] [cursor=pointer]
+        - generic [ref=e116]: "מתג הצג/הסתר לשכבת המתקנים. ב-QuickSight: פקד (Button/Dropdown) המחובר לפרמטר שמסנן את שכבת המתקנים — הצ׳ורופלת׳ נשאר."
+      - generic [ref=e117]:
+        - generic [ref=e118]:
+          - text: צבע הנקודות
+          - generic [ref=e119]: שכבה 2 · לפי מה לצבוע
+        - button "סוג מתקן" [ref=e120] [cursor=pointer]
+        - button "מצב המתקן" [ref=e121] [cursor=pointer]
+        - button "נגישות לנכים" [ref=e122] [cursor=pointer]
+        - generic [ref=e123]: בורר לדוגמה — בשכבת המתקנים אפשר לצבוע לפי כל שדה (סוג / מצב / נגישות / כל KPI).
+      - generic [ref=e124]:
+        - generic [ref=e125]:
+          - text: גודל הנקודות
+          - generic [ref=e126]: שקיפות + גודל
+        - slider [ref=e127]: "4"
+        - generic [ref=e128]: "4.0"
+        - generic [ref=e129]: "ב-QuickSight (Layer map) הגודל נקבע פעם אחת ברדיוס ה-buffer של ה-GeoJSON — אין סליידר גודל חי; מה שכן חי: שקיפות וגבול. הסליידר כאן = לבחירת הגודל הקבוע."
+    - generic [ref=e130]:
+      - text: 🗺️ אזורים צבועים + מתקנים — Layer map יחיד (2 שכבות GeoJSON)
+      - generic [ref=e131]: Choropleth רשויות · נקודות מתקנים (צבע לפי בחירה)
+    - generic [ref=e132]:
+      - generic [ref=e133]:
+        - generic:
+          - generic [ref=e135]:
+            - button "Zoom in" [ref=e136] [cursor=pointer]: +
+            - button "Zoom out" [ref=e137] [cursor=pointer]: −
+          - generic [ref=e138]:
+            - link "Leaflet" [ref=e139] [cursor=pointer]:
+              - /url: https://leafletjs.com
+            - text: "| © OSM · © CARTO"
+      - generic [ref=e144]:
+        - generic [ref=e145]:
+          - heading "צביעת רשויות · % תקינים ופעילים" [level=3] [ref=e146]
+          - generic [ref=e147]:
+            - generic [ref=e148]: 100%
+            - generic [ref=e150]: 81%
+            - generic [ref=e152]: 61%
+            - generic [ref=e154]: 42%
+            - generic [ref=e156]: 22%
+          - generic [ref=e158]: נקודות מתקנים · סוג מתקן
+          - generic [ref=e159]:
+            - generic [ref=e160]: מגרש
+            - generic [ref=e162]: אולם
+            - generic [ref=e164]: בריכה
+            - generic [ref=e166]: כושר
+            - generic [ref=e168]: אצטדיון
+            - generic [ref=e170]: אחר
+          - generic [ref=e172]: "שכבה 1: גבולות רשויות (משרד הפנים) — צבע = מדד הצבע. שכבה 2: מתקנים — צבע לפי השדה הנבחר (סוג / מצב / נגישות / כל KPI). סקאלה: אחוזון 5–95 של הרשויות המסוננות."
+        - generic [ref=e173]:
+          - heading "המדדים הנבחרים" [level=3] [ref=e174]
+          - generic [ref=e175]:
+            - text: 🎨 שכבה 1 · % תקינים ופעילים
+            - generic [ref=e176]: אקסל מפקחים
+            - text: "⬤ שכבה 2 · מתקנים — צבע לפי סוג מתקןסקאלה: אחוזון 5–95 של הרשויות המסוננות."
+    - generic [ref=e177]:
+      - generic [ref=e178]:
+        - heading "15 רשויות מובילות · % תקינים ופעילים" [level=3] [ref=e179]
+        - generic [ref=e180]:
+          - text: Bar · QuickSight-native ·
+          - generic [ref=e181]: אקסל מפקחים
+      - generic [ref=e184]:
+        - heading "תמהיל סוגי מתקנים" [level=3] [ref=e185]
+        - generic [ref=e186]: "Donut · מקור: אקסל מפקחים (סוג מתקן)"
+    - generic [ref=e189]:
+      - heading "טבלת פירוט לפי רשות — לחיצה על כותרת למיון" [level=3] [ref=e190]
+      - table [ref=e192]:
+        - rowgroup [ref=e193]:
+          - row [ref=e194]:
+            - columnheader "רשות" [ref=e195] [cursor=pointer]
+            - columnheader "מחוז" [ref=e196] [cursor=pointer]
+            - columnheader "מתקנים" [ref=e197] [cursor=pointer]
+            - columnheader "% תקין" [ref=e198] [cursor=pointer]
+            - columnheader "% נגיש" [ref=e199] [cursor=pointer]
+            - columnheader "% תקני" [ref=e200] [cursor=pointer]
+            - columnheader "גיל חציוני" [ref=e201] [cursor=pointer]
+            - columnheader "ל-1000 תוש׳" [ref=e202] [cursor=pointer]
+            - columnheader "ספורטאים/מתקן" [ref=e203] [cursor=pointer]
+            - columnheader "תקצוב/מתקן ₪" [ref=e204] [cursor=pointer]
+        - rowgroup [ref=e205]:
+          - row [ref=e206]:
+            - cell "ירושלים" [ref=e207]
+            - cell "דרום" [ref=e208]
+            - cell "704" [ref=e209]
+            - cell "100%" [ref=e210]
+            - cell "24%" [ref=e211]
+            - cell "14%" [ref=e212]
+            - cell "56" [ref=e213]
+            - cell "0.46" [ref=e214]
+            - cell "79" [ref=e215]
+            - cell "108,291" [ref=e216]
+          - row [ref=e217]:
+            - cell "תל אביב-יפו" [ref=e218]
+            - cell "תל אביב" [ref=e219]
+            - cell "491" [ref=e220]
+            - cell "99%" [ref=e221]
+            - cell "63%" [ref=e222]
+            - cell "25%" [ref=e223]
+            - cell "24" [ref=e224]
+            - cell "0.61" [ref=e225]
+            - cell "94" [ref=e226]
+            - cell "131,696" [ref=e227]
+          - row [ref=e228]:
+            - cell "באר שבע" [ref=e229]
+            - cell "—" [ref=e230]
+            - cell "231" [ref=e231]
+            - cell "90%" [ref=e232]
+            - cell "57%" [ref=e233]
+            - cell "—" [ref=e234]
+            - cell "36" [ref=e235]
+            - cell "0.52" [ref=e236]
+            - cell "223" [ref=e237]
+            - cell "107,624" [ref=e238]
+          - row [ref=e239]:
+            - cell "חיפה" [ref=e240]
+            - cell "חיפה" [ref=e241]
+            - cell "218" [ref=e242]
+            - cell "100%" [ref=e243]
+            - cell "75%" [ref=e244]
+            - cell "70%" [ref=e245]
+            - cell "36" [ref=e246]
+            - cell "0.41" [ref=e247]
+            - cell "159" [ref=e248]
+            - cell "60,678" [ref=e249]
+          - row [ref=e250]:
+            - cell "נתניה" [ref=e251]
+            - cell "מרכז" [ref=e252]
+            - cell "175" [ref=e253]
+            - cell "99%" [ref=e254]
+            - cell "44%" [ref=e255]
+            - cell "30%" [ref=e256]
+            - cell "23" [ref=e257]
+            - cell "0.62" [ref=e258]
+            - cell "204" [ref=e259]
+            - cell "96,432" [ref=e260]
+          - row [ref=e261]:
+            - cell "אילת" [ref=e262]
+            - cell "דרום" [ref=e263]
+            - cell "162" [ref=e264]
+            - cell "91%" [ref=e265]
+            - cell "89%" [ref=e266]
+            - cell "72%" [ref=e267]
+            - cell "21" [ref=e268]
+            - cell "0.57" [ref=e269]
+            - cell "134" [ref=e270]
+            - cell "51,674" [ref=e271]
+          - row [ref=e272]:
+            - cell "ראשון לציון" [ref=e273]
+            - cell "מרכז" [ref=e274]
+            - cell "158" [ref=e275]
+            - cell "99%" [ref=e276]
+            - cell "100%" [ref=e277]
+            - cell "27%" [ref=e278]
+            - cell "8" [ref=e279]
+            - cell "0.55" [ref=e280]
+            - cell "196" [ref=e281]
+            - cell "133,831" [ref=e282]
+          - row [ref=e283]:
+            - cell "רחובות" [ref=e284]
+            - cell "מרכז" [ref=e285]
+            - cell "145" [ref=e286]
+            - cell "81%" [ref=e287]
+            - cell "67%" [ref=e288]
+            - cell "26%" [ref=e289]
+            - cell "26" [ref=e290]
+            - cell "0.64" [ref=e291]
+            - cell "81" [ref=e292]
+            - cell "58,120" [ref=e293]
+          - row [ref=e294]:
+            - cell "אשקלון" [ref=e295]
+            - cell "דרום" [ref=e296]
+            - cell "122" [ref=e297]
+            - cell "93%" [ref=e298]
+            - cell "71%" [ref=e299]
+            - cell "44%" [ref=e300]
+            - cell "11" [ref=e301]
+            - cell "0.40" [ref=e302]
+            - cell "225" [ref=e303]
+            - cell "64,376" [ref=e304]
+          - row [ref=e305]:
+            - cell "אשדוד" [ref=e306]
+            - cell "דרום" [ref=e307]
+            - cell "120" [ref=e308]
+            - cell "96%" [ref=e309]
+            - cell "48%" [ref=e310]
+            - cell "52%" [ref=e311]
+            - cell "32" [ref=e312]
+            - cell "0.42" [ref=e313]
+            - cell "196" [ref=e314]
+            - cell "80,335" [ref=e315]
+          - row [ref=e316]:
+            - cell "פתח תקווה" [ref=e317]
+            - cell "תל אביב" [ref=e318]
+            - cell "111" [ref=e319]
+            - cell "99%" [ref=e320]
+            - cell "21%" [ref=e321]
+            - cell "71%" [ref=e322]
+            - cell "15" [ref=e323]
+            - cell "0.55" [ref=e324]
+            - cell "93" [ref=e325]
+            - cell "50,385" [ref=e326]
+          - row [ref=e327]:
+            - cell "חולון" [ref=e328]
+            - cell "תל אביב" [ref=e329]
+            - cell "110" [ref=e330]
+            - cell "99%" [ref=e331]
+            - cell "37%" [ref=e332]
+            - cell "11%" [ref=e333]
+            - cell "26" [ref=e334]
+            - cell "0.63" [ref=e335]
+            - cell "166" [ref=e336]
+            - cell "101,507" [ref=e337]
+          - row [ref=e338]:
+            - cell "עמק חפר" [ref=e339]
+            - cell "תל אביב" [ref=e340]
+            - cell "110" [ref=e341]
+            - cell "73%" [ref=e342]
+            - cell "39%" [ref=e343]
+            - cell "86%" [ref=e344]
+            - cell "56" [ref=e345]
+            - cell "0.65" [ref=e346]
+            - cell "194" [ref=e347]
+            - cell "109,072" [ref=e348]
+          - row [ref=e349]:
+            - cell "בת ים" [ref=e350]
+            - cell "תל אביב" [ref=e351]
+            - cell "107" [ref=e352]
+            - cell "93%" [ref=e353]
+            - cell "78%" [ref=e354]
+            - cell "10%" [ref=e355]
+            - cell "36" [ref=e356]
+            - cell "0.41" [ref=e357]
+            - cell "93" [ref=e358]
+            - cell "71,757" [ref=e359]
+          - row [ref=e360]:
+            - cell "כפר סבא" [ref=e361]
+            - cell "תל אביב" [ref=e362]
+            - cell "105" [ref=e363]
+            - cell "100%" [ref=e364]
+            - cell "78%" [ref=e365]
+            - cell "14%" [ref=e366]
+            - cell "36" [ref=e367]
+            - cell "0.63" [ref=e368]
+            - cell "119" [ref=e369]
+            - cell "95,137" [ref=e370]
+          - row [ref=e371]:
+            - cell "נהריה" [ref=e372]
+            - cell "חיפה" [ref=e373]
+            - cell "98" [ref=e374]
+            - cell "96%" [ref=e375]
+            - cell "88%" [ref=e376]
+            - cell "54%" [ref=e377]
+            - cell "25" [ref=e378]
+            - cell "0.55" [ref=e379]
+            - cell "129" [ref=e380]
+            - cell "72,170" [ref=e381]
+          - row [ref=e382]:
+            - cell "עמק יזרעאל" [ref=e383]
+            - cell "צפון" [ref=e384]
+            - cell "93" [ref=e385]
+            - cell "96%" [ref=e386]
+            - cell "98%" [ref=e387]
+            - cell "58%" [ref=e388]
+            - cell "35" [ref=e389]
+            - cell "0.58" [ref=e390]
+            - cell "127" [ref=e391]
+            - cell "90,348" [ref=e392]
+          - row [ref=e393]:
+            - cell "מטה בנימין" [ref=e394]
+            - cell "מזרח" [ref=e395]
+            - cell "88" [ref=e396]
+            - cell "98%" [ref=e397]
+            - cell "24%" [ref=e398]
+            - cell "9%" [ref=e399]
+            - cell "23" [ref=e400]
+            - cell "0.55" [ref=e401]
+            - cell "139" [ref=e402]
+            - cell "78,169" [ref=e403]
+          - row [ref=e404]:
+            - cell "חוף הכרמל" [ref=e405]
+            - cell "מרכז" [ref=e406]
+            - cell "87" [ref=e407]
+            - cell "57%" [ref=e408]
+            - cell "69%" [ref=e409]
+            - cell "29%" [ref=e410]
+            - cell "30" [ref=e411]
+            - cell "0.63" [ref=e412]
+            - cell "166" [ref=e413]
+            - cell "120,338" [ref=e414]
+          - row [ref=e415]:
+            - cell "אשכול" [ref=e416]
+            - cell "דרום" [ref=e417]
+            - cell "78" [ref=e418]
+            - cell "54%" [ref=e419]
+            - cell "41%" [ref=e420]
+            - cell "75%" [ref=e421]
+            - cell "42" [ref=e422]
+            - cell "0.40" [ref=e423]
+            - cell "109" [ref=e424]
+            - cell "48,498" [ref=e425]
+          - row [ref=e426]:
+            - cell "דימונה" [ref=e427]
+            - cell "דרום" [ref=e428]
+            - cell "78" [ref=e429]
+            - cell "99%" [ref=e430]
+            - cell "71%" [ref=e431]
+            - cell "16%" [ref=e432]
+            - cell "26" [ref=e433]
+            - cell "0.65" [ref=e434]
+            - cell "157" [ref=e435]
+            - cell "94,117" [ref=e436]
+          - row [ref=e437]:
+            - cell "מודיעין-מכבים-רעות" [ref=e438]
+            - cell "תל אביב" [ref=e439]
+            - cell "75" [ref=e440]
+            - cell "100%" [ref=e441]
+            - cell "92%" [ref=e442]
+            - cell "65%" [ref=e443]
+            - cell "26" [ref=e444]
+            - cell "0.62" [ref=e445]
+            - cell "181" [ref=e446]
+            - cell "82,124" [ref=e447]
+          - row [ref=e448]:
+            - cell "הגליל העליון" [ref=e449]
+            - cell "צפון" [ref=e450]
+            - cell "73" [ref=e451]
+            - cell "40%" [ref=e452]
+            - cell "52%" [ref=e453]
+            - cell "34%" [ref=e454]
+            - cell "61" [ref=e455]
+            - cell "0.45" [ref=e456]
+            - cell "167" [ref=e457]
+            - cell "59,187" [ref=e458]
+          - row [ref=e459]:
+            - cell "גזר" [ref=e460]
+            - cell "תל אביב" [ref=e461]
+            - cell "71" [ref=e462]
+            - cell "93%" [ref=e463]
+            - cell "85%" [ref=e464]
+            - cell "29%" [ref=e465]
+            - cell "26" [ref=e466]
+            - cell "0.43" [ref=e467]
+            - cell "226" [ref=e468]
+            - cell "53,287" [ref=e469]
+          - row [ref=e470]:
+            - cell "חבל מודיעין" [ref=e471]
+            - cell "תל אביב" [ref=e472]
+            - cell "69" [ref=e473]
+            - cell "88%" [ref=e474]
+            - cell "96%" [ref=e475]
+            - cell "12%" [ref=e476]
+            - cell "19" [ref=e477]
+            - cell "0.58" [ref=e478]
+            - cell "83" [ref=e479]
+            - cell "130,779" [ref=e480]
+          - row [ref=e481]:
+            - cell "דרום השרון" [ref=e482]
+            - cell "תל אביב" [ref=e483]
+            - cell "68" [ref=e484]
+            - cell "97%" [ref=e485]
+            - cell "91%" [ref=e486]
+            - cell "32%" [ref=e487]
+            - cell "10" [ref=e488]
+            - cell "0.56" [ref=e489]
+            - cell "192" [ref=e490]
+            - cell "69,213" [ref=e491]
+          - row [ref=e492]:
+            - cell "מנשה" [ref=e493]
+            - cell "תל אביב" [ref=e494]
+            - cell "68" [ref=e495]
+            - cell "40%" [ref=e496]
+            - cell "82%" [ref=e497]
+            - cell "20%" [ref=e498]
+            - cell "40" [ref=e499]
+            - cell "0.45" [ref=e500]
+            - cell "212" [ref=e501]
+            - cell "92,879" [ref=e502]
+          - row [ref=e503]:
+            - cell "רעננה" [ref=e504]
+            - cell "תל אביב" [ref=e505]
+            - cell "68" [ref=e506]
+            - cell "100%" [ref=e507]
+            - cell "90%" [ref=e508]
+            - cell "29%" [ref=e509]
+            - cell "17" [ref=e510]
+            - cell "0.56" [ref=e511]
+            - cell "124" [ref=e512]
+            - cell "92,106" [ref=e513]
+          - row [ref=e514]:
+            - cell "באר טוביה" [ref=e515]
+            - cell "דרום" [ref=e516]
+            - cell "67" [ref=e517]
+            - cell "100%" [ref=e518]
+            - cell "9%" [ref=e519]
+            - cell "51%" [ref=e520]
+            - cell "18" [ref=e521]
+            - cell "0.60" [ref=e522]
+            - cell "198" [ref=e523]
+            - cell "51,943" [ref=e524]
+          - row [ref=e525]:
+            - cell "מרחבים" [ref=e526]
+            - cell "דרום" [ref=e527]
+            - cell "64" [ref=e528]
+            - cell "91%" [ref=e529]
+            - cell "89%" [ref=e530]
+            - cell "19%" [ref=e531]
+            - cell "16" [ref=e532]
+            - cell "0.69" [ref=e533]
+            - cell "180" [ref=e534]
+            - cell "85,712" [ref=e535]
+          - row [ref=e536]:
+            - cell "עמק המעיינות" [ref=e537]
+            - cell "צפון" [ref=e538]
+            - cell "64" [ref=e539]
+            - cell "77%" [ref=e540]
+            - cell "23%" [ref=e541]
+            - cell "39%" [ref=e542]
+            - cell "50" [ref=e543]
+            - cell "0.59" [ref=e544]
+            - cell "228" [ref=e545]
+            - cell "122,100" [ref=e546]
+          - row [ref=e547]:
+            - cell "נס ציונה" [ref=e548]
+            - cell "מרכז" [ref=e549]
+            - cell "63" [ref=e550]
+            - cell "100%" [ref=e551]
+            - cell "37%" [ref=e552]
+            - cell "22%" [ref=e553]
+            - cell "14" [ref=e554]
+            - cell "0.70" [ref=e555]
+            - cell "199" [ref=e556]
+            - cell "105,463" [ref=e557]
+          - row [ref=e558]:
+            - cell "נצרת" [ref=e559]
+            - cell "צפון" [ref=e560]
+            - cell "62" [ref=e561]
+            - cell "68%" [ref=e562]
+            - cell "53%" [ref=e563]
+            - cell "74%" [ref=e564]
+            - cell "32" [ref=e565]
+            - cell "0.69" [ref=e566]
+            - cell "203" [ref=e567]
+            - cell "77,219" [ref=e568]
+          - row [ref=e569]:
+            - cell "שדות נגב" [ref=e570]
+            - cell "דרום" [ref=e571]
+            - cell "62" [ref=e572]
+            - cell "55%" [ref=e573]
+            - cell "81%" [ref=e574]
+            - cell "10%" [ref=e575]
+            - cell "26" [ref=e576]
+            - cell "0.66" [ref=e577]
+            - cell "98" [ref=e578]
+            - cell "123,747" [ref=e579]
+          - row [ref=e580]:
+            - cell "שומרון" [ref=e581]
+            - cell "תל אביב" [ref=e582]
+            - cell "61" [ref=e583]
+            - cell "87%" [ref=e584]
+            - cell "87%" [ref=e585]
+            - cell "0%" [ref=e586]
+            - cell "7" [ref=e587]
+            - cell "0.45" [ref=e588]
+            - cell "130" [ref=e589]
+            - cell "50,232" [ref=e590]
+          - row [ref=e591]:
+            - cell "הוד השרון" [ref=e592]
+            - cell "תל אביב" [ref=e593]
+            - cell "60" [ref=e594]
+            - cell "90%" [ref=e595]
+            - cell "60%" [ref=e596]
+            - cell "71%" [ref=e597]
+            - cell "23" [ref=e598]
+            - cell "0.57" [ref=e599]
+            - cell "212" [ref=e600]
+            - cell "59,612" [ref=e601]
+          - row [ref=e602]:
+            - cell "הרצליה" [ref=e603]
+            - cell "תל אביב" [ref=e604]
+            - cell "59" [ref=e605]
+            - cell "98%" [ref=e606]
+            - cell "69%" [ref=e607]
+            - cell "61%" [ref=e608]
+            - cell "26" [ref=e609]
+            - cell "0.50" [ref=e610]
+            - cell "132" [ref=e611]
+            - cell "86,492" [ref=e612]
+          - row [ref=e613]:
+            - cell "לב השרון" [ref=e614]
+            - cell "מרכז" [ref=e615]
+            - cell "59" [ref=e616]
+            - cell "95%" [ref=e617]
+            - cell "46%" [ref=e618]
+            - cell "51%" [ref=e619]
+            - cell "10" [ref=e620]
+            - cell "0.60" [ref=e621]
+            - cell "118" [ref=e622]
+            - cell "80,373" [ref=e623]
+          - row [ref=e624]:
+            - cell "טבריה" [ref=e625]
+            - cell "צפון" [ref=e626]
+            - cell "57" [ref=e627]
+            - cell "70%" [ref=e628]
+            - cell "4%" [ref=e629]
+            - cell "11%" [ref=e630]
+            - cell "56" [ref=e631]
+            - cell "0.46" [ref=e632]
+            - cell "89" [ref=e633]
+            - cell "102,290" [ref=e634]
+          - row [ref=e635]:
+            - cell "לוד" [ref=e636]
+            - cell "מרכז" [ref=e637]
+            - cell "53" [ref=e638]
+            - cell "98%" [ref=e639]
+            - cell "58%" [ref=e640]
+            - cell "35%" [ref=e641]
+            - cell "26" [ref=e642]
+            - cell "0.58" [ref=e643]
+            - cell "184" [ref=e644]
+            - cell "111,024" [ref=e645]
+          - row [ref=e646]:
+            - cell "קרית גת" [ref=e647]
+            - cell "—" [ref=e648]
+            - cell "53" [ref=e649]
+            - cell "83%" [ref=e650]
+            - cell "89%" [ref=e651]
+            - cell "—" [ref=e652]
+            - cell "44" [ref=e653]
+            - cell "0.46" [ref=e654]
+            - cell "182" [ref=e655]
+            - cell "116,414" [ref=e656]
+          - row [ref=e657]:
+            - cell "עפולה" [ref=e658]
+            - cell "צפון" [ref=e659]
+            - cell "51" [ref=e660]
+            - cell "98%" [ref=e661]
+            - cell "57%" [ref=e662]
+            - cell "62%" [ref=e663]
+            - cell "10" [ref=e664]
+            - cell "0.40" [ref=e665]
+            - cell "170" [ref=e666]
+            - cell "110,531" [ref=e667]
+          - row [ref=e668]:
+            - cell "מגידו" [ref=e669]
+            - cell "צפון" [ref=e670]
+            - cell "50" [ref=e671]
+            - cell "84%" [ref=e672]
+            - cell "12%" [ref=e673]
+            - cell "26%" [ref=e674]
+            - cell "16" [ref=e675]
+            - cell "0.50" [ref=e676]
+            - cell "76" [ref=e677]
+            - cell "65,815" [ref=e678]
+          - row [ref=e679]:
+            - cell "מטה אשר" [ref=e680]
+            - cell "חיפה" [ref=e681]
+            - cell "50" [ref=e682]
+            - cell "78%" [ref=e683]
+            - cell "28%" [ref=e684]
+            - cell "0%" [ref=e685]
+            - cell "26" [ref=e686]
+            - cell "0.60" [ref=e687]
+            - cell "143" [ref=e688]
+            - cell "54,990" [ref=e689]
+          - row [ref=e690]:
+            - cell "אור עקיבא" [ref=e691]
+            - cell "מרכז" [ref=e692]
+            - cell "49" [ref=e693]
+            - cell "98%" [ref=e694]
+            - cell "69%" [ref=e695]
+            - cell "12%" [ref=e696]
+            - cell "12" [ref=e697]
+            - cell "0.44" [ref=e698]
+            - cell "100" [ref=e699]
+            - cell "85,127" [ref=e700]
+          - row [ref=e701]:
+            - cell "בני שמעון" [ref=e702]
+            - cell "דרום" [ref=e703]
+            - cell "49" [ref=e704]
+            - cell "76%" [ref=e705]
+            - cell "35%" [ref=e706]
+            - cell "24%" [ref=e707]
+            - cell "16" [ref=e708]
+            - cell "0.39" [ref=e709]
+            - cell "100" [ref=e710]
+            - cell "55,059" [ref=e711]
+          - row [ref=e712]:
+            - cell "גבעתיים" [ref=e713]
+            - cell "תל אביב" [ref=e714]
+            - cell "48" [ref=e715]
+            - cell "94%" [ref=e716]
+            - cell "46%" [ref=e717]
+            - cell "20%" [ref=e718]
+            - cell "60" [ref=e719]
+            - cell "0.47" [ref=e720]
+            - cell "73" [ref=e721]
+            - cell "70,165" [ref=e722]
+          - row [ref=e723]:
+            - cell "מעלה אדומים" [ref=e724]
+            - cell "מזרח" [ref=e725]
+            - cell "48" [ref=e726]
+            - cell "100%" [ref=e727]
+            - cell "40%" [ref=e728]
+            - cell "0%" [ref=e729]
+            - cell "22" [ref=e730]
+            - cell "0.54" [ref=e731]
+            - cell "179" [ref=e732]
+            - cell "67,649" [ref=e733]
+          - row [ref=e734]:
+            - cell "ראש העין" [ref=e735]
+            - cell "מרכז" [ref=e736]
+            - cell "48" [ref=e737]
+            - cell "77%" [ref=e738]
+            - cell "31%" [ref=e739]
+            - cell "37%" [ref=e740]
+            - cell "22" [ref=e741]
+            - cell "0.47" [ref=e742]
+            - cell "95" [ref=e743]
+            - cell "117,703" [ref=e744]
+          - row [ref=e745]:
+            - cell "רמלה" [ref=e746]
+            - cell "מרכז" [ref=e747]
+            - cell "47" [ref=e748]
+            - cell "100%" [ref=e749]
+            - cell "47%" [ref=e750]
+            - cell "16%" [ref=e751]
+            - cell "21" [ref=e752]
+            - cell "0.58" [ref=e753]
+            - cell "186" [ref=e754]
+            - cell "56,010" [ref=e755]
+          - row [ref=e756]:
+            - cell "שדרות" [ref=e757]
+            - cell "—" [ref=e758]
+            - cell "47" [ref=e759]
+            - cell "66%" [ref=e760]
+            - cell "19%" [ref=e761]
+            - cell "—" [ref=e762]
+            - cell "16" [ref=e763]
+            - cell "0.47" [ref=e764]
+            - cell "131" [ref=e765]
+            - cell "108,472" [ref=e766]
+          - row [ref=e767]:
+            - cell "גולן" [ref=e768]
+            - cell "צפון" [ref=e769]
+            - cell "46" [ref=e770]
+            - cell "100%" [ref=e771]
+            - cell "93%" [ref=e772]
+            - cell "66%" [ref=e773]
+            - cell "36" [ref=e774]
+            - cell "0.66" [ref=e775]
+            - cell "201" [ref=e776]
+            - cell "66,794" [ref=e777]
+          - row [ref=e778]:
+            - cell "רמת הנגב" [ref=e779]
+            - cell "דרום" [ref=e780]
+            - cell "46" [ref=e781]
+            - cell "70%" [ref=e782]
+            - cell "50%" [ref=e783]
+            - cell "22%" [ref=e784]
+            - cell "18" [ref=e785]
+            - cell "0.49" [ref=e786]
+            - cell "124" [ref=e787]
+            - cell "46,248" [ref=e788]
+          - row [ref=e789]:
+            - cell "משגב" [ref=e790]
+            - cell "צפון" [ref=e791]
+            - cell "45" [ref=e792]
+            - cell "58%" [ref=e793]
+            - cell "2%" [ref=e794]
+            - cell "16%" [ref=e795]
+            - cell "40" [ref=e796]
+            - cell "0.48" [ref=e797]
+            - cell "121" [ref=e798]
+            - cell "130,991" [ref=e799]
+          - row [ref=e800]:
+            - cell "מגדל העמק" [ref=e801]
+            - cell "צפון" [ref=e802]
+            - cell "44" [ref=e803]
+            - cell "73%" [ref=e804]
+            - cell "5%" [ref=e805]
+            - cell "32%" [ref=e806]
+            - cell "39" [ref=e807]
+            - cell "0.66" [ref=e808]
+            - cell "155" [ref=e809]
+            - cell "85,716" [ref=e810]
+          - row [ref=e811]:
+            - cell "שער הנגב" [ref=e812]
+            - cell "דרום" [ref=e813]
+            - cell "44" [ref=e814]
+            - cell "75%" [ref=e815]
+            - cell "55%" [ref=e816]
+            - cell "59%" [ref=e817]
+            - cell "36" [ref=e818]
+            - cell "0.44" [ref=e819]
+            - cell "94" [ref=e820]
+            - cell "89,099" [ref=e821]
+          - row [ref=e822]:
+            - cell "גוש עציון" [ref=e823]
+            - cell "מזרח" [ref=e824]
+            - cell "43" [ref=e825]
+            - cell "77%" [ref=e826]
+            - cell "60%" [ref=e827]
+            - cell "5%" [ref=e828]
+            - cell "34" [ref=e829]
+            - cell "0.61" [ref=e830]
+            - cell "103" [ref=e831]
+            - cell "100,772" [ref=e832]
+          - row [ref=e833]:
+            - cell "נוף הגליל" [ref=e834]
+            - cell "צפון" [ref=e835]
+            - cell "42" [ref=e836]
+            - cell "52%" [ref=e837]
+            - cell "69%" [ref=e838]
+            - cell "40%" [ref=e839]
+            - cell "6" [ref=e840]
+            - cell "0.61" [ref=e841]
+            - cell "94" [ref=e842]
+            - cell "127,726" [ref=e843]
+          - row [ref=e844]:
+            - cell "אום אל-פחם" [ref=e845]
+            - cell "—" [ref=e846]
+            - cell "41" [ref=e847]
+            - cell "66%" [ref=e848]
+            - cell "29%" [ref=e849]
+            - cell "—" [ref=e850]
+            - cell "25" [ref=e851]
+            - cell "0.62" [ref=e852]
+            - cell "157" [ref=e853]
+            - cell "78,985" [ref=e854]
+          - row [ref=e855]:
+            - cell "בקעת הירדן" [ref=e856]
+            - cell "מזרח" [ref=e857]
+            - cell "40" [ref=e858]
+            - cell "100%" [ref=e859]
+            - cell "8%" [ref=e860]
+            - cell "7%" [ref=e861]
+            - cell "39" [ref=e862]
+            - cell "0.39" [ref=e863]
+            - cell "170" [ref=e864]
+            - cell "77,860" [ref=e865]
+          - row [ref=e866]:
+            - cell "חבל אילות" [ref=e867]
+            - cell "דרום" [ref=e868]
+            - cell "39" [ref=e869]
+            - cell "56%" [ref=e870]
+            - cell "77%" [ref=e871]
+            - cell "11%" [ref=e872]
+            - cell "41" [ref=e873]
+            - cell "0.48" [ref=e874]
+            - cell "89" [ref=e875]
+            - cell "50,038" [ref=e876]
+          - row [ref=e877]:
+            - cell "נתיבות" [ref=e878]
+            - cell "דרום" [ref=e879]
+            - cell "39" [ref=e880]
+            - cell "97%" [ref=e881]
+            - cell "92%" [ref=e882]
+            - cell "22%" [ref=e883]
+            - cell "24" [ref=e884]
+            - cell "0.45" [ref=e885]
+            - cell "167" [ref=e886]
+            - cell "50,233" [ref=e887]
+          - row [ref=e888]:
+            - cell "הר חברון" [ref=e889]
+            - cell "מזרח" [ref=e890]
+            - cell "38" [ref=e891]
+            - cell "87%" [ref=e892]
+            - cell "63%" [ref=e893]
+            - cell "83%" [ref=e894]
+            - cell "20" [ref=e895]
+            - cell "0.39" [ref=e896]
+            - cell "76" [ref=e897]
+            - cell "101,581" [ref=e898]
+          - row [ref=e899]:
+            - cell "מבואות החרמון" [ref=e900]
+            - cell "צפון" [ref=e901]
+            - cell "38" [ref=e902]
+            - cell "76%" [ref=e903]
+            - cell "11%" [ref=e904]
+            - cell "23%" [ref=e905]
+            - cell "12" [ref=e906]
+            - cell "0.56" [ref=e907]
+            - cell "206" [ref=e908]
+            - cell "46,784" [ref=e909]
+          - row [ref=e910]:
+            - cell "בית שאן" [ref=e911]
+            - cell "צפון" [ref=e912]
+            - cell "37" [ref=e913]
+            - cell "22%" [ref=e914]
+            - cell "76%" [ref=e915]
+            - cell "90%" [ref=e916]
+            - cell "20" [ref=e917]
+            - cell "0.48" [ref=e918]
+            - cell "120" [ref=e919]
+            - cell "47,728" [ref=e920]
+          - row [ref=e921]:
+            - cell "לכיש" [ref=e922]
+            - cell "דרום" [ref=e923]
+            - cell "37" [ref=e924]
+            - cell "81%" [ref=e925]
+            - cell "78%" [ref=e926]
+            - cell "57%" [ref=e927]
+            - cell "46" [ref=e928]
+            - cell "0.68" [ref=e929]
+            - cell "182" [ref=e930]
+            - cell "76,297" [ref=e931]
+          - row [ref=e932]:
+            - cell "רהט" [ref=e933]
+            - cell "מזרח" [ref=e934]
+            - cell "37" [ref=e935]
+            - cell "59%" [ref=e936]
+            - cell "35%" [ref=e937]
+            - cell "46%" [ref=e938]
+            - cell "17" [ref=e939]
+            - cell "0.40" [ref=e940]
+            - cell "154" [ref=e941]
+            - cell "97,051" [ref=e942]
+          - row [ref=e943]:
+            - cell "מרום הגליל" [ref=e944]
+            - cell "חיפה" [ref=e945]
+            - cell "36" [ref=e946]
+            - cell "28%" [ref=e947]
+            - cell "0%" [ref=e948]
+            - cell "0%" [ref=e949]
+            - cell "18" [ref=e950]
+            - cell "0.43" [ref=e951]
+            - cell "107" [ref=e952]
+            - cell "110,238" [ref=e953]
+          - row [ref=e954]:
+            - cell "קרית אונו" [ref=e955]
+            - cell "תל אביב" [ref=e956]
+            - cell "35" [ref=e957]
+            - cell "89%" [ref=e958]
+            - cell "57%" [ref=e959]
+            - cell "39%" [ref=e960]
+            - cell "11" [ref=e961]
+            - cell "0.39" [ref=e962]
+            - cell "227" [ref=e963]
+            - cell "107,029" [ref=e964]
+          - row [ref=e965]:
+            - cell "קדימה צורן" [ref=e966]
+            - cell "תל אביב" [ref=e967]
+            - cell "34" [ref=e968]
+            - cell "88%" [ref=e969]
+            - cell "74%" [ref=e970]
+            - cell "31%" [ref=e971]
+            - cell "18" [ref=e972]
+            - cell "0.57" [ref=e973]
+            - cell "201" [ref=e974]
+            - cell "106,412" [ref=e975]
+          - row [ref=e976]:
+            - cell "הערבה התיכונה" [ref=e977]
+            - cell "דרום" [ref=e978]
+            - cell "33" [ref=e979]
+            - cell "9%" [ref=e980]
+            - cell "91%" [ref=e981]
+            - cell "50%" [ref=e982]
+            - cell "33" [ref=e983]
+            - cell "0.64" [ref=e984]
+            - cell "80" [ref=e985]
+            - cell "118,765" [ref=e986]
+          - row [ref=e987]:
+            - cell "יבנה" [ref=e988]
+            - cell "מרכז" [ref=e989]
+            - cell "33" [ref=e990]
+            - cell "100%" [ref=e991]
+            - cell "94%" [ref=e992]
+            - cell "44%" [ref=e993]
+            - cell "42" [ref=e994]
+            - cell "0.51" [ref=e995]
+            - cell "83" [ref=e996]
+            - cell "134,674" [ref=e997]
+          - row [ref=e998]:
+            - cell "חוף אשקלון" [ref=e999]
+            - cell "דרום" [ref=e1000]
+            - cell "32" [ref=e1001]
+            - cell "47%" [ref=e1002]
+            - cell "38%" [ref=e1003]
+            - cell "74%" [ref=e1004]
+            - cell "36" [ref=e1005]
+            - cell "0.48" [ref=e1006]
+            - cell "147" [ref=e1007]
+            - cell "114,653" [ref=e1008]
+          - row [ref=e1009]:
+            - cell "יהוד" [ref=e1010]
+            - cell "תל אביב" [ref=e1011]
+            - cell "32" [ref=e1012]
+            - cell "91%" [ref=e1013]
+            - cell "44%" [ref=e1014]
+            - cell "46%" [ref=e1015]
+            - cell "21" [ref=e1016]
+            - cell "0.45" [ref=e1017]
+            - cell "207" [ref=e1018]
+            - cell "61,400" [ref=e1019]
+          - row [ref=e1020]:
+            - cell "נחל שורק" [ref=e1021]
+            - cell "דרום" [ref=e1022]
+            - cell "32" [ref=e1023]
+            - cell "91%" [ref=e1024]
+            - cell "84%" [ref=e1025]
+            - cell "11%" [ref=e1026]
+            - cell "18" [ref=e1027]
+            - cell "0.48" [ref=e1028]
+            - cell "121" [ref=e1029]
+            - cell "52,529" [ref=e1030]
+          - row [ref=e1031]:
+            - cell "עמק הירדן" [ref=e1032]
+            - cell "צפון" [ref=e1033]
+            - cell "31" [ref=e1034]
+            - cell "45%" [ref=e1035]
+            - cell "52%" [ref=e1036]
+            - cell "47%" [ref=e1037]
+            - cell "37" [ref=e1038]
+            - cell "0.45" [ref=e1039]
+            - cell "156" [ref=e1040]
+            - cell "84,849" [ref=e1041]
+          - row [ref=e1042]:
+            - cell "ערד" [ref=e1043]
+            - cell "דרום" [ref=e1044]
+            - cell "31" [ref=e1045]
+            - cell "100%" [ref=e1046]
+            - cell "87%" [ref=e1047]
+            - cell "31%" [ref=e1048]
+            - cell "26" [ref=e1049]
+            - cell "0.60" [ref=e1050]
+            - cell "153" [ref=e1051]
+            - cell "81,574" [ref=e1052]
+          - row [ref=e1053]:
+            - cell "אריאל" [ref=e1054]
+            - cell "תל אביב" [ref=e1055]
+            - cell "30" [ref=e1056]
+            - cell "63%" [ref=e1057]
+            - cell "60%" [ref=e1058]
+            - cell "27%" [ref=e1059]
+            - cell "17" [ref=e1060]
+            - cell "0.39" [ref=e1061]
+            - cell "107" [ref=e1062]
+            - cell "101,303" [ref=e1063]
+          - row [ref=e1064]:
+            - cell "גן יבנה" [ref=e1065]
+            - cell "דרום" [ref=e1066]
+            - cell "30" [ref=e1067]
+            - cell "100%" [ref=e1068]
+            - cell "7%" [ref=e1069]
+            - cell "100%" [ref=e1070]
+            - cell "16" [ref=e1071]
+            - cell "0.41" [ref=e1072]
+            - cell "137" [ref=e1073]
+            - cell "119,110" [ref=e1074]
+          - row [ref=e1075]:
+            - cell "עכו" [ref=e1076]
+            - cell "חיפה" [ref=e1077]
+            - cell "30" [ref=e1078]
+            - cell "67%" [ref=e1079]
+            - cell "83%" [ref=e1080]
+            - cell "23%" [ref=e1081]
+            - cell "21" [ref=e1082]
+            - cell "0.48" [ref=e1083]
+            - cell "136" [ref=e1084]
+            - cell "56,315" [ref=e1085]
+          - row [ref=e1086]:
+            - cell "בית שמש" [ref=e1087]
+            - cell "מזרח" [ref=e1088]
+            - cell "29" [ref=e1089]
+            - cell "97%" [ref=e1090]
+            - cell "76%" [ref=e1091]
+            - cell "16%" [ref=e1092]
+            - cell "25" [ref=e1093]
+            - cell "0.41" [ref=e1094]
+            - cell "151" [ref=e1095]
+            - cell "53,757" [ref=e1096]
+          - row [ref=e1097]:
+            - cell "עומר" [ref=e1098]
+            - cell "דרום" [ref=e1099]
+            - cell "29" [ref=e1100]
+            - cell "69%" [ref=e1101]
+            - cell "86%" [ref=e1102]
+            - cell "50%" [ref=e1103]
+            - cell "28" [ref=e1104]
+            - cell "0.67" [ref=e1105]
+            - cell "187" [ref=e1106]
+            - cell "79,069" [ref=e1107]
+          - row [ref=e1108]:
+            - cell "חדרה" [ref=e1109]
+            - cell "חיפה" [ref=e1110]
+            - cell "28" [ref=e1111]
+            - cell "89%" [ref=e1112]
+            - cell "89%" [ref=e1113]
+            - cell "81%" [ref=e1114]
+            - cell "22" [ref=e1115]
+            - cell "0.70" [ref=e1116]
+            - cell "188" [ref=e1117]
+            - cell "55,156" [ref=e1118]
+          - row [ref=e1119]:
+            - cell "מעלה יוסף" [ref=e1120]
+            - cell "חיפה" [ref=e1121]
+            - cell "28" [ref=e1122]
+            - cell "68%" [ref=e1123]
+            - cell "11%" [ref=e1124]
+            - cell "0%" [ref=e1125]
+            - cell "36" [ref=e1126]
+            - cell "0.68" [ref=e1127]
+            - cell "184" [ref=e1128]
+            - cell "96,052" [ref=e1129]
+          - row [ref=e1130]:
+            - cell "שדות דן" [ref=e1131]
+            - cell "מרכז" [ref=e1132]
+            - cell "28" [ref=e1133]
+            - cell "50%" [ref=e1134]
+            - cell "43%" [ref=e1135]
+            - cell "100%" [ref=e1136]
+            - cell "12" [ref=e1137]
+            - cell "0.42" [ref=e1138]
+            - cell "128" [ref=e1139]
+            - cell "109,043" [ref=e1140]
+          - row [ref=e1141]:
+            - cell "טמרה" [ref=e1142]
+            - cell "צפון" [ref=e1143]
+            - cell "27" [ref=e1144]
+            - cell "96%" [ref=e1145]
+            - cell "100%" [ref=e1146]
+            - cell "73%" [ref=e1147]
+            - cell "17" [ref=e1148]
+            - cell "0.51" [ref=e1149]
+            - cell "151" [ref=e1150]
+            - cell "105,043" [ref=e1151]
+          - row [ref=e1152]:
+            - cell "קרית מלאכי" [ref=e1153]
+            - cell "דרום" [ref=e1154]
+            - cell "27" [ref=e1155]
+            - cell "70%" [ref=e1156]
+            - cell "89%" [ref=e1157]
+            - cell "13%" [ref=e1158]
+            - cell "21" [ref=e1159]
+            - cell "0.64" [ref=e1160]
+            - cell "218" [ref=e1161]
+            - cell "58,119" [ref=e1162]
+          - row [ref=e1163]:
+            - cell "אופקים" [ref=e1164]
+            - cell "דרום" [ref=e1165]
+            - cell "26" [ref=e1166]
+            - cell "65%" [ref=e1167]
+            - cell "38%" [ref=e1168]
+            - cell "62%" [ref=e1169]
+            - cell "24" [ref=e1170]
+            - cell "0.41" [ref=e1171]
+            - cell "159" [ref=e1172]
+            - cell "132,309" [ref=e1173]
+          - row [ref=e1174]:
+            - cell "רמת גן" [ref=e1175]
+            - cell "תל אביב" [ref=e1176]
+            - cell "26" [ref=e1177]
+            - cell "96%" [ref=e1178]
+            - cell "96%" [ref=e1179]
+            - cell "34%" [ref=e1180]
+            - cell "44" [ref=e1181]
+            - cell "0.41" [ref=e1182]
+            - cell "187" [ref=e1183]
+            - cell "50,620" [ref=e1184]
+          - row [ref=e1185]:
+            - cell "באקה אל גרביה" [ref=e1186]
+            - cell "מרכז" [ref=e1187]
+            - cell "25" [ref=e1188]
+            - cell "80%" [ref=e1189]
+            - cell "84%" [ref=e1190]
+            - cell "60%" [ref=e1191]
+            - cell "18" [ref=e1192]
+            - cell "0.51" [ref=e1193]
+            - cell "102" [ref=e1194]
+            - cell "69,595" [ref=e1195]
+          - row [ref=e1196]:
+            - cell "גדרה" [ref=e1197]
+            - cell "דרום" [ref=e1198]
+            - cell "25" [ref=e1199]
+            - cell "92%" [ref=e1200]
+            - cell "80%" [ref=e1201]
+            - cell "23%" [ref=e1202]
+            - cell "20" [ref=e1203]
+            - cell "0.54" [ref=e1204]
+            - cell "179" [ref=e1205]
+            - cell "62,019" [ref=e1206]
+          - row [ref=e1207]:
+            - cell "הגלבוע" [ref=e1208]
+            - cell "צפון" [ref=e1209]
+            - cell "25" [ref=e1210]
+            - cell "72%" [ref=e1211]
+            - cell "72%" [ref=e1212]
+            - cell "54%" [ref=e1213]
+            - cell "41" [ref=e1214]
+            - cell "0.49" [ref=e1215]
+            - cell "105" [ref=e1216]
+            - cell "69,880" [ref=e1217]
+          - row [ref=e1218]:
+            - cell "חבל יבנה" [ref=e1219]
+            - cell "דרום" [ref=e1220]
+            - cell "25" [ref=e1221]
+            - cell "68%" [ref=e1222]
+            - cell "56%" [ref=e1223]
+            - cell "13%" [ref=e1224]
+            - cell "18" [ref=e1225]
+            - cell "0.51" [ref=e1226]
+            - cell "219" [ref=e1227]
+            - cell "124,428" [ref=e1228]
+          - row [ref=e1229]:
+            - cell "כרמיאל" [ref=e1230]
+            - cell "חיפה" [ref=e1231]
+            - cell "25" [ref=e1232]
+            - cell "96%" [ref=e1233]
+            - cell "72%" [ref=e1234]
+            - cell "52%" [ref=e1235]
+            - cell "41" [ref=e1236]
+            - cell "0.63" [ref=e1237]
+            - cell "154" [ref=e1238]
+            - cell "108,430" [ref=e1239]
+          - row [ref=e1240]:
+            - cell "סח'נין" [ref=e1241]
+            - cell "צפון" [ref=e1242]
+            - cell "25" [ref=e1243]
+            - cell "72%" [ref=e1244]
+            - cell "80%" [ref=e1245]
+            - cell "57%" [ref=e1246]
+            - cell "21" [ref=e1247]
+            - cell "0.59" [ref=e1248]
+            - cell "192" [ref=e1249]
+            - cell "89,422" [ref=e1250]
+          - row [ref=e1251]:
+            - cell "פרדסיה" [ref=e1252]
+            - cell "תל אביב" [ref=e1253]
+            - cell "25" [ref=e1254]
+            - cell "96%" [ref=e1255]
+            - cell "84%" [ref=e1256]
+            - cell "33%" [ref=e1257]
+            - cell "27" [ref=e1258]
+            - cell "0.48" [ref=e1259]
+            - cell "223" [ref=e1260]
+            - cell "64,713" [ref=e1261]
+          - row [ref=e1262]:
+            - cell "יקנעם עילית" [ref=e1263]
+            - cell "חיפה" [ref=e1264]
+            - cell "24" [ref=e1265]
+            - cell "88%" [ref=e1266]
+            - cell "46%" [ref=e1267]
+            - cell "86%" [ref=e1268]
+            - cell "32" [ref=e1269]
+            - cell "0.43" [ref=e1270]
+            - cell "191" [ref=e1271]
+            - cell "64,271" [ref=e1272]
+          - row [ref=e1273]:
+            - cell "מעלות-תרשיחא" [ref=e1274]
+            - cell "חיפה" [ref=e1275]
+            - cell "24" [ref=e1276]
+            - cell "75%" [ref=e1277]
+            - cell "71%" [ref=e1278]
+            - cell "23%" [ref=e1279]
+            - cell "34" [ref=e1280]
+            - cell "0.68" [ref=e1281]
+            - cell "137" [ref=e1282]
+            - cell "78,236" [ref=e1283]
+          - row [ref=e1284]:
+            - cell "עראבה" [ref=e1285]
+            - cell "צפון" [ref=e1286]
+            - cell "24" [ref=e1287]
+            - cell "67%" [ref=e1288]
+            - cell "100%" [ref=e1289]
+            - cell "52%" [ref=e1290]
+            - cell "12" [ref=e1291]
+            - cell "0.49" [ref=e1292]
+            - cell "206" [ref=e1293]
+            - cell "79,202" [ref=e1294]
+          - row [ref=e1295]:
+            - cell "פרדס חנה-כרכור" [ref=e1296]
+            - cell "תל אביב" [ref=e1297]
+            - cell "24" [ref=e1298]
+            - cell "88%" [ref=e1299]
+            - cell "83%" [ref=e1300]
+            - cell "65%" [ref=e1301]
+            - cell "16" [ref=e1302]
+            - cell "0.70" [ref=e1303]
+            - cell "86" [ref=e1304]
+            - cell "59,679" [ref=e1305]
+          - row [ref=e1306]:
+            - cell "קרית טבעון" [ref=e1307]
+            - cell "חיפה" [ref=e1308]
+            - cell "24" [ref=e1309]
+            - cell "88%" [ref=e1310]
+            - cell "29%" [ref=e1311]
+            - cell "32%" [ref=e1312]
+            - cell "46" [ref=e1313]
+            - cell "0.54" [ref=e1314]
+            - cell "124" [ref=e1315]
+            - cell "111,773" [ref=e1316]
+          - row [ref=e1317]:
+            - cell "אור יהודה" [ref=e1318]
+            - cell "מרכז" [ref=e1319]
+            - cell "23" [ref=e1320]
+            - cell "100%" [ref=e1321]
+            - cell "83%" [ref=e1322]
+            - cell "32%" [ref=e1323]
+            - cell "7" [ref=e1324]
+            - cell "0.43" [ref=e1325]
+            - cell "88" [ref=e1326]
+            - cell "50,240" [ref=e1327]
+          - row [ref=e1328]:
+            - cell "בנימינה-גבעת עדה" [ref=e1329]
+            - cell "מרכז" [ref=e1330]
+            - cell "23" [ref=e1331]
+            - cell "78%" [ref=e1332]
+            - cell "83%" [ref=e1333]
+            - cell "32%" [ref=e1334]
+            - cell "—" [ref=e1335]
+            - cell "0.64" [ref=e1336]
+            - cell "127" [ref=e1337]
+            - cell "107,597" [ref=e1338]
+          - row [ref=e1339]:
+            - cell "ברנר" [ref=e1340]
+            - cell "מרכז" [ref=e1341]
+            - cell "23" [ref=e1342]
+            - cell "91%" [ref=e1343]
+            - cell "83%" [ref=e1344]
+            - cell "50%" [ref=e1345]
+            - cell "46" [ref=e1346]
+            - cell "0.53" [ref=e1347]
+            - cell "197" [ref=e1348]
+            - cell "125,991" [ref=e1349]
+          - row [ref=e1350]:
+            - cell "רמת השרון" [ref=e1351]
+            - cell "מרכז" [ref=e1352]
+            - cell "23" [ref=e1353]
+            - cell "87%" [ref=e1354]
+            - cell "100%" [ref=e1355]
+            - cell "39%" [ref=e1356]
+            - cell "40" [ref=e1357]
+            - cell "0.61" [ref=e1358]
+            - cell "185" [ref=e1359]
+            - cell "97,911" [ref=e1360]
+          - row [ref=e1361]:
+            - cell "זכרון יעקב" [ref=e1362]
+            - cell "חיפה" [ref=e1363]
+            - cell "22" [ref=e1364]
+            - cell "77%" [ref=e1365]
+            - cell "23%" [ref=e1366]
+            - cell "57%" [ref=e1367]
+            - cell "33" [ref=e1368]
+            - cell "0.40" [ref=e1369]
+            - cell "204" [ref=e1370]
+            - cell "69,177" [ref=e1371]
+          - row [ref=e1372]:
+            - cell "מטה יהודה" [ref=e1373]
+            - cell "מזרח" [ref=e1374]
+            - cell "22" [ref=e1375]
+            - cell "100%" [ref=e1376]
+            - cell "36%" [ref=e1377]
+            - cell "62%" [ref=e1378]
+            - cell "24" [ref=e1379]
+            - cell "0.66" [ref=e1380]
+            - cell "177" [ref=e1381]
+            - cell "81,008" [ref=e1382]
+          - row [ref=e1383]:
+            - cell "קרית ים" [ref=e1384]
+            - cell "חיפה" [ref=e1385]
+            - cell "22" [ref=e1386]
+            - cell "82%" [ref=e1387]
+            - cell "50%" [ref=e1388]
+            - cell "53%" [ref=e1389]
+            - cell "31" [ref=e1390]
+            - cell "0.63" [ref=e1391]
+            - cell "118" [ref=e1392]
+            - cell "63,290" [ref=e1393]
+          - row [ref=e1394]:
+            - cell "שוהם" [ref=e1395]
+            - cell "תל אביב" [ref=e1396]
+            - cell "22" [ref=e1397]
+            - cell "100%" [ref=e1398]
+            - cell "77%" [ref=e1399]
+            - cell "86%" [ref=e1400]
+            - cell "23" [ref=e1401]
+            - cell "0.60" [ref=e1402]
+            - cell "120" [ref=e1403]
+            - cell "97,728" [ref=e1404]
+          - row [ref=e1405]:
+            - cell "אזור" [ref=e1406]
+            - cell "מרכז" [ref=e1407]
+            - cell "21" [ref=e1408]
+            - cell "100%" [ref=e1409]
+            - cell "100%" [ref=e1410]
+            - cell "37%" [ref=e1411]
+            - cell "19" [ref=e1412]
+            - cell "0.58" [ref=e1413]
+            - cell "196" [ref=e1414]
+            - cell "55,917" [ref=e1415]
+          - row [ref=e1416]:
+            - cell "שפיר" [ref=e1417]
+            - cell "—" [ref=e1418]
+            - cell "21" [ref=e1419]
+            - cell "33%" [ref=e1420]
+            - cell "52%" [ref=e1421]
+            - cell "—" [ref=e1422]
+            - cell "19" [ref=e1423]
+            - cell "0.44" [ref=e1424]
+            - cell "197" [ref=e1425]
+            - cell "54,299" [ref=e1426]
+          - row [ref=e1427]:
+            - cell "גבעת זאב" [ref=e1428]
+            - cell "מרכז" [ref=e1429]
+            - cell "20" [ref=e1430]
+            - cell "90%" [ref=e1431]
+            - cell "55%" [ref=e1432]
+            - cell "17%" [ref=e1433]
+            - cell "33" [ref=e1434]
+            - cell "0.71" [ref=e1435]
+            - cell "208" [ref=e1436]
+            - cell "85,523" [ref=e1437]
+          - row [ref=e1438]:
+            - cell "חורה" [ref=e1439]
+            - cell "מזרח" [ref=e1440]
+            - cell "20" [ref=e1441]
+            - cell "70%" [ref=e1442]
+            - cell "30%" [ref=e1443]
+            - cell "80%" [ref=e1444]
+            - cell "16" [ref=e1445]
+            - cell "0.40" [ref=e1446]
+            - cell "147" [ref=e1447]
+            - cell "75,361" [ref=e1448]
+          - row [ref=e1449]:
+            - cell "חצור הגלילית" [ref=e1450]
+            - cell "חיפה" [ref=e1451]
+            - cell "20" [ref=e1452]
+            - cell "45%" [ref=e1453]
+            - cell "70%" [ref=e1454]
+            - cell "30%" [ref=e1455]
+            - cell "14" [ref=e1456]
+            - cell "0.55" [ref=e1457]
+            - cell "127" [ref=e1458]
+            - cell "67,554" [ref=e1459]
+          - row [ref=e1460]:
+            - cell "נווה מדבר" [ref=e1461]
+            - cell "מזרח" [ref=e1462]
+            - cell "20" [ref=e1463]
+            - cell "50%" [ref=e1464]
+            - cell "15%" [ref=e1465]
+            - cell "11%" [ref=e1466]
+            - cell "17" [ref=e1467]
+            - cell "0.61" [ref=e1468]
+            - cell "71" [ref=e1469]
+            - cell "88,588" [ref=e1470]
+          - row [ref=e1471]:
+            - cell "בני עייש" [ref=e1472]
+            - cell "דרום" [ref=e1473]
+            - cell "19" [ref=e1474]
+            - cell "95%" [ref=e1475]
+            - cell "68%" [ref=e1476]
+            - cell "88%" [ref=e1477]
+            - cell "18" [ref=e1478]
+            - cell "0.39" [ref=e1479]
+            - cell "88" [ref=e1480]
+            - cell "64,012" [ref=e1481]
+          - row [ref=e1482]:
+            - cell "גדרות" [ref=e1483]
+            - cell "מרכז" [ref=e1484]
+            - cell "19" [ref=e1485]
+            - cell "74%" [ref=e1486]
+            - cell "68%" [ref=e1487]
+            - cell "25%" [ref=e1488]
+            - cell "32" [ref=e1489]
+            - cell "0.39" [ref=e1490]
+            - cell "75" [ref=e1491]
+            - cell "47,027" [ref=e1492]
+          - row [ref=e1493]:
+            - cell "גני תקווה" [ref=e1494]
+            - cell "תל אביב" [ref=e1495]
+            - cell "18" [ref=e1496]
+            - cell "78%" [ref=e1497]
+            - cell "100%" [ref=e1498]
+            - cell "50%" [ref=e1499]
+            - cell "18" [ref=e1500]
+            - cell "0.41" [ref=e1501]
+            - cell "168" [ref=e1502]
+            - cell "57,908" [ref=e1503]
+          - row [ref=e1504]:
+            - cell "חוף השרון" [ref=e1505]
+            - cell "תל אביב" [ref=e1506]
+            - cell "18" [ref=e1507]
+            - cell "72%" [ref=e1508]
+            - cell "83%" [ref=e1509]
+            - cell "61%" [ref=e1510]
+            - cell "41" [ref=e1511]
+            - cell "0.44" [ref=e1512]
+            - cell "140" [ref=e1513]
+            - cell "68,145" [ref=e1514]
+          - row [ref=e1515]:
+            - cell "אבן יהודה" [ref=e1516]
+            - cell "תל אביב" [ref=e1517]
+            - cell "17" [ref=e1518]
+            - cell "82%" [ref=e1519]
+            - cell "94%" [ref=e1520]
+            - cell "62%" [ref=e1521]
+            - cell "20" [ref=e1522]
+            - cell "0.69" [ref=e1523]
+            - cell "122" [ref=e1524]
+            - cell "129,280" [ref=e1525]
+          - row [ref=e1526]:
+            - cell "יפיע" [ref=e1527]
+            - cell "צפון" [ref=e1528]
+            - cell "17" [ref=e1529]
+            - cell "59%" [ref=e1530]
+            - cell "47%" [ref=e1531]
+            - cell "62%" [ref=e1532]
+            - cell "26" [ref=e1533]
+            - cell "0.47" [ref=e1534]
+            - cell "159" [ref=e1535]
+            - cell "76,623" [ref=e1536]
+          - row [ref=e1537]:
+            - cell "צפת" [ref=e1538]
+            - cell "חיפה" [ref=e1539]
+            - cell "17" [ref=e1540]
+            - cell "88%" [ref=e1541]
+            - cell "12%" [ref=e1542]
+            - cell "24%" [ref=e1543]
+            - cell "45" [ref=e1544]
+            - cell "0.65" [ref=e1545]
+            - cell "193" [ref=e1546]
+            - cell "69,472" [ref=e1547]
+          - row [ref=e1548]:
+            - cell "אלפי מנשה" [ref=e1549]
+            - cell "תל אביב" [ref=e1550]
+            - cell "16" [ref=e1551]
+            - cell "81%" [ref=e1552]
+            - cell "75%" [ref=e1553]
+            - cell "50%" [ref=e1554]
+            - cell "37" [ref=e1555]
+            - cell "0.62" [ref=e1556]
+            - cell "100" [ref=e1557]
+            - cell "90,246" [ref=e1558]
+          - row [ref=e1559]:
+            - cell "אפרת" [ref=e1560]
+            - cell "מזרח" [ref=e1561]
+            - cell "16" [ref=e1562]
+            - cell "81%" [ref=e1563]
+            - cell "75%" [ref=e1564]
+            - cell "25%" [ref=e1565]
+            - cell "22" [ref=e1566]
+            - cell "0.52" [ref=e1567]
+            - cell "98" [ref=e1568]
+            - cell "45,316" [ref=e1569]
+          - row [ref=e1570]:
+            - cell "באר יעקב" [ref=e1571]
+            - cell "מרכז" [ref=e1572]
+            - cell "16" [ref=e1573]
+            - cell "94%" [ref=e1574]
+            - cell "62%" [ref=e1575]
+            - cell "54%" [ref=e1576]
+            - cell "22" [ref=e1577]
+            - cell "0.58" [ref=e1578]
+            - cell "115" [ref=e1579]
+            - cell "66,624" [ref=e1580]
+          - row [ref=e1581]:
+            - cell "בית אל" [ref=e1582]
+            - cell "מזרח" [ref=e1583]
+            - cell "16" [ref=e1584]
+            - cell "100%" [ref=e1585]
+            - cell "44%" [ref=e1586]
+            - cell "57%" [ref=e1587]
+            - cell "16" [ref=e1588]
+            - cell "0.64" [ref=e1589]
+            - cell "173" [ref=e1590]
+            - cell "124,674" [ref=e1591]
+          - row [ref=e1592]:
+            - cell "מיתר" [ref=e1593]
+            - cell "דרום" [ref=e1594]
+            - cell "16" [ref=e1595]
+            - cell "69%" [ref=e1596]
+            - cell "69%" [ref=e1597]
+            - cell "71%" [ref=e1598]
+            - cell "16" [ref=e1599]
+            - cell "0.61" [ref=e1600]
+            - cell "70" [ref=e1601]
+            - cell "81,295" [ref=e1602]
+          - row [ref=e1603]:
+            - cell "קצרין" [ref=e1604]
+            - cell "צפון" [ref=e1605]
+            - cell "16" [ref=e1606]
+            - cell "62%" [ref=e1607]
+            - cell "62%" [ref=e1608]
+            - cell "62%" [ref=e1609]
+            - cell "40" [ref=e1610]
+            - cell "0.39" [ref=e1611]
+            - cell "220" [ref=e1612]
+            - cell "99,456" [ref=e1613]
+          - row [ref=e1614]:
+            - cell "קרית אתא" [ref=e1615]
+            - cell "חיפה" [ref=e1616]
+            - cell "16" [ref=e1617]
+            - cell "88%" [ref=e1618]
+            - cell "50%" [ref=e1619]
+            - cell "8%" [ref=e1620]
+            - cell "50" [ref=e1621]
+            - cell "0.51" [ref=e1622]
+            - cell "196" [ref=e1623]
+            - cell "84,458" [ref=e1624]
+          - row [ref=e1625]:
+            - cell "תל מונד" [ref=e1626]
+            - cell "תל אביב" [ref=e1627]
+            - cell "16" [ref=e1628]
+            - cell "69%" [ref=e1629]
+            - cell "88%" [ref=e1630]
+            - cell "53%" [ref=e1631]
+            - cell "28" [ref=e1632]
+            - cell "0.59" [ref=e1633]
+            - cell "193" [ref=e1634]
+            - cell "113,607" [ref=e1635]
+          - row [ref=e1636]:
+            - cell "יואב" [ref=e1637]
+            - cell "דרום" [ref=e1638]
+            - cell "15" [ref=e1639]
+            - cell "100%" [ref=e1640]
+            - cell "87%" [ref=e1641]
+            - cell "75%" [ref=e1642]
+            - cell "19" [ref=e1643]
+            - cell "0.43" [ref=e1644]
+            - cell "169" [ref=e1645]
+            - cell "128,056" [ref=e1646]
+          - row [ref=e1647]:
+            - cell "ירוחם" [ref=e1648]
+            - cell "דרום" [ref=e1649]
+            - cell "15" [ref=e1650]
+            - cell "80%" [ref=e1651]
+            - cell "80%" [ref=e1652]
+            - cell "33%" [ref=e1653]
+            - cell "24" [ref=e1654]
+            - cell "0.59" [ref=e1655]
+            - cell "167" [ref=e1656]
+            - cell "115,544" [ref=e1657]
+          - row [ref=e1658]:
+            - cell "כפר קאסם" [ref=e1659]
+            - cell "תל אביב" [ref=e1660]
+            - cell "15" [ref=e1661]
+            - cell "53%" [ref=e1662]
+            - cell "40%" [ref=e1663]
+            - cell "20%" [ref=e1664]
+            - cell "31" [ref=e1665]
+            - cell "0.69" [ref=e1666]
+            - cell "134" [ref=e1667]
+            - cell "70,850" [ref=e1668]
+          - row [ref=e1669]:
+            - cell "ערערה-בנגב" [ref=e1670]
+            - cell "מזרח" [ref=e1671]
+            - cell "15" [ref=e1672]
+            - cell "80%" [ref=e1673]
+            - cell "27%" [ref=e1674]
+            - cell "0%" [ref=e1675]
+            - cell "21" [ref=e1676]
+            - cell "0.49" [ref=e1677]
+            - cell "219" [ref=e1678]
+            - cell "80,403" [ref=e1679]
+          - row [ref=e1680]:
+            - cell "שלומי" [ref=e1681]
+            - cell "חיפה" [ref=e1682]
+            - cell "15" [ref=e1683]
+            - cell "53%" [ref=e1684]
+            - cell "93%" [ref=e1685]
+            - cell "15%" [ref=e1686]
+            - cell "42" [ref=e1687]
+            - cell "0.56" [ref=e1688]
+            - cell "146" [ref=e1689]
+            - cell "68,382" [ref=e1690]
+          - row [ref=e1691]:
+            - cell "בית אריה" [ref=e1692]
+            - cell "מזרח" [ref=e1693]
+            - cell "14" [ref=e1694]
+            - cell "79%" [ref=e1695]
+            - cell "100%" [ref=e1696]
+            - cell "43%" [ref=e1697]
+            - cell "20" [ref=e1698]
+            - cell "0.49" [ref=e1699]
+            - cell "194" [ref=e1700]
+            - cell "82,433" [ref=e1701]
+          - row [ref=e1702]:
+            - cell "כפר יונה" [ref=e1703]
+            - cell "מרכז" [ref=e1704]
+            - cell "14" [ref=e1705]
+            - cell "64%" [ref=e1706]
+            - cell "64%" [ref=e1707]
+            - cell "50%" [ref=e1708]
+            - cell "21" [ref=e1709]
+            - cell "0.56" [ref=e1710]
+            - cell "89" [ref=e1711]
+            - cell "113,244" [ref=e1712]
+          - row [ref=e1713]:
+            - cell "להבים" [ref=e1714]
+            - cell "דרום" [ref=e1715]
+            - cell "14" [ref=e1716]
+            - cell "100%" [ref=e1717]
+            - cell "93%" [ref=e1718]
+            - cell "69%" [ref=e1719]
+            - cell "20" [ref=e1720]
+            - cell "0.51" [ref=e1721]
+            - cell "80" [ref=e1722]
+            - cell "99,134" [ref=e1723]
+          - row [ref=e1724]:
+            - cell "קרני שומרון" [ref=e1725]
+            - cell "תל אביב" [ref=e1726]
+            - cell "14" [ref=e1727]
+            - cell "71%" [ref=e1728]
+            - cell "57%" [ref=e1729]
+            - cell "43%" [ref=e1730]
+            - cell "26" [ref=e1731]
+            - cell "0.51" [ref=e1732]
+            - cell "82" [ref=e1733]
+            - cell "128,859" [ref=e1734]
+          - row [ref=e1735]:
+            - cell "אכסאל" [ref=e1736]
+            - cell "צפון" [ref=e1737]
+            - cell "13" [ref=e1738]
+            - cell "31%" [ref=e1739]
+            - cell "92%" [ref=e1740]
+            - cell "38%" [ref=e1741]
+            - cell "17" [ref=e1742]
+            - cell "0.45" [ref=e1743]
+            - cell "144" [ref=e1744]
+            - cell "112,911" [ref=e1745]
+          - row [ref=e1746]:
+            - cell "ג'דיידה-מכר" [ref=e1747]
+            - cell "חיפה" [ref=e1748]
+            - cell "13" [ref=e1749]
+            - cell "62%" [ref=e1750]
+            - cell "77%" [ref=e1751]
+            - cell "69%" [ref=e1752]
+            - cell "31" [ref=e1753]
+            - cell "0.39" [ref=e1754]
+            - cell "135" [ref=e1755]
+            - cell "78,690" [ref=e1756]
+          - row [ref=e1757]:
+            - cell "זמר" [ref=e1758]
+            - cell "תל אביב" [ref=e1759]
+            - cell "13" [ref=e1760]
+            - cell "31%" [ref=e1761]
+            - cell "38%" [ref=e1762]
+            - cell "67%" [ref=e1763]
+            - cell "11" [ref=e1764]
+            - cell "0.55" [ref=e1765]
+            - cell "139" [ref=e1766]
+            - cell "117,492" [ref=e1767]
+          - row [ref=e1768]:
+            - cell "טירת כרמל" [ref=e1769]
+            - cell "חיפה" [ref=e1770]
+            - cell "13" [ref=e1771]
+            - cell "31%" [ref=e1772]
+            - cell "62%" [ref=e1773]
+            - cell "23%" [ref=e1774]
+            - cell "54" [ref=e1775]
+            - cell "0.68" [ref=e1776]
+            - cell "149" [ref=e1777]
+            - cell "66,605" [ref=e1778]
+          - row [ref=e1779]:
+            - cell "כפר כנא" [ref=e1780]
+            - cell "צפון" [ref=e1781]
+            - cell "13" [ref=e1782]
+            - cell "54%" [ref=e1783]
+            - cell "69%" [ref=e1784]
+            - cell "69%" [ref=e1785]
+            - cell "18" [ref=e1786]
+            - cell "0.67" [ref=e1787]
+            - cell "164" [ref=e1788]
+            - cell "94,484" [ref=e1789]
+          - row [ref=e1790]:
+            - cell "קרית מוצקין" [ref=e1791]
+            - cell "חיפה" [ref=e1792]
+            - cell "13" [ref=e1793]
+            - cell "77%" [ref=e1794]
+            - cell "62%" [ref=e1795]
+            - cell "36%" [ref=e1796]
+            - cell "26" [ref=e1797]
+            - cell "0.43" [ref=e1798]
+            - cell "216" [ref=e1799]
+            - cell "120,672" [ref=e1800]
+          - row [ref=e1801]:
+            - cell "קרית שמונה" [ref=e1802]
+            - cell "צפון" [ref=e1803]
+            - cell "13" [ref=e1804]
+            - cell "100%" [ref=e1805]
+            - cell "31%" [ref=e1806]
+            - cell "13%" [ref=e1807]
+            - cell "10" [ref=e1808]
+            - cell "0.44" [ref=e1809]
+            - cell "127" [ref=e1810]
+            - cell "60,575" [ref=e1811]
+          - row [ref=e1812]:
+            - cell "ג'ת" [ref=e1813]
+            - cell "מרכז" [ref=e1814]
+            - cell "12" [ref=e1815]
+            - cell "75%" [ref=e1816]
+            - cell "75%" [ref=e1817]
+            - cell "17%" [ref=e1818]
+            - cell "26" [ref=e1819]
+            - cell "0.40" [ref=e1820]
+            - cell "214" [ref=e1821]
+            - cell "123,822" [ref=e1822]
+          - row [ref=e1823]:
+            - cell "מצפה רמון" [ref=e1824]
+            - cell "דרום" [ref=e1825]
+            - cell "12" [ref=e1826]
+            - cell "92%" [ref=e1827]
+            - cell "92%" [ref=e1828]
+            - cell "54%" [ref=e1829]
+            - cell "24" [ref=e1830]
+            - cell "0.62" [ref=e1831]
+            - cell "78" [ref=e1832]
+            - cell "81,201" [ref=e1833]
+          - row [ref=e1834]:
+            - cell "סביון" [ref=e1835]
+            - cell "מרכז" [ref=e1836]
+            - cell "12" [ref=e1837]
+            - cell "100%" [ref=e1838]
+            - cell "50%" [ref=e1839]
+            - cell "58%" [ref=e1840]
+            - cell "57" [ref=e1841]
+            - cell "0.42" [ref=e1842]
+            - cell "118" [ref=e1843]
+            - cell "55,229" [ref=e1844]
+          - row [ref=e1845]:
+            - cell "ערערה" [ref=e1846]
+            - cell "מרכז" [ref=e1847]
+            - cell "12" [ref=e1848]
+            - cell "92%" [ref=e1849]
+            - cell "50%" [ref=e1850]
+            - cell "75%" [ref=e1851]
+            - cell "13" [ref=e1852]
+            - cell "0.47" [ref=e1853]
+            - cell "85" [ref=e1854]
+            - cell "119,457" [ref=e1855]
+          - row [ref=e1856]:
+            - cell "קדומים" [ref=e1857]
+            - cell "מזרח" [ref=e1858]
+            - cell "12" [ref=e1859]
+            - cell "58%" [ref=e1860]
+            - cell "8%" [ref=e1861]
+            - cell "0%" [ref=e1862]
+            - cell "8" [ref=e1863]
+            - cell "0.43" [ref=e1864]
+            - cell "182" [ref=e1865]
+            - cell "118,365" [ref=e1866]
+          - row [ref=e1867]:
+            - cell "אלקנה" [ref=e1868]
+            - cell "תל אביב" [ref=e1869]
+            - cell "11" [ref=e1870]
+            - cell "64%" [ref=e1871]
+            - cell "73%" [ref=e1872]
+            - cell "9%" [ref=e1873]
+            - cell "36" [ref=e1874]
+            - cell "0.51" [ref=e1875]
+            - cell "172" [ref=e1876]
+            - cell "70,519" [ref=e1877]
+          - row [ref=e1878]:
+            - cell "ביר אל-מכסור" [ref=e1879]
+            - cell "צפון" [ref=e1880]
+            - cell "11" [ref=e1881]
+            - cell "73%" [ref=e1882]
+            - cell "0%" [ref=e1883]
+            - cell "100%" [ref=e1884]
+            - cell "22" [ref=e1885]
+            - cell "0.49" [ref=e1886]
+            - cell "159" [ref=e1887]
+            - cell "122,125" [ref=e1888]
+          - row [ref=e1889]:
+            - cell "בית דגן" [ref=e1890]
+            - cell "תל אביב" [ref=e1891]
+            - cell "11" [ref=e1892]
+            - cell "100%" [ref=e1893]
+            - cell "91%" [ref=e1894]
+            - cell "20%" [ref=e1895]
+            - cell "26" [ref=e1896]
+            - cell "0.49" [ref=e1897]
+            - cell "194" [ref=e1898]
+            - cell "91,109" [ref=e1899]
+          - row [ref=e1900]:
+            - cell "גבעת שמואל" [ref=e1901]
+            - cell "תל אביב" [ref=e1902]
+            - cell "11" [ref=e1903]
+            - cell "91%" [ref=e1904]
+            - cell "36%" [ref=e1905]
+            - cell "54%" [ref=e1906]
+            - cell "47" [ref=e1907]
+            - cell "0.40" [ref=e1908]
+            - cell "174" [ref=e1909]
+            - cell "79,702" [ref=e1910]
+          - row [ref=e1911]:
+            - cell "חריש" [ref=e1912]
+            - cell "מרכז" [ref=e1913]
+            - cell "11" [ref=e1914]
+            - cell "91%" [ref=e1915]
+            - cell "64%" [ref=e1916]
+            - cell "33%" [ref=e1917]
+            - cell "6" [ref=e1918]
+            - cell "0.54" [ref=e1919]
+            - cell "136" [ref=e1920]
+            - cell "72,728" [ref=e1921]
+          - row [ref=e1922]:
+            - cell "טורעאן" [ref=e1923]
+            - cell "צפון" [ref=e1924]
+            - cell "11" [ref=e1925]
+            - cell "91%" [ref=e1926]
+            - cell "82%" [ref=e1927]
+            - cell "92%" [ref=e1928]
+            - cell "18" [ref=e1929]
+            - cell "0.39" [ref=e1930]
+            - cell "141" [ref=e1931]
+            - cell "45,456" [ref=e1932]
+          - row [ref=e1933]:
+            - cell "מזכרת בתיה" [ref=e1934]
+            - cell "מרכז" [ref=e1935]
+            - cell "11" [ref=e1936]
+            - cell "100%" [ref=e1937]
+            - cell "36%" [ref=e1938]
+            - cell "62%" [ref=e1939]
+            - cell "24" [ref=e1940]
+            - cell "0.46" [ref=e1941]
+            - cell "179" [ref=e1942]
+            - cell "50,043" [ref=e1943]
+          - row [ref=e1944]:
+            - cell "עספיא" [ref=e1945]
+            - cell "חיפה" [ref=e1946]
+            - cell "11" [ref=e1947]
+            - cell "55%" [ref=e1948]
+            - cell "91%" [ref=e1949]
+            - cell "67%" [ref=e1950]
+            - cell "29" [ref=e1951]
+            - cell "0.68" [ref=e1952]
+            - cell "92" [ref=e1953]
+            - cell "118,021" [ref=e1954]
+          - row [ref=e1955]:
+            - cell "פוריידיס" [ref=e1956]
+            - cell "מרכז" [ref=e1957]
+            - cell "11" [ref=e1958]
+            - cell "73%" [ref=e1959]
+            - cell "64%" [ref=e1960]
+            - cell "100%" [ref=e1961]
+            - cell "20" [ref=e1962]
+            - cell "0.64" [ref=e1963]
+            - cell "208" [ref=e1964]
+            - cell "47,597" [ref=e1965]
+          - row [ref=e1966]:
+            - cell "קלנסווה" [ref=e1967]
+            - cell "מרכז" [ref=e1968]
+            - cell "11" [ref=e1969]
+            - cell "27%" [ref=e1970]
+            - cell "9%" [ref=e1971]
+            - cell "69%" [ref=e1972]
+            - cell "26" [ref=e1973]
+            - cell "0.50" [ref=e1974]
+            - cell "87" [ref=e1975]
+            - cell "93,415" [ref=e1976]
+          - row [ref=e1977]:
+            - cell "קרית עקרון" [ref=e1978]
+            - cell "דרום" [ref=e1979]
+            - cell "11" [ref=e1980]
+            - cell "55%" [ref=e1981]
+            - cell "82%" [ref=e1982]
+            - cell "50%" [ref=e1983]
+            - cell "27" [ref=e1984]
+            - cell "0.46" [ref=e1985]
+            - cell "80" [ref=e1986]
+            - cell "113,091" [ref=e1987]
+          - row [ref=e1988]:
+            - cell "שפרעם" [ref=e1989]
+            - cell "צפון" [ref=e1990]
+            - cell "11" [ref=e1991]
+            - cell "73%" [ref=e1992]
+            - cell "91%" [ref=e1993]
+            - cell "73%" [ref=e1994]
+            - cell "21" [ref=e1995]
+            - cell "0.55" [ref=e1996]
+            - cell "117" [ref=e1997]
+            - cell "63,677" [ref=e1998]
+          - row [ref=e1999]:
+            - cell "תמר" [ref=e2000]
+            - cell "מזרח" [ref=e2001]
+            - cell "11" [ref=e2002]
+            - cell "100%" [ref=e2003]
+            - cell "100%" [ref=e2004]
+            - cell "82%" [ref=e2005]
+            - cell "41" [ref=e2006]
+            - cell "0.51" [ref=e2007]
+            - cell "183" [ref=e2008]
+            - cell "78,642" [ref=e2009]
+          - row [ref=e2010]:
+            - cell "אל קסום" [ref=e2011]
+            - cell "מזרח" [ref=e2012]
+            - cell "10" [ref=e2013]
+            - cell "30%" [ref=e2014]
+            - cell "20%" [ref=e2015]
+            - cell "50%" [ref=e2016]
+            - cell "7" [ref=e2017]
+            - cell "0.39" [ref=e2018]
+            - cell "147" [ref=e2019]
+            - cell "132,136" [ref=e2020]
+          - row [ref=e2021]:
+            - cell "אעבלין" [ref=e2022]
+            - cell "צפון" [ref=e2023]
+            - cell "10" [ref=e2024]
+            - cell "80%" [ref=e2025]
+            - cell "90%" [ref=e2026]
+            - cell "50%" [ref=e2027]
+            - cell "21" [ref=e2028]
+            - cell "0.41" [ref=e2029]
+            - cell "89" [ref=e2030]
+            - cell "64,001" [ref=e2031]
+          - row [ref=e2032]:
+            - cell "טייבה" [ref=e2033]
+            - cell "מרכז" [ref=e2034]
+            - cell "10" [ref=e2035]
+            - cell "100%" [ref=e2036]
+            - cell "30%" [ref=e2037]
+            - cell "45%" [ref=e2038]
+            - cell "26" [ref=e2039]
+            - cell "0.40" [ref=e2040]
+            - cell "89" [ref=e2041]
+            - cell "83,114" [ref=e2042]
+          - row [ref=e2043]:
+            - cell "כפר קרע" [ref=e2044]
+            - cell "מרכז" [ref=e2045]
+            - cell "10" [ref=e2046]
+            - cell "90%" [ref=e2047]
+            - cell "40%" [ref=e2048]
+            - cell "62%" [ref=e2049]
+            - cell "19" [ref=e2050]
+            - cell "0.50" [ref=e2051]
+            - cell "153" [ref=e2052]
+            - cell "64,706" [ref=e2053]
+          - row [ref=e2054]:
+            - cell "כפר תבור" [ref=e2055]
+            - cell "צפון" [ref=e2056]
+            - cell "10" [ref=e2057]
+            - cell "60%" [ref=e2058]
+            - cell "100%" [ref=e2059]
+            - cell "40%" [ref=e2060]
+            - cell "23" [ref=e2061]
+            - cell "0.44" [ref=e2062]
+            - cell "204" [ref=e2063]
+            - cell "63,989" [ref=e2064]
+          - row [ref=e2065]:
+            - cell "מבשרת ציון" [ref=e2066]
+            - cell "מזרח" [ref=e2067]
+            - cell "10" [ref=e2068]
+            - cell "100%" [ref=e2069]
+            - cell "0%" [ref=e2070]
+            - cell "10%" [ref=e2071]
+            - cell "35" [ref=e2072]
+            - cell "0.46" [ref=e2073]
+            - cell "183" [ref=e2074]
+            - cell "70,907" [ref=e2075]
+          - row [ref=e2076]:
+            - cell "קרית ארבע" [ref=e2077]
+            - cell "מזרח" [ref=e2078]
+            - cell "10" [ref=e2079]
+            - cell "100%" [ref=e2080]
+            - cell "60%" [ref=e2081]
+            - cell "33%" [ref=e2082]
+            - cell "33" [ref=e2083]
+            - cell "0.58" [ref=e2084]
+            - cell "217" [ref=e2085]
+            - cell "73,639" [ref=e2086]
+          - row [ref=e2087]:
+            - cell "תל שבע" [ref=e2088]
+            - cell "—" [ref=e2089]
+            - cell "10" [ref=e2090]
+            - cell "40%" [ref=e2091]
+            - cell "90%" [ref=e2092]
+            - cell "—" [ref=e2093]
+            - cell "15" [ref=e2094]
+            - cell "0.58" [ref=e2095]
+            - cell "118" [ref=e2096]
+            - cell "99,303" [ref=e2097]
+          - row [ref=e2098]:
+            - cell "אבו סנאן" [ref=e2099]
+            - cell "חיפה" [ref=e2100]
+            - cell "9" [ref=e2101]
+            - cell "78%" [ref=e2102]
+            - cell "100%" [ref=e2103]
+            - cell "30%" [ref=e2104]
+            - cell "25" [ref=e2105]
+            - cell "0.47" [ref=e2106]
+            - cell "175" [ref=e2107]
+            - cell "97,764" [ref=e2108]
+          - row [ref=e2109]:
+            - cell "בני ברק" [ref=e2110]
+            - cell "תל אביב" [ref=e2111]
+            - cell "9" [ref=e2112]
+            - cell "78%" [ref=e2113]
+            - cell "78%" [ref=e2114]
+            - cell "38%" [ref=e2115]
+            - cell "26" [ref=e2116]
+            - cell "0.58" [ref=e2117]
+            - cell "206" [ref=e2118]
+            - cell "73,916" [ref=e2119]
+          - row [ref=e2120]:
+            - cell "ג'וליס" [ref=e2121]
+            - cell "חיפה" [ref=e2122]
+            - cell "9" [ref=e2123]
+            - cell "33%" [ref=e2124]
+            - cell "67%" [ref=e2125]
+            - cell "40%" [ref=e2126]
+            - cell "24" [ref=e2127]
+            - cell "0.43" [ref=e2128]
+            - cell "199" [ref=e2129]
+            - cell "52,085" [ref=e2130]
+          - row [ref=e2131]:
+            - cell "טובא-זנגריה" [ref=e2132]
+            - cell "צפון" [ref=e2133]
+            - cell "9" [ref=e2134]
+            - cell "56%" [ref=e2135]
+            - cell "44%" [ref=e2136]
+            - cell "44%" [ref=e2137]
+            - cell "24" [ref=e2138]
+            - cell "0.39" [ref=e2139]
+            - cell "214" [ref=e2140]
+            - cell "60,874" [ref=e2141]
+          - row [ref=e2142]:
+            - cell "טירה" [ref=e2143]
+            - cell "מרכז" [ref=e2144]
+            - cell "9" [ref=e2145]
+            - cell "89%" [ref=e2146]
+            - cell "11%" [ref=e2147]
+            - cell "67%" [ref=e2148]
+            - cell "22" [ref=e2149]
+            - cell "0.53" [ref=e2150]
+            - cell "219" [ref=e2151]
+            - cell "108,545" [ref=e2152]
+          - row [ref=e2153]:
+            - cell "כוכב יאיר" [ref=e2154]
+            - cell "תל אביב" [ref=e2155]
+            - cell "9" [ref=e2156]
+            - cell "100%" [ref=e2157]
+            - cell "78%" [ref=e2158]
+            - cell "38%" [ref=e2159]
+            - cell "32" [ref=e2160]
+            - cell "0.65" [ref=e2161]
+            - cell "181" [ref=e2162]
+            - cell "106,764" [ref=e2163]
+          - row [ref=e2164]:
+            - cell "כפר מנדא" [ref=e2165]
+            - cell "צפון" [ref=e2166]
+            - cell "9" [ref=e2167]
+            - cell "33%" [ref=e2168]
+            - cell "78%" [ref=e2169]
+            - cell "44%" [ref=e2170]
+            - cell "19" [ref=e2171]
+            - cell "0.60" [ref=e2172]
+            - cell "121" [ref=e2173]
+            - cell "86,836" [ref=e2174]
+          - row [ref=e2175]:
+            - cell "לקיה" [ref=e2176]
+            - cell "מזרח" [ref=e2177]
+            - cell "9" [ref=e2178]
+            - cell "11%" [ref=e2179]
+            - cell "56%" [ref=e2180]
+            - cell "0%" [ref=e2181]
+            - cell "21" [ref=e2182]
+            - cell "0.59" [ref=e2183]
+            - cell "122" [ref=e2184]
+            - cell "121,452" [ref=e2185]
+          - row [ref=e2186]:
+            - cell "נשר" [ref=e2187]
+            - cell "חיפה" [ref=e2188]
+            - cell "9" [ref=e2189]
+            - cell "89%" [ref=e2190]
+            - cell "67%" [ref=e2191]
+            - cell "56%" [ref=e2192]
+            - cell "31" [ref=e2193]
+            - cell "0.59" [ref=e2194]
+            - cell "216" [ref=e2195]
+            - cell "104,192" [ref=e2196]
+          - row [ref=e2197]:
+            - cell "רמת ישי" [ref=e2198]
+            - cell "צפון" [ref=e2199]
+            - cell "9" [ref=e2200]
+            - cell "78%" [ref=e2201]
+            - cell "89%" [ref=e2202]
+            - cell "43%" [ref=e2203]
+            - cell "29" [ref=e2204]
+            - cell "0.69" [ref=e2205]
+            - cell "134" [ref=e2206]
+            - cell "68,173" [ref=e2207]
+          - row [ref=e2208]:
+            - cell "אל-בטוף" [ref=e2209]
+            - cell "צפון" [ref=e2210]
+            - cell "8" [ref=e2211]
+            - cell "62%" [ref=e2212]
+            - cell "38%" [ref=e2213]
+            - cell "100%" [ref=e2214]
+            - cell "21" [ref=e2215]
+            - cell "0.65" [ref=e2216]
+            - cell "135" [ref=e2217]
+            - cell "106,118" [ref=e2218]
+          - row [ref=e2219]:
+            - cell "בוסתאן אל מרג'" [ref=e2220]
+            - cell "צפון" [ref=e2221]
+            - cell "8" [ref=e2222]
+            - cell "25%" [ref=e2223]
+            - cell "88%" [ref=e2224]
+            - cell "40%" [ref=e2225]
+            - cell "11" [ref=e2226]
+            - cell "0.39" [ref=e2227]
+            - cell "186" [ref=e2228]
+            - cell "54,687" [ref=e2229]
+          - row [ref=e2230]:
+            - cell "בועיינה-נוג'ידאת" [ref=e2231]
+            - cell "צפון" [ref=e2232]
+            - cell "8" [ref=e2233]
+            - cell "88%" [ref=e2234]
+            - cell "100%" [ref=e2235]
+            - cell "40%" [ref=e2236]
+            - cell "23" [ref=e2237]
+            - cell "0.50" [ref=e2238]
+            - cell "109" [ref=e2239]
+            - cell "81,323" [ref=e2240]
+          - row [ref=e2241]:
+            - cell "ג'לג'וליה" [ref=e2242]
+            - cell "מרכז" [ref=e2243]
+            - cell "8" [ref=e2244]
+            - cell "50%" [ref=e2245]
+            - cell "75%" [ref=e2246]
+            - cell "43%" [ref=e2247]
+            - cell "28" [ref=e2248]
+            - cell "0.40" [ref=e2249]
+            - cell "161" [ref=e2250]
+            - cell "59,486" [ref=e2251]
+          - row [ref=e2252]:
+            - cell "דאלית אל כרמל" [ref=e2253]
+            - cell "חיפה" [ref=e2254]
+            - cell "8" [ref=e2255]
+            - cell "62%" [ref=e2256]
+            - cell "50%" [ref=e2257]
+            - cell "50%" [ref=e2258]
+            - cell "25" [ref=e2259]
+            - cell "0.43" [ref=e2260]
+            - cell "215" [ref=e2261]
+            - cell "102,025" [ref=e2262]
+          - row [ref=e2263]:
+            - cell "דבוריה" [ref=e2264]
+            - cell "צפון" [ref=e2265]
+            - cell "8" [ref=e2266]
+            - cell "100%" [ref=e2267]
+            - cell "75%" [ref=e2268]
+            - cell "57%" [ref=e2269]
+            - cell "26" [ref=e2270]
+            - cell "0.68" [ref=e2271]
+            - cell "136" [ref=e2272]
+            - cell "112,758" [ref=e2273]
+          - row [ref=e2274]:
+            - cell "יאנוח-ג'ת" [ref=e2275]
+            - cell "חיפה" [ref=e2276]
+            - cell "8" [ref=e2277]
+            - cell "50%" [ref=e2278]
+            - cell "75%" [ref=e2279]
+            - cell "71%" [ref=e2280]
+            - cell "29" [ref=e2281]
+            - cell "0.47" [ref=e2282]
+            - cell "91" [ref=e2283]
+            - cell "108,931" [ref=e2284]
+          - row [ref=e2285]:
+            - cell "ירכא" [ref=e2286]
+            - cell "חיפה" [ref=e2287]
+            - cell "8" [ref=e2288]
+            - cell "100%" [ref=e2289]
+            - cell "62%" [ref=e2290]
+            - cell "100%" [ref=e2291]
+            - cell "22" [ref=e2292]
+            - cell "0.51" [ref=e2293]
+            - cell "138" [ref=e2294]
+            - cell "127,658" [ref=e2295]
+          - row [ref=e2296]:
+            - cell "כפר ורדים" [ref=e2297]
+            - cell "חיפה" [ref=e2298]
+            - cell "8" [ref=e2299]
+            - cell "75%" [ref=e2300]
+            - cell "88%" [ref=e2301]
+            - cell "83%" [ref=e2302]
+            - cell "40" [ref=e2303]
+            - cell "0.57" [ref=e2304]
+            - cell "132" [ref=e2305]
+            - cell "113,611" [ref=e2306]
+          - row [ref=e2307]:
+            - cell "כפר שמריהו" [ref=e2308]
+            - cell "תל אביב" [ref=e2309]
+            - cell "8" [ref=e2310]
+            - cell "88%" [ref=e2311]
+            - cell "62%" [ref=e2312]
+            - cell "20%" [ref=e2313]
+            - cell "19" [ref=e2314]
+            - cell "0.66" [ref=e2315]
+            - cell "86" [ref=e2316]
+            - cell "86,085" [ref=e2317]
+          - row [ref=e2318]:
+            - cell "מעלה אפרים" [ref=e2319]
+            - cell "מזרח" [ref=e2320]
+            - cell "8" [ref=e2321]
+            - cell "88%" [ref=e2322]
+            - cell "75%" [ref=e2323]
+            - cell "50%" [ref=e2324]
+            - cell "37" [ref=e2325]
+            - cell "0.39" [ref=e2326]
+            - cell "191" [ref=e2327]
+            - cell "107,859" [ref=e2328]
+          - row [ref=e2329]:
+            - cell "עילוט" [ref=e2330]
+            - cell "צפון" [ref=e2331]
+            - cell "8" [ref=e2332]
+            - cell "62%" [ref=e2333]
+            - cell "100%" [ref=e2334]
+            - cell "67%" [ref=e2335]
+            - cell "23" [ref=e2336]
+            - cell "0.43" [ref=e2337]
+            - cell "154" [ref=e2338]
+            - cell "73,685" [ref=e2339]
+          - row [ref=e2340]:
+            - cell "ראש פינה" [ref=e2341]
+            - cell "חיפה" [ref=e2342]
+            - cell "8" [ref=e2343]
+            - cell "38%" [ref=e2344]
+            - cell "88%" [ref=e2345]
+            - cell "83%" [ref=e2346]
+            - cell "46" [ref=e2347]
+            - cell "0.51" [ref=e2348]
+            - cell "217" [ref=e2349]
+            - cell "59,073" [ref=e2350]
+          - row [ref=e2351]:
+            - cell "בוקעתא" [ref=e2352]
+            - cell "צפון" [ref=e2353]
+            - cell "7" [ref=e2354]
+            - cell "57%" [ref=e2355]
+            - cell "100%" [ref=e2356]
+            - cell "33%" [ref=e2357]
+            - cell "14" [ref=e2358]
+            - cell "0.41" [ref=e2359]
+            - cell "103" [ref=e2360]
+            - cell "121,418" [ref=e2361]
+          - row [ref=e2362]:
+            - cell "ביתר עילית" [ref=e2363]
+            - cell "מזרח" [ref=e2364]
+            - cell "7" [ref=e2365]
+            - cell "57%" [ref=e2366]
+            - cell "14%" [ref=e2367]
+            - cell "—" [ref=e2368]
+            - cell "11" [ref=e2369]
+            - cell "0.59" [ref=e2370]
+            - cell "156" [ref=e2371]
+            - cell "83,791" [ref=e2372]
+          - row [ref=e2373]:
+            - cell "בסמ\"ה" [ref=e2374]
+            - cell "מרכז" [ref=e2375]
+            - cell "7" [ref=e2376]
+            - cell "71%" [ref=e2377]
+            - cell "71%" [ref=e2378]
+            - cell "12%" [ref=e2379]
+            - cell "19" [ref=e2380]
+            - cell "0.44" [ref=e2381]
+            - cell "111" [ref=e2382]
+            - cell "95,373" [ref=e2383]
+          - row [ref=e2384]:
+            - cell "גן רוה" [ref=e2385]
+            - cell "מרכז" [ref=e2386]
+            - cell "7" [ref=e2387]
+            - cell "86%" [ref=e2388]
+            - cell "14%" [ref=e2389]
+            - cell "27%" [ref=e2390]
+            - cell "31" [ref=e2391]
+            - cell "0.47" [ref=e2392]
+            - cell "222" [ref=e2393]
+            - cell "47,272" [ref=e2394]
+          - row [ref=e2395]:
+            - cell "הר אדר" [ref=e2396]
+            - cell "מזרח" [ref=e2397]
+            - cell "7" [ref=e2398]
+            - cell "86%" [ref=e2399]
+            - cell "100%" [ref=e2400]
+            - cell "43%" [ref=e2401]
+            - cell "14" [ref=e2402]
+            - cell "0.69" [ref=e2403]
+            - cell "112" [ref=e2404]
+            - cell "87,650" [ref=e2405]
+          - row [ref=e2406]:
+            - cell "זרזיר" [ref=e2407]
+            - cell "צפון" [ref=e2408]
+            - cell "7" [ref=e2409]
+            - cell "57%" [ref=e2410]
+            - cell "86%" [ref=e2411]
+            - cell "75%" [ref=e2412]
+            - cell "24" [ref=e2413]
+            - cell "0.51" [ref=e2414]
+            - cell "116" [ref=e2415]
+            - cell "122,027" [ref=e2416]
+          - row [ref=e2417]:
+            - cell "כאבול" [ref=e2418]
+            - cell "חיפה" [ref=e2419]
+            - cell "7" [ref=e2420]
+            - cell "86%" [ref=e2421]
+            - cell "100%" [ref=e2422]
+            - cell "50%" [ref=e2423]
+            - cell "11" [ref=e2424]
+            - cell "0.46" [ref=e2425]
+            - cell "75" [ref=e2426]
+            - cell "134,504" [ref=e2427]
+          - row [ref=e2428]:
+            - cell "כסרא סמיע" [ref=e2429]
+            - cell "חיפה" [ref=e2430]
+            - cell "7" [ref=e2431]
+            - cell "57%" [ref=e2432]
+            - cell "86%" [ref=e2433]
+            - cell "100%" [ref=e2434]
+            - cell "29" [ref=e2435]
+            - cell "0.70" [ref=e2436]
+            - cell "96" [ref=e2437]
+            - cell "63,186" [ref=e2438]
+          - row [ref=e2439]:
+            - cell "כפר כמא" [ref=e2440]
+            - cell "צפון" [ref=e2441]
+            - cell "7" [ref=e2442]
+            - cell "100%" [ref=e2443]
+            - cell "86%" [ref=e2444]
+            - cell "75%" [ref=e2445]
+            - cell "31" [ref=e2446]
+            - cell "0.53" [ref=e2447]
+            - cell "196" [ref=e2448]
+            - cell "88,329" [ref=e2449]
+          - row [ref=e2450]:
+            - cell "משהד" [ref=e2451]
+            - cell "צפון" [ref=e2452]
+            - cell "7" [ref=e2453]
+            - cell "57%" [ref=e2454]
+            - cell "71%" [ref=e2455]
+            - cell "50%" [ref=e2456]
+            - cell "14" [ref=e2457]
+            - cell "0.53" [ref=e2458]
+            - cell "183" [ref=e2459]
+            - cell "118,697" [ref=e2460]
+          - row [ref=e2461]:
+            - cell "סאג'ור" [ref=e2462]
+            - cell "חיפה" [ref=e2463]
+            - cell "7" [ref=e2464]
+            - cell "29%" [ref=e2465]
+            - cell "86%" [ref=e2466]
+            - cell "33%" [ref=e2467]
+            - cell "28" [ref=e2468]
+            - cell "0.46" [ref=e2469]
+            - cell "87" [ref=e2470]
+            - cell "76,351" [ref=e2471]
+          - row [ref=e2472]:
+            - cell "עין מאהל" [ref=e2473]
+            - cell "צפון" [ref=e2474]
+            - cell "7" [ref=e2475]
+            - cell "57%" [ref=e2476]
+            - cell "86%" [ref=e2477]
+            - cell "12%" [ref=e2478]
+            - cell "10" [ref=e2479]
+            - cell "0.53" [ref=e2480]
+            - cell "221" [ref=e2481]
+            - cell "76,423" [ref=e2482]
+          - row [ref=e2483]:
+            - cell "שגב שלום" [ref=e2484]
+            - cell "מזרח" [ref=e2485]
+            - cell "7" [ref=e2486]
+            - cell "43%" [ref=e2487]
+            - cell "100%" [ref=e2488]
+            - cell "67%" [ref=e2489]
+            - cell "10" [ref=e2490]
+            - cell "0.52" [ref=e2491]
+            - cell "146" [ref=e2492]
+            - cell "75,594" [ref=e2493]
+          - row [ref=e2494]:
+            - cell "אבו גוש" [ref=e2495]
+            - cell "מזרח" [ref=e2496]
+            - cell "6" [ref=e2497]
+            - cell "33%" [ref=e2498]
+            - cell "100%" [ref=e2499]
+            - cell "29%" [ref=e2500]
+            - cell "20" [ref=e2501]
+            - cell "0.44" [ref=e2502]
+            - cell "104" [ref=e2503]
+            - cell "123,436" [ref=e2504]
+          - row [ref=e2505]:
+            - cell "אורנית" [ref=e2506]
+            - cell "תל אביב" [ref=e2507]
+            - cell "6" [ref=e2508]
+            - cell "100%" [ref=e2509]
+            - cell "33%" [ref=e2510]
+            - cell "62%" [ref=e2511]
+            - cell "30" [ref=e2512]
+            - cell "0.39" [ref=e2513]
+            - cell "199" [ref=e2514]
+            - cell "69,919" [ref=e2515]
+          - row [ref=e2516]:
+            - cell "בית ג'ן" [ref=e2517]
+            - cell "חיפה" [ref=e2518]
+            - cell "6" [ref=e2519]
+            - cell "0%" [ref=e2520]
+            - cell "83%" [ref=e2521]
+            - cell "29%" [ref=e2522]
+            - cell "18" [ref=e2523]
+            - cell "0.61" [ref=e2524]
+            - cell "194" [ref=e2525]
+            - cell "46,217" [ref=e2526]
+          - row [ref=e2527]:
+            - cell "בסמת טבעון" [ref=e2528]
+            - cell "חיפה" [ref=e2529]
+            - cell "6" [ref=e2530]
+            - cell "100%" [ref=e2531]
+            - cell "100%" [ref=e2532]
+            - cell "75%" [ref=e2533]
+            - cell "22" [ref=e2534]
+            - cell "0.44" [ref=e2535]
+            - cell "207" [ref=e2536]
+            - cell "117,898" [ref=e2537]
+          - row [ref=e2538]:
+            - cell "ג'סר א-זרקא" [ref=e2539]
+            - cell "מרכז" [ref=e2540]
+            - cell "6" [ref=e2541]
+            - cell "83%" [ref=e2542]
+            - cell "0%" [ref=e2543]
+            - cell "25%" [ref=e2544]
+            - cell "21" [ref=e2545]
+            - cell "0.40" [ref=e2546]
+            - cell "201" [ref=e2547]
+            - cell "87,636" [ref=e2548]
+          - row [ref=e2549]:
+            - cell "דיר חנא" [ref=e2550]
+            - cell "צפון" [ref=e2551]
+            - cell "6" [ref=e2552]
+            - cell "50%" [ref=e2553]
+            - cell "83%" [ref=e2554]
+            - cell "33%" [ref=e2555]
+            - cell "29" [ref=e2556]
+            - cell "0.39" [ref=e2557]
+            - cell "225" [ref=e2558]
+            - cell "103,982" [ref=e2559]
+          - row [ref=e2560]:
+            - cell "זבולון" [ref=e2561]
+            - cell "חיפה" [ref=e2562]
+            - cell "6" [ref=e2563]
+            - cell "100%" [ref=e2564]
+            - cell "100%" [ref=e2565]
+            - cell "56%" [ref=e2566]
+            - cell "20" [ref=e2567]
+            - cell "0.43" [ref=e2568]
+            - cell "74" [ref=e2569]
+            - cell "100,731" [ref=e2570]
+          - row [ref=e2571]:
+            - cell "כסיפה" [ref=e2572]
+            - cell "מזרח" [ref=e2573]
+            - cell "6" [ref=e2574]
+            - cell "67%" [ref=e2575]
+            - cell "100%" [ref=e2576]
+            - cell "67%" [ref=e2577]
+            - cell "28" [ref=e2578]
+            - cell "0.40" [ref=e2579]
+            - cell "89" [ref=e2580]
+            - cell "131,115" [ref=e2581]
+          - row [ref=e2582]:
+            - cell "כפר יאסיף" [ref=e2583]
+            - cell "חיפה" [ref=e2584]
+            - cell "6" [ref=e2585]
+            - cell "67%" [ref=e2586]
+            - cell "50%" [ref=e2587]
+            - cell "0%" [ref=e2588]
+            - cell "27" [ref=e2589]
+            - cell "0.54" [ref=e2590]
+            - cell "89" [ref=e2591]
+            - cell "53,065" [ref=e2592]
+          - row [ref=e2593]:
+            - cell "מעלה עירון" [ref=e2594]
+            - cell "צפון" [ref=e2595]
+            - cell "6" [ref=e2596]
+            - cell "0%" [ref=e2597]
+            - cell "83%" [ref=e2598]
+            - cell "0%" [ref=e2599]
+            - cell "18" [ref=e2600]
+            - cell "0.45" [ref=e2601]
+            - cell "81" [ref=e2602]
+            - cell "134,692" [ref=e2603]
+          - row [ref=e2604]:
+            - cell "עיילבון" [ref=e2605]
+            - cell "צפון" [ref=e2606]
+            - cell "6" [ref=e2607]
+            - cell "0%" [ref=e2608]
+            - cell "50%" [ref=e2609]
+            - cell "17%" [ref=e2610]
+            - cell "26" [ref=e2611]
+            - cell "0.51" [ref=e2612]
+            - cell "103" [ref=e2613]
+            - cell "112,519" [ref=e2614]
+          - row [ref=e2615]:
+            - cell "פקיעין" [ref=e2616]
+            - cell "חיפה" [ref=e2617]
+            - cell "6" [ref=e2618]
+            - cell "0%" [ref=e2619]
+            - cell "100%" [ref=e2620]
+            - cell "50%" [ref=e2621]
+            - cell "32" [ref=e2622]
+            - cell "0.41" [ref=e2623]
+            - cell "173" [ref=e2624]
+            - cell "82,280" [ref=e2625]
+          - row [ref=e2626]:
+            - cell "אלונה" [ref=e2627]
+            - cell "תל אביב" [ref=e2628]
+            - cell "5" [ref=e2629]
+            - cell "20%" [ref=e2630]
+            - cell "40%" [ref=e2631]
+            - cell "20%" [ref=e2632]
+            - cell "26" [ref=e2633]
+            - cell "0.44" [ref=e2634]
+            - cell "186" [ref=e2635]
+            - cell "127,961" [ref=e2636]
+          - row [ref=e2637]:
+            - cell "אליכין" [ref=e2638]
+            - cell "תל אביב" [ref=e2639]
+            - cell "5" [ref=e2640]
+            - cell "80%" [ref=e2641]
+            - cell "20%" [ref=e2642]
+            - cell "—" [ref=e2643]
+            - cell "19" [ref=e2644]
+            - cell "0.57" [ref=e2645]
+            - cell "74" [ref=e2646]
+            - cell "63,119" [ref=e2647]
+          - row [ref=e2648]:
+            - cell "יבנאל" [ref=e2649]
+            - cell "צפון" [ref=e2650]
+            - cell "5" [ref=e2651]
+            - cell "40%" [ref=e2652]
+            - cell "60%" [ref=e2653]
+            - cell "20%" [ref=e2654]
+            - cell "41" [ref=e2655]
+            - cell "0.54" [ref=e2656]
+            - cell "144" [ref=e2657]
+            - cell "56,480" [ref=e2658]
+          - row [ref=e2659]:
+            - cell "כאוכב אבו אל-היג'א" [ref=e2660]
+            - cell "צפון" [ref=e2661]
+            - cell "5" [ref=e2662]
+            - cell "100%" [ref=e2663]
+            - cell "80%" [ref=e2664]
+            - cell "71%" [ref=e2665]
+            - cell "21" [ref=e2666]
+            - cell "0.50" [ref=e2667]
+            - cell "130" [ref=e2668]
+            - cell "47,537" [ref=e2669]
+          - row [ref=e2670]:
+            - cell "מג'ד אל כרום" [ref=e2671]
+            - cell "חיפה" [ref=e2672]
+            - cell "5" [ref=e2673]
+            - cell "60%" [ref=e2674]
+            - cell "100%" [ref=e2675]
+            - cell "0%" [ref=e2676]
+            - cell "50" [ref=e2677]
+            - cell "0.42" [ref=e2678]
+            - cell "97" [ref=e2679]
+            - cell "89,937" [ref=e2680]
+          - row [ref=e2681]:
+            - cell "מגדל" [ref=e2682]
+            - cell "צפון" [ref=e2683]
+            - cell "5" [ref=e2684]
+            - cell "40%" [ref=e2685]
+            - cell "100%" [ref=e2686]
+            - cell "60%" [ref=e2687]
+            - cell "15" [ref=e2688]
+            - cell "0.47" [ref=e2689]
+            - cell "175" [ref=e2690]
+            - cell "81,980" [ref=e2691]
+          - row [ref=e2692]:
+            - cell "עמנואל" [ref=e2693]
+            - cell "תל אביב" [ref=e2694]
+            - cell "5" [ref=e2695]
+            - cell "0%" [ref=e2696]
+            - cell "60%" [ref=e2697]
+            - cell "0%" [ref=e2698]
+            - cell "15" [ref=e2699]
+            - cell "0.41" [ref=e2700]
+            - cell "93" [ref=e2701]
+            - cell "62,618" [ref=e2702]
+          - row [ref=e2703]:
+            - cell "קרית יערים" [ref=e2704]
+            - cell "מזרח" [ref=e2705]
+            - cell "5" [ref=e2706]
+            - cell "80%" [ref=e2707]
+            - cell "100%" [ref=e2708]
+            - cell "100%" [ref=e2709]
+            - cell "12" [ref=e2710]
+            - cell "0.40" [ref=e2711]
+            - cell "148" [ref=e2712]
+            - cell "74,623" [ref=e2713]
+          - row [ref=e2714]:
+            - cell "בענה" [ref=e2715]
+            - cell "חיפה" [ref=e2716]
+            - cell "4" [ref=e2717]
+            - cell "50%" [ref=e2718]
+            - cell "50%" [ref=e2719]
+            - cell "50%" [ref=e2720]
+            - cell "16" [ref=e2721]
+            - cell "0.66" [ref=e2722]
+            - cell "97" [ref=e2723]
+            - cell "114,516" [ref=e2724]
+          - row [ref=e2725]:
+            - cell "חורפיש" [ref=e2726]
+            - cell "חיפה" [ref=e2727]
+            - cell "4" [ref=e2728]
+            - cell "0%" [ref=e2729]
+            - cell "75%" [ref=e2730]
+            - cell "33%" [ref=e2731]
+            - cell "40" [ref=e2732]
+            - cell "0.61" [ref=e2733]
+            - cell "103" [ref=e2734]
+            - cell "55,633" [ref=e2735]
+          - row [ref=e2736]:
+            - cell "יסוד המעלה" [ref=e2737]
+            - cell "צפון" [ref=e2738]
+            - cell "4" [ref=e2739]
+            - cell "50%" [ref=e2740]
+            - cell "50%" [ref=e2741]
+            - cell "33%" [ref=e2742]
+            - cell "8" [ref=e2743]
+            - cell "0.52" [ref=e2744]
+            - cell "109" [ref=e2745]
+            - cell "125,162" [ref=e2746]
+          - row [ref=e2747]:
+            - cell "מטולה" [ref=e2748]
+            - cell "צפון" [ref=e2749]
+            - cell "4" [ref=e2750]
+            - cell "50%" [ref=e2751]
+            - cell "50%" [ref=e2752]
+            - cell "50%" [ref=e2753]
+            - cell "19" [ref=e2754]
+            - cell "0.44" [ref=e2755]
+            - cell "113" [ref=e2756]
+            - cell "83,189" [ref=e2757]
+          - row [ref=e2758]:
+            - cell "מעיליא" [ref=e2759]
+            - cell "חיפה" [ref=e2760]
+            - cell "4" [ref=e2761]
+            - cell "75%" [ref=e2762]
+            - cell "50%" [ref=e2763]
+            - cell "0%" [ref=e2764]
+            - cell "18" [ref=e2765]
+            - cell "0.53" [ref=e2766]
+            - cell "104" [ref=e2767]
+            - cell "125,344" [ref=e2768]
+          - row [ref=e2769]:
+            - cell "עין קנייא" [ref=e2770]
+            - cell "צפון" [ref=e2771]
+            - cell "4" [ref=e2772]
+            - cell "75%" [ref=e2773]
+            - cell "100%" [ref=e2774]
+            - cell "33%" [ref=e2775]
+            - cell "30" [ref=e2776]
+            - cell "0.57" [ref=e2777]
+            - cell "178" [ref=e2778]
+            - cell "46,504" [ref=e2779]
+          - row [ref=e2780]:
+            - cell "פסוטה" [ref=e2781]
+            - cell "חיפה" [ref=e2782]
+            - cell "4" [ref=e2783]
+            - cell "25%" [ref=e2784]
+            - cell "75%" [ref=e2785]
+            - cell "100%" [ref=e2786]
+            - cell "24" [ref=e2787]
+            - cell "0.39" [ref=e2788]
+            - cell "167" [ref=e2789]
+            - cell "124,935" [ref=e2790]
+          - row [ref=e2791]:
+            - cell "ראמה" [ref=e2792]
+            - cell "חיפה" [ref=e2793]
+            - cell "4" [ref=e2794]
+            - cell "100%" [ref=e2795]
+            - cell "75%" [ref=e2796]
+            - cell "40%" [ref=e2797]
+            - cell "22" [ref=e2798]
+            - cell "0.45" [ref=e2799]
+            - cell "139" [ref=e2800]
+            - cell "75,154" [ref=e2801]
+          - row [ref=e2802]:
+            - cell "ג'ש (גוש חלב)" [ref=e2803]
+            - cell "חיפה" [ref=e2804]
+            - cell "3" [ref=e2805]
+            - cell "100%" [ref=e2806]
+            - cell "100%" [ref=e2807]
+            - cell "67%" [ref=e2808]
+            - cell "20" [ref=e2809]
+            - cell "0.56" [ref=e2810]
+            - cell "115" [ref=e2811]
+            - cell "117,676" [ref=e2812]
+          - row [ref=e2813]:
+            - cell "מג'דל שמס" [ref=e2814]
+            - cell "צפון" [ref=e2815]
+            - cell "3" [ref=e2816]
+            - cell "100%" [ref=e2817]
+            - cell "100%" [ref=e2818]
+            - cell "100%" [ref=e2819]
+            - cell "17" [ref=e2820]
+            - cell "0.46" [ref=e2821]
+            - cell "109" [ref=e2822]
+            - cell "52,258" [ref=e2823]
+          - row [ref=e2824]:
+            - cell "מודיעין עילית" [ref=e2825]
+            - cell "תל אביב" [ref=e2826]
+            - cell "3" [ref=e2827]
+            - cell "100%" [ref=e2828]
+            - cell "100%" [ref=e2829]
+            - cell "33%" [ref=e2830]
+            - cell "26" [ref=e2831]
+            - cell "0.62" [ref=e2832]
+            - cell "145" [ref=e2833]
+            - cell "73,170" [ref=e2834]
+          - row [ref=e2835]:
+            - cell "מזרעה" [ref=e2836]
+            - cell "חיפה" [ref=e2837]
+            - cell "3" [ref=e2838]
+            - cell "67%" [ref=e2839]
+            - cell "100%" [ref=e2840]
+            - cell "0%" [ref=e2841]
+            - cell "8" [ref=e2842]
+            - cell "0.71" [ref=e2843]
+            - cell "93" [ref=e2844]
+            - cell "90,785" [ref=e2845]
+          - row [ref=e2846]:
+            - cell "מע'אר" [ref=e2847]
+            - cell "חיפה" [ref=e2848]
+            - cell "3" [ref=e2849]
+            - cell "67%" [ref=e2850]
+            - cell "67%" [ref=e2851]
+            - cell "100%" [ref=e2852]
+            - cell "36" [ref=e2853]
+            - cell "0.52" [ref=e2854]
+            - cell "188" [ref=e2855]
+            - cell "108,639" [ref=e2856]
+          - row [ref=e2857]:
+            - cell "ע'ג'ר" [ref=e2858]
+            - cell "צפון" [ref=e2859]
+            - cell "3" [ref=e2860]
+            - cell "100%" [ref=e2861]
+            - cell "0%" [ref=e2862]
+            - cell "67%" [ref=e2863]
+            - cell "28" [ref=e2864]
+            - cell "0.48" [ref=e2865]
+            - cell "147" [ref=e2866]
+            - cell "105,423" [ref=e2867]
+          - row [ref=e2868]:
+            - cell "ריינה" [ref=e2869]
+            - cell "צפון" [ref=e2870]
+            - cell "3" [ref=e2871]
+            - cell "0%" [ref=e2872]
+            - cell "100%" [ref=e2873]
+            - cell "75%" [ref=e2874]
+            - cell "8" [ref=e2875]
+            - cell "0.55" [ref=e2876]
+            - cell "164" [ref=e2877]
+            - cell "97,186" [ref=e2878]
+          - row [ref=e2879]:
+            - cell "רכסים" [ref=e2880]
+            - cell "חיפה" [ref=e2881]
+            - cell "3" [ref=e2882]
+            - cell "0%" [ref=e2883]
+            - cell "0%" [ref=e2884]
+            - cell "0%" [ref=e2885]
+            - cell "64" [ref=e2886]
+            - cell "0.40" [ref=e2887]
+            - cell "158" [ref=e2888]
+            - cell "124,746" [ref=e2889]
+          - row [ref=e2890]:
+            - cell "שיבלי אום אלג'נם" [ref=e2891]
+            - cell "צפון" [ref=e2892]
+            - cell "3" [ref=e2893]
+            - cell "0%" [ref=e2894]
+            - cell "100%" [ref=e2895]
+            - cell "0%" [ref=e2896]
+            - cell "—" [ref=e2897]
+            - cell "0.61" [ref=e2898]
+            - cell "195" [ref=e2899]
+            - cell "67,264" [ref=e2900]
+          - row [ref=e2901]:
+            - cell "שעב" [ref=e2902]
+            - cell "חיפה" [ref=e2903]
+            - cell "3" [ref=e2904]
+            - cell "67%" [ref=e2905]
+            - cell "100%" [ref=e2906]
+            - cell "40%" [ref=e2907]
+            - cell "26" [ref=e2908]
+            - cell "0.54" [ref=e2909]
+            - cell "87" [ref=e2910]
+            - cell "105,310" [ref=e2911]
+          - row [ref=e2912]:
+            - cell "דיר אל אסד" [ref=e2913]
+            - cell "חיפה" [ref=e2914]
+            - cell "2" [ref=e2915]
+            - cell "50%" [ref=e2916]
+            - cell "0%" [ref=e2917]
+            - cell "25%" [ref=e2918]
+            - cell "22" [ref=e2919]
+            - cell "0.42" [ref=e2920]
+            - cell "86" [ref=e2921]
+            - cell "100,922" [ref=e2922]
+          - row [ref=e2923]:
+            - cell "הגליל התחתון" [ref=e2924]
+            - cell "צפון" [ref=e2925]
+            - cell "2" [ref=e2926]
+            - cell "50%" [ref=e2927]
+            - cell "0%" [ref=e2928]
+            - cell "9%" [ref=e2929]
+            - cell "26" [ref=e2930]
+            - cell "0.52" [ref=e2931]
+            - cell "191" [ref=e2932]
+            - cell "70,794" [ref=e2933]
+          - row [ref=e2934]:
+            - cell "כפר ברא" [ref=e2935]
+            - cell "מרכז" [ref=e2936]
+            - cell "2" [ref=e2937]
+            - cell "50%" [ref=e2938]
+            - cell "100%" [ref=e2939]
+            - cell "33%" [ref=e2940]
+            - cell "24" [ref=e2941]
+            - cell "0.63" [ref=e2942]
+            - cell "198" [ref=e2943]
+            - cell "85,352" [ref=e2944]
+          - row [ref=e2945]:
+            - cell "מגילות ים המלח" [ref=e2946]
+            - cell "מזרח" [ref=e2947]
+            - cell "2" [ref=e2948]
+            - cell "50%" [ref=e2949]
+            - cell "100%" [ref=e2950]
+            - cell "100%" [ref=e2951]
+            - cell "18" [ref=e2952]
+            - cell "0.51" [ref=e2953]
+            - cell "195" [ref=e2954]
+            - cell "46,796" [ref=e2955]
+          - row [ref=e2956]:
+            - cell "מסעדה" [ref=e2957]
+            - cell "צפון" [ref=e2958]
+            - cell "2" [ref=e2959]
+            - cell "100%" [ref=e2960]
+            - cell "100%" [ref=e2961]
+            - cell "50%" [ref=e2962]
+            - cell "24" [ref=e2963]
+            - cell "0.63" [ref=e2964]
+            - cell "75" [ref=e2965]
+            - cell "119,507" [ref=e2966]
+          - row [ref=e2967]:
+            - cell "נחף" [ref=e2968]
+            - cell "חיפה" [ref=e2969]
+            - cell "2" [ref=e2970]
+            - cell "100%" [ref=e2971]
+            - cell "100%" [ref=e2972]
+            - cell "33%" [ref=e2973]
+            - cell "30" [ref=e2974]
+            - cell "0.52" [ref=e2975]
+            - cell "143" [ref=e2976]
+            - cell "87,870" [ref=e2977]
+          - row [ref=e2978]:
+            - cell "קרית ביאליק" [ref=e2979]
+            - cell "חיפה" [ref=e2980]
+            - cell "2" [ref=e2981]
+            - cell "100%" [ref=e2982]
+            - cell "50%" [ref=e2983]
+            - cell "42%" [ref=e2984]
+            - cell "8" [ref=e2985]
+            - cell "0.71" [ref=e2986]
+            - cell "83" [ref=e2987]
+            - cell "99,370" [ref=e2988]
+          - row [ref=e2989]:
+            - cell "אלעד" [ref=e2990]
+            - cell "מרכז" [ref=e2991]
+            - cell "1" [ref=e2992]
+            - cell "100%" [ref=e2993]
+            - cell "100%" [ref=e2994]
+            - cell "100%" [ref=e2995]
+            - cell "17" [ref=e2996]
+            - cell "0.46" [ref=e2997]
+            - cell "123" [ref=e2998]
+            - cell "115,859" [ref=e2999]
+          - row [ref=e3000]:
+            - cell "כעביה-טבאש-חג'אג'רה" [ref=e3001]
+            - cell "צפון" [ref=e3002]
+            - cell "1" [ref=e3003]
+            - cell "100%" [ref=e3004]
+            - cell "0%" [ref=e3005]
+            - cell "25%" [ref=e3006]
+            - cell "7" [ref=e3007]
+            - cell "0.40" [ref=e3008]
+            - cell "116" [ref=e3009]
+            - cell "119,763" [ref=e3010]
+    - generic [ref=e3011]:
+      - generic [ref=e3012]: מימוש ב-QuickSight — נבדק
+      - heading "איך המסך הזה נבנה ב-QuickSight (ואיך בוחרים כמה מדדים יחד)" [level=3] [ref=e3013]
+      - generic [ref=e3014]:
+        - generic [ref=e3015]:
+          - text: ויזואל אחד — Layer map ✓
+          - paragraph [ref=e3016]: ויזואל מסוג Layer map יחיד. שכבה 1 = גבולות רשויות (GeoJSON) בצביעת gradient לפי המדד. אין צורך בשני ויזואלים.
+        - generic [ref=e3017]:
+          - text: המתקנים = שכבת GeoJSON שנייה ✓
+          - paragraph [ref=e3018]: Layer map תומך בכמה שכבות. מוסיפים שכבה 2 של המתקנים כ-GeoJSON, צבע לפי מצב (תקין/לשיפוץ/לא פעיל) דרך שדה המפתח של השכבה.
+        - generic [ref=e3019]:
+          - text: הטריק (הכנה חד-פעמית)
+          - paragraph [ref=e3020]: Layer map לא מקבל נקודות — לכן כל מתקן נשמר כפוליגון-עיגול זעיר (buffer ~90 מ׳). המרה חד-פעמית מנ״צ ל-GeoJSON, בלי שלבי BI מורכבים.
+        - generic [ref=e3021]:
+          - text: בורר המדד = Parameter control
+          - paragraph [ref=e3022]: בורר הצבע = פרמטר + Calculated field שמחליף את המדד. מסננים (מחוז/סוג) = פקדי סינון רב-בחירה. שכבת המתקנים = toggle הצג/הסתר.
+    - generic [ref=e3023]:
+      - heading "מקור נתון לכל מדד — הכול מהאקסל של המפקחים או מה-DW" [level=3] [ref=e3024]
+      - table [ref=e3025]:
+        - rowgroup [ref=e3026]:
+          - row [ref=e3027]:
+            - columnheader "ויזואל / מדד" [ref=e3028] [cursor=pointer]
+            - columnheader "מקור" [ref=e3029] [cursor=pointer]
+            - columnheader "שדה / חישוב" [ref=e3030] [cursor=pointer]
+          - row [ref=e3031]:
+            - cell "נקודות מתקנים" [ref=e3032]
+            - cell "אקסל מפקחים" [ref=e3033]
+            - cell "שם המתקן + כתובת → geocode (נ״צ)" [ref=e3035]
+          - row [ref=e3036]:
+            - cell "מס׳ מתקנים לרשות" [ref=e3037]
+            - cell "אקסל מפקחים" [ref=e3038]
+            - cell "COUNT לפי רשות מקומית" [ref=e3040]
+          - row [ref=e3041]:
+            - cell "% תקינים ופעילים" [ref=e3042]
+            - cell "אקסל מפקחים" [ref=e3043]
+            - cell "מצב המתקן = \"תקין ופעיל\"" [ref=e3045]
+          - row [ref=e3046]:
+            - cell "% נגישים לנכים" [ref=e3047]
+            - cell "אקסל מפקחים" [ref=e3048]
+            - cell "נגישות לנכים = \"כן\"" [ref=e3050]
+          - row [ref=e3051]:
+            - cell "% תקניים לתחרויות" [ref=e3052]
+            - cell "אקסל מפקחים" [ref=e3053]
+            - cell "מתקן תקני לתחרויות (מתחיל ב\"תקני\")" [ref=e3055]
+          - row [ref=e3056]:
+            - cell "גיל מתקן חציוני" [ref=e3057]
+            - cell "אקסל מפקחים" [ref=e3058]
+            - cell "2026 − חציון שנת הקמה" [ref=e3060]
+          - row [ref=e3061]:
+            - cell "תמהיל סוגי מתקנים" [ref=e3062]
+            - cell "אקסל מפקחים" [ref=e3063]
+            - cell "סוג מתקן (טקסונומיה)" [ref=e3065]
+          - row [ref=e3066]:
+            - cell "מתקנים ל-1,000 תושבים" [ref=e3067]
+            - cell "DW" [ref=e3068]
+            - cell "מתקנים ÷ אוכלוסייה (למ״ס) ×1000" [ref=e3070]
+          - row [ref=e3071]:
+            - cell "ספורטאים רשומים / מתקן" [ref=e3072]
+            - cell "DW" [ref=e3073]
+            - cell "ספורטאים רשומים (DW) ÷ מתקנים" [ref=e3075]
+          - row [ref=e3076]:
+            - cell "תקצוב לרשות למתקן" [ref=e3077]
+            - cell "מרכבה" [ref=e3078]
+            - cell "תמיכות ששולמו ÷ מתקנים — דורש אינטגרציית מרכבה" [ref=e3080]
+    - generic [ref=e3081]: "מוקאפ · יעד: AWS QuickSight (Points on map · Layer map/GeoJSON · KPI/Bar/Donut/Table). נקודות ומדדי אקסל מנתוני אמת; שכבות DW/מרכבה כ-placeholder עד חיבור המקורות. פלטת המשרד · RTL · Amazon Ember."

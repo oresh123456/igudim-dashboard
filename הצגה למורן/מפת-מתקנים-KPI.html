@@ -43,6 +43,16 @@
   .chip{font:inherit;font-size:12.5px;border:1px solid var(--border);background:#fff;color:var(--ink);padding:6px 12px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:.15s}
   .chip:hover{border-color:var(--navy)}
   .chip.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+  /* פילטרים גלובליים — אחיד עם wg-women.html (label מעל select) */
+  .gfilters{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;flex:1}
+  .gf{display:flex;flex-direction:column;gap:4px}
+  .gf label{font-size:11px;color:var(--ink-muted);font-weight:600}
+  .gf select{font-family:inherit;font-size:12.5px;padding:6px 10px;border:1px solid var(--border);border-radius:8px;
+    background:var(--surface);color:var(--ink);cursor:pointer;min-width:108px;outline:none;transition:.15s}
+  .gf select:hover{border-color:var(--navy)}
+  .gf-reset{margin-inline-start:auto;align-self:flex-end;background:transparent;border:1px solid var(--border);
+    border-radius:8px;padding:7px 14px;font-family:inherit;font-size:12px;color:var(--ink-muted);cursor:pointer;transition:.15s}
+  .gf-reset:hover{border-color:var(--navy);color:var(--navy)}
   .dot{width:9px;height:9px;border-radius:50%;display:inline-block}
   .toggle{font-size:12.5px;color:var(--ink-muted);display:inline-flex;gap:6px;align-items:center;cursor:pointer}
   .count-note{margin-inline-start:auto;font-size:12px;color:var(--ink-muted)}
@@ -113,6 +123,17 @@
     <div class="kpi s"><div class="n" id="kSel">–</div><div class="l" id="kSelL">ממוצע מדד הצבע</div></div>
   </div>
   <div class="panel">
+    <div class="frow">
+      <span class="lab">פילטרים גלובליים<span class="hint">Sheet filters · זהה למסכי הספורט</span></span>
+      <div class="gfilters">
+        <div class="gf"><label>שנה</label><select><option>2026</option><option>2025</option></select></div>
+        <div class="gf"><label>רשות מקומית</label><select id="fAuth"><option value="">הכל</option></select></div>
+        <div class="gf"><label>מדד סוציו-אקונומי</label><select><option>הכל</option><option>אשכול 1–3</option><option>אשכול 4–6</option><option>אשכול 7–10</option></select></div>
+        <div class="gf"><label>איגוד</label><select><option>הכל</option></select></div>
+        <div class="gf"><label>אגודה</label><select><option>הכל</option></select></div>
+        <button class="gf-reset" id="fReset">איפוס</button>
+      </div>
+    </div>
     <div class="frow"><span class="lab">מדד הצבע<span class="hint">Color · צביעת הרשויות</span></span><div class="kpibar" id="colorbar"></div></div>
     <div class="frow">
       <span class="lab">תצוגת מפה<span class="hint">Layer map יחיד</span></span>
@@ -233,7 +254,7 @@ const FACCOLORS={
   acc:{t:'נגישות לנכים', col:f=>f.acc?'#2D9CDB':'#7A8FA6', items:()=>[['#2D9CDB','נגיש'],['#7A8FA6','לא נגיש']]},
 };
 const DISTS=['תל אביב','מרכז','דרום','צפון','חיפה','מזרח'];
-const state={colorKpi:'pct_ok', facColor:'type', facSize:4, dists:new Set(), cats:new Set(), pts:true, sort:'n', dir:-1};
+const state={colorKpi:'pct_ok', facColor:'type', facSize:4, dists:new Set(), cats:new Set(), auth:null, pts:true, sort:'n', dir:-1};
 let facMarkers=[];
 const authByName={}; MD.auth.forEach(a=>authByName[a.au]=a);
 const kpiOf=k=>KPIS.find(x=>x.k===k);
@@ -245,7 +266,7 @@ function paint(pal,t){t=Math.max(0,Math.min(1,t));
   if(pal==='qual'){if(t<.5){const u=t/.5;return hex(lerp(0xDA,0xF8,u),lerp(0x34,0xC3,u),lerp(0x39,0x3E,u));}const u=(t-.5)/.5;return hex(lerp(0xF8,0x24,u),lerp(0xC3,0x8A,u),lerp(0x3E,0x3D,u));}
   if(pal==='agerev'){if(t<.5){const u=t/.5;return hex(lerp(0x24,0xF8,u),lerp(0x8A,0xC3,u),lerp(0x3D,0x3E,u));}const u=(t-.5)/.5;return hex(lerp(0xF8,0xDA,u),lerp(0xC3,0x34,u),lerp(0x3E,0x39,u));}
   return '#1F3F6D';}
-function activeAuth(){return MD.auth.filter(a=>(state.dists.size===0||state.dists.has(a.dist)));}
+function activeAuth(){return MD.auth.filter(a=>(state.dists.size===0||state.dists.has(a.dist))&&(!state.auth||a.au===state.auth));}
 function valOf(a,k){const v=a[k];return(v===''||v==null)?null:+v;}
 function domainOf(k){const vals=activeAuth().map(a=>valOf(a,k)).filter(v=>v!=null).sort((x,y)=>x-y);
   if(!vals.length)return[0,1];const q=p=>vals[Math.min(vals.length-1,Math.floor(p*(vals.length-1)))];
@@ -260,6 +281,7 @@ const polyLayer=L.layerGroup().addTo(mapPoly);   // שכבה 1: גבולות ר�
 const facLayer=L.layerGroup().addTo(mapPoly);    // שכבה 2: מתקנים כעיגול-פוליגון זעיר (צבע לפי מצב)
 
 function facFilter(f){const a=authByName[f.au];
+  if(state.auth && f.au!==state.auth)return false;
   if(state.dists.size && (!a||!state.dists.has(a.dist)))return false;
   if(state.cats.size && !state.cats.has(f.c))return false;return true;}
 function facLegend(){const fc=FACCOLORS[state.facColor];
@@ -378,7 +400,23 @@ function wireFacColor(){document.querySelectorAll('[data-faccolor]').forEach(b=>
   document.querySelectorAll('[data-faccolor]').forEach(x=>x.classList.remove('on'));b.classList.add('on');
   state.facColor=b.dataset.faccolor;drawPoints();});}
 document.querySelectorAll('#tbl th').forEach(th=>th.onclick=()=>{const k=th.dataset.k;state.dir=(state.sort===k)?-state.dir:-1;state.sort=k;drawTable();});
-buildKpiBar('colorbar','colorKpi');buildDistChips();wireCats();wireFacColor();renderAll();
+// פילטרים גלובליים: רשות מקומית מחוברת לנתונים; היתר פקדי מוקאפ (כמו wg-women)
+function buildAuthSelect(){const s=document.getElementById('fAuth');
+  MD.auth.map(a=>a.au).sort((x,y)=>x.localeCompare(y,'he')).forEach(n=>{
+    const o=document.createElement('option');o.value=n;o.textContent=n;s.appendChild(o);});
+  s.onchange=()=>{state.auth=s.value||null;
+    const a=state.auth?authByName[state.auth]:null;
+    if(a)mapPoly.setView([a.lat,a.lo],11);else fitDists();
+    renderAll();};}
+function wireReset(){document.getElementById('fReset').onclick=()=>{
+  state.dists.clear();state.cats.clear();state.auth=null;
+  document.querySelectorAll('.panel select').forEach(s=>s.selectedIndex=0);
+  document.querySelectorAll('[data-dist]').forEach(x=>x.classList.remove('on'));
+  document.querySelector('[data-dist="all"]').classList.add('on');
+  document.querySelectorAll('[data-cat]').forEach(x=>x.classList.remove('on'));
+  document.querySelector('[data-cat="all"]').classList.add('on');
+  mapPoly.setView([31.4,35.0],7.4);renderAll();};}
+buildKpiBar('colorbar','colorKpi');buildDistChips();wireCats();wireFacColor();buildAuthSelect();wireReset();renderAll();
 setTimeout(()=>{mapPoly.invalidateSize();},250);
 
 </script>
