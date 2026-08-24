@@ -980,8 +980,14 @@
       <div class="card col-7"><div class="card-head"><span class="card-title">ספורטאים לפי ענף</span><span class="card-meta">Bar <span class="src-real">קיים בתיק יישוב</span></span></div><div class="card-canvas-wrap h-300"><canvas id="ac_branch"></canvas></div></div>
       <div class="card col-5"><div class="card-head"><span class="card-title">תקציב לפי מבחן</span><span class="card-meta">Bar · מלש&quot;ח <span class="src-real">קיים בתיק יישוב</span></span></div><div class="card-canvas-wrap h-300"><canvas id="ac_tests"></canvas></div></div>
       <div class="card col-12"><div class="card-head"><span class="card-title">מול הרשויות הדומות — אותו אשכול חברתי-כלכלי</span><span class="card-meta">Clustered Bar · הרשות · ממוצע האשכול · ממוצע ארצי <span class="qs-tag">QS</span></span></div><div class="card-canvas-wrap h-280"><canvas id="ac_bench"></canvas></div><div style="font-size:11px;color:var(--ink-faint);margin-top:6px;line-height:1.6"><strong>ממוצע האשכול = 100.</strong> ארבעת המדדים מוצגים כמדד יחסי כדי שיישבו על אותו סולם (₪ לנפש, אחוזים ויחסים ל-1,000 אינם ברי-השוואה בציר אחד); הערכים המוחלטים ב-Tooltip. ההשוואה היא מול <strong>רשויות באותו אשכול</strong> ולא מול הממוצע הארצי — רשות באשכול 3 שנמצאת מתחת לממוצע הארצי עשויה להיות מובילה בין שוותיה, ולהפך. זו השאלה שמנהלת שואלת לפני הקצאה.</div></div>
-      <div class="card col-5"><div class="card-head"><span class="card-title">מתקנים לפי סוג</span><span class="card-meta">Donut <span class="src-real">קיים בדשבורד המתקנים</span></span></div><div class="card-canvas-wrap h-260"><canvas id="ac_fac"></canvas></div></div>
-      <div class="card col-7"><div class="card-head"><span class="card-title">נגישות המתקנים ברשות</span><span class="card-meta">Bar · % <span class="src-real">קיים בדשבורד המתקנים</span></span></div><div class="card-canvas-wrap h-260"><canvas id="ac_facq"></canvas></div><div style="font-size:11px;color:var(--ink-faint);margin-top:6px;line-height:1.6">מדד "המתקן הקרוב ביותר" נלקח מניתוח הרדיוס בדשבורד המתקנים (מפה 3) — מרחק חציוני מכתובת מגורים למתקן הקרוב.</div></div>
+    </div>
+
+    <h2 class="st-sub" style="--accent:var(--navy)">מתקני ספורט ברשות</h2>
+    <p class="st-subnote">ספירת המתקנים, תמהיל הסוגים ואחוזי התקינות/נגישות/תקן הם <strong>נתוני אמת מאקסל המפקחים</strong> — אותו מקור שמזין את לשונית "מתקנים", ולכן המספרים זהים בין שני המסכים. מדד "המתקן הקרוב ביותר" מגיע מניתוח הרדיוס (מפה 3 שם). האוכלוסייה היא נתון למ"ס, וממוצעי האשכול להמחשה.</p>
+    <div class="kpis" id="ac_fkpis"></div>
+    <div class="grid">
+      <div class="card col-5"><div class="card-head"><span class="card-title">תמהיל סוגי המתקנים</span><span class="card-meta">Donut <span class="src-real">אקסל מפקחים</span></span></div><div class="card-canvas-wrap h-260"><canvas id="ac_fac"></canvas></div><div id="ac_facnone" style="font-size:11.5px;color:var(--ink-muted);margin-top:6px;line-height:1.6"></div></div>
+      <div class="card col-7"><div class="card-head"><span class="card-title">מצב המתקנים — הרשות מול הממוצע הארצי</span><span class="card-meta">Clustered Bar · % <span class="src-real">אקסל מפקחים</span></span></div><div class="card-canvas-wrap h-260"><canvas id="ac_facq"></canvas></div><div style="font-size:11px;color:var(--ink-faint);margin-top:6px;line-height:1.6">הממוצע הארצי: <strong>84%</strong> תקינים ופעילים · <strong>59%</strong> נגישים לנכים (8,507 מתקנים ב-255 רשויות). "% תקניים לתחרויות" אינו מאוכלס בכל הרשויות ומוצג רק היכן שקיים.</div></div>
       <div class="card col-12"><div class="card-head"><span class="card-title">אגודות פעילות ברשות</span><span class="card-meta">Table</span></div><div id="ac_table"></div></div>
     </div>
     <div class="footer-note"><strong>מקורות:</strong> תקציב ותמיכות — פנימי (מרכבה). אוכלוסייה, אשכול חברתי-כלכלי ומדד פריפריאליות — הלמ"ס. ספורטאים ואגודות — דשבורד האיגודים/אגודות. מתקנים — אקסל המפקחים ודשבורד המתקנים. נתוני דמה להמחשה.</div>
@@ -1997,43 +2003,45 @@
   INIT.authcard = function(){
     const kc=(l,val,sub,cls)=>`<div class="kpi"><div class="kpi-label">${l}</div><div class="kpi-value">${val}</div><div class="kpi-sub ${cls||''}">${sub||''}</div></div>`;
     const AUTHS=[
-      {n:'חדרה',dist:'חיפה',cl:6,per:5,pop:99700,bud:4.2,ath:6240,clubs:18,fac:47,ach:41,
+      {n:'חדרה',dist:'חיפה',cl:6,per:5,pop:99700,bud:4.2,ath:6240,clubs:18,fac:28,ach:41,
        br:[['כדורגל',1580],['כדורסל',1120],['שחייה',760],['אתלטיקה',540],['התעמלות',430],['ג\'ודו',380],['טניס',290],['אחר',1140]],
        tests:[['סל הספורט לרשויות',1.9],['ספורט עממי-קהילתי',1.1],['קידום ספורט נשים',.6],['ספורט פראלימפי',.4],['ספורט בחירום',.2]],
-       facmix:[18,12,4,7,2,4], facq:[86,61,38], nearest:640,
+       facmix:[19,7,0,0,2,0], facq:[89,89,81], auFull:'חדרה', auFull:'באר שבע', auFull:'נצרת', auFull:'מודיעין-מכבים-רעות', auFull:'אשקלון', auFull:'כרמיאל', nearest:640,
        list:[['מכבי חדרה','כדורגל',9,540],['הפועל חדרה','כדורסל',7,410],['מועדון השחייה חדרה','שחייה',5,320],['אתלטיקה חדרה','אתלטיקה',4,240],['ג\'ודו חדרה','ג\'ודו',3,180]]},
-      {n:'באר שבע',dist:'דרום',cl:5,per:3,pop:214600,bud:8.9,ath:12980,clubs:31,fac:86,ach:73,
+      {n:'באר שבע',dist:'דרום',cl:5,per:3,pop:214600,bud:8.9,ath:12980,clubs:31,fac:231,ach:73,
        br:[['כדורגל',3240],['כדורסל',2180],['שחייה',1420],['אתלטיקה',1080],['התעמלות',760],['ג\'ודו',690],['טניס',480],['אחר',3130]],
        tests:[['סל הספורט לרשויות',4.1],['ספורט עממי-קהילתי',2.2],['קידום ספורט נשים',1.1],['ספורט פראלימפי',.9],['ספורט בחירום',.6]],
-       facmix:[31,22,7,14,3,9], facq:[81,54,31], nearest:720,
+       facmix:[116,40,7,55,9,4], facq:[90,57,null], auFull:'באר שבע', nearest:720,
        list:[['הפועל באר שבע','כדורגל',14,880],['מכבי באר שבע','כדורסל',9,520],['מועדון שחייה נגב','שחייה',7,430],['אתלטיקה הנגב','אתלטיקה',6,360],['ג\'ודו באר שבע','ג\'ודו',4,240]]},
-      {n:'נצרת',dist:'צפון',cl:3,per:4,pop:78300,bud:2.4,ath:3120,clubs:11,fac:26,ach:14,
+      {n:'נצרת',dist:'צפון',cl:3,per:4,pop:78300,bud:2.4,ath:3120,clubs:11,fac:62,ach:14,
        br:[['כדורגל',1140],['כדורסל',620],['אתלטיקה',310],['שחייה',180],['ג\'ודו',210],['התעמלות',140],['טניס',90],['אחר',430]],
        tests:[['סל הספורט לרשויות',1.3],['ספורט עממי-קהילתי',.6],['קידום ספורט נשים',.3],['ספורט פראלימפי',.2]],
-       facmix:[12,7,1,4,1,1], facq:[68,34,17], nearest:1180,
+       facmix:[44,13,2,2,0,1], facq:[68,53,74], auFull:'נצרת', nearest:1180,
        list:[['הפועל נצרת','כדורגל',8,420],['מכבי נצרת','כדורסל',5,260],['אתלטיקה נצרת','אתלטיקה',3,150],['ג\'ודו נצרת','ג\'ודו',2,110]]},
-      {n:'מודיעין',dist:'מרכז',cl:8,per:8,pop:96400,bud:3.6,ath:7480,clubs:22,fac:53,ach:38,
+      {n:'מודיעין',dist:'מרכז',cl:8,per:8,pop:96400,bud:3.6,ath:7480,clubs:22,fac:75,ach:38,
        br:[['כדורגל',1720],['כדורסל',1310],['שחייה',940],['התעמלות',680],['אתלטיקה',520],['טניס',410],['ג\'ודו',330],['אחר',1570]],
        tests:[['סל הספורט לרשויות',1.4],['ספורט עממי-קהילתי',1.1],['קידום ספורט נשים',.6],['ספורט פראלימפי',.3],['ספורט בחירום',.2]],
-       facmix:[19,15,5,8,2,4], facq:[93,72,44], nearest:510,
+       facmix:[35,20,3,10,0,7], facq:[100,92,65], auFull:'מודיעין-מכבים-רעות', nearest:510,
        list:[['עירוני מודיעין','כדורגל',10,610],['מכבי מודיעין','כדורסל',8,470],['מועדון שחייה מודיעין','שחייה',6,380],['התעמלות מודיעין','התעמלות',5,290],['טניס מודיעין','טניס',3,190]]},
-      {n:'אשקלון',dist:'דרום',cl:4,per:4,pop:148700,bud:5.1,ath:7920,clubs:24,fac:61,ach:29,
+      {n:'אשקלון',dist:'דרום',cl:4,per:4,pop:148700,bud:5.1,ath:7920,clubs:24,fac:122,ach:29,
        br:[['כדורגל',2140],['כדורסל',1380],['שחייה',890],['אתלטיקה',640],['ג\'ודו',470],['התעמלות',380],['טניס',260],['אחר',1760]],
        tests:[['סל הספורט לרשויות',2.4],['ספורט עממי-קהילתי',1.2],['קידום ספורט נשים',.6],['ספורט בחירום',.5],['ספורט פראלימפי',.4]],
-       facmix:[23,16,4,10,2,6], facq:[76,49,26], nearest:830,
+       facmix:[53,32,11,15,3,8], facq:[93,71,44], auFull:'אשקלון', nearest:830,
        list:[['הפועל אשקלון','כדורגל',11,640],['מכבי אשקלון','כדורסל',7,390],['שחייה אשקלון','שחייה',5,300],['אתלטיקה אשקלון','אתלטיקה',4,220]]},
-      {n:'כרמיאל',dist:'צפון',cl:6,per:6,pop:46800,bud:1.8,ath:3410,clubs:12,fac:24,ach:16,
+      {n:'כרמיאל',dist:'צפון',cl:6,per:6,pop:46800,bud:1.8,ath:3410,clubs:12,fac:25,ach:16,
        br:[['כדורגל',780],['כדורסל',620],['שחייה',410],['אתלטיקה',340],['התעמלות',280],['ג\'ודו',190],['טניס',140],['אחר',650]],
        tests:[['סל הספורט לרשויות',.8],['ספורט עממי-קהילתי',.5],['קידום ספורט נשים',.3],['ספורט פראלימפי',.2]],
-       facmix:[9,7,2,3,1,2], facq:[88,57,29], nearest:690,
+       facmix:[10,13,1,0,1,0], facq:[96,72,52], auFull:'כרמיאל', nearest:690,
        list:[['הפועל כרמיאל','כדורגל',6,300],['מכבי כרמיאל','כדורסל',5,250],['שחייה כרמיאל','שחייה',4,190],['אתלטיקה כרמיאל','אתלטיקה',3,140]]}
     ];
     // ממוצע ארצי — משוקלל אוכלוסייה על פני כל האשכולות, ולכן נופל בתוך טווח ממוצעי האשכולות
     // (אשכולות נמוכים מחזיקים נתח אוכלוסייה גדול ומושכים את הממוצע כלפי מטה).
-    const NAT={budpp:32.0,athpct:4.8,facpk:0.52,clubpk:0.21};
-    const CLAVG={3:{budpp:26.4,athpct:3.6,facpk:0.41,clubpk:0.17},4:{budpp:31.2,athpct:5.1,facpk:0.44,clubpk:0.17},
-                 5:{budpp:35.8,athpct:5.7,facpk:0.42,clubpk:0.15},6:{budpp:38.1,athpct:6.0,facpk:0.48,clubpk:0.19},
-                 8:{budpp:33.4,athpct:7.2,facpk:0.55,clubpk:0.22}};
+    const NAT={budpp:32.0,athpct:4.8,facpk:0.86,clubpk:0.21};   // facpk = 8,507 מתקנים / ~9.9M נפש
+    const NAT_FAC={ok:84,acc:59,std:38};                        // אקסל המפקחים · ממוצע ארצי
+    // facpk כויל מחדש אחרי המעבר לספירות מתקנים אמיתיות (הערכים הקודמים נגזרו מספירות מומצאות)
+    const CLAVG={3:{budpp:26.4,athpct:3.6,facpk:0.75,clubpk:0.17},4:{budpp:31.2,athpct:5.1,facpk:0.85,clubpk:0.17},
+                 5:{budpp:35.8,athpct:5.7,facpk:1.00,clubpk:0.15},6:{budpp:38.1,athpct:6.0,facpk:0.55,clubpk:0.19},
+                 8:{budpp:33.4,athpct:7.2,facpk:0.80,clubpk:0.22}};
     const FACLBL=['מגרש','אולם','בריכה','כושר','אצטדיון','אחר'];
     // שישה סוגי מתקן — שישה צבעי קטגוריה מהפלטה
     const FACCOL=[v('--navy'),v('--purple'),v('--sky'),v('--orange'),v('--gold'),v('--slate')];
@@ -2084,21 +2092,40 @@
             return c.dataset.label+': '+f+'  (מדד '+c.raw+')';}}}},
           scales:{x:{...gridX},y:{...gridY,ticks:{color:COL.muted,callback:x=>x}},
             }}});
-      // מתקנים לפי סוג
+      // ── KPI מתקנים ──
+      const fSum=a.facmix.reduce((x,y)=>x+y,0), fTop=FACLBL[a.facmix.indexOf(Math.max.apply(null,a.facmix))];
+      document.getElementById('ac_fkpis').innerHTML=
+        kc('מתקנים ברשות',a.fac,facpk.toFixed(2)+' ל-1,000 תוש׳ · ארצי '+NAT.facpk)+
+        kc('% תקינים ופעילים',a.facq[0]+'%',arr(a.facq[0],NAT_FAC.ok)+'ארצי '+NAT_FAC.ok+'%',cmp(a.facq[0],NAT_FAC.ok))+
+        kc('% נגישים לנכים',a.facq[1]+'%',arr(a.facq[1],NAT_FAC.acc)+'ארצי '+NAT_FAC.acc+'%',cmp(a.facq[1],NAT_FAC.acc))+
+        kc('המתקן הקרוב ביותר',a.nearest+' מ׳','חציון · מניתוח הרדיוס');
+      // תמהיל סוגים
+      // רק סוגים שקיימים בפועל — סוג חסר הוא ממצא ניהולי ומוצג במפורש מתחת לגרף
+      const kept=FACLBL.map((l,i)=>i).filter(i=>a.facmix[i]>0);
+      const absent=FACLBL.filter((l,i)=>a.facmix[i]===0);
       if(D4)D4.destroy(); D4=new Chart(document.getElementById('ac_fac'),{type:'doughnut',
-        data:{labels:FACLBL,datasets:[{data:a.facmix,backgroundColor:FACCOL,borderWidth:2,borderColor:'#fff'}]},
-        options:{cutout:'56%',plugins:{...legBottom('bottom'),tooltip:{rtl:true}}}});
-      // איכות ונגישות
+        data:{labels:kept.map(i=>FACLBL[i]),
+              datasets:[{data:kept.map(i=>a.facmix[i]),backgroundColor:kept.map(i=>FACCOL[i]),borderWidth:2,borderColor:'#fff'}]},
+        options:{cutout:'56%',plugins:{...legBottom('bottom'),tooltip:{rtl:true,callbacks:{
+          label:c=>c.label+': '+c.raw+' ('+Math.round(c.raw/fSum*100)+'%)'}}}}});
+      document.getElementById('ac_facnone').innerHTML = absent.length
+        ? '<strong>אין ברשות:</strong> ' + absent.join(' · ')
+        : 'כל ששת סוגי המתקנים קיימים ברשות.';
+      // מצב המתקנים מול הממוצע הארצי
+      const QL=['% תקינים ופעילים','% נגישים לנכים','% תקניים לתחרויות'];
+      const qa=a.facq.map(x=>x==null?null:x), qn=[NAT_FAC.ok,NAT_FAC.acc,NAT_FAC.std];
       if(D5)D5.destroy(); D5=new Chart(document.getElementById('ac_facq'),{type:'bar',
-        data:{labels:['% תקינים ופעילים','% נגישים לנכים','% תקניים לתחרויות'],datasets:[
-          {label:a.n,data:a.facq,backgroundColor:[COL.success,v('--perf'),COL.rest],borderRadius:3,barPercentage:.6}]},
-        options:{plugins:{...noLeg,tooltip:{rtl:true,callbacks:{label:c=>c.raw+'%'}}},
+        data:{labels:QL,datasets:[
+          {label:a.n,data:qa,backgroundColor:COL.navy,borderRadius:3},
+          {label:'ממוצע ארצי',data:qn,backgroundColor:COL.slate,borderRadius:3}]},
+        options:{plugins:{...legBottom('bottom'),tooltip:{rtl:true,callbacks:{
+          label:c=>c.dataset.label+': '+(c.raw==null?'לא מאוכלס':c.raw+'%')}}},
           scales:{x:{...gridX},y:{...gridY,max:100,ticks:{color:COL.muted,callback:x=>x+'%'}}}}});
       // טבלה
       document.getElementById('ac_table').innerHTML=
         '<table class="db-table"><thead><tr><th>אגודה</th><th>ענף</th><th>קבוצות</th><th>ספורטאים</th><th>חלק מספורטאי הרשות</th></tr></thead><tbody>'+
         a.list.map(c=>`<tr><td style="text-align:right;font-weight:500">${c[0]}</td><td>${c[1]}</td><td>${c[2]}</td><td>${c[3].toLocaleString('he-IL')}</td><td>${(c[3]/a.ath*100).toFixed(1)}%</td></tr>`).join('')+
-        `<tr><td colspan="5" style="font-size:11px;color:var(--ink-faint);text-align:right">מוצגות ${a.list.length} מתוך ${a.clubs} אגודות · המתקן הקרוב ביותר (חציון): ${a.nearest} מ׳ — מניתוח הרדיוס בדשבורד המתקנים</td></tr>`+
+        `<tr><td colspan="5" style="font-size:11px;color:var(--ink-faint);text-align:right">מוצגות ${a.list.length} מתוך ${a.clubs} אגודות</td></tr>`+
         '</tbody></table>';
     }
     sel.onchange=paint; paint();
