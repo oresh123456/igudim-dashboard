@@ -86,6 +86,8 @@
   .vlgd .legend2{margin-top:0;gap:8px 16px;font-size:11.5px;color:var(--ink)}
   #mapPoly,#mapFac{height:600px;z-index:1}
   #mapRad{height:560px;z-index:1}
+  .z2d-btn{width:30px;height:30px;line-height:30px;text-align:center;font-size:17px;background:#fff;cursor:pointer;text-decoration:none;color:#1F3F6D;font-weight:700}
+  .z2d-btn:hover{background:#f4f6fa}
   /* ── בורר נקודת עוגן (QuickSight: Parameter control · Dropdown מדאטהסט) ── */
   .anch{position:relative;flex:1 1 340px;max-width:460px}
   .anch input{width:100%;font:inherit;font-size:13px;padding:7px 11px;border:1px solid var(--border);
@@ -326,8 +328,19 @@ let CDOM=[0,1];
 function colorFor(a){const v=valOf(a,state.colorKpi);if(v==null)return '#c9d2df';
   const[lo,hi]=CDOM;return paint(kpiOf(state.colorKpi).pal,(v-lo)/(hi-lo));}
 
-function baseMap(id){const m=L.map(id,{zoomControl:true,preferCanvas:true}).setView([31.4,35.0],7.4);
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{attribution:'© OSM · © CARTO',subdomains:'abcd',maxZoom:19}).addTo(m);return m;}
+// תצוגת ברירת מחדל = ישראל. ב-QuickSight זה מושג ב-auto-fit לנתונים (או Bounds+MapZoomMode:MANUAL).
+// אין נעילת גבולות קשיחה — QuickSight אינו חוסם pan/zoom; הוא מספק "Zoom to data" מובנה במקום.
+const ISR_HOME={center:[31.4,35.0],zoom:7.4};
+function baseMap(id){const m=L.map(id,{zoomControl:true,preferCanvas:true}).setView(ISR_HOME.center,ISR_HOME.zoom);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{attribution:'© OSM · © CARTO',subdomains:'abcd',maxZoom:19}).addTo(m);
+  // "התאם לנתונים" — מקביל ל-Zoom to data המובנה של QuickSight (מחזיר לתצוגת הנתונים = ישראל)
+  const Z2D=L.Control.extend({options:{position:'topleft'},onAdd:function(){
+    const b=L.DomUtil.create('a','leaflet-bar leaflet-control z2d-btn');
+    b.href='#';b.title='התאם לנתונים · Zoom to data';b.setAttribute('role','button');b.setAttribute('aria-label','התאם לנתונים');b.innerHTML='⤢';
+    L.DomEvent.on(b,'click',L.DomEvent.stop).on(b,'click',()=>m.setView(ISR_HOME.center,ISR_HOME.zoom));
+    return b;}});
+  m.addControl(new Z2D());
+  return m;}
 // שתי מפות נפרדות: מפה 1 = רמת רשויות (פוליגונים) · מפה 2 = רמת מתקנים (נקודות)
 const mapPoly=baseMap('mapPoly');
 const polyLayer=L.layerGroup().addTo(mapPoly);   // מפה 1: גבולות רשויות (choropleth)
