@@ -86,8 +86,6 @@
   .vlgd .legend2{margin-top:0;gap:8px 16px;font-size:11.5px;color:var(--ink)}
   #mapPoly,#mapFac{height:600px;z-index:1}
   #mapRad{height:560px;z-index:1}
-  .z2d-btn{width:30px;height:30px;line-height:30px;text-align:center;font-size:17px;background:#fff;cursor:pointer;text-decoration:none;color:#1F3F6D;font-weight:700}
-  .z2d-btn:hover{background:#f4f6fa}
   /* ── בורר נקודת עוגן (QuickSight: Parameter control · Dropdown מדאטהסט) ── */
   .anch{position:relative;flex:1 1 340px;max-width:460px}
   .anch input{width:100%;font:inherit;font-size:13px;padding:7px 11px;border:1px solid var(--border);
@@ -294,8 +292,6 @@ const KPIS = [
   {k:'pct_acc',t:'% נגישים לנכים',         src:'excel',   pal:'navy',   fmt:v=>Math.round(v)+'%'},
   {k:'pct_std',t:'% תקניים לתחרויות',      src:'excel',   pal:'navy',   fmt:v=>Math.round(v)+'%'},
 ];
-// מפה 1 (Choropleth) — מדדי צביעה זמינים בשלב זה. שאר המדדים שמורים לשלב 2 (ר' קובץ -שלב2).
-const COLOR_KPIS=['pct_acc','pct_std'];
 const SRC={excel:{cls:'s-excel',txt:'אקסל מפקחים'},dw:{cls:'s-dw',txt:'DW'},merkava:{cls:'s-merkava',txt:'מרכבה'}};
 const CAT={field:'מגרש',hall:'אולם',pool:'בריכה',gym:'כושר',stadium:'אצטדיון',other:'אחר'};
 const CATCOL={field:'#1F3F6D',hall:'#6B4FA0',pool:'#7A8FA6',gym:'#E07B39',stadium:'#F8C33E',other:'#9aa8bd'};
@@ -307,7 +303,7 @@ const FACCOLORS={
   acc:{t:'נגישות לנכים', col:f=>f.acc?'#2D9CDB':'#7A8FA6', items:()=>[['#2D9CDB','נגיש'],['#7A8FA6','לא נגיש']]},
 };
 const DISTS=['תל אביב','מרכז','דרום','צפון','חיפה','מזרח'];
-const state={colorKpi:'pct_acc', facColor:'type', dists:new Set(), cats:new Set(), sort:'n', dir:-1};
+const state={colorKpi:'pct_ok', facColor:'type', dists:new Set(), cats:new Set(), sort:'n', dir:-1};
 state.radiusKm=3; state.anchor=null;   // ניתוח רדיוס — נקודת עוגן + רדיוס בצעדים קבועים
 const FACR=4.5;   // רדיוס קבוע לנקודות המתקנים (ב-QuickSight: גודל נקודה קבוע בוויזואל)
 const authByName={}; MD.auth.forEach(a=>authByName[a.au]=a);
@@ -330,19 +326,8 @@ let CDOM=[0,1];
 function colorFor(a){const v=valOf(a,state.colorKpi);if(v==null)return '#c9d2df';
   const[lo,hi]=CDOM;return paint(kpiOf(state.colorKpi).pal,(v-lo)/(hi-lo));}
 
-// תצוגת ברירת מחדל = ישראל. ב-QuickSight זה מושג ב-auto-fit לנתונים (או Bounds+MapZoomMode:MANUAL).
-// אין נעילת גבולות קשיחה — QuickSight אינו חוסם pan/zoom; הוא מספק "Zoom to data" מובנה במקום.
-const ISR_HOME={center:[31.4,35.0],zoom:7.4};
-function baseMap(id){const m=L.map(id,{zoomControl:true,preferCanvas:true}).setView(ISR_HOME.center,ISR_HOME.zoom);
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{attribution:'© OSM · © CARTO',subdomains:'abcd',maxZoom:19}).addTo(m);
-  // "התאם לנתונים" — מקביל ל-Zoom to data המובנה של QuickSight (מחזיר לתצוגת הנתונים = ישראל)
-  const Z2D=L.Control.extend({options:{position:'topleft'},onAdd:function(){
-    const b=L.DomUtil.create('a','leaflet-bar leaflet-control z2d-btn');
-    b.href='#';b.title='התאם לנתונים · Zoom to data';b.setAttribute('role','button');b.setAttribute('aria-label','התאם לנתונים');b.innerHTML='⤢';
-    L.DomEvent.on(b,'click',L.DomEvent.stop).on(b,'click',()=>m.setView(ISR_HOME.center,ISR_HOME.zoom));
-    return b;}});
-  m.addControl(new Z2D());
-  return m;}
+function baseMap(id){const m=L.map(id,{zoomControl:true,preferCanvas:true}).setView([31.4,35.0],7.4);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{attribution:'© OSM · © CARTO',subdomains:'abcd',maxZoom:19}).addTo(m);return m;}
 // שתי מפות נפרדות: מפה 1 = רמת רשויות (פוליגונים) · מפה 2 = רמת מתקנים (נקודות)
 const mapPoly=baseMap('mapPoly');
 const polyLayer=L.layerGroup().addTo(mapPoly);   // מפה 1: גבולות רשויות (choropleth)
@@ -530,7 +515,7 @@ function buildAnchorPicker(){
 function renderAll(){drawPoly();drawPoints();drawLegend();drawCards();drawBar();drawDonut();drawTable();drawRadius();updCount();}
 
 function buildKpiBar(id,which){const bar=document.getElementById(id);
-  KPIS.filter(kp=>which!=='colorKpi'||COLOR_KPIS.includes(kp.k)).forEach(kp=>{const sb=SRC[kp.src],b=document.createElement('button');
+  KPIS.forEach(kp=>{const sb=SRC[kp.src],b=document.createElement('button');
     b.className='kbtn'+(kp.k===state[which]?' on':'');
     b.innerHTML='<span class="kt">'+kp.t+'</span><span class="src-badge '+sb.cls+'">'+sb.txt+'</span>';
     b.onclick=()=>{state[which]=kp.k;[...bar.children].forEach(c=>c.classList.remove('on'));b.classList.add('on');
