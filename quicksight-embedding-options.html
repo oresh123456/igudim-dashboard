@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QuickSight embedding — decision: 1-click registered-user</title>
+<style>
+  :root{
+    --navy:#1f3a5f; --teal:#0f766e; --ink:#1a2230; --muted:#5b6472;
+    --bg:#f4f6f9; --surface:#ffffff; --border:#e2e7ee;
+    --green:#166534; --green-bg:#e7f5ec;
+    --amber:#92600a; --amber-bg:#fdf3e0;
+    --grey:#565f6b;  --grey-bg:#eef1f5;
+    --red:#9b1c1c;   --red-bg:#fbe9e9;
+    --blue:#1d4ed8;  --blue-bg:#e8f1fb;
+    --code-bg:#eef2f7; --code-border:#d5deea; --code-bar:#e3eaf3; --code-ink:#26324a;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Segoe UI","Helvetica Neue",system-ui,Arial,sans-serif;
+    line-height:1.65;font-size:16px;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:840px;margin:0 auto;padding:28px 22px 80px;}
+  a{color:var(--blue)}
+  h1,h2,h3{margin:0;color:var(--navy);text-wrap:balance}
+  p{margin:0}
+  code,.mono{font-family:ui-monospace,"Cascadia Code","SF Mono",Consolas,monospace}
+
+  .top{background:linear-gradient(135deg,var(--navy),var(--teal));color:#fff;border-radius:16px;
+    padding:26px 28px;box-shadow:0 10px 26px rgba(31,58,95,.22);}
+  .top .kicker{font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:#cfe6e2;font-weight:600}
+  .top h1{color:#fff;font-size:1.7rem;margin:.4rem 0 .3rem;line-height:1.2}
+  .top .sub{color:#e6eef3;font-size:1.02rem;max-width:60ch}
+  .meta{display:flex;flex-wrap:wrap;gap:22px;margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.2)}
+  .meta div{display:flex;flex-direction:column;gap:2px}
+  .meta .k{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:#bcd4d0}
+  .meta .v{font-size:1.05rem;font-weight:600;font-variant-numeric:tabular-nums}
+
+  .proofhint{margin:16px 0 2px;font-size:.9rem;color:var(--ink);background:var(--blue-bg);
+    border:1px solid #c6ddf6;border-radius:10px;padding:11px 15px}
+  .proofhint b{color:var(--blue)}
+  .proofhint .kbd{font-family:ui-monospace,Consolas,monospace;font-size:.82rem;background:var(--surface);
+    border:1px solid var(--code-border);border-radius:5px;padding:1px 6px}
+  .collapsehint{margin:12px 0 2px;font-size:.86rem;color:var(--muted)}
+
+  .leadcaveat{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--teal);
+    border-radius:12px;padding:16px 18px;margin-top:16px;box-shadow:0 2px 8px rgba(31,58,95,.05)}
+  .leadcaveat .lead{font-size:1.1rem;font-weight:600;line-height:1.5}
+  .leadcaveat .lead b{color:var(--teal)}
+
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:16px}
+  .stat{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;
+    box-shadow:0 2px 8px rgba(31,58,95,.05)}
+  .stat .fig{font-size:1.7rem;font-weight:700;color:var(--teal);line-height:1;font-variant-numeric:tabular-nums}
+  .stat .fig a.cval{font-size:1.7rem}
+  .stat .lab{margin-top:8px;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+  details.sec{margin-top:16px;background:var(--surface);border:1px solid var(--border);border-radius:12px;
+    box-shadow:0 2px 8px rgba(31,58,95,.05);overflow:hidden}
+  details.sec>summary{cursor:pointer;list-style:none;padding:15px 20px;font-size:1.14rem;font-weight:700;
+    color:var(--navy);border-left:4px solid var(--teal);display:flex;align-items:center;gap:11px}
+  details.sec>summary::-webkit-details-marker{display:none}
+  details.sec>summary .num{color:var(--teal);font-size:.9rem;font-weight:800;font-variant-numeric:tabular-nums}
+  details.sec>summary .chev{margin-left:auto;color:var(--teal);font-size:.9rem;transition:transform .15s ease}
+  details.sec[open]>summary .chev{transform:rotate(90deg)}
+  details.sec[open]>summary{border-bottom:1px solid var(--border)}
+  .secbody{padding:16px 20px 20px}
+  .secbody>p+p{margin-top:11px}
+
+  .tblwrap{overflow-x:auto;border:1px solid var(--border);border-radius:12px;margin-top:6px}
+  table.sum{border-collapse:collapse;width:100%;min-width:560px;font-size:.9rem;background:var(--surface)}
+  table.sum th,table.sum td{padding:10px 13px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}
+  table.sum thead th{background:var(--grey-bg);color:var(--navy);font-weight:700;font-size:.7rem;
+    letter-spacing:.05em;text-transform:uppercase}
+  table.sum td.rate{text-align:center}
+  table.sum tbody tr:last-child td{border-bottom:none}
+  table.sum tbody tr:hover{background:#f7f9fc}
+  table.sum td:first-child{font-weight:700;color:var(--navy)}
+
+  .pill{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.03em;padding:3px 9px;border-radius:999px;
+    border:1px solid transparent;white-space:nowrap}
+  .pill.green{color:var(--green);background:var(--green-bg);border-color:#bfe3cd}
+  .pill.amber{color:var(--amber);background:var(--amber-bg);border-color:#f0dcae}
+  .pill.grey{color:var(--grey);background:var(--grey-bg);border-color:var(--border)}
+  .pill.red{color:var(--red);background:var(--red-bg);border-color:#efc9c9}
+  .pill.blue{color:var(--blue);background:var(--blue-bg);border-color:#c6ddf6}
+
+  .claim{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+  a.cval{font-weight:700;text-decoration:none;color:var(--blue);border-bottom:1px solid rgba(29,78,216,.35)}
+  a.cval:hover{border-bottom-color:var(--blue)}
+  .find{font-family:ui-monospace,"Cascadia Code",Consolas,monospace;font-size:.7rem;color:var(--navy);
+    background:var(--code-bg);border:1px solid var(--code-border);border-radius:6px;padding:2px 7px;cursor:pointer;
+    white-space:nowrap;line-height:1.5}
+  .find:hover{border-color:var(--teal);color:var(--teal)}
+  .find.copied{color:var(--green);border-color:#bfe3cd;background:var(--green-bg)}
+  .tier{font-size:.62rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:2px 6px;border-radius:5px;
+    border:1px solid transparent}
+  .tier.primary{color:var(--green);background:var(--green-bg);border-color:#bfe3cd}
+  .tier.secondary{color:var(--amber);background:var(--amber-bg);border-color:#f0dcae}
+  .tier.derived{color:var(--grey);background:var(--grey-bg);border-color:var(--border)}
+
+  .callout{border-radius:11px;padding:14px 16px;margin-top:14px;border:1px solid;border-left-width:4px}
+  .callout .clabel{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:4px}
+  .callout p{font-weight:500}
+  .callout.win{background:var(--green-bg);border-color:#bfe3cd;border-left-color:var(--green)}
+  .callout.win .clabel{color:var(--green)}
+  .callout.info{background:var(--blue-bg);border-color:#c6ddf6;border-left-color:var(--blue)}
+  .callout.info .clabel{color:var(--blue)}
+  .callout.caution{background:var(--amber-bg);border-color:#f0dcae;border-left-color:var(--amber)}
+  .callout.caution .clabel{color:var(--amber)}
+
+  dl.kv{display:grid;grid-template-columns:190px 1fr;gap:0;margin:6px 0 0;background:var(--surface);
+    border:1px solid var(--border);border-radius:12px;overflow:hidden}
+  dl.kv dt{padding:11px 16px;font-weight:600;color:var(--navy);background:#fafbfd;border-bottom:1px solid var(--border)}
+  dl.kv dd{margin:0;padding:11px 16px;color:var(--ink);border-bottom:1px solid var(--border)}
+  dl.kv dt:last-of-type,dl.kv dd:last-of-type{border-bottom:none}
+
+  ol.hier{list-style:none;counter-reset:h;margin:6px 0 0;padding:0;display:flex;flex-direction:column;gap:12px}
+  ol.hier li{counter-increment:h;display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;
+    background:#fafbfd;border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+  ol.hier li::before{content:counter(h);background:var(--teal);color:#fff;width:26px;height:26px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;flex-shrink:0}
+  ol.hier h3{font-size:1rem;margin-bottom:2px}
+  ol.hier p{color:var(--muted);font-size:.94rem;font-weight:500}
+
+  .code{background:var(--code-bg);border:1px solid var(--code-border);border-radius:11px;overflow:hidden;margin-top:14px}
+  .code .cbar{display:flex;align-items:center;gap:10px;background:var(--code-bar);border-bottom:1px solid var(--code-border);
+    padding:8px 13px}
+  .code .fname{font-family:ui-monospace,Consolas,monospace;font-size:.8rem;color:var(--code-ink);font-weight:600}
+  .code .copy{margin-left:auto;font-size:.72rem;font-weight:600;color:var(--navy);background:var(--surface);
+    border:1px solid var(--code-border);border-radius:6px;padding:3px 10px;cursor:pointer}
+  .code .copy:hover{border-color:var(--teal);color:var(--teal)}
+  .code pre{margin:0;padding:14px 15px;overflow-x:auto;font-family:ui-monospace,"Cascadia Code",Consolas,monospace;
+    font-size:.83rem;line-height:1.6;color:var(--code-ink)}
+  .code .k{color:var(--blue)} .code .s{color:var(--teal)} .code .n{color:var(--amber)} .code .c{color:var(--muted)}
+
+  .src{font-family:ui-monospace,"Cascadia Code",Consolas,monospace;font-size:.78rem;color:var(--navy);
+    background:var(--code-bg);border:1px solid var(--code-border);padding:3px 8px;border-radius:6px;text-decoration:none}
+  .src:hover{border-color:var(--teal)}
+  .sources{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
+
+  footer{margin-top:40px;padding-top:18px;border-top:1px solid var(--border);color:var(--muted);font-size:.85rem;
+    display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center}
+  footer .mono{font-size:.8rem}
+  @media (max-width:560px){dl.kv{grid-template-columns:1fr}dl.kv dt{border-bottom:none}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<!--verify-css-start--><style>
+/* Calm & asymmetric: VERIFIED (the norm) is a whisper — a small green check inside a barely-there
+   green box that ties the check to the exact claim. Problems (the exceptions) get a slightly
+   stronger tint + a small tag so they still catch the eye. Detail: banner + verification.json. */
+[data-verdict]{border-radius:5px;padding:.5px 5px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+[data-verdict="VERIFIED"]{background:rgba(75,158,111,.09)}
+[data-verdict="CONTRADICTED"]{background:rgba(192,57,43,.10);box-shadow:inset 0 0 0 1px rgba(192,57,43,.30)}
+[data-verdict="UNREACHABLE"]{background:rgba(184,134,11,.10)}
+[data-verdict="INCOMPLETE"]{background:rgba(86,95,107,.10)}
+[data-verdict]::after{margin-inline-start:5px;font-weight:700;vertical-align:middle;white-space:nowrap;cursor:default}
+[data-verdict="VERIFIED"]::after{content:"✓";color:#4b9e6f;font-size:.9em}
+[data-verdict="CONTRADICTED"]::after{content:"✗ unverified";color:#fff;background:#c0392b;font-size:.6rem;font-weight:800;letter-spacing:.02em;padding:1px 6px;border-radius:4px}
+[data-verdict="UNREACHABLE"]::after{content:"⚠";color:#b8860b;font-size:.9em}
+[data-verdict="INCOMPLETE"]::after{content:"⚠ no proof";color:#565f6b;background:#eef1f5;font-size:.6rem;font-weight:700;padding:1px 6px;border-radius:4px;border:1px solid #d5deea}
+.verifysum{margin:16px 0;padding:12px 15px;border-radius:10px;border:1px solid;font-size:.92rem;font-weight:600}
+.verifysum.ok{background:#e7f5ec;border-color:#bfe3cd;color:#166534}
+.verifysum.bad{background:#fbe9e9;border-color:#efc9c9;color:#9b1c1c}
+.verifysum .mono{font-family:ui-monospace,Consolas,monospace;font-weight:400}
+</style><!--verify-css-end-->
+</head>
+<body>
+<div class="wrap">
+<!--verify-summary-start--><p class="verifysum ok">Machine source-check: 12/12 VERIFIED <span class="mono">— re-run scripts/verify.ps1 to reproduce · 2026-08-30</span></p><!--verify-summary-end-->
+
+  <header class="top">
+    <div class="kicker">Decision · QuickSight embedding</div>
+    <h1>Decision: 1-click registered-user embedding</h1>
+    <p class="sub">Viewers must sign in — so public &amp; anonymous paths are out. The chosen route hosts your dashboards inside an internal page via a static iframe: no code, ~$3/reader/month.</p>
+    <div class="meta">
+      <div><span class="k">Constraint</span><span class="v">Registered only</span></div>
+      <div><span class="k">Chosen path</span><span class="v">1-click reg-user</span></div>
+      <div><span class="k">Effort</span><span class="v">No code</span></div>
+      <div><span class="k">Cost</span><span class="v">~$3/reader/mo</span></div>
+      <div><span class="k">Date</span><span class="v">2026-08-30</span></div>
+    </div>
+  </header>
+
+  <p class="proofhint"><b>Every claim below is verifiable in one click.</b> Click any <span class="mono">linked value</span> — it opens the AWS doc, jumps to the highlighted quote, <b>and copies the keyword to your clipboard</b>. To step through other mentions, <span class="kbd">Ctrl+F</span> → paste → <span class="kbd">Enter</span>. The <span class="kbd">⧉</span> chip copies the keyword without navigating.</p>
+  <p class="collapsehint">All sections below are collapsed — click any header to expand. Header, the tiles, and the one-line takeaway stay visible.</p>
+
+  <div class="leadcaveat">
+    <p class="lead">Build <b>one internal page</b> and drop your dashboards in as <b>static iframes</b> (1-click registered-user embedding). <b>No code, no API, no backend.</b> Viewers sign in with their QuickSight account — <b>SSO makes that invisible</b>. The only real work: provision viewers as readers and allow-list the page's domain.</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="fig"><a class="cval" href="https://aws.amazon.com/quicksight/pricing/" target="_blank" rel="noopener" data-src="https://aws.amazon.com/quicksight/pricing/" data-value="$3/reader/mo" data-quote="$3 per user/month" data-find="$3" data-verdict="VERIFIED">$3</a></div><div class="lab">Per reader / month (flat)</div><button class="find" data-find="$3" title="Copy keyword, then Ctrl+F + Enter">⧉ $3</button></div>
+    <div class="stat"><div class="fig">4 steps</div><div class="lab">No code — grant · allow-list · copy · paste</div></div>
+    <div class="stat"><div class="fig">Enterprise</div><div class="lab"><a class="cval" href="https://docs.aws.amazon.com/quicksight/latest/user/embedded-analytics.html" target="_blank" rel="noopener" data-src="https://docs.aws.amazon.com/quicksight/latest/user/embedded-analytics.html" data-value="Enterprise edition" data-quote="Enterprise edition in the AWS account where you plan to use embedding" data-find="Enterprise edition" data-verdict="VERIFIED">edition required</a></div></div>
+    <div class="stat"><div class="fig">SSO</div><div class="lab"><a class="cval" href="https://docs.aws.amazon.com/quicksight/latest/user/embedded-analytics-1-click.html" target="_blank" rel="noopener" data-src="https://docs.aws.amazon.com/quicksight/latest/user/embedded-analytics-1-click.html" data-value="no re-login" data-quote="users aren't prompted to sign in again" data-find="prompted to sign in again" data-verdict="VERIFIED">= no re-login</a></div></div>
+  </div>
+
+  <details class="sec" id="decision">
+    <summary><span class="num">1</span> The decision — and why the other paths dropped <span class="chev">▸</span></summary>
+    <div class="secbody">
+      <p>Requiring viewers to be authenticated collapses the option set fast:</p>
+      <div class="tblwrap">
+        <table class="sum">
+          <thead><tr><th>Path</th><th>Status</th><th>Why</th></tr></thead>
+          <tbody>
+            <tr><td>1-click <b>public</b></td><td><span class="pill red">Out</span></td><td>Exposes data with no login — fails the "registered" rule.</td></tr>
+            <tr><td><b>Anonymous</b> (API)</td><td><span class="pill red">Out</span></td><td>No sign-in by design; also needs coding + session capacity.</td></tr>
+            <tr><td>Registered-user (API)</td><td><span class="pill amber">Deferred</span></td><td>Only worth it for seamless SSO in a custom app, or to embed the Q bar. Needs a backend.</td></tr>
+            <tr><td>1-click <b>registered-user</b></td><td><span class="pill green">Chosen</span></td><td>No code, cheapest for a known user set, viewers sign in.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:12px;color:var(--muted);font-size:.9rem">You can still upgrade to the API path later without redoing the dashboards — same content, different delivery.</p>
+    </div>
+  </details>
+
+  <details class="sec" id="entails">
+    <summary><span class="num">2</span> What Path 2 entails — prerequisites <span class="chev">▸</span></summary>
+    <div class="secbody">
+      <dl class="kv">
+        <dt>Edition</dt><dd><span class="claim" data-src="https://docs.aws.amazon.com/quicksight/latest/user/embedded-analytics.html" data-value="Enterprise" data-quote="Enterprise edition in the AWS account where you plan to use embedding" data-verdict="VERIFIED"><a class="cval" href="https://docs.aws.amazon.com/quicksight/latest/user/embedded-analytics.html" target="_blank" rel="noopener" data-find="Enterprise edition">Enterprise edition</a> <span class="tier primary">primary</span></span> required.</dd>
+        <dt>Viewers</dt><dd>Each viewer is a <b>registered reader</b> in your QuickSight account, granted access to the dashboard.</dd>
+        <dt>Sign-in</dt><dd>Viewers are prompted to log in once; <span class="claim" data-src="https://docs.aws.amazon.com/quicksight/latest/user/embedded-analytics-1-click.html" data-value="SSO removes prompt" data-quote="users aren't prompted to sign in again" data-verdict="VERIFIED"><a class="cval" href="https://docs.aws.amazon.com/quicksight/latest/user/embedded-analytics-1-click.html" target="_blank" rel="noopener" data-find="prompted to sign in again">with SSO they aren't prompted again</a> <span class="tier primary">primary</span></span>.</dd>
+        <dt>Browser</dt><dd>BroadcastChannel / IndexedDB / LocalStorage support, and <span class="claim" data-src="https://docs.aws.amazon.com/quicksight/latest/user/embedded-analytics-1-click.html" data-value="cookies on" data-quote="block all cookies" data-verdict="VERIFIED"><a class="cval" href="https://docs.aws.amazon.com/quicksight/latest/user/embedded-analytics-1-click.html" target="_blank" rel="noopener" data-find="block all cookies">"block all cookies" turned off</a> <span class="tier primary">primary</span></span>.</dd>
+        <dt>Coding</dt><dd>None — a static embed code, no embedding API call.</dd>
+      </dl>
+    </div>
+  </details>
+
+  <details class="sec" id="steps">
+    <summary><span class="num">3</span> The 4 steps <span class="chev">▸</span></summary>
+    <div class="secbody">
+      <ol class="hier">
+        <li><div><h3>Grant dashboard access</h3><p><span class="claim" data-src="https://docs.aws.amazon.com/quicksight/latest/user/embedded-analytics-1-click.html" data-value="grant access" data-quote="grant them access to view it" data-verdict="VERIFIED"><a class="cval" href="https://docs.aws.amazon.com/quicksight/latest/user/embedded-analytics-1-click.html" target="_blank" rel="noopener" data-find="grant them access">Grant the users/groups access</a> <span class="tier primary">primary</span></span> (or everyone in the account). Visual permissions inherit from the dashboard.</p></div></li>
+        <li><div><h3>Allow-list the page's domain</h3><p>In QuickSight, make sure <span class="claim" data-src="https://docs.aws.amazon.com/quicksight/latest/user/embedded-analytics-1-click.html" data-value="allow-listed" data-quote="the domain where you're embedding is allow-listed" data-verdict="VERIFIED"><a class="cval" href="https://docs.aws.amazon.com/quicksight/latest/user/embedded-analytics-1-click.html" target="_blank" rel="noopener" data-find="allow-listed">the embedding domain is allow-listed</a> <span class="tier primary">primary</span></span>.</p></div></li>
+        <li><div><h3>Copy the embed code</h3><p>Open the dashboard → <b>Share → Share dashboard</b> → <span class="claim" data-src="https://docs.aws.amazon.com/quicksight/latest/user/embedded-analytics-1-click.html" data-value="Copy embed code" data-quote="Copy embed code at upper left" data-verdict="VERIFIED"><a class="cval" href="https://docs.aws.amazon.com/quicksight/latest/user/embedded-analytics-1-click.html" target="_blank" rel="noopener" data-find="Copy embed code">Copy embed code</a> <span class="tier primary">primary</span></span>. (Per-visual: on-visual menu → <b>Embed visual → Copy code</b>.)</p></div></li>
+        <li><div><h3>Paste into your page's HTML</h3><p>Drop the iframe into any internal page — including a <b>Google Sites embed widget</b> or a <b>SharePoint Embed web part</b>. Several iframes on one page = your composite dashboard.</p></div></li>
+      </ol>
+      <div class="code">
+        <div class="cbar"><span class="fname">embed.html — dashboard iframe</span><button class="copy">Copy</button></div>
+<pre><span class="c">&lt;!-- static embed code copied from QuickSight — no API call --&gt;</span>
+<span class="k">&lt;iframe</span>
+  <span class="k">width</span>=<span class="s">"960"</span> <span class="k">height</span>=<span class="s">"720"</span>
+  <span class="k">src</span>=<span class="s">"https://{{quicksightdomain}}/sn/embed/share/accounts/{{accountid}}/dashboards/{{dashboardid}}?directory_alias=account_directory_alias"</span><span class="k">&gt;</span>
+<span class="k">&lt;/iframe&gt;</span></pre>
+      </div>
+    </div>
+  </details>
+
+  <details class="sec" id="cost">
+    <summary><span class="num">4</span> Cost — which reader model is cheaper <span class="chev">▸</span></summary>
+    <div class="secbody">
+      <div class="tblwrap">
+        <table class="sum">
+          <thead><tr><th>Model</th><th>Price</th><th>Cheapest when</th></tr></thead>
+          <tbody>
+            <tr><td>Per-user reader</td><td><span class="claim" data-src="https://aws.amazon.com/quicksight/pricing/" data-value="$3/user/mo" data-quote="$3 per user/month" data-verdict="VERIFIED"><a class="cval" href="https://aws.amazon.com/quicksight/pricing/" target="_blank" rel="noopener" data-find="$3">$3 / reader / month</a> <span class="tier primary">primary</span></span> (flat)</td><td>Known set of regular viewers</td></tr>
+            <tr><td>Session capacity</td><td><span class="claim" data-src="https://aws.amazon.com/quicksight/pricing/" data-value="$250/mo" data-quote="$250 per month" data-verdict="VERIFIED"><a class="cval" href="https://aws.amazon.com/quicksight/pricing/" target="_blank" rel="noopener" data-find="$250">$250 / mo for 500 sessions</a> <span class="tier primary">primary</span></span></td><td>Many occasional viewers</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout info">
+        <span class="clabel">For a ministry audience</span>
+        <p>A defined internal user list → <b>per-user ($3/reader/mo) is the simplest and almost certainly cheapest</b>. No session accounting. Dashboard authors are billed separately at <span class="claim" data-src="https://aws.amazon.com/quicksight/pricing/" data-value="$24/author/mo" data-quote="$24 per user/month" data-verdict="VERIFIED"><a class="cval" href="https://aws.amazon.com/quicksight/pricing/" target="_blank" rel="noopener" data-find="$24">$24 / author / month</a> <span class="tier primary">primary</span></span>.</p>
+      </div>
+    </div>
+  </details>
+
+  <details class="sec" id="limits">
+    <summary><span class="num">5</span> What you give up (vs the API path) <span class="chev">▸</span></summary>
+    <div class="secbody">
+      <ul style="margin:0;padding-left:20px">
+        <li><b>Content:</b> dashboards + visuals only — <b>no Q search bar</b> via 1-click.</li>
+        <li><b>Same static iframe for everyone</b> — personalization comes only from each viewer's login + row-level security in the dashboard, not from your app passing context.</li>
+        <li><b>Provisioning:</b> every viewer must exist as a QuickSight reader in your account (inherent to "registered").</li>
+      </ul>
+      <div class="callout caution">
+        <span class="clabel">When to step up to the API path</span>
+        <p>Choose programmatic registered-user embedding only if you need <b>invisible SSO in a custom app</b> (no QuickSight login screen at all), the <b>Q natural-language bar</b>, or app-driven per-user context. It costs a few days of backend work.</p>
+      </div>
+    </div>
+  </details>
+
+  <details class="sec" id="next">
+    <summary><span class="num">6</span> Recommendation &amp; next steps <span class="chev">▸</span></summary>
+    <div class="secbody">
+      <div class="callout win">
+        <span class="clabel">Recommended</span>
+        <p>Go with <b>1-click registered-user embedding</b> on a single internal page. Bill viewers per-user ($3/mo). Wire <b>SSO</b> so the login is invisible — that's the one upgrade that turns this from "good" to "seamless".</p>
+      </div>
+      <ol class="hier" style="margin-top:14px">
+        <li><div><h3>Confirm Enterprise edition + SSO</h3><p>Enterprise is required; SSO (IdP federation) is optional but removes the login prompt.</p></div></li>
+        <li><div><h3>Provision viewers as readers</h3><p>Add the ministry users/groups and grant them the dashboard.</p></div></li>
+        <li><div><h3>Allow-list + embed</h3><p>Allow-list the portal domain, copy the embed code, paste the iframes into the page.</p></div></li>
+      </ol>
+      <div class="sources">
+        <a class="src" href="https://docs.aws.amazon.com/quicksight/latest/user/embedded-analytics-1-click.html" target="_blank" rel="noopener">docs · 1-click registered-user</a>
+        <a class="src" href="https://docs.aws.amazon.com/quicksight/latest/user/embedded-analytics.html" target="_blank" rel="noopener">docs · embedded-analytics</a>
+        <a class="src" href="https://aws.amazon.com/quicksight/pricing/" target="_blank" rel="noopener">aws · quicksight/pricing</a>
+      </div>
+    </div>
+  </details>
+
+  <footer>
+    <span>Generated by Claude Code · sources = official AWS QuickSight docs</span>
+    <span class="mono">2026-08-30 · quicksight-embedding-decision</span>
+  </footer>
+
+</div>
+<script>
+  document.querySelectorAll('.code .copy').forEach(function(b){
+    b.addEventListener('click',function(){
+      var pre=b.closest('.code').querySelector('pre');
+      navigator.clipboard.writeText(pre.innerText).then(function(){
+        var t=b.textContent;b.textContent='Copied';setTimeout(function(){b.textContent=t;},1200);
+      });
+    });
+  });
+  document.querySelectorAll('.find').forEach(function(b){
+    b.addEventListener('click',function(){
+      navigator.clipboard.writeText(b.getAttribute('data-find')||'').then(function(){
+        var t=b.textContent;b.classList.add('copied');b.textContent='✓ copied';
+        setTimeout(function(){b.textContent=t;b.classList.remove('copied');},1200);
+      });
+    });
+  });
+  function frag(q){ return '#:~:text=' + encodeURIComponent(q).replace(/-/g,'%2D'); }
+  document.querySelectorAll('[data-src]').forEach(function(el){
+    var a = el.matches('a.cval') ? el : el.querySelector('a.cval');
+    if(!a) return;
+    var src = el.getAttribute('data-src'), q = el.getAttribute('data-quote'), page = el.getAttribute('data-page');
+    if(/\.pdf(\?|#|$)/i.test(src)){
+      a.setAttribute('href', page ? src + '#page=' + page : src);
+    } else if(q && (a.getAttribute('href')||'').indexOf('#:~:text=')===-1){
+      a.setAttribute('href', src + frag(q));
+    }
+  });
+  document.querySelectorAll('a.cval[data-find]').forEach(function(a){
+    a.addEventListener('click',function(){
+      try{ navigator.clipboard.writeText(a.getAttribute('data-find')||''); }catch(e){}
+    });
+  });
+</script>
+</body>
+</html>
+

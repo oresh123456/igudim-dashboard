@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>תוכנית המיתקנים הלאומית <bdi>2022–2031 </bdi>· מסמך הסבר</title>
+<style>
+:root{
+  --navy:#1F3F6D; --green:#248A3D; --red:#DA3439;
+  --sky:#2D9CDB; --purple:#6B4FA0; --orange:#E07B39; --slate:#7A8FA6; --gold:#F8C33E;
+  --bg:#F2F4F7; --surface:#FFFFFF; --border:#E5E9F0; --ink:#1A1A2E; --ink-muted:#6B7280;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Amazon Ember","Heebo",system-ui,sans-serif;line-height:1.65;}
+
+/* ===== Header ===== */
+.topbar{background:var(--navy);border-bottom:3px solid var(--gold);padding:14px 28px;
+  display:flex;align-items:center;gap:18px;}
+.logo-box{background:#fff;border-radius:6px;padding:6px 10px;display:flex;align-items:center;}
+.logo-box img{height:44px;display:block}
+.topbar h1{color:#fff;font-size:22px;font-weight:700;margin:0;}
+.topbar .sub{color:#C8D4E6;font-size:13px;margin-top:2px}
+
+/* ===== Nav ===== */
+nav{background:var(--surface);border-bottom:1px solid var(--border);padding:0 28px;
+  display:flex;gap:4px;overflow-x:auto;position:sticky;top:0;z-index:20;}
+nav a{padding:12px 14px;font-size:14px;color:var(--ink-muted);text-decoration:none;
+  border-bottom:3px solid transparent;white-space:nowrap;}
+nav a:hover{color:var(--navy)}
+nav a.on{color:var(--navy);font-weight:700;border-bottom-color:var(--navy)}
+
+main{max-width:1180px;margin:0 auto;padding:26px 20px 80px}
+section{margin-bottom:34px;scroll-margin-top:60px}
+h2{font-size:20px;color:var(--navy);margin:0 0 4px;font-weight:700}
+h2 .num{display:inline-block;background:var(--navy);color:#fff;font-size:13px;
+  width:26px;height:26px;line-height:26px;text-align:center;border-radius:5px;margin-left:9px}
+.lead{color:var(--ink-muted);font-size:14px;margin:0 0 16px}
+h3{font-size:16px;color:var(--navy);margin:0 0 10px;font-weight:700}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin-bottom:14px}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+
+/* ===== KPI ===== */
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 18px}
+.kpi .lbl{font-size:13px;color:var(--ink-muted)}
+.kpi .val{font-size:30px;font-weight:700;color:var(--navy);line-height:1.15;margin-top:4px}
+.kpi .val small{font-size:15px;font-weight:600}
+.kpi .note{font-size:12px;color:var(--ink-muted);margin-top:4px}
+
+/* ===== Tables ===== */
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--border)}
+th{background:#F7F9FC;color:var(--navy);font-weight:700;font-size:13px}
+tbody tr:hover{background:#FAFBFD}
+td.num,th.num{text-align:center;font-variant-numeric:tabular-nums}
+tfoot td{font-weight:700;background:#F7F9FC;color:var(--navy);border-bottom:none}
+
+/* ===== Bars ===== */
+.bar-row{display:grid;grid-template-columns:210px 1fr 74px;align-items:center;gap:10px;margin-bottom:6px;font-size:13px}
+.bar-row .nm{color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar-track{background:#EEF1F6;border-radius:4px;height:20px;position:relative;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px}
+.bar-row .vl{text-align:left;font-variant-numeric:tabular-nums;color:var(--ink-muted);font-weight:600}
+
+.legend{display:flex;flex-wrap:wrap;gap:16px;font-size:13px;color:var(--ink-muted);margin:10px 0 14px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-left:6px;vertical-align:-1px}
+
+/* ===== Cluster split ===== */
+.split{display:flex;height:52px;border-radius:8px;overflow:hidden;border:1px solid var(--border)}
+.split div{display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:15px}
+.range{display:grid;grid-template-columns:210px 1fr;gap:12px;align-items:center;margin-top:10px;font-size:13px}
+.range-track{position:relative;height:26px;background:#EEF1F6;border-radius:5px}
+.range-band{position:absolute;top:0;bottom:0;border-radius:5px;opacity:.85}
+.range-mark{position:absolute;top:-4px;bottom:-4px;width:3px;background:var(--ink)}
+.range-lbl{position:absolute;top:4px;font-size:11px;color:#fff;font-weight:700}
+
+/* ===== Flow ===== */
+.flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:0}
+.step{flex:1 1 150px;background:#F7F9FC;border:1px solid var(--border);border-radius:8px;
+  padding:12px;margin:5px;position:relative}
+.step .st{font-size:11px;color:#fff;background:var(--navy);border-radius:4px;padding:1px 7px;display:inline-block;margin-bottom:6px}
+.step h4{margin:0 0 4px;font-size:14px;color:var(--navy)}
+.step p{margin:0;font-size:12.5px;color:var(--ink-muted)}
+
+/* ===== misc ===== */
+.pill{display:inline-block;font-size:11.5px;padding:2px 9px;border-radius:99px;font-weight:700;white-space:nowrap}
+.p-h{background:#E8EDF5;color:var(--navy)}
+.p-t{background:#F1E9F7;color:var(--purple)}
+.p-k{background:#FBEEE3;color:var(--orange)}
+.p-g{background:#EDF1F5;color:var(--slate)}
+.callout{border-right:4px solid var(--gold);background:#FFFBEF;padding:12px 16px;border-radius:0 8px 8px 0;font-size:14px;margin:12px 0}
+.callout.info{border-right-color:var(--sky);background:#EFF7FD}
+.callout.warn{border-right-color:var(--red);background:#FDF0F0}
+.callout b{color:var(--navy)}
+ul.tight{margin:6px 0;padding-right:20px;font-size:14px}
+ul.tight li{margin-bottom:5px}
+.src{font-size:12.5px;color:var(--ink-muted);margin-top:6px}
+.calc{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end}
+.calc label{font-size:13px;color:var(--ink-muted);display:block;margin-bottom:4px}
+.calc select,.calc input{font-family:inherit;font-size:14px;padding:7px 10px;border:1px solid var(--border);
+  border-radius:6px;background:#fff;color:var(--ink);min-width:150px}
+.calc-out{background:#F7F9FC;border:1px solid var(--border);border-radius:8px;padding:12px 18px;margin-top:14px;font-size:15px}
+.calc-out b{color:var(--navy);font-size:19px;font-variant-numeric:tabular-nums}
+footer{text-align:center;font-size:12.5px;color:var(--ink-muted);padding:20px;border-top:1px solid var(--border)}
+@media(max-width:640px){
+  .bar-row{grid-template-columns:130px 1fr 60px;font-size:12px}
+  .range{grid-template-columns:1fr}
+  .topbar h1{font-size:17px}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo-box"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIwAAABKCAYAAABpcbyXAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjI3QzU1NjQ4QjIzMTExRTdCRUMxOUYzMjJFRjk3QzU4IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjI3QzU1NjQ5QjIzMTExRTdCRUMxOUYzMjJFRjk3QzU4Ij4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MjdDNTU2NDZCMjMxMTFFN0JFQzE5RjMyMkVGOTdDNTgiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MjdDNTU2NDdCMjMxMTFFN0JFQzE5RjMyMkVGOTdDNTgiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz5t0+6wAAAl2ElEQVR42ux9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" alt="משרד התרבות והספורט"></div>
+  <div>
+    <h1>תוכנית המיתקנים הלאומית · <bdi>2022–2031</bdi></h1>
+    <div class="sub">מסמך הסבר ויזואלי · לפי חוק הספורט, התשמ"ח–1988 · ילקוט הפרסומים 10470 מיום 27.4.2022</div>
+  </div>
+</div>
+
+<nav id="nav">
+  <a href="#s1" class="on">בקצרה</a>
+  <a href="#s2">מהי התוכנית</a>
+  <a href="#s3">שלושת האשכולות</a>
+  <a href="#s4">התקציב</a>
+  <a href="#s5">פריסה שנתית</a>
+  <a href="#s6">לאן הכסף הולך</a>
+  <a href="#s7">מנגנון התמיכה</a>
+  <a href="#s8">מימון משלים</a>
+  <a href="#s9">תנאי סף</a>
+  <a href="#s10">קריטריונים</a>
+  <a href="#s11">החברה הערבית</a>
+  <a href="#s12">נספח ב'</a>
+  <a href="#s13">ממשל וגמישות</a>
+  <a href="#s14" style="color:var(--red);font-weight:700">⬅ סיכום: טקסונומיה</a>
+</nav>
+
+<main>
+
+<!-- ============ 1 ============ -->
+<section id="s1">
+  <h2><span class="num">1</span>בקצרה</h2>
+  <p class="lead">חמישה מספרים שמסבירים את כל התוכנית.</p>
+  <div class="grid g4">
+    <div class="kpi"><div class="lbl">תקציב כולל (נספח א')</div><div class="val">2,890<small> מ׳ ₪</small></div><div class="note">בסיס 2,650 מ׳ + 240 מ׳ תוספות ייעודיות</div></div>
+    <div class="kpi"><div class="lbl">תקופת התוכנית</div><div class="val">10<small> שנים</small></div><div class="note"><bdi>1.1.2022 – 31.12.2031</bdi></div></div>
+    <div class="kpi"><div class="lbl">אשכולות תמיכה</div><div class="val">3</div><div class="note">הישגי · תחרותי · קהילתי</div></div>
+    <div class="kpi"><div class="lbl">מיתקנים מתוכננים</div><div class="val">~1,140</div><div class="note">סכימת עמודת "מספר מתקנים משוער"</div></div>
+    <div class="kpi"><div class="lbl">רשימת המתנה (נספח ב')</div><div class="val">659</div><div class="note">מיתקנים נוספים — רק אם יגיע תקציב</div></div>
+  </div>
+
+  <div class="callout">
+    <b>הרעיון המרכזי:</b> התוכנית עצמה <u>לא מחלקת כסף</u>. היא קובעת את המסגרת — כמה כסף, לאיזה אשכול, לאילו סוגי מיתקנים ובאילו שנים.
+    החלוקה בפועל נעשית דרך <b>מבחני תמיכה</b> שהמשרד מפרסם בנפרד, וכל מבחן חייב להיות בכפוף לתוכנית הזו.
+  </div>
+</section>
+
+<!-- ============ 2 ============ -->
+<section id="s2">
+  <h2><span class="num">2</span>מהי התוכנית ומה היא באה לפתור</h2>
+  <p class="lead">מסמך חוקי המחייב את משרד התרבות והספורט בתקצוב מיתקני ספורט לעשור.</p>
+  <div class="grid g2">
+    <div class="card">
+      <h3>מעמד משפטי</h3>
+      <ul class="tight">
+        <li>נקבעה מכוח <b>סעיף 17יד</b> לחוק הספורט, התשמ"ח–1988.</li>
+        <li>לאחר התייעצות עם <b>המועצה הלאומית לספורט</b>.</li>
+        <li>חתומים: <b>שר התרבות והספורט</b> (חילי טרופר) ו<b>שר האוצר</b> (אביגדור ליברמן).</li>
+        <li>אינה גורעת מכל דין אחר — תכנון, בנייה, רישוי, תקינות ובטיחות (סעיף 20).</li>
+        <li><b>פטור (סעיף 21):</b> גופים מסוימים רשאים להקים מיתקנים מתקציבם שלא לפי התוכנית, ובלבד שיעמדו בכללי תקינות ובטיחות.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>שמונה המטרות (סעיף 1)</h3>
+      <ul class="tight">
+        <li>יעדים לאומיים ארוכי טווח לפריסה ראויה של מיתקנים.</li>
+        <li>יישום מדיניות הספורט הלאומית, בדגש על <b>שוויון הזדמנויות</b>.</li>
+        <li>תנאים פיסיים מתאימים לספורט עממי, תחרותי והישגי.</li>
+        <li>תמרוץ רשויות מקומיות לבצע מיתקנים תקינים ובטיחותיים.</li>
+        <li>מיתקנים ברמה הגבוהה ביותר לספורט ההישגי ולתחרויות בין־לאומיות.</li>
+        <li>תנאים הולמים לספורטאים בכל ענף ספורט מוכר.</li>
+        <li><b>ניצול יעיל של מיתקנים קיימים</b> — שדרוג, שיפוץ והתאמה.</li>
+        <li>מענה לצרכים ייחודיים של אנשים עם מוגבלויות וצרכים מיוחדים.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>מושגי מפתח שכדאי להכיר</h3>
+    <table>
+      <tbody>
+        <tr><td style="width:22%"><b>אשכול</b></td><td>קבוצת מבחני התמיכה בתחום אחד — הישגי, תחרותי או קהילתי. זו יחידת החלוקה התקציבית המרכזית.</td></tr>
+        <tr><td><b>ביצוע</b></td><td>הקמה, בנייה, שדרוג, שיפוץ <u>או רכישה</u> של מיתקן ספורט. כלומר גם הצטיידות נחשבת "ביצוע".</td></tr>
+        <tr><td><b>תיק מוצר</b></td><td>אפיון טכני מפורט של המיתקן + <b>אומדן המשרד לעלות המרבית</b>. אם קיים תיק מוצר — הביצוע חייב להתאים לו.</td></tr>
+        <tr><td><b>עלות מיתקן מרבית</b></td><td>תקרת העלות המוכרת שקבע מינהל הספורט. התמיכה לא תחושב מעליה גם אם בפועל הבנייה עלתה יותר.</td></tr>
+        <tr><td><b>דירוג הלמ"ס</b></td><td>אשכול חברתי־כלכלי של הרשות המקומית (1 = החלש ביותר, 10 = החזק). קובע כמה הרשות תשלים מכיסה.</td></tr>
+        <tr><td><b>הרשאה להתחייב</b></td><td>אישור להתחייב על סכום שיפרס לאורך שנים — לא תזרים מזומנים של שנה אחת.</td></tr>
+        <tr><td><b>כספי ביטול</b></td><td>כסף שאושר ולא נוצל / הוחזר. חוזר לאותו אשכול או לרצועה הייעודית ומחולק מחדש.</td></tr>
+        <tr><td><b>שיפוץ</b></td><td>מוגדר בצמצום: רק לצורך דרישת איגוד, דרישת בטיחות/רישוי, שיפור חוויית צפייה, או תחזוקה — ובכפוף לוותק (ר' להלן).</td></tr>
+      </tbody>
+    </table>
+    <div class="callout warn" style="margin-bottom:0">
+      <b>מלכודת בהגדרת "שיפוץ" (סעיף 2):</b> תמיכה בשיפוץ תחזוקתי תינתן רק אם <b>המיתקן הוקם לפני 5 שנים לפחות</b> <u>וגם</u> <b>חלפו 3 שנים מאז השיפוץ האחרון</b> של אותם פריטים. חריג: נזק מכוח עליון. כמו כן — <b>אין תמיכה בשיפוץ תאי צפייה אישיים או תאי כבוד</b>.
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3 ============ -->
+<section id="s3">
+  <h2><span class="num">3</span>שלושת האשכולות</h2>
+  <p class="lead">כל שקל בתוכנית משויך לאחד משלושה אשכולות, ולכל אשכול מטרה, קהל יעד ומנגנון תמחור משלו.</p>
+
+  <div class="card">
+    <h3>חלוקת התקציב בין האשכולות (סעיף 4ב)</h3>
+    <div class="split">
+      <div style="width:60%;background:var(--purple)">תחרותי · 60%</div>
+      <div style="width:20%;background:var(--navy)">הישגי · 20%</div>
+      <div style="width:20%;background:var(--orange)">קהילתי · 20%</div>
+    </div>
+    <p class="src">האחוזים הם יעד בפרישה לכל תקופת התוכנית — לא מכסה שנתית קשיחה.</p>
+
+    <h3 style="margin-top:20px">טווח התמרון של ועדת התמיכות</h3>
+    <div class="range">
+      <div>אשכול הישגי <span class="pill p-h">יעד 20%</span></div>
+      <div class="range-track">
+        <div class="range-band" style="right:0;width:70%;background:#E5E9F0"></div>
+        <div class="range-band" style="right:21.4%;width:14.3%;background:var(--navy)"></div>
+        <div class="range-lbl" style="right:23%"><bdi>15% – 25%</bdi></div>
+      </div>
+    </div>
+    <div class="range">
+      <div>אשכול תחרותי <span class="pill p-t">יעד 60%</span></div>
+      <div class="range-track">
+        <div class="range-band" style="right:0;width:70%;background:#E5E9F0"></div>
+        <div class="range-band" style="right:78.6%;width:14.3%;background:var(--purple)"></div>
+        <div class="range-lbl" style="right:79.5%;color:#fff"><bdi>55%–65%</bdi></div>
+      </div>
+    </div>
+    <div class="range">
+      <div>אשכול קהילתי <span class="pill p-k">יעד 20%</span></div>
+      <div class="range-track">
+        <div class="range-band" style="right:0;width:70%;background:#E5E9F0"></div>
+        <div class="range-band" style="right:21.4%;width:14.3%;background:var(--orange)"></div>
+        <div class="range-lbl" style="right:23%"><bdi>15% – 25%</bdi></div>
+      </div>
+    </div>
+    <p class="src">הציר מייצג <bdi>0%–70%</bdi> מהתקציב. הוועדה רשאית להעביר כספים בין אשכולות — ובלבד שחלקו של כל אשכול לאורך התקופה יישאר בתוך הרצועה הצבועה.</p>
+  </div>
+
+  <div class="grid g3">
+    <div class="card" style="border-top:4px solid var(--navy)">
+      <span class="pill p-h">אשכול הישגי</span>
+      <h3 style="margin-top:8px">פרק ב' · סעיפים <bdi>7–11</bdi></h3>
+      <p style="font-size:13.5px;margin:0 0 8px"><b>מטרה:</b> מיתקנים לספורטאי הישג — אולימפי, פראלימפי, אליפויות עולם ואירופה. פיזור ארצי לפי צורכי האיגודים.</p>
+      <ul class="tight">
+        <li><b>מי מבקש:</b> מוסד ציבור, רשות מקומית או תאגיד.</li>
+        <li><b>מימון משלים:</b> <bdi>10%–30%</bdi> לפי דירוג למ"ס בלבד.</li>
+        <li>חובה לאפשר שימוש גם לספורטאים שאינם הישגיים — בשעות שהמיתקן פנוי.</li>
+        <li>ביצוע במכון וינגייט נעשה במסגרת התקציב השנתי של המכון.</li>
+      </ul>
+    </div>
+    <div class="card" style="border-top:4px solid var(--purple)">
+      <span class="pill p-t">אשכול תחרותי</span>
+      <h3 style="margin-top:8px">פרק ג' · סעיפים <bdi>12–15</bdi></h3>
+      <p style="font-size:13.5px;margin:0 0 8px"><b>מטרה:</b> מיתקנים לספורט תחרותי (פעילות במסגרת איגוד), שיפור פריסה ארצית וצמצום פערים.</p>
+      <ul class="tight">
+        <li><b>מי מבקש:</b> מוסדות ציבור, רשויות מקומיות ותאגידים שהם אגודות.</li>
+        <li><b>מימון משלים:</b> <bdi>10%–60%</bdi> — לפי דירוג למ"ס <u>וגם</u> לפי אזור עדיפות לאומית.</li>
+        <li><b>תנאי ייחודי:</b> חייבות לפעול ברשות קבוצות ספורט באותו ענף — או התחייבות להקים קבוצה.</li>
+        <li>יש מסלול ל<b>צרכים דחופים</b> (דרישת איגוד/איגוד בין־לאומי/משטרה/כב"א).</li>
+      </ul>
+    </div>
+    <div class="card" style="border-top:4px solid var(--orange)">
+      <span class="pill p-k">אשכול קהילתי</span>
+      <h3 style="margin-top:8px">פרק ד' · סעיפים <bdi>16–19</bdi></h3>
+      <p style="font-size:13.5px;margin:0 0 8px"><b>מטרה:</b> היצע ומגוון מיתקנים לספורט קהילתי בכל רשות — פנאי, בריאות, פתוח לכלל הציבור.</p>
+      <ul class="tight">
+        <li><b>מי מבקש:</b> רשויות מקומיות בלבד — <b>לא איגוד ערים</b>.</li>
+        <li>המיתקן חייב להיות <b>פתוח בלא תשלום</b> לציבור הרחב.</li>
+        <li><b>סכום התמיכה:</b> סכום קבוע לפי מספר תושבים ברשות (לא לפי עלות).</li>
+        <li><b>חריג:</b> מיתקנים לאנשים עם מוגבלויות — גם למוסדות ציבור, ובלי דרישת הפתיחות לציבור.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4 ============ -->
+<section id="s4">
+  <h2><span class="num">4</span>איך נבנה התקציב</h2>
+  <p class="lead">מ־2.65 מיליארד ₪ בסיס ל־2.89 מיליארד ₪ בפועל.</p>
+  <div class="card">
+    <div class="grid g4" style="align-items:stretch">
+      <div class="kpi" style="border-right:4px solid var(--navy)"><div class="lbl">בסיס התוכנית (סעיף 4א)</div><div class="val">2,650<small> מ׳ ₪</small></div><div class="note">בהרשאה להתחייב לכל התקופה</div></div>
+      <div class="kpi" style="border-right:4px solid var(--sky)"><div class="lbl">+ תוספות החלטות ממשלה</div><div class="val">240<small> מ׳ ₪</small></div><div class="note">החלטות 550 · 716 · 717 · 1279 — חברה ערבית, בדואית, דרוזית וצ'רקסית</div></div>
+      <div class="kpi" style="border-right:4px solid var(--slate)"><div class="lbl">+ כספי ביטול ותוספות אוצר</div><div class="val">משתנה</div><div class="note">נכנסים חזרה לאותו אשכול / רצועה ייעודית</div></div>
+      <div class="kpi" style="border-right:4px solid var(--green)"><div class="lbl">= סה"כ נספח א'</div><div class="val">2,890<small> מ׳ ₪</small></div><div class="note">100% מהטבלה הרב־שנתית</div></div>
+    </div>
+    <div class="callout info">
+      <b>תקרה אחת מפורשת:</b> מתוך כלל התקציב — <b>לא יותר מ־180 מיליון ₪</b> לרכש ציוד לאורך כל התקופה (סעיף 4ו).
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5 ============ -->
+<section id="s5">
+  <h2><span class="num">5</span>פריסה שנתית</h2>
+  <p class="lead">בסיס קבוע של 265 מ׳ ₪ בשנה. בחמש השנים הראשונות מתווספים 48 מ׳ ₪ ייעודיים לחברה הערבית, הבדואית, הדרוזית והצ'רקסית.</p>
+  <div class="card">
+    <div class="legend">
+      <span><i style="background:var(--navy)"></i>בסיס שנתי — 265 מ׳ ₪</span>
+      <span><i style="background:var(--sky)"></i>תוספת ייעודית — 48 מ׳ ₪</span>
+    </div>
+    <svg viewBox="0 0 900 300" style="width:100%;height:auto" role="img" aria-label="פריסת התקציב לפי שנים">
+      <line x1="60" y1="250" x2="880" y2="250" stroke="#E5E9F0" stroke-width="1.5"/>
+      <line x1="60" y1="180" x2="880" y2="180" stroke="#E5E9F0" stroke-width="1" stroke-dasharray="4 4"/>
+      <line x1="60" y1="110" x2="880" y2="110" stroke="#E5E9F0" stroke-width="1" stroke-dasharray="4 4"/>
+      <line x1="60" y1="40"  x2="880" y2="40"  stroke="#E5E9F0" stroke-width="1" stroke-dasharray="4 4"/>
+      <text x="52" y="254" font-size="11" fill="#6B7280" text-anchor="end">0</text>
+      <text x="52" y="184" font-size="11" fill="#6B7280" text-anchor="end">100</text>
+      <text x="52" y="114" font-size="11" fill="#6B7280" text-anchor="end">200</text>
+      <text x="52" y="44"  font-size="11" fill="#6B7280" text-anchor="end">300</text>
+      <g id="bars"></g>
+    </svg>
+    <table style="margin-top:14px">
+      <thead><tr><th>רכיב</th><th class="num">2022</th><th class="num">2023</th><th class="num">2024</th><th class="num">2025</th><th class="num">2026</th><th class="num"><bdi>2027–2031</bdi></th><th class="num">סה"כ</th></tr></thead>
+      <tbody>
+        <tr><td>בסיס</td><td class="num">265</td><td class="num">265</td><td class="num">265</td><td class="num">265</td><td class="num">265</td><td class="num"><bdi>265 ×5</bdi></td><td class="num">2,650</td></tr>
+        <tr><td>תוספת ייעודית — חברה ערבית ובדואית</td><td class="num">48</td><td class="num">48</td><td class="num">48</td><td class="num">48</td><td class="num">48</td><td class="num">—</td><td class="num">240</td></tr>
+      </tbody>
+      <tfoot><tr><td>סה"כ שנתי (מ׳ ₪)</td><td class="num">313</td><td class="num">313</td><td class="num">313</td><td class="num">313</td><td class="num">313</td><td class="num">265</td><td class="num">2,890</td></tr></tfoot>
+    </table>
+    <p class="src">התוספת הייעודית מתחלקת בין החלטות 550/1279 (בדואים ואחרים) לבין החלטה 716 (חברה ערבית), ומחולקת במבחני תמיכה נפרדים לכל החלטת ממשלה.</p>
+  </div>
+</section>
+
+<!-- ============ 6 ============ -->
+<section id="s6">
+  <h2><span class="num">6</span>לאן הכסף הולך — פילוח לפי סוג מיתקן</h2>
+  <p class="lead">33 שורות תקציב בנספח א'. חמש השורות הגדולות מרכזות כ־60% מהתוכנית.</p>
+
+  <div class="card">
+    <div class="legend">
+      <span><i style="background:var(--navy)"></i>הישגי</span>
+      <span><i style="background:var(--purple)"></i>תחרותי</span>
+      <span><i style="background:var(--orange)"></i>קהילתי</span>
+      <span><i style="background:var(--slate)"></i>כללי</span>
+    </div>
+    <div id="typebars"></div>
+    <p class="src">סכומים במיליוני ₪ לכל תקופת התוכנית. שורות באפס תקציב מופיעות בנספח א' אך לא תוקצבו בפועל.</p>
+  </div>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3>עשר שורות התקציב הגדולות</h3>
+      <table>
+        <thead><tr><th>סוג מיתקן</th><th class="num">מ׳ ₪</th><th class="num">%</th><th class="num">מס' מיתקנים</th></tr></thead>
+        <tbody>
+          <tr><td>מתקני ספורט קהילתי</td><td class="num">513.0</td><td class="num">17.8%</td><td class="num">700</td></tr>
+          <tr><td>אולמות גדולים ובינוניים</td><td class="num">510.9</td><td class="num">17.7%</td><td class="num">120</td></tr>
+          <tr><td>שדרוגים / שיפוצים / צורך ספורטיבי</td><td class="num">351.3</td><td class="num">12.2%</td><td class="num">לפי צורך</td></tr>
+          <tr><td>מרכזים אזוריים רב־תכליתיים</td><td class="num">350.0</td><td class="num">12.1%</td><td class="num">5</td></tr>
+          <tr><td>קומפלקס כדורגל</td><td class="num">150.0</td><td class="num">5.2%</td><td class="num">8</td></tr>
+          <tr><td>היכלי ספורט בינלאומיים (<bdi>3–5 </bdi>אלף)</td><td class="num">140.0</td><td class="num">4.8%</td><td class="num">4</td></tr>
+          <tr><td>אצטדיונים קטנים ובינוניים</td><td class="num">96.8</td><td class="num">3.3%</td><td class="num">5</td></tr>
+          <tr><td>בריכות שחייה 25 מ'</td><td class="num">80.3</td><td class="num">2.8%</td><td class="num">10</td></tr>
+          <tr><td>ספורט מוטורי — מסלולים</td><td class="num">76.0</td><td class="num">2.6%</td><td class="num">12</td></tr>
+          <tr><td>הצטיידות (תחרותי)</td><td class="num">76.0</td><td class="num">2.6%</td><td class="num">—</td></tr>
+        </tbody>
+        <tfoot><tr><td>סה"כ עשר השורות</td><td class="num">2,344</td><td class="num">81.1%</td><td class="num"></td></tr></tfoot>
+      </table>
+    </div>
+    <div class="card">
+      <h3>המיתקנים בפועל — לפי כמות</h3>
+      <p class="lead" style="margin-bottom:10px">התמונה התקציבית והתמונה הכמותית שונות מאוד: 700 מיתקנים קהילתיים עולים כמו 120 אולמות.</p>
+      <div id="countbars"></div>
+      <div class="callout" style="margin-bottom:0">
+        <b>עלות ממוצעת למיתקן:</b> מיתקן קהילתי ≈ 0.7 מ׳ ₪ · אולם בינוני/גדול ≈ 4.3 מ׳ ₪ · אצטדיון בינוני ≈ 19 מ׳ ₪ · מרכז רב־תכליתי ≈ 70 מ׳ ₪.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 7 ============ -->
+<section id="s7">
+  <h2><span class="num">7</span>מנגנון התמיכה — מהתוכנית ועד הכסף</h2>
+  <p class="lead">התוכנית היא שכבה אחת מתוך ארבע. בלי מבחן תמיכה מפורסם — אין חלוקה.</p>
+  <div class="card">
+    <div class="flow">
+      <div class="step"><span class="st">שלב 1</span><h4>התוכנית</h4><p>קובעת סכום, אשכולות, סוגי מיתקנים ולוחות זמנים. חתומה בידי שני שרים.</p></div>
+      <div class="step"><span class="st">שלב 2</span><h4>מבחן תמיכה</h4><p>השר או המנכ"ל מפרסמים מבחן לפי סעיף 3א לחוק יסודות התקציב — תנאי סף, אמות מידה, סדרי עדיפויות, לו"ז ומימון משלים.</p></div>
+      <div class="step"><span class="st">שלב 3</span><h4>בקשת הגוף</h4><p>רשות מקומית / מוסד ציבור / תאגיד מגיש. חייב להוכיח זמינות קרקע, קבוצות פעילות והתחייבויות שימוש.</p></div>
+      <div class="step"><span class="st">שלב 4</span><h4>ועדת התמיכות</h4><p>מדרגת לפי אמות המידה, מאשרת הרשאה להתחייב, ומפרסמת באתר המשרד את המיתקנים שאושרו מדי שנה.</p></div>
+      <div class="step"><span class="st">שלב 5</span><h4>ביצוע ובקרה</h4><p>ביצוע לפי תיק מוצר / מפרט טכני, בעמידה בכללי תקינות ובטיחות. אי־ניצול → כספי ביטול חוזרים לחלוקה.</p></div>
+    </div>
+    <div class="callout info" style="margin-bottom:0">
+      <b>שים לב להבחנה:</b> באשכולות ההישגי והתחרותי התמיכה ניתנת רק ל<b>מיתקנים שנקבעו בנספח א'</b> ולפי לוחות הזמנים שבו. באשכול הקהילתי המשרד מפרסם מבחן תמיכה כללי, בכפוף להוראות התוכנית.
+    </div>
+  </div>
+</section>
+
+<!-- ============ 8 ============ -->
+<section id="s8">
+  <h2><span class="num">8</span>מימון משלים — כמה הרשות משלמת מכיסה</h2>
+  <p class="lead">התמיכה = הנמוך מבין העלות המרבית לבין העלות בפועל, פחות המימון המשלים. ככל שהרשות חזקה יותר — היא משלימה יותר.</p>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3>אשכול הישגי (סעיף 10ב)</h3>
+      <table>
+        <thead><tr><th>דירוג למ"ס</th><th class="num">מימון משלים מזערי</th></tr></thead>
+        <tbody>
+          <tr><td><bdi>1–6 </bdi><span class="pill p-g">רשויות חלשות</span></td><td class="num" style="color:var(--green);font-weight:700">10%</td></tr>
+          <tr><td><bdi>7–8</bdi></td><td class="num" style="font-weight:700">20%</td></tr>
+          <tr><td><bdi>9–10 </bdi><span class="pill p-g">רשויות חזקות</span></td><td class="num" style="color:var(--red);font-weight:700">30%</td></tr>
+        </tbody>
+      </table>
+      <p class="src">מיתקן שהוא <b>ציוד</b>: השיעור נקבע במבחן התמיכה בטווח <bdi>10%–30%</bdi>, לפי נתוני המבקש.</p>
+    </div>
+
+    <div class="card">
+      <h3>אשכול תחרותי וקהילתי (סעיף 14ב)</h3>
+      <table>
+        <thead><tr><th class="num">דירוג</th><th class="num">באזור עדיפות לאומית</th><th class="num">מחוץ לאזור עדיפות</th></tr></thead>
+        <tbody id="fintable"></tbody>
+      </table>
+      <p class="src">מועצה אזורית — הפחתה של 5 נקודות אחוז מהשיעור שהיה חל עליה (סעיף 14ד).</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>מחשבון מימון משלים</h3>
+    <div class="calc">
+      <div><label>אשכול</label>
+        <select id="c-cluster"><option value="h">הישגי</option><option value="t" selected>תחרותי / קהילתי</option></select></div>
+      <div><label>דירוג למ"ס של הרשות</label>
+        <select id="c-rank"></select></div>
+      <div><label>אזור עדיפות לאומית</label>
+        <select id="c-prio"><option value="1">כן</option><option value="0" selected>לא</option></select></div>
+      <div><label>סוג הרשות</label>
+        <select id="c-type"><option value="0" selected>עירייה / מועצה מקומית</option><option value="1">מועצה אזורית (−5%)</option><option value="2">יישוב עוטף עזה (פטור מלא, 2022)</option></select></div>
+      <div><label>עלות המיתקן המוכרת (אלפי ₪)</label>
+        <input type="number" id="c-cost" value="10000" min="0" step="100"></div>
+    </div>
+    <div class="calc-out" id="c-out"></div>
+    <p class="src">להמחשה בלבד. השיעורים בטבלאות הם <b>מזעריים</b> — מבחן התמיכה הספציפי עשוי לקבוע אחרת, והשר/מנכ"ל רשאים בנסיבות מיוחדות לקבוע סכום תמיכה קבוע במקום החישוב הזה (סעיפים 10ג, 14ג).</p>
+  </div>
+
+  <div class="callout">
+    <b>הטבת עוטף עזה (החלטת ממשלה 566):</b> יישובי שדרות רבתי והמועצות אשכול, חוף אשקלון, שדות נגב ושער הנגב — עד 7 ק"מ מגדר המערכת — קיבלו לגבי <b>שנת 2022</b> פטור מלא ממימון משלים בשלושת האשכולות, בתוספת עדיפות בניקוד.
+  </div>
+</section>
+
+<!-- ============ 9 ============ -->
+<section id="s9">
+  <h2><span class="num">9</span>תנאי סף</h2>
+  <p class="lead">תנאים מצטברים — נפילה באחד מהם פוסלת את הבקשה עוד לפני שלב הניקוד.</p>
+  <div class="grid g3">
+    <div class="card">
+      <h3>משותף לכל האשכולות</h3>
+      <ul class="tight">
+        <li><b>זמינות קרקע:</b> המקרקעין פנויים וזמינים תכנונית וקניינית, הוקצו בדין ובסמכות, ללא מטרדים שיעכבו ביצוע. ברשות מקומית — גם החלטות ההקצאה בוצעו ואושרו.</li>
+        <li><b>תיק מוצר:</b> אם מינהל הספורט קבע תיק מוצר או מפרט טכני — הביצוע חייב להתאים לו.</li>
+        <li><b>תקינות ובטיחות:</b> עמידה בכל דין בישראל ובתקנוני הגופים הבין־לאומיים בענף.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>הישגי (סעיף 9)</h3>
+      <ul class="tight">
+        <li>מגיש: מוסד ציבור, רשות מקומית או תאגיד. השר רשאי לדרוש <b>ביצוע משותף</b> של רשויות/איגוד ערים בסוגי מיתקנים מסוימים.</li>
+        <li>המיתקן <b>נכלל בנספח א'</b> ומיועד לספורטאי הישג בענף מוכר.</li>
+        <li>מותר שישמש גם ספורטאים שאינם הישגיים — בשעות פנויות.</li>
+        <li><b>התחייבות להקצות שעות לספורט נשים</b> בהיקף ובזמן ראויים ומקובלים.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>תחרותי (סעיף 13) וקהילתי (סעיף 17)</h3>
+      <ul class="tight">
+        <li><b>תחרותי — מבחן קבוצות:</b> ברשות פועלות קבוצות באותו ענף ביחס מזערי למספר המיתקנים. רשות ללא מיתקן בענף — חייבת להתחייב להקים קבוצה.</li>
+        <li><b>תחרותי — שעות שימוש:</b> התחייבות להקצות שעות לקבוצות/ספורטאים, וכן <b>לספורט נשים ולספורט לאנשים עם צרכים מיוחדים</b> אם פועלים כאלה ברשות.</li>
+        <li><b>קהילתי:</b> רק רשויות מקומיות (לא איגוד ערים), והמיתקן פתוח בלא תשלום לציבור.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 10 ============ -->
+<section id="s10">
+  <h2><span class="num">10</span>קריטריונים לבחירה בין בקשות</h2>
+  <p class="lead">אחרי תנאי הסף — כללי הברירה (סעיפים 11, 15, 19). אלה השיקולים שמבחני התמיכה מתרגמים לניקוד.</p>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3>מדדי מיקום ואוכלוסייה</h3>
+      <ul class="tight">
+        <li><b>דירוג הלמ"ס</b> החברתי־כלכלי של הרשות.</li>
+        <li><b>מדד הפריפריאליות</b> של הלמ"ס.</li>
+        <li><b>אזור עדיפות לאומית</b> — הטבות ייקבעו במבחן התמיכה בכפוף להחלטות הממשלה.</li>
+        <li><b>גודל האוכלוסייה</b> שהמיתקן ישרת.</li>
+        <li><b>העדפה מתקנת</b> ליישובי החברה הערבית, הבדואית, הדרוזית והצ'רקסית — כשאין רצועה ייעודית נפרדת.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>מדדי "צורכי הספורט"</h3>
+      <ul class="tight">
+        <li>קיומם, מספרם ופיזורם של מיתקנים קיימים לאותה מטרה.</li>
+        <li>מספר ענפי הספורט המוכרים שהמיתקן יכול לשמש.</li>
+        <li>מספר הספורטאים והאגודות/הקבוצות בענף ברשות או באזור.</li>
+        <li>צורכי הפיתוח של הענפים הרלוונטיים.</li>
+        <li><b>הישגי:</b> שיוך ל<b>ענף על</b> או ל<b>ענף מועדף</b>; בציוד — עלות יחסית ודירוג הספורטאים המשתמשים.</li>
+        <li><b>תחרותי:</b> מידת ושנות ה<b>בכירות</b> של הקבוצות שישתמשו במיתקן.</li>
+        <li><b>קהילתי:</b> דירוג למ"ס ומספר תושבים; במיתקני נגישות — צורכי הציבור ומספר המשתמשים הצפוי.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>מסלול "צרכים דחופים" — אשכול תחרותי בלבד (סעיף 15ב9)</h3>
+    <p class="lead" style="margin-bottom:10px">ארבע עילות המאפשרות מענה מהיר מחוץ לתור הרגיל:</p>
+    <div class="grid g4">
+      <div class="kpi" style="padding:12px 14px"><div class="lbl">א</div><div style="font-size:13.5px;margin-top:4px">דרישת <b>איגוד ספורט</b> שפורסמה ברבים, כתנאי להשתתפות הקבוצה בליגה בכירה.</div></div>
+      <div class="kpi" style="padding:12px 14px"><div class="lbl">ב</div><div style="font-size:13.5px;margin-top:4px">דרישת <b>איגוד בין־לאומי</b> כתנאי להשתתפות במפעל בין־לאומי רשמי.</div></div>
+      <div class="kpi" style="padding:12px 14px"><div class="lbl">ג</div><div style="font-size:13.5px;margin-top:4px">דרישות <b>גופים רגולטוריים</b> — משטרת ישראל, כבאות והצלה, ביטחון ובטיחות.</div></div>
+      <div class="kpi" style="padding:12px 14px"><div class="lbl">ד</div><div style="font-size:13.5px;margin-top:4px">דרישת איגוד הענף עקב <b>שינוי בתקנון</b> שלו.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 11 ============ -->
+<section id="s11">
+  <h2><span class="num">11</span>הרצועה הייעודית לחברה הערבית, הבדואית, הדרוזית והצ'רקסית</h2>
+  <p class="lead">240 מ׳ ₪ מעל הבסיס, מתוקף ארבע החלטות ממשלה, עם מנגנון חלוקה נפרד.</p>
+  <div class="grid g2">
+    <div class="card">
+      <h3>מקורות התוספת</h3>
+      <table>
+        <thead><tr><th>החלטה</th><th>נושא</th></tr></thead>
+        <tbody>
+          <tr><td class="num"><b>550</b><br><span style="font-size:12px;color:var(--ink-muted)">24.10.2021</span></td><td>התוכנית הכלכלית לצמצום פערים בחברה הערבית עד 2026</td></tr>
+          <tr><td class="num"><b>716</b><br><span style="font-size:12px;color:var(--ink-muted)">28.11.2021</span></td><td>יישובים דרוזיים וצ'רקסיים בגליל ובכרמל, <bdi>2021–2023</bdi></td></tr>
+          <tr><td class="num"><b>717</b><br><span style="font-size:12px;color:var(--ink-muted)">28.11.2021</span></td><td>יישובים דרוזיים ברמת הגולן, <bdi>2021–2023</bdi></td></tr>
+          <tr><td class="num"><b>1279</b><br><span style="font-size:12px;color:var(--ink-muted)">14.3.2022</span></td><td>פיתוח כלכלי־חברתי באוכלוסייה הבדואית בנגב, <bdi>2022–2026</bdi></td></tr>
+        </tbody>
+      </table>
+      <p class="src">הגדרת היישובים: רשויות שבהן <b>לפחות 80% מהתושבים אינם יהודים</b> לפי נתוני הלמ"ס.</p>
+    </div>
+    <div class="card">
+      <h3>כללי המנגנון (סעיף 6ג)</h3>
+      <ul class="tight">
+        <li>התקציב <b>מחולק במבחני תמיכה נפרדים לכל החלטת ממשלה</b> — לא מתערבב עם התור הכללי.</li>
+        <li>סדרי העדיפויות והמיתקנים נקבעים לפי נספח א', בשורות המסומנות להחלטות אלה.</li>
+        <li><b>כספי ביטול מהתקציב התוספתי חוזרים לחלוקה לאותו מגזר</b> — לא נשאבים חזרה לתקציב הכללי.</li>
+        <li>אם תתקבל החלטת ממשלה לתוספת לרצועה ייעודית — היא מתווספת לרצועה ואינה מתחלקת לפי מפתח האשכולות (סעיף 5ג).</li>
+        <li>כשאין רצועה ייעודית נפרדת — ניתנת <b>העדפה מתקנת</b> בניקוד באותו מסלול.</li>
+      </ul>
+      <div class="callout" style="margin-bottom:0">
+        דוגמאות לשורות ייעודיות בנספח א': מרכז רב־תכליתי אחד מתוך 5 · מרכז מצוינות כדורגל אחד מתוך 3 · <b>25 שדרוגי תאורה ומיתקני כדורגל</b> · <bdi>1–2 </bdi>מתחמי כדורגל מתוך 8 · היכל קטן <bdi>1,500–3,000 </bdi>מקומות.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 12 ============ -->
+<section id="s12">
+  <h2><span class="num">12</span>נספח ב' — רשימת ההמתנה</h2>
+  <p class="lead">659 מיתקנים שיבוצעו <u>רק</u> אם תגיע תוספת תקציבית מעבר לנספח א'. ועדת התמיכות (או הוועדה המיוחדת) קובעת את סדרי העדיפויות ביניהם.</p>
+  <div class="card">
+    <div class="grid g2">
+      <div>
+        <h3>הפריטים הבולטים</h3>
+        <table>
+          <thead><tr><th>מיתקן</th><th class="num">כמות</th><th>אשכול</th></tr></thead>
+          <tbody>
+            <tr><td>מתקני ספורט קהילתי</td><td class="num">450</td><td><span class="pill p-k">קהילתי</span></td></tr>
+            <tr><td>אולמות גדולים ובינוניים</td><td class="num">100</td><td><span class="pill p-t">תחרותי</span></td></tr>
+            <tr><td>מגרשי כדורגל בודדים</td><td class="num">35</td><td><span class="pill p-t">תחרותי</span></td></tr>
+            <tr><td>אצטדיונים בינוניים (<bdi>2.5–8 </bdi>אלף)</td><td class="num">15</td><td><span class="pill p-t">תחרותי</span></td></tr>
+            <tr><td>מתחמי אימונים לטניס</td><td class="num">8</td><td><span class="pill p-t">תחרותי</span></td></tr>
+            <tr><td>אולמות התעמלות · מסלולי ספורט מוטורי · מתקני ענפי קרב · BMX Racing</td><td class="num">5 כ״א</td><td><span class="pill p-t">תחרותי</span></td></tr>
+            <tr><td>בריכות אולימפיות 50 מ' · בריכות <bdi>25×33 </bdi>· וולודרום מוקטן</td><td class="num">4 כ״א</td><td><span class="pill p-t">תחרותי</span></td></tr>
+            <tr><td>אצטדיונים 10 אלף · היכלים <bdi>3–5 </bdi>אלף · היכלים <bdi>1.5–3 </bdi>אלף · קומפלקס כדורסל · כדורעף חופים · BMX Freestyle</td><td class="num">2 כ״א</td><td><span class="pill p-t">תחרותי</span></td></tr>
+            <tr><td>מתקנים אזוריים לסקי מים</td><td class="num">3</td><td><span class="pill p-h">הישגי</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h3>פרויקטי הדגל ההישגיים שממתינים</h3>
+        <ul class="tight">
+          <li><b>אצטדיון לאומי לכדורגל</b> — תמיכה בהקמה.</li>
+          <li><b>היכל בינלאומי גדול, <bdi>15–17 </bdi>אלף מקומות.</b></li>
+          <li><b>מרכז מצוינות רב־תכליתי נוסף.</b></li>
+          <li>קומפלקס כדורסל (<bdi>2–4 </bdi>אולמות).</li>
+          <li>מתקנים אזוריים לכדורעף חופים ולסקי מים.</li>
+          <li>מסלול BMX Racing הישגי.</li>
+        </ul>
+        <div class="callout warn">
+          <b>שורה תחתונה:</b> אצטדיון לאומי, היכל 17 אלף ובריכות אולימפיות של 50 מ' <u>אינם ממומנים</u> בתוכנית — הם מותנים לחלוטין בתוספת תקציבית עתידית.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 13 ============ -->
+<section id="s13">
+  <h2><span class="num">13</span>ממשל, גמישות והוראות מעבר</h2>
+  <div class="grid g2">
+    <div class="card">
+      <h3>הוועדה המיוחדת (סעיף 4ד)</h3>
+      <p class="lead" style="margin-bottom:10px">שבעה חברים, בראשות מנכ"ל המשרד:</p>
+      <ul class="tight">
+        <li>המנהל הכללי של המשרד — <b>יושב ראש</b></li>
+        <li>יו"ר המועצה הלאומית לספורט</li>
+        <li>ראש מינהל הספורט או נציגו</li>
+        <li>ראש אגף בכיר לתקצוב ותכנון או נציגו</li>
+        <li>היועץ המשפטי של המשרד או נציגו</li>
+        <li>חשב המשרד או נציגו</li>
+        <li>מנהל אגף בכיר לתמיכות ומיתקנים או נציגו</li>
+      </ul>
+      <div class="callout" style="margin-bottom:0">
+        <b>סמכות החריגה (סעיף 4ה):</b> הוועדה רשאית לחלק שלא לפי מפתח האשכולות — בשל שינוי מדיניות ממשלה, תוכניות עבודה או <b>שינוי ביקושים מהותי</b> — ובלבד שהגידול המרבי לאשכול לא יעלה על <b>5% נוספים</b> מסך התוכנית. כך למשל האשכול ההישגי יכול להגיע עד <b>30%</b>. כל החלטה כזו חייבת הנמקה.
+      </div>
+    </div>
+    <div class="card">
+      <h3>גמישות תקציבית ומעברים</h3>
+      <ul class="tight">
+        <li><b>העברה בין אשכולות</b> — מותרת, בתוך הרצועות המזעריות והמרביות (סעיף 4ג).</li>
+        <li><b>כספי ביטול</b> — מוקצים מחדש לאשכול שבו ניתנה ההרשאה המקורית או לרצועה הייעודית, בשנת הביטול או בשנה שלאחריה (סעיף 5א).</li>
+        <li><b>תוספות תקציביות</b> — מחולקות לפי נספח ב', בכפוף למפתח האשכולות (סעיף 5ב). מיתקן מנספח ב' שאושר — נכנס לנספח א' המעודכן.</li>
+        <li><b>העברה למשרד ממשלתי אחר</b> — אפשרית בהחלטת ממשלה; אותו משרד אינו כפוף עוד להוראות התוכנית (סעיף 3ד).</li>
+        <li><b>שקיפות:</b> המשרד מפרסם מדי שנה באתרו את המיתקנים שלהקמתם ניתנה הרשאה (סעיף 6א2).</li>
+      </ul>
+      <div class="callout info" style="margin-bottom:0">
+        <b>הוראת מעבר (סעיף 23):</b> מיום התחילה ועד 31.12.2023 ניתנה עדיפות לרשויות שהיו זכאיות לתמיכה בהקמת אולמות לפי התוספת הראשונה של התוכנית הלאומית למיתקנים משנת 2016, ככל שעמדה להן זכאות מכוחה.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 14 ============ -->
+<section id="s14">
+  <h2><span class="num">14</span>מסקנות — התאמת בסיס הנתונים לתוכנית</h2>
+  <p class="lead">בדיקה של <b>"של מיפוי מתקנים 2026 - סכימה מורחבת להחזיר לאור. עדכני ל <bdi>19.8</bdi>.xlsx"</b> מול דרישות התוכנית: מפת השדות, איכות הנתונים, הפערים, והצעת טקסונומיה מלאה.</p>
+
+  <div class="grid g4">
+    <div class="kpi" style="border-right:4px solid var(--navy)"><div class="lbl">מיתקנים ממופים</div><div class="val">8,586</div><div class="note">ב־251 רשויות מקומיות · 6 מחוזות</div></div>
+    <div class="kpi" style="border-right:4px solid var(--slate)"><div class="lbl">עמודות ריקות לחלוטין</div><div class="val">8<small> מתוך 33</small></div><div class="note">כל שכבת הממשל והבעלות המשפטית</div></div>
+    <div class="kpi" style="border-right:4px solid var(--red)"><div class="lbl">התאמה לגיליון הטקסונומיה שבאותו קובץ</div><div class="val">4.1%</div><div class="note">353 מתוך 8,586 רשומות</div></div>
+    <div class="kpi" style="border-right:4px solid var(--orange)"><div class="lbl">ענפי ספורט ברשימת הייחוס</div><div class="val">92</div><div class="note">עם מזהה ענף — ואפס קישור למיתקן</div></div>
+  </div>
+
+  <div class="callout warn">
+    <b>שורה תחתונה:</b> הקובץ הוא <u>מצאי מצוין</u> — 8,586 מיתקנים, כיסוי ארצי מלא, ושדות תשתית (תאורה, גידור, נגישות, מצב) שממופים כמעט במלואם. הוא <u>עדיין לא כלי תכנון</u>: אי אפשר לשאול אותו אף אחת מהשאלות שהתוכנית שואלת — כמה מיתקנים יש בכל אשכול, כמה ענפים כל מיתקן משרת, ומי זכאי לשיפוץ.
+  </div>
+
+  <h3 style="margin-top:26px">א. מפת השדות — 33 עמודות</h3>
+  <p class="lead">כל עמודה בגיליון "בסיס הנתונים", לפי שיעור מילוי ואיכות.</p>
+  <div class="card" style="overflow-x:auto"><table><thead><tr><th class="num">#</th><th>עמודה</th><th class="num">מילוי</th><th class="num">ערכים<br>שונים</th><th>הערה</th></tr></thead><tbody><tr style="background:#F1F8F3"><td colspan="5" style="font-weight:700;color:var(--green);border-bottom:2px solid var(--green)">מלא ואמין — 12 עמודות</td></tr><tr><td class="num" style="color:var(--ink-muted)">0</td><td><b>מחוז</b></td><td class="num" style="min-width:86px">100.0%<div class="bar-track" style="height:10px;margin-top:3px"><div class="bar-fill" style="width:100.0%;background:var(--green)"></div></div></td><td class="num">6</td><td style="font-size:13px;color:var(--ink-muted)">6 מחוזות · רשימה סגורה</td></tr><tr><td class="num" style="color:var(--ink-muted)">1</td><td><b>מפקח</b></td><td class="num" style="min-width:86px">100.0%<div class="bar-track" style="height:10px;margin-top:3px"><div class="bar-fill" style="width:100.0%;background:var(--green)"></div></div></td><td class="num">6</td><td style="font-size:13px;color:var(--ink-muted)">1:1 עם מחוז — עמודה נגזרת, לא נתון עצמאי</td></tr><tr><td class="num" style="color:var(--ink-muted)">2</td><td><b>רשות מקומית</b></td><td class="num" style="min-width:86px">100.0%<div class="bar-track" style="height:10px;margin-top:3px"><div class="bar-fill" style="width:100.0%;background:var(--green)"></div></div></td><td class="num">251</td><td style="font-size:13px;color:var(--ink-muted)">מפתח ההצטרפות לדירוג למ&quot;ס, פריפריאליות ואזור עדיפות</td></tr><tr><td class="num" style="color:var(--ink-muted)">25</td><td><b>מזהה מתקן</b></td><td class="num" style="min-width:86px">100.0%<div class="bar-track" style="height:10px;margin-top:3px"><div class="bar-fill" style="width:100.0%;background:var(--green)"></div></div></td><td class="num">8586</td><td style="font-size:13px;color:var(--ink-muted)">E-00001…E-08586 · מפתח ראשי תקין</td></tr><tr><td class="num" style="color:var(--ink-muted)">19</td><td><b>מצב המתקן</b></td><td class="num" style="min-width:86px">99.7%<div class="bar-track" style="height:10px;margin-top:3px"><div class="bar-fill" style="width:99.7%;background:var(--green)"></div></div></td><td class="num">15</td><td style="font-size:13px;color:var(--ink-muted)">&quot;תקין ופעיל&quot; 82% · &quot;פעיל וזקוק לשיפוץ&quot; 12% — מזהה צורכי שדרוג</td></tr><tr><td class="num" style="color:var(--ink-muted)">3</td><td><b>סוג מתקן</b></td><td class="num" style="min-width:86px">99.2%<div class="bar-track" style="height:10px;margin-top:3px"><div class="bar-fill" style="width:99.2%;background:var(--green)"></div></div></td><td class="num">50</td><td style="font-size:13px;color:var(--ink-muted)">אוצר מילים שאינו הרשימה שבגיליון הטקסונומיה — ר&#x27; סעיף ב1</td></tr><tr><td class="num" style="color:var(--ink-muted)">4</td><td><b>שם המתקן</b></td><td class="num" style="min-width:86px">99.2%<div class="bar-track" style="height:10px;margin-top:3px"><div class="bar-fill" style="width:99.2%;background:var(--green)"></div></div></td><td class="num">6550</td><td style="font-size:13px;color:var(--ink-muted)">מלל חופשי · 109 רשומות בשם &quot;מגרש משולב&quot;</td></tr><tr><td class="num" style="color:var(--ink-muted)">14</td><td><b>פנוי לפעילות</b></td><td class="num" style="min-width:86px">99.0%<div class="bar-track" style="height:10px;margin-top:3px"><div class="bar-fill" style="width:99.0%;background:var(--green)"></div></div></td><td class="num">13</td><td style="font-size:13px;color:var(--ink-muted)">כולל &quot;כניסה בתשלום במקום&quot; (492) — אינדיקציה חלקית לתנאי הסף הקהילתי</td></tr><tr><td class="num" style="color:var(--ink-muted)">12</td><td><b>גוף מפעיל המתקן</b></td><td class="num" style="min-width:86px">98.9%<div class="bar-track" style="height:10px;margin-top:3px"><div class="bar-fill" style="width:98.9%;background:var(--green)"></div></div></td><td class="num">1872</td><td style="font-size:13px;color:var(--ink-muted)">מלל חופשי · &quot;עירייה&quot; מול &quot;עיריית תל אביב&quot; מול &quot;רשות הספורט העירונית&quot;</td></tr><tr><td class="num" style="color:var(--ink-muted)">17</td><td><b>נגישות לנכים</b></td><td class="num" style="min-width:86px">98.2%<div class="bar-track" style="height:10px;margin-top:3px"><div class="bar-fill" style="width:98.2%;background:var(--green)"></div></div></td><td class="num">2</td><td style="font-size:13px;color:var(--ink-muted)">כן/לא · 61% כן</td></tr><tr><td class="num" style="color:var(--ink-muted)">15</td><td><b>גידור קיים</b></td><td class="num" style="min-width:86px">98.1%<div class="bar-track" style="height:10px;margin-top:3px"><div class="bar-fill" style="width:98.1%;background:var(--green)"></div></div></td><td class="num">2</td><td style="font-size:13px;color:var(--ink-muted)">כן/לא · 80% כן</td></tr><tr><td class="num" style="color:var(--ink-muted)">16</td><td><b>תאורה קיימת</b></td><td class="num" style="min-width:86px">98.1%<div class="bar-track" style="height:10px;margin-top:3px"><div class="bar-fill" style="width:98.1%;background:var(--green)"></div></div></td><td class="num">3</td><td style="font-size:13px;color:var(--ink-muted)">כן/לא/חלקית · רכיב שדרוג שהתוכנית מתקצבת ישירות</td></tr><tr style="background:#FDF7F1"><td colspan="5" style="font-weight:700;color:var(--orange);border-bottom:2px solid var(--orange)">חלקי — דורש השלמה — 12 עמודות</td></tr><tr><td class="num" style="color:var(--ink-muted)">20</td><td><b>מתקן תקני לתחרויות</b></td><td class="num" style="min-width:86px">81.8%<div class="bar-track" style="height:10px;margin-top:3px"><div class="bar-fill" style="width:81.8%;background:var(--orange)"></div></div></td><td class="num">20</td><td style="font-size:13px;color:var(--ink-muted)">אמור להיות רשימה סגורה — בפועל 20 ניסוחים, כולל כפילויות כמעט־זהות</td></tr><tr><td class="num" style="color:var(--ink-muted)">21</td><td><b>שימוש לתחרויות רשמיות</b></td><td class="num" style="min-width:86px">80.5%<div class="bar-track" style="height:10px;margin-top:3px"><div class="bar-fill" style="width:80.5%;background:var(--orange)"></div></div></td><td class="num">16</td><td style="font-size:13px;color:var(--ink-muted)">מעורבב: ערכים תיאוריים לצד &quot;כן&quot; (47)</td></tr><tr><td class="num" style="color:var(--ink-muted)">11</td><td><b>בעלי המתקן</b></td><td class="num" style="min-width:86px">75.6%<div class="bar-track" style="height:10px;margin-top:3px"><div class="bar-fill" style="width:75.6%;background:var(--orange)"></div></div></td><td class="num">347</td><td style="font-size:13px;color:var(--ink-muted)">מלל חופשי · ברוב המקרים שם הרשות — כפילות של עמודה 2</td></tr><tr><td class="num" style="color:var(--ink-muted)">22</td><td><b>שנת הקמה</b></td><td class="num" style="min-width:86px">74.9%<div class="bar-track" style="height:10px;margin-top:3px"><div class="bar-fill" style="width:74.9%;background:var(--orange)"></div></div></td><td class="num">95</td><td style="font-size:13px;color:var(--ink-muted)">30% מהערכים עשורים עגולים · 1970 לבדה 679 פעמים — דפוס ערך ברירת מחדל</td></tr><tr><td class="num" style="color:var(--ink-muted)">8</td><td><b>רחוב</b></td><td class="num" style="min-width:86px">62.4%<div class="bar-track" style="height:10px;margin-top:3px"><div class="bar-fill" style="width:62.4%;background:var(--orange)"></div></div></td><td class="num">2278</td><td style="font-size:13px;color:var(--ink-muted)">מלל חופשי; קיימת עמודת &quot;רחוב (מעודכן)&quot; ריקה לצידה</td></tr><tr><td class="num" style="color:var(--ink-muted)">5</td><td><b>שכונה-רובע</b></td><td class="num" style="min-width:86px">52.0%<div class="bar-track" style="height:10px;margin-top:3px"><div class="bar-fill" style="width:52.0%;background:var(--orange)"></div></div></td><td class="num">1472</td><td style="font-size:13px;color:var(--ink-muted)">שם העמודה עצמו מכיל הנחיה: &quot;השדה צריך להפוך ל&#x27;הערות מיקום&#x27;&quot;</td></tr><tr><td class="num" style="color:var(--ink-muted)">23</td><td><b>משרת בית ספר</b></td><td class="num" style="min-width:86px">43.4%<div class="bar-track" style="height:10px;margin-top:3px"><div class="bar-fill" style="width:43.4%;background:var(--orange)"></div></div></td><td class="num">1807</td><td style="font-size:13px;color:var(--ink-muted)">מעורבב: כן/לא לצד שמות בתי ספר לצד ערכים זרים</td></tr><tr><td class="num" style="color:var(--ink-muted)">9</td><td><b>מספר בית</b></td><td class="num" style="min-width:86px">37.9%<div class="bar-track" style="height:10px;margin-top:3px"><div class="bar-fill" style="width:37.9%;background:var(--orange)"></div></div></td><td class="num">254</td><td style="font-size:13px;color:var(--ink-muted)"></td></tr><tr><td class="num" style="color:var(--ink-muted)">10</td><td><b>מספר המבנים</b></td><td class="num" style="min-width:86px">37.6%<div class="bar-track" style="height:10px;margin-top:3px"><div class="bar-fill" style="width:37.6%;background:var(--orange)"></div></div></td><td class="num">34</td><td style="font-size:13px;color:var(--ink-muted)">111 ערכים לא־מספריים — שמות רחובות וערכי זמינות</td></tr><tr><td class="num" style="color:var(--ink-muted)">13</td><td><b>מספר מושבים</b></td><td class="num" style="min-width:86px">23.2%<div class="bar-track" style="height:10px;margin-top:3px"><div class="bar-fill" style="width:23.2%;background:var(--orange)"></div></div></td><td class="num">161</td><td style="font-size:13px;color:var(--ink-muted)">הנתון שכל דרגי האצטדיונים וההיכלים בתוכנית נשענים עליו</td></tr><tr><td class="num" style="color:var(--ink-muted)">24</td><td><b>הערות</b></td><td class="num" style="min-width:86px">5.2%<div class="bar-track" style="height:10px;margin-top:3px"><div class="bar-fill" style="width:5.2%;background:var(--orange)"></div></div></td><td class="num">198</td><td style="font-size:13px;color:var(--ink-muted)"></td></tr><tr><td class="num" style="color:var(--ink-muted)">26</td><td><b>דגל לבדיקה</b></td><td class="num" style="min-width:86px">1.6%<div class="bar-track" style="height:10px;margin-top:3px"><div class="bar-fill" style="width:1.6%;background:var(--orange)"></div></div></td><td class="num">9</td><td style="font-size:13px;color:var(--ink-muted)">דגלי בקרה אוטומטיים על גידור/תאורה/נגישות/חניה</td></tr><tr style="background:#FDF0F0"><td colspan="5" style="font-weight:700;color:var(--red);border-bottom:2px solid var(--red)">מזוהם — ערכים מעמודה אחרת — 1 עמודות</td></tr><tr><td class="num" style="color:var(--ink-muted)">18</td><td><b>חניה לרכבים</b></td><td class="num" style="min-width:86px">99.3%<div class="bar-track" style="height:10px;margin-top:3px"><div class="bar-fill" style="width:99.3%;background:var(--red)"></div></div></td><td class="num">21</td><td style="font-size:13px;color:var(--ink-muted)">אמורה להיות כן/לא — 43 רשומות מכילות שנים (2000, 2023, 2010…)</td></tr><tr style="background:#F4F6F8"><td colspan="5" style="font-weight:700;color:var(--slate);border-bottom:2px solid var(--slate)">ריק לחלוטין — 8 עמודות</td></tr><tr><td class="num" style="color:var(--ink-muted)">6</td><td><b>ישוב</b></td><td class="num" style="min-width:86px">0.0%<div class="bar-track" style="height:10px;margin-top:3px"><div class="bar-fill" style="width:0.0%;background:var(--slate)"></div></div></td><td class="num">—</td><td style="font-size:13px;color:var(--ink-muted)"></td></tr><tr><td class="num" style="color:var(--ink-muted)">7</td><td><b>רחוב (מעודכן)</b></td><td class="num" style="min-width:86px">0.0%<div class="bar-track" style="height:10px;margin-top:3px"><div class="bar-fill" style="width:0.0%;background:var(--slate)"></div></div></td><td class="num">—</td><td style="font-size:13px;color:var(--ink-muted)"></td></tr><tr><td class="num" style="color:var(--ink-muted)">27</td><td><b>סוג בעלים (עירייה/חכ&quot;ל/פרטי)</b></td><td class="num" style="min-width:86px">0.0%<div class="bar-track" style="height:10px;margin-top:3px"><div class="bar-fill" style="width:0.0%;background:var(--slate)"></div></div></td><td class="num">—</td><td style="font-size:13px;color:var(--ink-muted)">נדרש כדי להבחין בין רשות · מוסד ציבור · תאגיד · איגוד ערים</td></tr><tr><td class="num" style="color:var(--ink-muted)">28</td><td><b>מזהה בעלים (ח.פ.)</b></td><td class="num" style="min-width:86px">0.0%<div class="bar-track" style="height:10px;margin-top:3px"><div class="bar-fill" style="width:0.0%;background:var(--slate)"></div></div></td><td class="num">—</td><td style="font-size:13px;color:var(--ink-muted)"></td></tr><tr><td class="num" style="color:var(--ink-muted)">29</td><td><b>סטטוס מחזור חיים</b></td><td class="num" style="min-width:86px">0.0%<div class="bar-track" style="height:10px;margin-top:3px"><div class="bar-fill" style="width:0.0%;background:var(--slate)"></div></div></td><td class="num">—</td><td style="font-size:13px;color:var(--ink-muted)">רשימת ערכים קיימת בגיליון הייחוס (קיים · בהקמה…) — לא מולאה</td></tr><tr><td class="num" style="color:var(--ink-muted)">30</td><td><b>תאריך עדכון אחרון</b></td><td class="num" style="min-width:86px">0.0%<div class="bar-track" style="height:10px;margin-top:3px"><div class="bar-fill" style="width:0.0%;background:var(--slate)"></div></div></td><td class="num">—</td><td style="font-size:13px;color:var(--ink-muted)"></td></tr><tr><td class="num" style="color:var(--ink-muted)">31</td><td><b>מי עדכן</b></td><td class="num" style="min-width:86px">0.0%<div class="bar-track" style="height:10px;margin-top:3px"><div class="bar-fill" style="width:0.0%;background:var(--slate)"></div></div></td><td class="num">—</td><td style="font-size:13px;color:var(--ink-muted)"></td></tr><tr><td class="num" style="color:var(--ink-muted)">32</td><td><b>מקור הנתון</b></td><td class="num" style="min-width:86px">0.0%<div class="bar-track" style="height:10px;margin-top:3px"><div class="bar-fill" style="width:0.0%;background:var(--slate)"></div></div></td><td class="num">2</td><td style="font-size:13px;color:var(--ink-muted)">2 רשומות בלבד מתוך 8,586</td></tr></tbody></table></div>
+
+  <h3 style="margin-top:26px">ב. שלוש בעיות מבנה</h3>
+  <div class="grid g3">
+    <div class="card" style="border-top:4px solid var(--red)">
+      <h3>1 · הטקסונומיה מנותקת מהנתונים</h3>
+      <p style="font-size:14px">הקובץ מכיל גיליון טקסונומיה בן 61 ערכים ו־17 משפחות — אבל עמודת "סוג מתקן" בגיליון הנתונים משתמשת ב־50 ערכים <u>אחרים</u>. רק ערך אחד מתלכד מילולית בין השניים: "מגרש טניס" (353 רשומות).</p>
+      <div class="bar-track" style="height:28px;margin:12px 0">
+        <div class="bar-fill" style="width:4.1%;background:var(--green);float:right;height:100%"></div>
+        <div class="bar-fill" style="width:95.9%;background:var(--red);float:right;height:100%"></div>
+      </div>
+      <p style="font-size:13px;color:var(--ink-muted);margin:0">אין טבלת המרה. חלק מהמיפויים אף דורשים נתון שלא נאסף — למשל סוג משטח (דשא סינטטי מול טבעי), שהרשימה מבחינה לפיו.</p>
+    </div>
+    <div class="card" style="border-top:4px solid var(--red)">
+      <h3>2 · אין מפתחות לשלושה ממדים מרכזיים</h3>
+      <ul class="tight">
+        <li><b>ענף ספורט</b> — מקודד בתוך שם הסוג, יחיד ומרומז. אי אפשר לחשב את קריטריון הניקוד "מספר ענפי הספורט המוכרים אשר המיתקן יכול לשמש".</li>
+        <li><b>מתחם אב</b> — התוכנית מתקצבת "קומפלקס כדורגל של <bdi>3–6</bdi> מתקנים" כיחידה אחת. הטבלה שטוחה.</li>
+        <li><b>סוג המיתקן עצמו</b> — בגיליון הטקסונומיה, עמודת "סוג מתקן (מלא)" חוזרת על עצמה: 61 שורות אך 47 שמות. "מסלול נהיגה ספורטיבית" מופיע 9 פעמים. ערך שנבחר מרשימה כזו לא ניתן לשחזור לתת־סוג.</li>
+      </ul>
+    </div>
+    <div class="card" style="border-top:4px solid var(--slate)">
+      <h3>3 · שכבת הממשל ריקה</h3>
+      <p style="font-size:14px">שמונה עמודות הוגדרו ולא מולאו כלל: ישוב · רחוב (מעודכן) · סוג בעלים · מזהה בעלים · סטטוס מחזור חיים · תאריך עדכון אחרון · מי עדכן · מקור הנתון (2 רשומות מתוך 8,586).</p>
+      <p style="font-size:14px;margin-bottom:0">המשמעות המעשית: אי אפשר לדעת מתי רשומה עודכנה ומי אחראי לה — ואי אפשר להבחין בין <b>רשות מקומית · מוסד ציבור · תאגיד · איגוד ערים</b>, הבחנה שקובעת זכאות (איגוד ערים נפסל באשכול הקהילתי).</p>
+    </div>
+  </div>
+
+  <h3 style="margin-top:26px">ג. ארבעה ממצאי איכות</h3>
+  <div class="grid g2">
+    <div class="card">
+      <h3 style="color:var(--red)">זליגת עמודות</h3>
+      <p style="font-size:14px">ערכים שנכתבו בעמודה הלא נכונה — סימן לשורות שבהן המילוי הוסט:</p>
+      <ul class="tight">
+        <li><b>מספר המבנים</b> — 111 ערכים לא־מספריים: "בתיאום בלבד" (32), "פתוח ללא הגבלה" (27), ושמות רחובות.</li>
+        <li><b>חניה לרכבים</b> — 43 רשומות מכילות שנים (2000, 2023, 2010) במקום כן/לא.</li>
+        <li><b>משרת בית ספר</b> — מערבב כן/לא, שמות בתי ספר, וערכים מעמודת התחרויות.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--red)">מספר מושבים — 23% מילוי</h3>
+      <p style="font-size:14px">זה הנתון שכל דרגי האצטדיונים וההיכלים בתוכנית נשענים עליו:</p>
+      <table style="font-size:13px">
+        <tbody>
+          <tr><td>אצטדיונים</td><td class="num">164 רשומות</td><td class="num" style="color:var(--orange);font-weight:700">62% מולא</td></tr>
+          <tr><td>אולמות</td><td class="num">1,778</td><td class="num" style="color:var(--orange);font-weight:700">45%</td></tr>
+          <tr><td>מגרשים</td><td class="num">4,593</td><td class="num" style="color:var(--red);font-weight:700">20%</td></tr>
+          <tr><td>בריכות</td><td class="num">505</td><td class="num" style="color:var(--red);font-weight:700">10%</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:13px;color:var(--ink-muted);margin:8px 0 0">בנוסף 169 רשומות עם ערך "0" — לא ברור אם אין יציע או שלא נמדד.</p>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--orange)">שנת הקמה — דפוס ערכי ברירת מחדל</h3>
+      <p style="font-size:14px">75% מולא, אך <b>30% מהערכים הם עשורים עגולים</b>, ו־1970 לבדה מופיעה <b>679 פעמים</b> — 11% מכל הערכים שמולאו.</p>
+      <p style="font-size:14px;margin-bottom:0">זה השדה שקובע את <b>כלל 5 השנים</b> לזכאות שיפוץ. ערך משוער עלול לייצר זכאות שגויה לכאן או לכאן — כדאי לסמן ערכים משוערים בדגל נפרד ולא להתייחס אליהם כנתון.</p>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--orange)">רשימות סגורות שנשחקו</h3>
+      <ul class="tight">
+        <li><b>מתקן תקני לתחרויות</b> — 20 ניסוחים, כולל כמעט־כפילויות ("תקני במידות אך ללא שירותים, מקלחות" מול "…ללא שירותים מקלחות").</li>
+        <li><b>מצב המתקן</b> — 15 ערכים במקום 4, כולל "כן" (69 רשומות).</li>
+        <li><b>שימוש לתחרויות רשמיות</b> — 16 ערכים, כולל "כן" (47).</li>
+        <li><b>סוג מתקן</b> — 50 ערכים, מהם כ־27 מלל חופשי חד־פעמי. חלקם מכילים היסטוריית שיפוץ בתוך שם הסוג ("מגרש טניס- עבר שיפוץ והוחלפה תאורה") — נתון שמנסה לדווח את עצמו ואין לו עמודה.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 style="margin-top:26px">ד. מה התוכנית דורשת ואין בקובץ</h3>
+  <div class="card" style="overflow-x:auto">
+    <table>
+      <thead><tr><th>נדרש</th><th>הסעיף בתוכנית</th><th>מה יש היום</th></tr></thead>
+      <tbody>
+        <tr><td><b>תאריך שיפוץ אחרון</b> + הפריטים ששופצו</td><td>הגדרת "שיפוץ" (סעיף 2) — כלל 3 השנים</td><td style="color:var(--red)">אין. מפקחים דוחפים את המידע לשם המיתקן</td></tr>
+        <tr><td><b>ענפים נתמכים</b> (רבים־לרבים)</td><td>קריטריון ניקוד 11ב2 · 15ב2</td><td style="color:var(--red)">אין עמודה — אך רשימת 92 הענפים כבר בקובץ</td></tr>
+        <tr><td><b>דרג ייעוד</b> קהילתי / תחרותי / הישגי</td><td>ציר החלוקה <bdi>20/60/20</bdi> (סעיף 4ב)</td><td style="color:var(--orange)">נגזר חלקית ממשפחת המיתקן ומ"תקני לתחרויות"</td></tr>
+        <tr><td><b>מזהה מתחם אב</b></td><td>קומפלקס כדורגל · קומפלקס כדורסל · מתחמי טניס</td><td style="color:var(--red)">אין</td></tr>
+        <tr><td><b>מזהה תיק מוצר</b> + עלות מיתקן מרבית</td><td>תנאי סף 9(2) · 13(4); בסיס לחישוב סכום התמיכה</td><td style="color:var(--red)">אין</td></tr>
+        <tr><td><b>פתוח לציבור בלא תשלום</b></td><td>תנאי סף מוחלט באשכול הקהילתי (17א2)</td><td style="color:var(--orange)">"פנוי לפעילות" מזהה 492 מיתקנים בתשלום — התחלה</td></tr>
+        <tr><td><b>הקצאת שעות לספורט נשים</b> / לצרכים מיוחדים</td><td>תנאי סף 9(4) · 13(5)</td><td style="color:var(--red)">אין</td></tr>
+        <tr><td><b>סוג משטח</b> (סינטטי / טבעי / אספלט)</td><td>נדרש כדי לסווג מגרשי כדורגל</td><td style="color:var(--red)">אין</td></tr>
+        <tr><td><b>קואורדינטות</b></td><td>ניתוח פריסה — "קיומם, מספרם ופיזורם של מיתקנים" (11ב1)</td><td style="color:var(--orange)">כתובת חלקית בלבד (רחוב 62%, מספר בית 38%)</td></tr>
+        <tr><td><b>ישות ציוד</b></td><td>"ביצוע" כולל רכישה; תקרת 180 מ׳ ₪ (סעיף 4ו)</td><td style="color:var(--red)">אין — ציוד אינו מיתקן עם כתובת</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="margin-top:26px">ה. הצעת טקסונומיה — 63 ערכים ב־11 משפחות</h3>
+  <p class="lead">כל שורה עם קוד ייחודי, ענף ראשי, דרג ייעוד ומפרט. <b>הקוד — ולא השם — הוא מה שנשמר בעמודת "סוג מתקן".</b> הרשימה מכסה את כל מה שקיים היום בנתונים <u>וגם</u> את כל מה שנספחים א׳ ו־ב׳ מתקצבים.</p>
+  <div class="card" style="overflow-x:auto"><table><thead><tr><th>קוד</th><th>סוג מיתקן</th><th>ענף ראשי</th><th>דרג ייעוד</th><th class="num">מקורה/פתוח</th><th>מידות · קיבולת</th></tr></thead><tbody><tr style="background:#F7F9FC"><td colspan="6" style="font-weight:700;color:var(--navy);border-bottom:2px solid var(--navy)">מגרשים <span style="font-family:monospace;font-weight:400;color:var(--ink-muted)">MGR</span> · 12 ערכים</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">MGR-BSK</td><td>מגרש כדורסל</td><td style="font-size:13px;color:var(--ink-muted)">כדורסל</td><td><span class="pill p-k">קהילתי</span> <span class="pill p-t">תחרותי</span></td><td class="num" style="font-size:13px">פתוח</td><td style="font-size:12.5px;color:var(--ink-muted)"><bdi>19×32</bdi> מ׳</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">MGR-BSK-X</td><td>מגרש כדורסל — מידות אחרות</td><td style="font-size:13px;color:var(--ink-muted)">כדורסל</td><td><span class="pill p-k">קהילתי</span></td><td class="num" style="font-size:13px">פתוח</td><td style="font-size:12.5px;color:var(--ink-muted)">—</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">MGR-MLT</td><td>מגרש ספורט משולב</td><td style="font-size:13px;color:var(--ink-muted)">כדורסל · כדורעף · כדורגל</td><td><span class="pill p-k">קהילתי</span></td><td class="num" style="font-size:13px">פתוח</td><td style="font-size:12.5px;color:var(--ink-muted)"><bdi>43×32</bdi> מ׳</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">MGR-MLT-X</td><td>מגרש משולב — מידות אחרות</td><td style="font-size:13px;color:var(--ink-muted)">רב־ענפי</td><td><span class="pill p-k">קהילתי</span></td><td class="num" style="font-size:13px">פתוח</td><td style="font-size:12.5px;color:var(--ink-muted)">—</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">MGR-SHB</td><td>מגרש שחבק</td><td style="font-size:13px;color:var(--ink-muted)">—</td><td><span class="pill p-k">קהילתי</span></td><td class="num" style="font-size:13px">פתוח</td><td style="font-size:12.5px;color:var(--ink-muted)"><bdi>46×26</bdi> מ׳</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">MGR-MIN</td><td>מגרש מיניפיץ׳</td><td style="font-size:13px;color:var(--ink-muted)">כדורגל</td><td><span class="pill p-k">קהילתי</span></td><td class="num" style="font-size:13px">פתוח</td><td style="font-size:12.5px;color:var(--ink-muted)"><bdi>15×30</bdi> מ׳</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">MGR-TEN</td><td>מגרש טניס</td><td style="font-size:13px;color:var(--ink-muted)">טניס</td><td><span class="pill p-k">קהילתי</span> <span class="pill p-t">תחרותי</span></td><td class="num" style="font-size:13px">פתוח</td><td style="font-size:12.5px;color:var(--ink-muted)">—</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">MGR-PAD</td><td>מגרש פאדל</td><td style="font-size:13px;color:var(--ink-muted)">פאדל ⚠</td><td><span class="pill p-k">קהילתי</span></td><td class="num" style="font-size:13px">פתוח</td><td style="font-size:12.5px;color:var(--ink-muted)">—</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">MGR-BCH</td><td>מגרש חול — כדורעף/כדוריד/קטרגל חופים</td><td style="font-size:13px;color:var(--ink-muted)">כדורעף חופים</td><td><span class="pill p-t">תחרותי</span></td><td class="num" style="font-size:13px">פתוח</td><td style="font-size:12.5px;color:var(--ink-muted)">—</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">MGR-PET</td><td>מגרש פטאנק / כדורת דשא</td><td style="font-size:13px;color:var(--ink-muted)">פטנק · כדורת דשא</td><td><span class="pill p-k">קהילתי</span></td><td class="num" style="font-size:13px">פתוח</td><td style="font-size:12.5px;color:var(--ink-muted)">—</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">MGR-BAS</td><td>מגרש בייסבול / סופטבול</td><td style="font-size:13px;color:var(--ink-muted)">בייסבול · סופטבול</td><td><span class="pill p-t">תחרותי</span></td><td class="num" style="font-size:13px">פתוח</td><td style="font-size:12.5px;color:var(--ink-muted)">—</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">MGR-LAC</td><td>מגרש לקרוס</td><td style="font-size:13px;color:var(--ink-muted)">לקרוס</td><td><span class="pill p-t">תחרותי</span></td><td class="num" style="font-size:13px">פתוח</td><td style="font-size:12.5px;color:var(--ink-muted)">—</td></tr><tr style="background:#F7F9FC"><td colspan="6" style="font-weight:700;color:var(--navy);border-bottom:2px solid var(--navy)">כדורגל — מגרשים ואצטדיונים <span style="font-family:monospace;font-weight:400;color:var(--ink-muted)">FTB</span> · 8 ערכים</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">FTB-TRN</td><td>מגרש כדורגל לאימונים</td><td style="font-size:13px;color:var(--ink-muted)">כדורגל</td><td><span class="pill p-k">קהילתי</span> <span class="pill p-t">תחרותי</span></td><td class="num" style="font-size:13px">פתוח</td><td style="font-size:12.5px;color:var(--ink-muted)">ללא יציע</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">FTB-SYN</td><td>מגרש כדורגל תקני — דשא סינטטי</td><td style="font-size:13px;color:var(--ink-muted)">כדורגל</td><td><span class="pill p-t">תחרותי</span></td><td class="num" style="font-size:13px">פתוח</td><td style="font-size:12.5px;color:var(--ink-muted)">350+ מושבים</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">FTB-NAT</td><td>מגרש כדורגל תקני — דשא טבעי</td><td style="font-size:13px;color:var(--ink-muted)">כדורגל</td><td><span class="pill p-t">תחרותי</span></td><td class="num" style="font-size:13px">פתוח</td><td style="font-size:12.5px;color:var(--ink-muted)">350+ מושבים</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">FTB-BCH</td><td>מגרש כדורגל חופים</td><td style="font-size:13px;color:var(--ink-muted)">כדורגל</td><td><span class="pill p-t">תחרותי</span></td><td class="num" style="font-size:13px">פתוח</td><td style="font-size:12.5px;color:var(--ink-muted)">—</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">STD-01K</td><td>אצטדיון עד ליגה א׳</td><td style="font-size:13px;color:var(--ink-muted)">כדורגל</td><td><span class="pill p-t">תחרותי</span></td><td class="num" style="font-size:13px">פתוח</td><td style="font-size:12.5px;color:var(--ink-muted)"><bdi>1,000–2,500</bdi></td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">STD-08K</td><td>אצטדיון בינוני</td><td style="font-size:13px;color:var(--ink-muted)">כדורגל</td><td><span class="pill p-t">תחרותי</span></td><td class="num" style="font-size:13px">פתוח</td><td style="font-size:12.5px;color:var(--ink-muted)"><bdi>2,500–8,000</bdi></td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">STD-10K</td><td>אצטדיון גדול</td><td style="font-size:13px;color:var(--ink-muted)">כדורגל</td><td><span class="pill p-h">הישגי</span></td><td class="num" style="font-size:13px">פתוח</td><td style="font-size:12.5px;color:var(--ink-muted)"><bdi>8,000–10,000</bdi> · נספח ב׳</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">STD-NAT</td><td>אצטדיון לאומי</td><td style="font-size:13px;color:var(--ink-muted)">כדורגל</td><td><span class="pill p-h">הישגי</span></td><td class="num" style="font-size:13px">פתוח</td><td style="font-size:12.5px;color:var(--ink-muted)">10,000+ · נספח ב׳</td></tr><tr style="background:#F7F9FC"><td colspan="6" style="font-weight:700;color:var(--navy);border-bottom:2px solid var(--navy)">אולמות והיכלים <span style="font-family:monospace;font-weight:400;color:var(--ink-muted)">ULM</span> · 6 ערכים</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">ULM-S</td><td>אולם ספורט קטן</td><td style="font-size:13px;color:var(--ink-muted)">רב־ענפי</td><td><span class="pill p-k">קהילתי</span></td><td class="num" style="font-size:13px">מקורה</td><td style="font-size:12.5px;color:var(--ink-muted)"><bdi>26×15</bdi> מ׳</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">ULM-M</td><td>אולם ספורט בינוני</td><td style="font-size:13px;color:var(--ink-muted)">רב־ענפי</td><td><span class="pill p-t">תחרותי</span></td><td class="num" style="font-size:13px">מקורה</td><td style="font-size:12.5px;color:var(--ink-muted)"><bdi>34×21</bdi> מ׳</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">ULM-L</td><td>אולם ספורט גדול</td><td style="font-size:13px;color:var(--ink-muted)">רב־ענפי</td><td><span class="pill p-t">תחרותי</span></td><td class="num" style="font-size:13px">מקורה</td><td style="font-size:12.5px;color:var(--ink-muted)"><bdi>46×26</bdi> מ׳</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">HCL-03K</td><td>היכל ספורט</td><td style="font-size:13px;color:var(--ink-muted)">רב־ענפי</td><td><span class="pill p-t">תחרותי</span></td><td class="num" style="font-size:13px">מקורה</td><td style="font-size:12.5px;color:var(--ink-muted)"><bdi>1,500–3,000</bdi> מושבים</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">HCL-05K</td><td>היכל ספורט בין־לאומי</td><td style="font-size:13px;color:var(--ink-muted)">רב־ענפי</td><td><span class="pill p-t">תחרותי</span> <span class="pill p-h">הישגי</span></td><td class="num" style="font-size:13px">מקורה</td><td style="font-size:12.5px;color:var(--ink-muted)"><bdi>3,000–5,000</bdi> מושבים</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">HCL-17K</td><td>היכל לאומי</td><td style="font-size:13px;color:var(--ink-muted)">רב־ענפי</td><td><span class="pill p-h">הישגי</span></td><td class="num" style="font-size:13px">מקורה</td><td style="font-size:12.5px;color:var(--ink-muted)"><bdi>15,000–17,000</bdi> · נספח ב׳</td></tr><tr style="background:#F7F9FC"><td colspan="6" style="font-weight:700;color:var(--navy);border-bottom:2px solid var(--navy)">התעמלות <span style="font-family:monospace;font-weight:400;color:var(--ink-muted)">GYM</span> · 4 ערכים</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">GYM-ART-H</td><td>אולם התעמלות אמנותית</td><td style="font-size:13px;color:var(--ink-muted)">התעמלות אמנותית</td><td><span class="pill p-t">תחרותי</span></td><td class="num" style="font-size:13px">מקורה</td><td style="font-size:12.5px;color:var(--ink-muted)">—</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">GYM-APP-H</td><td>אולם התעמלות מכשירים</td><td style="font-size:13px;color:var(--ink-muted)">התעמלות</td><td><span class="pill p-t">תחרותי</span></td><td class="num" style="font-size:13px">מקורה</td><td style="font-size:12.5px;color:var(--ink-muted)">—</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">GYM-ART-T</td><td>אוהל התעמלות אמנותית</td><td style="font-size:13px;color:var(--ink-muted)">התעמלות אמנותית</td><td><span class="pill p-t">תחרותי</span></td><td class="num" style="font-size:13px">מקורה</td><td style="font-size:12.5px;color:var(--ink-muted)">מבנה קל</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">GYM-APP-T</td><td>אוהל התעמלות מכשירים</td><td style="font-size:13px;color:var(--ink-muted)">התעמלות</td><td><span class="pill p-t">תחרותי</span></td><td class="num" style="font-size:13px">מקורה</td><td style="font-size:12.5px;color:var(--ink-muted)">מבנה קל</td></tr><tr style="background:#F7F9FC"><td colspan="6" style="font-weight:700;color:var(--navy);border-bottom:2px solid var(--navy)">בריכות <span style="font-family:monospace;font-weight:400;color:var(--ink-muted)">POO</span> · 5 ערכים</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">POO-25</td><td>בריכה חצי אולימפית</td><td style="font-size:13px;color:var(--ink-muted)">שחייה</td><td><span class="pill p-t">תחרותי</span></td><td class="num" style="font-size:13px">שניהם</td><td style="font-size:12.5px;color:var(--ink-muted)"><bdi>25×12.5</bdi> מ׳</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">POO-50</td><td>בריכה אולימפית</td><td style="font-size:13px;color:var(--ink-muted)">שחייה · מים פתוחים</td><td><span class="pill p-t">תחרותי</span> <span class="pill p-h">הישגי</span></td><td class="num" style="font-size:13px">שניהם</td><td style="font-size:12.5px;color:var(--ink-muted)"><bdi>50×25</bdi> מ׳</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">POO-WP</td><td>בריכת כדורמים</td><td style="font-size:13px;color:var(--ink-muted)">כדורמים</td><td><span class="pill p-t">תחרותי</span></td><td class="num" style="font-size:13px">שניהם</td><td style="font-size:12.5px;color:var(--ink-muted)"><bdi>25×33</bdi> מ׳</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">POO-THR</td><td>בריכה טיפולית</td><td style="font-size:13px;color:var(--ink-muted)">ספורט נכים</td><td><span class="pill p-k">קהילתי</span></td><td class="num" style="font-size:13px">מקורה</td><td style="font-size:12.5px;color:var(--ink-muted)">—</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">POO-X</td><td>בריכה — מידות אחרות</td><td style="font-size:13px;color:var(--ink-muted)">שחייה</td><td><span class="pill p-k">קהילתי</span></td><td class="num" style="font-size:13px">שניהם</td><td style="font-size:12.5px;color:var(--ink-muted)">—</td></tr><tr style="background:#F7F9FC"><td colspan="6" style="font-weight:700;color:var(--navy);border-bottom:2px solid var(--navy)">מסלולים <span style="font-family:monospace;font-weight:400;color:var(--ink-muted)">TRK</span> · 8 ערכים</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">ATH-200</td><td>מסלול אתלטיקה — נוער</td><td style="font-size:13px;color:var(--ink-muted)">אתלטיקה</td><td><span class="pill p-t">תחרותי</span></td><td class="num" style="font-size:13px">פתוח</td><td style="font-size:12.5px;color:var(--ink-muted)">200 מ׳</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">ATH-400</td><td>אצטדיון אתלטיקה תקני</td><td style="font-size:13px;color:var(--ink-muted)">אתלטיקה</td><td><span class="pill p-t">תחרותי</span> <span class="pill p-h">הישגי</span></td><td class="num" style="font-size:13px">פתוח</td><td style="font-size:12.5px;color:var(--ink-muted)">400 מ׳ · 8 מסלולים</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">CYC-VEL</td><td>וולודרום</td><td style="font-size:13px;color:var(--ink-muted)">אופניים</td><td><span class="pill p-h">הישגי</span></td><td class="num" style="font-size:13px">מקורה</td><td style="font-size:12.5px;color:var(--ink-muted)">נספח ב׳</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">CYC-CRT</td><td>מסלול קריטריום</td><td style="font-size:13px;color:var(--ink-muted)">אופניים</td><td><span class="pill p-t">תחרותי</span></td><td class="num" style="font-size:13px">פתוח</td><td style="font-size:12.5px;color:var(--ink-muted)">—</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">CYC-BMR</td><td>מסלול BMX Racing</td><td style="font-size:13px;color:var(--ink-muted)">אופניים</td><td><span class="pill p-t">תחרותי</span> <span class="pill p-h">הישגי</span></td><td class="num" style="font-size:13px">פתוח</td><td style="font-size:12.5px;color:var(--ink-muted)">—</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">CYC-BMF</td><td>מתקן BMX Freestyle</td><td style="font-size:13px;color:var(--ink-muted)">אופניים</td><td><span class="pill p-t">תחרותי</span></td><td class="num" style="font-size:13px">פתוח</td><td style="font-size:12.5px;color:var(--ink-muted)">נספח ב׳</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">MOT-*</td><td>מסלול נהיגה ספורטיבית</td><td style="font-size:13px;color:var(--ink-muted)">ספורט מוטורי</td><td><span class="pill p-t">תחרותי</span></td><td class="num" style="font-size:13px">פתוח</td><td style="font-size:12.5px;color:var(--ink-muted)">9 תת־סוגים: קארטינג · דריפט · סופר בייק · סופר מוטו · מוטוקורס · טורינג · ג׳ימקאנה · זמן מטרה</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">WLK-TRL</td><td>מסלול הליכה / ריצה</td><td style="font-size:13px;color:var(--ink-muted)">—</td><td><span class="pill p-k">קהילתי</span></td><td class="num" style="font-size:13px">פתוח</td><td style="font-size:12.5px;color:var(--ink-muted)">—</td></tr><tr style="background:#F7F9FC"><td colspan="6" style="font-weight:700;color:var(--navy);border-bottom:2px solid var(--navy)">מרכזים ובתים לאומיים <span style="font-family:monospace;font-weight:400;color:var(--ink-muted)">CNT</span> · 7 ערכים</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">CNT-MLT</td><td>מרכז אזורי רב־תכליתי</td><td style="font-size:13px;color:var(--ink-muted)">רב־ענפי</td><td><span class="pill p-h">הישגי</span></td><td class="num" style="font-size:13px">שניהם</td><td style="font-size:12.5px;color:var(--ink-muted)">5 יח׳ · 350 מ׳ ₪</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">CNT-EXC</td><td>מרכז מצוינות אזורי</td><td style="font-size:13px;color:var(--ink-muted)">לפי ענף</td><td><span class="pill p-h">הישגי</span></td><td class="num" style="font-size:13px">שניהם</td><td style="font-size:12.5px;color:var(--ink-muted)">—</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">CNT-FTB</td><td>מרכז מצוינות בכדורגל</td><td style="font-size:13px;color:var(--ink-muted)">כדורגל</td><td><span class="pill p-h">הישגי</span></td><td class="num" style="font-size:13px">שניהם</td><td style="font-size:12.5px;color:var(--ink-muted)">3 יח׳</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">CNT-CMB</td><td>מתקן לענפי קרב</td><td style="font-size:13px;color:var(--ink-muted)">14 ענפי קרב</td><td><span class="pill p-t">תחרותי</span></td><td class="num" style="font-size:13px">מקורה</td><td style="font-size:12.5px;color:var(--ink-muted)">נספח ב׳</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">NAT-ICE</td><td>בית לאומי — החלקה על הקרח</td><td style="font-size:13px;color:var(--ink-muted)">החלקה על הקרח · הוקי קרח</td><td><span class="pill p-h">הישגי</span></td><td class="num" style="font-size:13px">מקורה</td><td style="font-size:12.5px;color:var(--ink-muted)">—</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">NAT-SAI</td><td>בית לאומי — שייט</td><td style="font-size:13px;color:var(--ink-muted)">שייט</td><td><span class="pill p-h">הישגי</span></td><td class="num" style="font-size:13px">שניהם</td><td style="font-size:12.5px;color:var(--ink-muted)">—</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">NAT-WIN</td><td>מכון וינגייט</td><td style="font-size:13px;color:var(--ink-muted)">רב־ענפי</td><td><span class="pill p-h">הישגי</span></td><td class="num" style="font-size:13px">שניהם</td><td style="font-size:12.5px;color:var(--ink-muted)">64 מ׳ ₪ · תקצוב נפרד</td></tr><tr style="background:#F7F9FC"><td colspan="6" style="font-weight:700;color:var(--navy);border-bottom:2px solid var(--navy)">מתקנים ימיים <span style="font-family:monospace;font-weight:400;color:var(--ink-muted)">YAM</span> · 3 ערכים</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">YAM-MAR</td><td>מרכז ימי / מועדון שייט</td><td style="font-size:13px;color:var(--ink-muted)">שייט · קיאקים · חתירה</td><td><span class="pill p-k">קהילתי</span> <span class="pill p-t">תחרותי</span></td><td class="num" style="font-size:13px">פתוח</td><td style="font-size:12.5px;color:var(--ink-muted)">—</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">YAM-WSK</td><td>מתקן סקי מים</td><td style="font-size:13px;color:var(--ink-muted)">סקי מים</td><td><span class="pill p-t">תחרותי</span> <span class="pill p-h">הישגי</span></td><td class="num" style="font-size:13px">פתוח</td><td style="font-size:12.5px;color:var(--ink-muted)">נספח ב׳</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">YAM-SRF</td><td>מתקן גלישת גלים</td><td style="font-size:13px;color:var(--ink-muted)">גלישת גלים</td><td><span class="pill p-t">תחרותי</span></td><td class="num" style="font-size:13px">פתוח</td><td style="font-size:12.5px;color:var(--ink-muted)">—</td></tr><tr style="background:#F7F9FC"><td colspan="6" style="font-weight:700;color:var(--navy);border-bottom:2px solid var(--navy)">קהילתי וכושר <span style="font-family:monospace;font-weight:400;color:var(--ink-muted)">COM</span> · 4 ערכים</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">COM-FIT</td><td>מתקן כושר פתוח</td><td style="font-size:13px;color:var(--ink-muted)">פיתוח הגוף</td><td><span class="pill p-k">קהילתי</span></td><td class="num" style="font-size:13px">פתוח</td><td style="font-size:12.5px;color:var(--ink-muted)">—</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">COM-GYM</td><td>מכון כושר</td><td style="font-size:13px;color:var(--ink-muted)">פיתוח הגוף</td><td><span class="pill p-k">קהילתי</span></td><td class="num" style="font-size:13px">מקורה</td><td style="font-size:12.5px;color:var(--ink-muted)">—</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">COM-ADP</td><td>מתקן קהילתי מותאם לצרכים מיוחדים</td><td style="font-size:13px;color:var(--ink-muted)">ספורט נכים</td><td><span class="pill p-k">קהילתי</span></td><td class="num" style="font-size:13px">שניהם</td><td style="font-size:12.5px;color:var(--ink-muted)">15 יח׳ · 60 מ׳ ₪</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">COM-X</td><td>אחר — מתקן קהילתי</td><td style="font-size:13px;color:var(--ink-muted)">—</td><td><span class="pill p-k">קהילתי</span></td><td class="num" style="font-size:13px">שניהם</td><td style="font-size:12.5px;color:var(--ink-muted)">מלל חופשי + חובת סיווג</td></tr><tr style="background:#F7F9FC"><td colspan="6" style="font-weight:700;color:var(--navy);border-bottom:2px solid var(--navy)">אקסטרים <span style="font-family:monospace;font-weight:400;color:var(--ink-muted)">EXT</span> · 5 ערכים</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">EXT-CLB</td><td>קיר טיפוס</td><td style="font-size:13px;color:var(--ink-muted)">טיפוס ספורטיבי</td><td><span class="pill p-k">קהילתי</span> <span class="pill p-t">תחרותי</span></td><td class="num" style="font-size:13px">שניהם</td><td style="font-size:12.5px;color:var(--ink-muted)">—</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">EXT-SKT</td><td>סקייטפארק</td><td style="font-size:13px;color:var(--ink-muted)">גלגיליות</td><td><span class="pill p-k">קהילתי</span></td><td class="num" style="font-size:13px">פתוח</td><td style="font-size:12.5px;color:var(--ink-muted)">—</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">EXT-PMP</td><td>פאמפטרק</td><td style="font-size:13px;color:var(--ink-muted)">אופניים</td><td><span class="pill p-k">קהילתי</span></td><td class="num" style="font-size:13px">פתוח</td><td style="font-size:12.5px;color:var(--ink-muted)">—</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">EXT-ICE</td><td>משטח החלקה עירוני</td><td style="font-size:13px;color:var(--ink-muted)">החלקה על הקרח</td><td><span class="pill p-k">קהילתי</span></td><td class="num" style="font-size:13px">שניהם</td><td style="font-size:12.5px;color:var(--ink-muted)">נבדל מ־NAT-ICE</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">EXT-NIN</td><td>מתחם נינג׳ה</td><td style="font-size:13px;color:var(--ink-muted)">—</td><td><span class="pill p-k">קהילתי</span></td><td class="num" style="font-size:13px">פתוח</td><td style="font-size:12.5px;color:var(--ink-muted)">—</td></tr><tr style="background:#F7F9FC"><td colspan="6" style="font-weight:700;color:var(--navy);border-bottom:2px solid var(--navy)">לא מסווג <span style="font-family:monospace;font-weight:400;color:var(--ink-muted)">OTH</span> · 1 ערכים</td></tr><tr><td style="font-family:monospace;direction:ltr;text-align:right;font-size:12.5px;color:var(--navy);font-weight:700">OTH-TBD</td><td>אחר — ממתין לסיווג</td><td style="font-size:13px;color:var(--ink-muted)">—</td><td><span class="pill p-g">—</span></td><td class="num" style="font-size:13px">—</td><td style="font-size:12.5px;color:var(--ink-muted)">ערך זמני בלבד · חייב דוח מעקב</td></tr></tbody><tfoot><tr><td colspan="6">סה"כ 63 ערכים ב־11 משפחות</td></tr></tfoot></table></div>
+  <div class="grid g2">
+    <div class="card">
+      <h3>שלושה כללי תכנון שהרשימה מיישמת</h3>
+      <ul class="tight">
+        <li><b>קוד ייחודי לכל שורה.</b> השם המלא הוא תצוגה בלבד ומותר לו לחזור על עצמו; הקוד לא.</li>
+        <li><b>ממד אחד לכל עמודה.</b> ענף, דרג, מקורה/פתוח וקיבולת יוצאים מתוך השם ומקבלים עמודה משלהם. השם המוצג נבנה מהם.</li>
+        <li><b>דרגי קיבולת רציפים וללא חפיפה</b>, מיושרים לטווחים שבתוכנית: <bdi>1,000–2,500</bdi> · <bdi>2,500–8,000</bdi> · <bdi>8,000–10,000</bdi> · 10,000+ באצטדיונים; <bdi>1,500–3,000</bdi> · <bdi>3,000–5,000</bdi> · <bdi>15,000–17,000</bdi> בהיכלים.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>שלוש הערות ליישום</h3>
+      <ul class="tight">
+        <li><b>מתחם אינו ערך בטקסונומיה</b> אלא ישות נפרדת: טבלת "מתחם" עם מזהה, ועמודת מזהה־אב בכל מיתקן. כך קומפלקס כדורגל נספר כיחידת תקצוב אחת ומרכיביו נשארים מיתקנים לכל דבר.</li>
+        <li><b>פאדל אינו ברשימת 92 הענפים המוכרים.</b> הוא מופיע כאן כסוג מיתקן, אך אם אינו ענף מוכר — לא תוכל להינתן בעדו תמיכה תחרותית. שווה לוודא מול מינהל הספורט לפני נעילה.</li>
+        <li><b>OTH-TBD הוא ערך זמני בלבד</b> וצריך דוח מעקב. היום 465 רשומות "אחר" יושבות ללא סיווג ואיש לא רואה אותן.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 style="margin-top:26px">ו. סדר הפעולות</h3>
+  <div class="card">
+    <div class="flow">
+      <div class="step" style="background:#FDF0F0;border-color:var(--red)"><span class="st" style="background:var(--red)">1</span><h4>לנעול טקסונומיה מקודדת</h4><p>63 ערכים עם קוד ייחודי, ולמלא את עמודות הענף, הדרג והמקורה/פתוח שכרגע ריקות בגיליון.</p></div>
+      <div class="step" style="background:#FDF0F0;border-color:var(--red)"><span class="st" style="background:var(--red)">2</span><h4>טבלת המרה</h4><p>50 ערכי הנתונים הקיימים ← הקודים החדשים. לסמן אילו דורשים נתון שלא נאסף (סוג משטח, מושבים) — הם יוצאים לסבב השלמה.</p></div>
+      <div class="step" style="background:#EFF7FD;border-color:var(--sky)"><span class="st" style="background:var(--sky)">3</span><h4>לחבר את 92 הענפים</h4><p>טבלת קשר מיתקן↔ענף עם דגל ענף ראשי. שני הצדדים כבר בקובץ — ההשקעה הזולה ביותר עם התשואה הגבוהה ביותר.</p></div>
+      <div class="step" style="background:#EFF7FD;border-color:var(--sky)"><span class="st" style="background:var(--sky)">4</span><h4>סבב השלמה אחד</h4><p>מושבים · סוג משטח · תאריך שיפוץ אחרון · פתוח בתשלום · שעות נשים. לאסוף הכול יחד ולא בטפטופים.</p></div>
+      <div class="step" style="background:#EFF7FD;border-color:var(--sky)"><span class="st" style="background:var(--sky)">5</span><h4>לנקות ולהפעיל ממשל</h4><p>111 זליגות העמודות, הרשימות הסגורות שנשחקו, ושמונה עמודות הממשל הריקות — כולל מקור נתון ותאריך עדכון בכל שורה.</p></div>
+      <div class="step" style="background:#EFF7FD;border-color:var(--sky)"><span class="st" style="background:var(--sky)">6</span><h4>מתחם ותיק מוצר</h4><p>ישות מתחם עם מזהה־אב, ומזהה תיק מוצר עם עלות מרבית לכל ערך בטקסונומיה.</p></div>
+    </div>
+    <div class="callout" style="margin-bottom:0">
+      <b>מבחן הקבלה:</b> שאילתה אחת שמחזירה, לכל אחת מ־33 שורות התקציב בנספח א׳, <b>כמה מיתקנים כאלה קיימים היום ובאילו רשויות</b>. אחרי צעדים <bdi>1–2</bdi> היא רצה. אחרי <bdi>3–4</bdi> אפשר גם לדרג בקשות לפי אמות המידה שבתוכנית.
+    </div>
+  </div>
+  <p class="src">נבדק: גיליון "בסיס הנתונים" (8,586 שורות × 33 עמודות) · "טקסונומיית מתקנים" (61 שורות) · "מקורות לנתונים (Data Validation)" (92 ענפי ספורט עם מזהה, ורשימות רשויות ורחובות). כל הנתונים הכמותיים בפרק זה חושבו מהקובץ עצמו.</p>
+</section>
+
+</main>
+
+<footer>
+  מקור: <b>תוכנית המיתקנים הלאומית</b>, ילקוט הפרסומים 10470, כ"ו בניסן התשפ"ב (27.4.2022), עמ' <bdi>7498–7509 </bdi>· חמ <bdi>3-5223</bdi><br>
+  מסמך הסבר זה מסכם את נוסח התוכנית לצורכי הבנה בלבד; במקרה של סתירה — הנוסח המפורסם ברשומות הוא הקובע.
+</footer>
+
+<script>
+/* ===== nav highlight ===== */
+const links=[...document.querySelectorAll('#nav a')];
+const secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){ links.forEach(l=>l.classList.remove('on'));
+    const i=secs.indexOf(e.target); if(i>-1) links[i].classList.add('on'); }});
+},{rootMargin:'-45% 0px -50% 0px'});
+secs.forEach(s=>s&&io.observe(s));
+
+/* ===== annual bars ===== */
+const yrs=[['2022',265,48],['2023',265,48],['2024',265,48],['2025',265,48],['2026',265,48],
+           ['2027',265,0],['2028',265,0],['2029',265,0],['2030',265,0],['2031',265,0]];
+const g=document.getElementById('bars'); const base=250, scale=210/300, x0=70, w=62, gap=20;
+let svg='';
+yrs.forEach((y,i)=>{
+  const x=x0+i*(w+gap);
+  const hB=y[1]*scale, hT=y[2]*scale;
+  svg+=`<rect x="${x}" y="${base-hB}" width="${w}" height="${hB}" fill="#1F3F6D" rx="3"/>`;
+  if(hT) svg+=`<rect x="${x}" y="${base-hB-hT}" width="${w}" height="${hT}" fill="#2D9CDB" rx="3"/>`;
+  svg+=`<text x="${x+w/2}" y="${base-hB-hT-8}" font-size="13" font-weight="700" fill="#1F3F6D" text-anchor="middle">${y[1]+y[2]}</text>`;
+  svg+=`<text x="${x+w/2}" y="${base+18}" font-size="12" fill="#6B7280" text-anchor="middle">${y[0]}</text>`;
+});
+g.innerHTML=svg;
+
+/* ===== type bars ===== */
+const C={h:'#1F3F6D',t:'#6B4FA0',k:'#E07B39',g:'#7A8FA6'};
+const types=[
+ ['מתקני ספורט קהילתי',513,'k'],['אולמות גדולים ובינוניים',510.9,'t'],
+ ['שדרוגים/שיפוצים/צורך ספורטיבי',351.3,'t'],['מרכזים אזוריים רב־תכליתיים',350,'h'],
+ ['קומפלקס כדורגל',150,'t'],['היכלי ספורט בינלאומיים',140,'t'],
+ ['אצטדיונים קטנים ובינוניים',96.8,'t'],['בריכות 25 מ׳ — הקמה',80.3,'t'],
+ ['ספורט מוטורי — מסלולים',76,'t'],['הצטיידות (תחרותי)',76,'t'],
+ ['מכון וינגייט',64,'h'],['הקמת מגרשי כדורגל',61.7,'t'],
+ ['מיתקנים לצרכים מיוחדים',60,'k'],['מרכזי מצוינות כדורגל',45,'h'],
+ ['אירועים בינלאומיים',40,'h'],['הצטיידות ספורטאי הישג',40,'h'],
+ ['מתקני אימון נוער (אתלטיקה)',39.2,'t'],['אולמות/אוהלי התעמלות',35,'t'],
+ ['שדרוג אולמות קיימים',28.2,'t'],['בריכות <bdi>25×33</bdi> מ׳',25,'t'],
+ ['היכלים קטנים <bdi>(1.5–3</bdi> אלף)',20,'t'],['שדרוג מגרשי כדורגל (תאורה)',17.5,'t'],
+ ['קריטריום',14.8,'t'],['שדרוג מתקנים קיימים',14.2,'t'],
+ ['אירוע ספורט ייחודי',12,'h'],['מרכזי מצוינות/בית לאומי',8.4,'h'],
+ ['שדרוג בריכות 25 מ׳',6.2,'t'],['מתקן הישגי — אופניים',5,'h'],
+ ['ליווי רשויות',5,'g'],['הצטיידות שייט',3,'t'],['הצטיידות דגמים — נבחרות',1.5,'h']
+];
+const max=513;
+document.getElementById('typebars').innerHTML = types.map(t=>{
+  const pct=(t[1]/2890*100).toFixed(1);
+  return `<div class="bar-row"><div class="nm" title="${t[0]}">${t[0]}</div>
+  <div class="bar-track"><div class="bar-fill" style="width:${t[1]/max*100}%;background:${C[t[2]]}"></div></div>
+  <div class="vl">${t[1]} <span style="font-weight:400;font-size:11px">(${pct}%)</span></div></div>`;
+}).join('');
+
+/* ===== count bars ===== */
+const counts=[['מתקנים קהילתיים',700,'k'],['הנגשת מתקני כושר',150,'k'],
+ ['אולמות בינוניים וגדולים',120,'t'],['שדרוג תאורה/מגרשי כדורגל',25,'t'],
+ ['שדרוג אולמות התעמלות',25,'t'],['מגרשי כדורגל בודדים',15,'t'],
+ ['מתקני אתלטיקה',15,'t'],['מיתקנים לצרכים מיוחדים',15,'k'],
+ ['מסלולי ספורט מוטורי',12,'t'],['בריכות 25 מ׳ (הקמה)',10,'t'],
+ ['שדרוג בריכות',10,'t'],['מתחמי כדורגל',8,'t'],['קריטריום',6,'t'],
+ ['אצטדיונים בינוניים',5,'t'],['אולמות/אוהלי התעמלות',5,'t'],
+ ['מרכזים רב־תכליתיים',5,'h'],['היכלים בינלאומיים',4,'t'],
+ ['מרכזי מצוינות כדורגל',3,'h'],['בריכות <bdi>25×33</bdi>',2,'t']];
+document.getElementById('countbars').innerHTML = counts.map(t=>
+ `<div class="bar-row"><div class="nm" title="${t[0]}">${t[0]}</div>
+  <div class="bar-track"><div class="bar-fill" style="width:${t[1]/700*100}%;background:${C[t[2]]}"></div></div>
+  <div class="vl">${t[1]}</div></div>`).join('');
+
+/* ===== financing table ===== */
+const FIN={1:[10,15],2:[15,20],3:[20,25],4:[25,30],5:[30,35],6:[35,40],7:[40,45],8:[45,50],9:[50,55],10:[50,60]};
+document.getElementById('fintable').innerHTML = Object.keys(FIN).map(k=>{
+  const [a,b]=FIN[k];
+  const col=v=>v<=20?'var(--green)':v<=40?'var(--ink)':'var(--red)';
+  return `<tr><td class="num"><b>${k}</b></td>
+   <td class="num" style="color:${col(a)};font-weight:700">${a}%</td>
+   <td class="num" style="color:${col(b)};font-weight:700">${b}%</td></tr>`;
+}).join('');
+
+/* ===== calculator ===== */
+const rankSel=document.getElementById('c-rank');
+rankSel.innerHTML=[1,2,3,4,5,6,7,8,9,10].map(i=>`<option value="${i}"${i===5?' selected':''}>${i}</option>`).join('');
+function calc(){
+  const cl=document.getElementById('c-cluster').value;
+  const r=+rankSel.value, prio=document.getElementById('c-prio').value==='1';
+  const typ=document.getElementById('c-type').value;
+  const cost=+document.getElementById('c-cost').value||0;
+  let pct;
+  if(cl==='h') pct = r<=6?10 : r<=8?20 : 30;
+  else pct = prio?FIN[r][0]:FIN[r][1];
+  let note='';
+  if(typ==='1'){ pct=Math.max(0,pct-5); note=' (לאחר הפחתת 5% למועצה אזורית)'; }
+  if(typ==='2'){ pct=0; note=' (פטור מלא — יישובי עוטף עזה, 2022)'; }
+  document.getElementById('c-prio').disabled = (cl==='h');
+  const own=Math.round(cost*pct/100), sup=cost-own;
+  const f=n=>n.toLocaleString('he-IL');
+  document.getElementById('c-out').innerHTML =
+   `מימון משלים: <b>${pct}%</b>${note} · המשרד תומך ב־<b>${f(sup)}</b> אלפי ₪ · הרשות משלימה <b>${f(own)}</b> אלפי ₪`;
+}
+['c-cluster','c-rank','c-prio','c-type','c-cost'].forEach(id=>{
+  document.getElementById(id).addEventListener('input',calc);
+});
+calc();
+</script>
+</body>
+</html>

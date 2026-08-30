@@ -18,3 +18,8 @@ generate-mock-data.js
 
 # scratch (chat-generated)
 _*
+
+# Verify cache + swarm intermediates (chat-generated, not for public repo)
+.verify-cache/
+verification.json
+facilities_product_file/
