@@ -23,3 +23,6 @@ _*
 .verify-cache/
 verification.json
 facilities_product_file/
+
+# Browser session artifacts (chat-generated)
+.playwright-cli/

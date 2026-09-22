@@ -122,6 +122,10 @@
   .miss-tag { display:inline-block; background:#FAE6E7; border:1px solid #F0C7C9; color:var(--danger);
     border-radius:999px; padding:1px 8px; font-size:10.5px; font-weight:600; white-space:nowrap; }
   /* ── רצועת ניווט בתוך לשונית ── */
+  .mbar { display:flex; align-items:center; gap:8px; justify-content:flex-end; }
+  .mbar-t { flex:1 1 auto; height:9px; background:var(--line-soft); border-radius:999px; overflow:hidden; min-width:40px; display:block; }
+  .mbar-f { display:block; height:100%; border-radius:999px; }
+  .mbar-v { flex:0 0 auto; font-variant-numeric:tabular-nums; }
   .jump { display:flex; gap:7px; flex-wrap:wrap; align-items:center; background:var(--surface);
     border:1px solid var(--line); border-radius:var(--radius); padding:9px 12px; margin-bottom:16px; }
   .jump b { font-size:11.5px; font-weight:600; color:var(--ink-faint); margin-inline-end:4px; }
@@ -452,7 +456,6 @@
       <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
       <div class="filter"><label>גורם מקצועי</label><select><option>הכל</option><option>יניב</option><option>נורית</option><option>ורד</option><option>אבי</option><option>קארין</option><option>דימה</option><option>ע'אזי</option><option>רועי</option></select></div>
       <div class="filter"><label>סטטוס מודל</label><select><option>הכל</option><option>אושר</option><option>מתוכנן</option><option>טרם</option></select></div>
-      <div class="filter"><label>שלמות דיווח</label><select><option>הכל</option><option>דווח במלואו</option><option>שדה אחד חסר</option><option>2+ שדות חסרים</option></select></div>
       <div class="filter"><label>שנה</label><select><option>2026</option><option>2025</option></select></div>
       <button class="filter-reset">איפוס פילטרים</button>
     </div>
@@ -465,7 +468,6 @@
 
     <h3 class="st-sub">דיווח סטטוס לפי גורם מקצועי</h3>
     <p class="st-subnote">שדה נדרש רק בשלב שבו הוא רלוונטי: <strong>תמיד</strong> — תקנה · סטטוס מודל; <strong>מתוכנן לפרסום</strong> — חלון ק"ק, ומשנקבע — צפי בקשות, ומשנסגר — מקדמות; <strong>מודל שטרם אושר</strong> — צפי אישור סופי. <em>אישור מל"ס</em> ו<em>פרסום ק"ק</em> מחוץ לחישוב (מאוכלסים בגיליון לחלק מהמבחנים בלבד).</p>
-    <div class="kpis k2" id="st_rep_kpis"></div>
     <div class="grid">
       <div class="card col-12"><div class="card-head"><span class="card-title">שלמות הדיווח לכל גורם מקצועי</span><span class="card-meta">Stacked Bar · מדורג לפי פערי דיווח <span class="qs-tag">QS: Horizontal Stacked Bar</span></span></div><div class="card-canvas-wrap h-260"><canvas id="st_report"></canvas></div></div>
       <div class="card col-12"><div class="card-head"><span class="card-title">לוח סטטוס — מבחני תמיכה</span><span class="card-meta">Table · שורה לכל מבחן · מבחנים עם פער דיווח בראש</span></div><div id="st_table"></div></div>
@@ -510,155 +512,34 @@
     <div class="footer-note"><strong>מקור:</strong> גאנט תמיכות מעודכן 20-8-2026.xlsx (קובץ מחלקה פנימי). הגיליון מתוחזק ידנית ע&quot;י המחלקה והדשבורד משקף אותו; המבנה ניתן להתאמה קלה למילוי הארגון. חלונות קול קורא שהחלו ב-2025 מוצגים מתחילת 2026. נתוני דמה להמחשה.</div>
   </section>
 
-  <!-- ===================== BUDGET ===================== -->
-  <section class="page" id="page-budget" data-tab="sport" data-init="budget" style="--accent:var(--navy);">
-    <h1 class="page-title">תמיכות<span class="sub">התמיכות שהמשרד מחלק לאיגודים ולאגודות</span></h1>
-    <nav class="jump"><b>במסך זה</b><a href="#" onclick="gotoTab('budget');return false">תמיכות</a><a href="#" onclick="gotoTab('catalog');return false">קטלוג התוכניות</a><a href="#" onclick="gotoTab('muni');return false">הסתכלות גיאוגרפית</a><a href="#" onclick="gotoTab('perf');return false">ביצועים ומגדר</a><a href="#" onclick="gotoTab('impact');return false">IMPACT ויעילות</a><a href="#" onclick="gotoTab('levers');return false">מנופי מדיניות והכלה</a></nav>
-    <p class="page-intro">תמיכות — התמיכות שהמשרד מחלק לאיגודים ולאגודות על פי מבחני התמיכה: פילוח לפי ייעוד, מגמות רב-שנתיות ויציבות הגופים הנתמכים. <strong>אין חיבור לתקציב המשרד עצמו — כל הנתונים מתייחסים לתמיכות המחולקות בלבד.</strong></p>
+  <!-- ===================== SPORT · מצב הספורט בישראל (הוויזואלים מדשבורד האיגודים בפרודקשן) ===================== -->
+  <section class="page" id="page-sport" data-tab="sport" data-init="sport" style="--accent:var(--navy);">
+    <h1 class="page-title">מצב הספורט בישראל<span class="sub">הוויזואלים שכבר קיימים בדשבורד האיגודים והאגודות</span></h1>
+    <p class="page-intro">לפי איפיון הפגישה השנייה — הלשונית מצומצמת לוויזואלים <strong>שכבר קיימים בדשבורד האיגודים והאגודות בפרודקשן</strong>. כל הערכים כאן <strong>הועתקו כלשונם מהדשבורד החי</strong> (שנת 2026), ולא נוצרו כנתוני דמה. תוספות ה-KPI שנתבקשו — 5 האיגודים המובילים בגדילה · קירבה לאי-מעבר תנאי סף · שוטף איגודים/אגודות · תקציב לפי רצועות — ייבנו על המסך הזה.</p>
+
     <div class="filter-bar">
       <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
-      <div class="filter"><label>שנת תקציב</label><select><option>2026</option><option>2025</option><option>2024</option><option>הכל</option></select></div>
-      <div class="filter"><label>מקור מימון</label><select><option>הכל</option><option>תמיכות משרד</option><option>מפעל הפיס / טוטו</option><option>רשויות מקומיות</option><option>הכנסות עצמיות</option></select></div>
-      <div class="filter"><label>ענף / איגוד</label><select><option>הכל</option><option>כדורגל</option><option>כדורסל</option><option>שחייה</option><option>אתלטיקה</option><option>התעמלות</option></select></div>
-      <div class="filter"><label>מחוז</label><select><option>הכל</option><option>צפון</option><option>חיפה</option><option>מרכז</option><option>תל אביב</option><option>ירושלים</option><option>דרום</option></select></div>
+      <div class="filter"><label>איגוד</label><select><option>הכל</option></select></div>
+      <div class="filter"><label>ענף</label><select><option>הכל</option></select></div>
+      <div class="filter"><label>סיווג ענף</label><select><option>הכל</option><option>אולימפי</option><option>לא אולימפי</option></select></div>
+      <div class="filter"><label>סוג ענף</label><select><option>הכל</option><option>אישי</option><option>קבוצתי</option></select></div>
+      <div class="filter"><label>עמידה בתנאי סף</label><select><option>עמד בתנאי סף</option><option>לא עמד</option><option>הכל</option></select></div>
+      <div class="filter"><label>טווח גיל</label><select><option>0–120</option></select></div>
+      <div class="filter"><label>שנה</label><select><option>2026</option><option>2025</option></select></div>
       <button class="filter-reset">איפוס פילטרים</button>
     </div>
 
-    <div class="kpis k3">
-      <div class="kpi"><div class="kpi-label">סך התמיכות</div><div class="kpi-value">₪148.1M</div><div class="kpi-sub up">▲ 8.4% מול 2025</div></div>
-      <div class="kpi"><div class="kpi-label">גופים נתמכים</div><div class="kpi-value">476</div><div class="kpi-sub">64 איגודים · 412 אגודות</div></div>
-      <div class="kpi"><div class="kpi-label">צמיחה תלת-שנתית</div><div class="kpi-value">+12.6%</div><div class="kpi-sub">2023 → 2026</div></div>
-    </div>
+    <div class="kpis" id="sp_kpis"></div>
 
     <div class="grid">
-      <div class="card col-4"><div class="card-head"><span class="card-title">חלוקת התמיכות לפי ייעוד</span><span class="card-meta">Donut · מיליוני ₪ <span class="qs-tag">QS</span></span></div><div class="card-canvas-wrap h-300"><canvas id="b_donut"></canvas></div><div style="margin-top:8px"><a href="#" onclick="gotoTab('catalog');return false" style="font-size:12px; color:var(--budget); text-decoration:none">↩ לפירוט מלא — קטלוג התוכניות · ב-QuickSight: URL Action</a></div></div>
-      <div class="card col-8"><div class="card-head"><span class="card-title">מגמת התמיכות</span><span class="card-meta">Line · מיליוני ₪ <span class="src-real">קיים בתיק יישוב</span></span></div><div class="card-canvas-wrap h-300"><canvas id="b_trend"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">קיים היום בתיק יישוב כ"תקציב שאושר לפי שנים" (עמודות, תרבות+ספורט). כאן: קו רב-שנתי לתמיכות הספורט בלבד.</div></div>
-
-      <div class="card col-7"><div class="card-head"><span class="card-title">יציבות תקציבית של הגופים הנתמכים</span><span class="card-meta"><span class="need-data">דורש דוח כספי · צבירת נתונים</span></span></div><div class="card-canvas-wrap h-300"><canvas id="b_stability"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:8px; line-height:1.6">פילוח ההכנסות העצמיות לאורך השנים קיים רק בדוחות הכספיים (PDF) ואינו זמין ב-API. כאן להמחשה.</div></div>
-      <div class="card col-5"><div class="card-head"><span class="card-title">מקורות מימון הגופים הנתמכים · 2024</span><span class="card-meta">Donut · % · שנת הדיווח הכספי האחרונה</span></div><div class="card-canvas-wrap h-260"><canvas id="b_mix"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">ממקורות רשמיים בלבד: תמיכת המשרד (פנימי) · תרומות מדינה זרה (data.gov.il) · יתר עצמי. פירוט ה"יתר" — רק בדוח הכספי (PDF).</div></div>
-
-      <div class="card col-12"><div class="card-head"><span class="card-title">תמיכות לפי איגוד · השוואת 2025 ל-2026</span><span class="card-meta">Clustered Bar · 10 המובילים מתוך 64 איגודים</span></div><div class="card-canvas-wrap h-340"><canvas id="b_yoy"></canvas></div></div>
-
-      <div class="card col-12"><div class="card-head"><span class="card-title">הרכב התמיכה — ניקוד לפי אמות מידה מול תיקונים</span><span class="card-meta"><span class="need-data">פנימי · לדוגמה</span></span></div><div class="card-canvas-wrap h-260"><canvas id="b_corrections"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">"התיקונים" — תקרות תמיכה, מקדמים וועדת חריגים — אינם נגזרים מהניקוד (ר' מנוע הניקוד בלשונית גוף נתמך). הפער בין החישוב לתשלום בפועל, במספר אחד. הסכומים מסתכמים למגמת התמיכות שלמעלה.</div></div>
-    </div>
-    <div class="footer-note"><strong>הבהרת תכולה:</strong> הנתונים משקפים את ה<em>תמיכות</em> שהמשרד מחלק לאיגודים ולאגודות על פי מבחני התמיכה — ולא את תקציב המשרד עצמו (אין לכך חיבור נתונים). <strong>מקורות מימון</strong> מוצג ממקורות רשמיים בלבד (תמיכת המשרד · תרומות מדינה זרה מ-data.gov.il · יתר עצמי); הפילוח המלא של ה"יתר" ו<strong>יציבות תקציבית</strong> רב-שנתית קיימים רק בדוחות הכספיים (PDF) ואינם זמינים ב-API — מסומנים בהתאם. כל הוויזואלים נתמכים ב-QuickSight.</div>
-  </section>
-  <!-- ===================== CATALOG · קטלוג התוכניות (סיעור מוחות) ===================== -->
-  <section class="page" id="page-catalog" data-tab="sport" data-init="catalog" style="--accent:var(--navy);">
-    <h1 class="page-title">קטלוג התוכניות<span class="sub">כל 17 מבחני התמיכה במבט-על אחד</span></h1>
-    <p class="page-intro">קטלוג התוכניות — מפת כל מבחני התמיכה במבט-על אחד: תקציב, גופים נתמכים, ערך נקודה וקריטריון מוביל. <strong>תמונת הפורטפוליו של מורן</strong> — מענה לשאלה הפתוחה מהפגישה על מסך Overview ראשוני.</p>
-    <div class="filter-bar">
-      <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
-      <div class="filter"><label>שנת תקציב</label><select><option>2026</option><option>2025</option><option>2024</option></select></div>
-      <div class="filter"><label>תחום</label><select><option>הכל</option><option>הישגי</option><option>קהילה ועממי</option><option>הכלה ושוויון</option><option>תשתית ומעטפת</option><option>חירום ועמידות</option></select></div>
-      <div class="filter"><label>אוכלוסיית יעד</label><select><option>הכל</option><option>איגודים</option><option>אגודות</option><option>רשויות מקומיות</option><option>ארגוני גג</option></select></div>
-      <div class="filter"><label>מיון לפי</label><select><option>תקציב</option><option>גופים נתמכים</option><option>ערך נקודה</option></select></div>
-      <button class="filter-reset">איפוס פילטרים</button>
+      <div class="card col-5"><div class="card-head"><span class="card-title">סך הספורטאים באיגודים לפי שנים</span><span class="card-meta">Clustered Bar · athlete_code מול latest 4 years <span class="src-real">קיים בדשבורד האיגודים</span></span></div><div class="card-canvas-wrap h-300"><canvas id="sp_years"></canvas></div></div>
+      <div class="card col-7"><div class="card-head"><span class="card-title">ספורטאים לפי קבוצת גיל ומגדר</span><span class="card-meta">Stacked Bar · גברים נייבי / נשים תכלת <span class="src-real">קיים בדשבורד האיגודים</span></span></div><div class="card-canvas-wrap h-300"><canvas id="sp_age"></canvas></div></div>
+      <div class="card col-12"><div class="card-head"><span class="card-title">לפי רשות מקומית</span><span class="card-meta">Table · תקציב מאושר · מספר קבוצות · סך ספורטאים (ללא אליפות אירופה) <span class="src-real">קיים בדשבורד האיגודים</span></span></div><div id="sp_table"></div></div>
     </div>
 
-    <div class="kpis">
-      <div class="kpi"><div class="kpi-label">מבחני תמיכה פעילים</div><div class="kpi-value">17</div><div class="kpi-sub">בנויים על מנגנון משותף אחד</div></div>
-      <div class="kpi"><div class="kpi-label">סך תקציב המבחנים</div><div class="kpi-value">₪148.1M</div><div class="kpi-sub">זהה לסך התמיכות בלשונית "תמיכות"</div></div>
-      <div class="kpi"><div class="kpi-label">גופים נתמכים (ייחודיים)</div><div class="kpi-value">476</div><div class="kpi-sub">גוף יכול להיתמך מכמה מבחנים</div></div>
-      <div class="kpi"><div class="kpi-label">ערך נקודה חציוני</div><div class="kpi-value">₪300</div><div class="kpi-sub">כמה ₪ שווה כל נקודת ניקוד · טווח ₪150–₪850</div></div>
-    </div>
-
-    <div class="grid">
-      <div class="card col-7"><div class="card-head"><span class="card-title">תקציב לפי מבחן תמיכה</span><span class="card-meta">Bar · צבע = תחום <span class="qs-tag">QS</span></span></div><div class="card-canvas-wrap h-420"><canvas id="c_byTest"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6"><span class="src-real">קיים בתיק יישוב</span> מקבילה תפעולית — "תקציב לפי תקנה &gt; מרכז קרנות/רצועה" (ברמת תקנה, תרבות+ספורט). כאן: ברמת מבחן תמיכה, ספורט בלבד, עם תחום וערך נקודה.</div></div>
-      <div class="card col-5"><div class="card-head"><span class="card-title">תעדוף ענפים מועדפים — כמה כסף המקדם מזיז</span><span class="card-meta">Stacked Bar · בסיס + תוספת תעדוף</span></div><div class="card-canvas-wrap h-320"><canvas id="c_priority"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">"ענף מועדף" מקבל מקדם ניקוד מוגדל — הרצועה הבהירה היא הכסף שהמקדם הזיז. מוצגים 8 הענפים המובילים מתוך מבחן האיגודים; הסכומים תואמים ללשונית "תמיכות".</div></div>
-
-      <div class="card col-12"><div class="card-head"><span class="card-title">קטלוג המבחנים המלא</span><span class="card-meta">Table · Data bars <span class="qs-tag">QS</span></span></div><div id="c_table"></div></div>
-    </div>
-    <div class="footer-note"><strong>מהסיעור (★ מומלץ לפתיחת הפגישה):</strong> קטלוג תוכניות התמיכה — תמונת פורטפוליו אחת למורן, מענה לשאלה הפתוחה מהפגישה איך לבנות מסך Overview ראשוני. 13 מבחנים נקראו לעומק ועוד 4 הושלמו מרשימות המשרד — יחד 17 (נתוני דמה להמחשה — הרשימה והסכומים כפופים לאימות). "אמת המידה המובילה" = הקריטריון שמניב את רוב הניקוד במבחן. Bar · Donut · Scatter · Table נתמכים ילידית ב-QuickSight.</div>
+    <div class="footer-note"><strong>מקור:</strong> דשבורד האיגודים והאגודות בפרודקשן (QuickSight) — הערכים הועתקו מצילומי המסך שבאיפיון הפגישה השנייה. פילוח הגיל מסתכם ל-162,880 לעומת 162,071 ב-KPI — פער של 0.5% שמקורו בהקשר סינון שונה בדשבורד המקורי; <strong>לא תוקן כאן כדי לא לשנות ערכי פרודקשן</strong>. "סוג ענף — אישי/קבוצתי" הוא הפילוח שיניב ביקש.</div>
   </section>
 
-  <!-- ===================== MUNICIPALITY ===================== -->
-  <section class="page" id="page-muni" data-tab="sport" data-init="muni" style="--accent:var(--navy);">
-    <h1 class="page-title">הסתכלות גיאוגרפית<span class="sub">ראייה הוליסטית סביב הרשות המקומית</span></h1>
-    <p class="page-intro">הסתכלות גיאוגרפית — האבולוציה של דשבורד "תיק יישוב" הקיים בפרודקשן (ר' קישורים): ראייה הוליסטית סביב הרשות: תקציב, ספורטאים, אגודות, הישגים, ואחוז מהאוכלוסייה (נתוני למ"ס · Drill-down).</p>
-    <div class="filter-bar">
-      <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
-      <div class="filter"><label>רשות / יישוב</label><select><option>חדרה</option><option>באר שבע</option><option>נצרת</option><option>מודיעין</option><option>אשקלון</option><option>כרמיאל</option></select></div>
-      <div class="filter"><label>מחוז</label><select><option>הכל</option><option>צפון</option><option>חיפה</option><option>מרכז</option><option>תל אביב</option><option>ירושלים</option><option>דרום</option></select></div>
-      <div class="filter"><label>אשכול פריפריאלי</label><select><option>הכל</option><option>1–2 (פריפריה)</option><option>3–5</option><option>6–7</option><option>8–10 (מרכז)</option></select></div>
-      <div class="filter"><label>אשכול סוציו-אקונומי</label><select><option>הכל</option><option>1–3</option><option>4–6</option><option>7–10</option></select></div>
-      <button class="filter-reset">איפוס פילטרים</button>
-    </div>
-
-    <div class="kpis k6">
-      <div class="kpi"><div class="kpi-label">אוכלוסייה (למ"ס)</div><div class="kpi-value">99,700</div></div>
-      <div class="kpi"><div class="kpi-label">ספורטאים רשומים</div><div class="kpi-value">6,240</div></div>
-      <div class="kpi"><div class="kpi-label">אחוז מהאוכלוסייה</div><div class="kpi-value">6.3%</div><div class="kpi-sub up">▲ מעל ממוצע ארצי 4.8%</div></div>
-      <div class="kpi"><div class="kpi-label">תקציב יישובי</div><div class="kpi-value">₪4.2M</div></div>
-      <div class="kpi"><div class="kpi-label">אגודות פעילות</div><div class="kpi-value">18</div></div>
-      <div class="kpi"><div class="kpi-label">הישגים ארציים</div><div class="kpi-value">41</div></div>
-    </div>
-
-    <div class="grid">
-      <div class="card col-5">
-        <div class="card-head"><span class="card-title" id="mapTitle">מפת חום — ספורטאים ל-1,000 תושבים</span><span class="card-meta">Filled Map · לפי מחוז <span class="qs-tag">QS</span></span></div>
-        <div style="display:flex; gap:6px; margin:-4px 0 10px;">
-          <button class="map-mode on" data-mode="0">ספורטאים ל-1,000</button>
-          <button class="map-mode" data-mode="1">תמיכה לנפש (₪)</button>
-        </div>
-        <div class="map-wrap">
-          <div id="il-map" style="flex:1; min-width:0;"></div>
-          <div class="map-legend">
-            <div class="lg-row"><span id="lgHi">גבוה · 78</span></div>
-            <div style="display:flex; gap:8px; align-items:center;"><div class="lg-scale"></div>
-              <div style="display:flex; flex-direction:column; justify-content:space-between; height:120px; font-size:10px;"><span>מרכז</span><span>ארצי</span><span>פריפריה</span></div>
-            </div>
-            <div class="lg-row"><span id="lgLo">נמוך · 22</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="card col-4">
-        <div class="card-head"><span class="card-title">כרטיס יישוב · חדרה</span><span class="card-meta">ראייה הוליסטית</span></div>
-        <div class="muni-card">
-          <div class="muni-head"><span class="n">חדרה</span><span class="m">מחוז חיפה · אשכול סוציו-אקונומי 5</span></div>
-          <div class="muni-mini">
-            <div class="mini"><div class="l">מדליות / הישגים</div><div class="v" style="color:var(--band-podium)">41</div></div>
-            <div class="mini"><div class="l">תקציב לספורטאי</div><div class="v">₪673</div></div>
-            <div class="mini"><div class="l">אחוז נשים</div><div class="v" style="color:var(--women)">44%</div></div>
-            <div class="mini"><div class="l">דירוג ארצי לפי % מאוכ'</div><div class="v" style="color:var(--muni)">7 מתוך 255</div></div>
-            <div class="mini"><div class="l">תמיכה לנפש</div><div class="v">₪42.1</div></div>
-            <div class="mini"><div class="l">מול צפי נוסחת סל הספורט <span class="need-data" style="font-size:9px; padding:1px 6px">באימות</span></div><div class="v" style="color:var(--success)">+6%</div></div>
-          </div>
-          <div class="card-canvas-wrap h-140"><canvas id="m_muniTrend"></canvas></div>
-          <div style="font-size:11px; color:var(--ink-faint); line-height:1.6"><span class="src-real">קיים בתיק יישוב</span> פרופיל רשות עם נתוני הלמ"ס קיים ב"מסמך לפני סיור שר". כאן: נוספו מדדי הספורט (מדליות, תקציב לספורטאי, % נשים, מגמה).</div>
-        </div>
-      </div>
-      <div class="card col-3">
-        <div class="card-head"><span class="card-title">ספורטאים לפי ענף</span><span class="card-meta">חדרה · Bar</span></div>
-        <div class="card-canvas-wrap h-300"><canvas id="m_byBranch"></canvas></div>
-      </div>
-
-      <div class="card col-7">
-        <div class="card-head"><span class="card-title">רשויות מובילות — תקציב, ספורטאים ואחוז מהאוכלוסייה</span><span class="card-meta">Table · Data bars <span class="src-real">קיים בתיק יישוב</span></span></div>
-        <div id="m_table"></div>
-        <div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">קיים היום בתיק יישוב בשני חלקים: טבלת "נתוני הלמ"ס" (אשכולות, אוכלוסייה) ו"תקציב שאושר לפי מחוז &gt; רשות". כאן: מאוחד לטבלה אחת + ספורטאים, % השתתפות והישגים.</div>
-      </div>
-      <div class="card col-5">
-        <div class="card-head"><span class="card-title">תקציב יישובי מול שיעור השתתפות</span><span class="card-meta">Scatter · X: תקציב ₪M · Y: % מהאוכלוסייה · גודל = הישגים</span></div>
-        <div class="card-canvas-wrap h-320"><canvas id="m_scatter"></canvas></div>
-      </div>
-    </div>
-    <div class="sub-div"><span class="t" style="color:var(--muni)">שוויון גיאוגרפי — האם הכסף מגיע לפריפריה?</span><span class="s">מהסיעור · מבט מדיניות רוחבי המשלים את ה-Drill-down היישובי</span></div>
-    <p class="page-intro">מבחן התמיכה "סל הספורט לרשויות מקומיות" מתעדף רשויות לפי דירוגי הלמ"ס: <strong>אשכול חברתי-כלכלי ומדד פריפריאליות</strong> — המשקלים המדויקים טעונים אימות מול נוסח המבחן ברשומות. תמיכה לנפש מול חוזק הרשות.</p>
-    <div class="kpis">
-      <div class="kpi"><div class="kpi-label">תמיכה לנפש · ארצי</div><div class="kpi-value">₪16.1</div><div class="kpi-sub">סל הספורט + תמיכות יישוביות</div></div>
-      <div class="kpi"><div class="kpi-label">תמיכה לנפש · אשכולות 1–4</div><div class="kpi-value">₪21.4</div><div class="kpi-sub up">▲ מעל הממוצע הארצי</div></div>
-      <div class="kpi"><div class="kpi-label">תמיכה לנפש · אשכולות 7–10</div><div class="kpi-value">₪12.6</div><div class="kpi-sub">מתחת לממוצע — תוצאת התעדוף המכוון</div></div>
-      <div class="kpi"><div class="kpi-label">יחס פריפריה / מרכז</div><div class="kpi-value">×1.70</div><div class="kpi-sub up">▲ עלה מ-×1.48 ב-2024</div></div>
-    </div>
-    <div class="grid">
-      <div class="card col-7"><div class="card-head"><span class="card-title">תמיכה לנפש מול אשכול חברתי-כלכלי</span><span class="card-meta">Scatter · גודל = אוכלוסייה <span class="qs-tag">QS</span></span></div><div class="card-canvas-wrap h-320"><canvas id="g_scatter"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">שיפוע יורד = הנוסחה עובדת: רשויות חלשות מקבלות יותר לנפש. חריגים מעל/מתחת לקו — נקודות לבדיקה.</div></div>
-      <div class="card col-5"><div class="card-head"><span class="card-title">רכיבי הנוסחה — אשכול מול פריפריאליות</span><span class="card-meta"><span class="need-data">משקלים להמחשה · טעון אימות מול נוסח המבחן</span></span></div><div class="card-canvas-wrap h-320"><canvas id="g_formula"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">פירוק נקודות הסל לשני הרכיבים — רשות יכולה להיות חזקה חברתית אך פריפריאלית גיאוגרפית (ולהפך). היחס בין הרכיבים כאן להמחשה בלבד.</div></div>
-      <div class="card col-12"><div class="card-head"><span class="card-title">מגמת יחס פריפריה / מרכז</span><span class="card-meta">Line · מול יעד מדיניות</span></div><div class="card-canvas-wrap h-240"><canvas id="g_ratio"></canvas></div></div>
-    </div>
-    <div class="footer-note"><strong>מהסיעור:</strong> שוויון גיאוגרפי (למ"ס + פריפריה) — נגזר ממבחן סל הספורט לרשויות (תעדוף לפי אשכול ופריפריאליות; המשקלים טעונים אימות מול נוסח המבחן ברשומות) וממבחן מרחב מוגן יביל. אוחד לתוך "הסתכלות גיאוגרפית" כמבט המדיניות של אותו נושא. מקורות: אשכולות למ"ס (פומבי) + תמיכות המשרד (פנימי) — נתוני דמה להמחשה. Scatter · Stacked · Line ילידיים ב-QuickSight.</div>
-    <div class="footer-note"><strong>הרעיון (אור):</strong> הסתכלות גיאוגרפית (לשעבר "תיק יישוב") מאגדת ממדים — תקציב, כמות ספורטאים, נתונים טכניים ואוכלוסייה מהלמ"ס — לכדי ראייה אחת סביב הרשות, עם Drill-down ממחוז לרשות. "כמויות תמיד ביחס לכלל האוכלוסייה". Filled Map, Scatter, Bar ו-Table נתמכים ב-QuickSight.</div>
-  </section>
 
   <!-- ===================== SUPPORTED BODY (GuideStar) ===================== -->
   <section class="page" id="page-org" data-tab="other" data-init="org" style="--accent:var(--navy);">
@@ -756,39 +637,6 @@
     <div class="footer-note"><strong>מקור ומתודולוגיה:</strong> נתוני הפרופיל (הכנסות/מחזור, עובדים, מתנדבים, חברי עמותה, שנת דיווח, סיווג, כתובת) — מ<em>מאגר רשם העמותות הפתוח (data.gov.il · משרד המשפטים)</em>; סטטוס תמיכות/שירותים ממשלתיים — מגיידסטאר. <strong>תלות בתמיכה</strong> = סכום התמיכה שהמשרד מחלק ÷ הכנסות העמותה — מדד היתלות של הגוף במשרד וסמן סיכון תקציבי (התמיכה שלנו היא נתון פנימי של המשרד, כאן לדוגמה). <strong>מגבלות נתונים:</strong> סך הוצאות ועודף/גירעון קיימים בקובץ הפתוח אך אינם מדווחים לעמותה זו; פירוט הכנסות לפי מקור (תרומות/מדינה/שירותים/דמי חבר) קיים רק בדוח הכספי (PDF) — שניהם לשלב הבא.</div>
   </section>
 
-  <!-- ===================== PERFORMANCE ===================== -->
-  <section class="page" id="page-perf" data-tab="sport" data-init="perf" style="--accent:var(--navy);">
-    <h1 class="page-title">ביצועים ומגדר<span class="sub">ספורטאים, הישגים וראייה מגדרית במבט מאוחד</span></h1>
-    <p class="page-intro">דשבורד ביצועים אחד — כמות ספורטאים, הישגים וראייה מגדרית, במבט מאוחד וביחס לאוכלוסייה.</p>
-    <div class="filter-bar">
-      <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
-      <div class="filter"><label>ענף</label><select><option>הכל</option><option>כדורגל</option><option>כדורסל</option><option>שחייה</option><option>אתלטיקה</option><option>התעמלות</option><option>ג'ודו</option></select></div>
-      <div class="filter"><label>מגדר</label><select><option>הכל</option><option>נשים</option><option>גברים</option></select></div>
-      <div class="filter"><label>שכבת גיל</label><select><option>הכל</option><option>ילדים 6–12</option><option>נוער 13–18</option><option>בוגרים 19–35</option><option>ותיקים 36+</option></select></div>
-      <div class="filter"><label>מחוז</label><select><option>הכל</option><option>צפון</option><option>חיפה</option><option>מרכז</option><option>תל אביב</option><option>ירושלים</option><option>דרום</option></select></div>
-      <button class="filter-reset">איפוס פילטרים</button>
-    </div>
-
-    <div class="kpis">
-      <div class="kpi"><div class="kpi-label">סך ספורטאים רשומים</div><div class="kpi-value">174,680</div><div class="kpi-sub up">▲ 5.1% מול 2025</div></div>
-      <div class="kpi"><div class="kpi-label">אחוז מהאוכלוסייה</div><div class="kpi-value">4.8%</div><div class="kpi-sub">מכלל האוכלוסייה (למ"ס) · יעד לאומי 6.0%</div></div>
-      <div class="kpi"><div class="kpi-label">הישגים ארציים ובינ"ל</div><div class="kpi-value">1,284</div><div class="kpi-sub up">מתוכם 74 עליות לפודיום</div></div>
-      <div class="kpi"><div class="kpi-label">אחוז נשים</div><div class="kpi-value">41.0%</div><div class="kpi-sub up">▲ 2.4 נק'</div></div>
-    </div>
-
-    <div class="grid">
-      <div class="card col-8"><div class="card-head"><span class="card-title">ספורטאים לפי ענף — נשים מול גברים</span><span class="card-meta">Stacked Bar · 10 מובילים</span></div><div class="card-canvas-wrap h-340"><canvas id="p_byBranch"></canvas></div></div>
-      <div class="card col-4"><div class="card-head"><span class="card-title">ראייה מגדרית</span><span class="card-meta">Donut + מגמה</span></div><div class="card-canvas-wrap h-180"><canvas id="p_gender"></canvas></div><div class="card-canvas-wrap h-140" style="margin-top:6px"><canvas id="p_genderTrend"></canvas></div></div>
-
-      <div class="card col-7"><div class="card-head"><span class="card-title">הישגים לפי דירוג בתחרות</span><span class="card-meta">Stacked · 6 ענפים מובילים</span></div><div class="card-canvas-wrap h-300"><canvas id="p_bands"></canvas></div></div>
-      <div class="card col-5"><div class="card-head"><span class="card-title">השתתפות ביחס לאוכלוסייה לפי גיל</span><span class="card-meta">Clustered · רשומים מול % אוכלוסייה</span></div><div class="card-canvas-wrap h-300"><canvas id="p_vsPop"></canvas></div></div>
-
-      <div class="card col-12"><div class="card-head"><span class="card-title">מגמת הישגים רב-שנתית</span><span class="card-meta">Line · מדליות ארציות ובינ"ל</span></div><div class="card-canvas-wrap h-260"><canvas id="p_achTrend"></canvas></div></div>
-
-      <div class="card col-12"><div class="card-head"><span class="card-title">הישגים לפי דירוג ומגדר — כלל הענפים</span><span class="card-meta">Clustered · נשים תכלת / גברים נייבי · מסתכם ל-1,284 · לדוגמה</span></div><div class="card-canvas-wrap h-260"><canvas id="p_bandsGender"></canvas></div></div>
-    </div>
-    <div class="footer-note"><strong>הרעיון:</strong> דשבורד ביצועים אחד המאחד כמות ספורטאים + הישגים + ראייה מגדרית. שמירה על צבעי הדירוג המחייבים (פודיום ירוק · גמר 8 זהב · 9–16 כתום · 17+ אפור) ועל <em>נשים תכלת / גברים כחול-נייבי</em>. "כמויות תמיד ביחס לכלל האוכלוסייה".</div>
-  </section>
 
   <!-- ===================== SLA ===================== -->
   <section class="page" id="page-sla" data-tab="other" data-init="sla" style="--accent:var(--navy);">
@@ -820,36 +668,6 @@
     <div class="footer-note"><strong>הרעיון:</strong> מדדי SLA תפעוליים — כמות בקשות חוזרות/השלמות, פניות פרטניות, תיקוני ועדת חריגים/עררים, וזמן מבקשה עד תשובה (מקצה לקצה). מבט "עומס תפעולי" ברמת עובד ירד — מצבת העובדים במשרד קטנה מכדי שמדד כזה יהיה משמעותי. Gauge · Combo · Stacked Bar נתמכים ב-QuickSight.</div>
   </section>
 
-  <!-- ===================== IMPACT ===================== -->
-  <section class="page" id="page-impact" data-tab="sport" data-init="impact" style="--accent:var(--navy);">
-    <h1 class="page-title">IMPACT ויעילות<span class="sub">שיעור השתתפות מול יעד לאומי ויעילות תקציבית</span></h1>
-    <p class="page-intro">IMPACT — קידום תרבות ספורט: שיעור ההשתתפות מהאוכלוסייה מול יעד לאומי, ויעילות תקציבית (Budget for impact).</p>
-    <div class="filter-bar">
-      <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
-      <div class="filter"><label>שנה</label><select><option>2026</option><option>2025</option><option>2024</option></select></div>
-      <div class="filter"><label>מחוז</label><select><option>הכל</option><option>צפון</option><option>חיפה</option><option>מרכז</option><option>תל אביב</option><option>ירושלים</option><option>דרום</option></select></div>
-      <div class="filter"><label>קבוצת גיל</label><select><option>הכל</option><option>ילדים ונוער</option><option>בוגרים</option><option>ותיקים</option></select></div>
-      <div class="filter"><label>סיווג אולימפי</label><select><option>הכל</option><option>אולימפי</option><option>פרה-אולימפי</option><option>לא אולימפי</option></select></div>
-      <button class="filter-reset">איפוס פילטרים</button>
-    </div>
-
-    <div class="kpis" style="grid-template-columns:repeat(5,1fr);">
-      <div class="kpi"><div class="kpi-label">שיעור השתתפות ארצי</div><div class="kpi-value">4.8%</div><div class="kpi-sub">מהאוכלוסייה בספורט מאורגן</div></div>
-      <div class="kpi"><div class="kpi-label">יעד לאומי 2028</div><div class="kpi-value">6.0%</div><div class="kpi-sub up">פער 1.2 נק'</div></div>
-      <div class="kpi"><div class="kpi-label">תקציב לספורטאי רשום</div><div class="kpi-value">₪848</div><div class="kpi-sub">₪148.1M ÷ 174,680 רשומים</div></div>
-      <div class="kpi"><div class="kpi-label">תקציב להישג</div><div class="kpi-value">₪115K</div><div class="kpi-sub">₪148.1M ÷ 1,284 הישגים ארציים ובינ"ל</div></div>
-      <div class="kpi"><div class="kpi-label">יחס תמיכה לנפש פריפריה/מרכז</div><div class="kpi-value">×1.70</div><div class="kpi-sub">תמיכה לנפש: אשכולות 1–4 ÷ אשכולות 7–10 · לדוגמה</div></div>
-    </div>
-
-    <div class="grid">
-      <div class="card col-7"><div class="card-head"><span class="card-title">שיעור השתתפות לפי מחוז מול יעד</span><span class="card-meta">Combo · Bar + קו יעד</span></div><div class="card-canvas-wrap h-300"><canvas id="i_byDistrict"></canvas></div></div>
-      <div class="card col-5"><div class="card-head"><span class="card-title">מגמת שיעור ההשתתפות מול יעד</span><span class="card-meta">Line · 2019–2028</span></div><div class="card-canvas-wrap h-300"><canvas id="i_trend"></canvas></div></div>
-
-      <div class="card col-7"><div class="card-head"><span class="card-title">תקציב מול עלות לספורטאי רשום — לאיגוד</span><span class="card-meta">Scatter · גודל = מדליות ארציות ובינ"ל</span></div><div class="card-canvas-wrap h-320"><canvas id="i_efficiency"></canvas></div></div>
-      <div class="card col-5"><div class="card-head"><span class="card-title">עלות לספורטאי רשום — דירוג</span><span class="card-meta">Bar · ₪ לספורטאי רשום</span></div><div class="card-canvas-wrap h-320"><canvas id="i_cost"></canvas></div></div>
-    </div>
-    <div class="footer-note"><strong>הרעיון:</strong> IMPACT = אחוז מהאוכלוסייה בספורט מאורגן מול יעד לאומי. <strong>הגדרת תפוקה:</strong> אין "תפוקה" כללית אחת — כל מבחן תמיכה מגדיר את התפוקה שלו באמות המידה שלו (ספורטאים לפי שנתון, הישגי דרג א', משתתפים בקהילה...), וערך הנקודה הוא המחיר ליחידת תפוקה (ר' קטלוג התוכניות ומנוע הניקוד). לכן מוצגים כאן רק מדדים עם מכנה מוגדר: ₪ לספורטאי רשום ו-₪ למדליה.</div>
-  </section>
 
   <!-- ===================== LINKS ===================== -->
   <section class="page" id="page-links" data-tab="other" style="--accent:var(--navy);">
@@ -863,7 +681,6 @@
       <a class="link-card"><div class="ic" style="background:var(--muni-soft); color:var(--muni)">◉</div><div class="lt">נתוני למ"ס · אוכלוסייה</div><div class="ld">מקור אוכלוסייה לחישוב שיעורי השתתפות ו-Drill-down יישובי.</div></a>
       <a class="link-card"><div class="ic" style="background:var(--sla-soft); color:var(--sla)">⏱</div><div class="lt">מערכת פניות ו-SLA</div><div class="ld">בקשות, פניות פרטניות, ועדת חריגים ועררים וזמני טיפול.</div></a>
       <a class="link-card"><div class="ic" style="background:var(--links-soft); color:var(--links)">📄</div><div class="lt">מתודולוגיה · שקל לנקודת אמת מידה</div><div class="ld">כמה שקלים שווה כל נקודת ניקוד — מסמכי המתודולוגיה, האפיון ותנאי הסף.</div></a>
-      <a class="link-card" href="#" onclick="gotoTab('catalog');return false"><div class="ic" style="background:var(--catalog-soft); color:var(--catalog)">▦</div><div class="lt">קטלוג התוכניות</div><div class="ld">פורטפוליו 17 מבחני התמיכה — תקציב, גופים וערך נקודה.</div></a>
       <a class="link-card" href="#" onclick="gotoTab('org');return false"><div class="ic" style="background:var(--engine-soft); color:var(--engine)">⚙</div><div class="lt">מנוע הניקוד — בתוך לשונית גוף נתמך</div><div class="ld">יעד וייחוס לכל אחוז תמיכה — למה כל גוף קיבל מה שקיבל.</div></a>
       <a class="link-card" href="https://www.cbs.gov.il/he/publications/Pages/2023/מדד-פריפריאליות-של-יישובים-ושל-רשויות-מקומיות-2020.aspx" target="_blank" rel="noopener"><div class="ic" style="background:var(--geo-soft); color:var(--geo)">◈</div><div class="lt">מדד פריפריאליות · למ"ס</div><div class="ld">המקור הרשמי למדד הפריפריאליות ולאשכולות החברתיים-כלכליים.</div></a>
     </div>
@@ -871,50 +688,6 @@
   </section>
 
 
-  <!-- ===================== POLICY LEVERS · מנופי מדיניות (סיעור מוחות) ===================== -->
-  <section class="page" id="page-levers" data-tab="sport" data-init="levers" style="--accent:var(--navy);">
-    <h1 class="page-title">מנופי מדיניות והכלה<span class="sub">מגדר, צנרת דור צעיר, מאמנים והכלה</span></h1>
-    <p class="page-intro">מנופי מדיניות — המבחנים לא רק מחלקים כסף, הם <strong>מכוונים התנהגות</strong>: תוספת ניקוד לנשים (+30% במבחן האיגודים), ניקוד מדורג לשנתוני נוער, תגמול מעטפת מקצועית ומכפיל הכלה ×1.5. המסך מודד כמה כסף כל מנוף באמת מזיז.</p>
-    <div class="filter-bar">
-      <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
-      <div class="filter"><label>שנת תקציב</label><select><option>2026</option><option>2025</option></select></div>
-      <div class="filter"><label>ענף</label><select><option>הכל</option><option>כדורגל</option><option>כדורסל</option><option>שחייה</option><option>אתלטיקה</option><option>התעמלות</option><option>ג'ודו</option><option>טניס</option><option>כדורעף</option></select></div>
-      <div class="filter"><label>מנוף</label><select><option>הכל</option><option>מכפיל נשים</option><option>שנתוני נוער</option><option>מאמנים ומעטפת</option></select></div>
-      <button class="filter-reset">איפוס פילטרים</button>
-    </div>
-
-    <div class="kpis">
-      <div class="kpi"><div class="kpi-label">פרמיית מגדר · כלל המבחנים</div><div class="kpi-value">₪11.2M</div><div class="kpi-sub">11 מבחנים מנקדים נשים במכפיל</div></div>
-      <div class="kpi"><div class="kpi-label">פרמיית שנתוני נוער</div><div class="kpi-value">₪9.6M</div><div class="kpi-sub">8 מבחנים מנקדים גיל מדורג</div></div>
-      <div class="kpi"><div class="kpi-label">מאמנים מוסמכים</div><div class="kpi-value">3,140</div><div class="kpi-sub">8 מבחנים מתגמלים מעטפת</div></div>
-      <div class="kpi"><div class="kpi-label">יחס ספורטאים למאמן</div><div class="kpi-value">1:56</div><div class="kpi-sub down">▼ יעד 1:45 — פער לשיפור</div></div>
-    </div>
-
-    <div class="grid">
-      <div class="card col-7"><div class="card-head"><span class="card-title">מגדר כמכפיל — פרמיית הנקודות שנשים ייצרו</span><span class="card-meta">Stacked · בסיס + פרמיה <span class="qs-tag">QS</span></span></div><div class="card-canvas-wrap h-320"><canvas id="l_gender"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">לא רק "כמה נשים" — כמה כסף ההשתתפות שלהן ייצרה דרך תוספת הניקוד (+30% במבחן האיגודים; מנגנונים דומים במבחנים נוספים — בבדיקה מול נוסחי המבחנים). תכלת = נשים, לפי עקרונות העיצוב. הסכומים זהים למנוע הניקוד.</div></div>
-      <div class="card col-5"><div class="card-head"><span class="card-title">הפרמיה כאחוז מהתמיכה</span><span class="card-meta">Bar · מיון יורד</span></div><div class="card-canvas-wrap h-320"><canvas id="l_gpct"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">בכדורעף כ-40% מהתמיכה נובעים מהפרמיה — טיעון חזק לקידום ספורטאיות.</div></div>
-
-      <div class="card col-7"><div class="card-head"><span class="card-title">צנרת דור צעיר — פירמידת גיל לפי ענף</span><span class="card-meta">Clustered · ילדים / נוער / הישגי</span></div><div class="card-canvas-wrap h-300"><canvas id="l_pipeline"></canvas></div></div>
-      <div class="card col-5"><div class="card-head"><span class="card-title">משפך הצנרת הארצי</span><span class="card-meta">Bar · שיעורי מעבר</span></div><div class="card-canvas-wrap h-300"><canvas id="l_funnel"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">היכן נבנה — והיכן דולף — הדור הבא. מעקב התמדה במסלול התחרותי (Cohort) — אינו זהה למצבת הרשומים בשנה נתונה. הניקוד המדורג לפי שנתונים נועד בדיוק לכאן.</div></div>
-
-      <div class="card col-12"><div class="card-head"><span class="card-title">מקצועיות — ספורטאים למאמן מוסמך לפי ענף</span><span class="card-meta">Combo · מול קו יעד 1:45 <span class="qs-tag">QS</span></span></div><div class="card-canvas-wrap h-260"><canvas id="l_coach"></canvas></div></div>
-    </div>
-    <div class="sub-div"><span class="t" style="color:var(--incl)">הכלה ומוגבלות — המנוף הרביעי</span><span class="s">מהסיעור · 6 מבחנים מתגמלים שילוב במכפיל ניקוד ×1.5 (מאומת) — אותו מנגנון, מבט מאוחד ראשון</span></div>
-    <div class="kpis">
-      <div class="kpi"><div class="kpi-label">ספורטאים עם מוגבלות</div><div class="kpi-value">8,420</div><div class="kpi-sub up">▲ 9.2% מול 2025 · 4.8% מכלל הרשומים</div></div>
-      <div class="kpi"><div class="kpi-label">יעד מדיניות</div><div class="kpi-value">6.0%</div><div class="kpi-sub">זהה ליעד ההשתתפות הלאומי</div></div>
-      <div class="kpi"><div class="kpi-label">גופים משלבים</div><div class="kpi-value">118</div><div class="kpi-sub">מתוך 476 גופים נתמכים</div></div>
-      <div class="kpi"><div class="kpi-label">פרמיית מכפילי הכלה</div><div class="kpi-value">₪6.8M</div><div class="kpi-sub">הכסף שהמכפיל ×1.5 הזיז</div></div>
-    </div>
-    <div class="grid">
-      <div class="card col-7"><div class="card-head"><span class="card-title">ספורטאים משולבים לפי ענף ומסגרת</span><span class="card-meta">Stacked Bar <span class="qs-tag">QS</span></span></div><div class="card-canvas-wrap h-320"><canvas id="n_byBranch"></canvas></div></div>
-      <div class="card col-5"><div class="card-head"><span class="card-title">חלוקה לפי מסגרת</span><span class="card-meta">Donut</span></div><div class="card-canvas-wrap h-260"><canvas id="n_frame"></canvas></div><div style="font-size:11px; color:var(--ink-faint); margin-top:6px; line-height:1.6">פראלימפי תחרותי · עממי משלב · ספיישל אולימפיקס — שלוש מסגרות, מדיניות אחת.</div></div>
-
-      <div class="card col-6"><div class="card-head"><span class="card-title">פרמיית המכפילים לפי מבחן תמיכה</span><span class="card-meta">Bar · 6 מבחנים</span></div><div class="card-canvas-wrap h-300"><canvas id="n_premium"></canvas></div></div>
-      <div class="card col-6"><div class="card-head"><span class="card-title">מגמת השילוב — שיעור מכלל הרשומים</span><span class="card-meta">Line · מול יעד 6%</span></div><div class="card-canvas-wrap h-300"><canvas id="n_trend"></canvas></div></div>
-    </div>
-    <div class="footer-note"><strong>מהסיעור (4 רעיונות באחד):</strong> מגדר כמכפיל (11 מבחנים) · צנרת דור צעיר (ניקוד מדורג לפי שנתונים) · מקצועיות — מאמנים ומעטפת (8 מבחנים) · הכלה ומוגבלות (6 מבחנים: גופי רוחב, פראלימפי, עממי-קהילתי, סל רשויות, איגודים, ליגות). המסר למורן: מבחני התמיכה הם הגה מדיניות, והדשבורד מראה כמה כל הגה באמת מסובב. נתוני דמה להמחשה; הפרמיות מחושבות מתוך מנוע הניקוד. Stacked · Clustered · Bar · Combo ילידיים ב-QuickSight.</div>
-  </section>
 
   <!-- ===================== RESILIENCE · עמידות וחירום (סיעור מוחות) ===================== -->
   <section class="page" id="page-resil" data-tab="other" data-init="resil" style="--accent:var(--navy);">
@@ -1741,6 +1514,59 @@
   };
   // איחוד לשוניות: התוכן המאומץ מאותחל יחד עם לשונית-האם
   // ===================== INIT.status · סטטוס המינהל (מקור: גאנט תמיכות 20-8-2026) =====================
+  // ================= SPORT · מצב הספורט בישראל (ערכים מדשבורד הפרודקשן) =================
+  INIT.sport = function(){
+    const kcard=k=>`<div class="kpi"><div class="kpi-label">${k[0]}</div><div class="kpi-value">${k[1]}</div><div class="kpi-sub">${k[2]||''}</div></div>`;
+    document.getElementById('sp_kpis').innerHTML=[
+      ['איגודים פעילים','59','שנת 2026 · עמדו בתנאי סף'],
+      ['סך ספורטאים באיגודים','162,071','athlete_code · טווח גיל 0–120'],
+      ['ספורטאים לאיגוד','2,747','ממוצע · 162,071 ÷ 59'],
+      ['אחוז נשים','22.52%','36,710 מתוך 162,880 בפילוח הגיל']
+    ].map(kcard).join('');
+
+    const kFmt = v => (v/1000).toFixed(2)+'K';
+    const kTick = {color:COL.muted, callback:v=>Math.round(v/1000)+'K'};
+
+    // סך הספורטאים לפי שנים — Clustered Bar
+    new Chart(document.getElementById('sp_years'),{type:'bar',
+      data:{labels:['2025','2026'],datasets:[
+        {label:'רשומים',data:[155000,162071],backgroundColor:COL.navy,borderRadius:3,barPercentage:.78},
+        {label:'פעילים ב-4 השנים האחרונות',data:[158500,166120],backgroundColor:COL.slate,borderRadius:3,barPercentage:.78}
+      ]},
+      options:{plugins:{...legBottom('bottom'),datalabels:{formatter:kFmt},
+        tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${c.raw.toLocaleString('he-IL')}`}}},
+        scales:{x:gridX,y:{...gridY,ticks:kTick,beginAtZero:true}}}});
+
+    // ספורטאים לפי קבוצת גיל ומגדר — Stacked Bar
+    const ages=['גיל התמחות 2','גיל למידה','גיל הישגי','גיל התמחות 1','גיל מסטרס','גיל ותיקים','גיל אוריינות','גיל תחרותי'];
+    new Chart(document.getElementById('sp_age'),{type:'bar',
+      data:{labels:ages,datasets:[
+        {label:'גברים',data:[34890,31100,27910,14470,6570,5130,3180,2920],backgroundColor:COL.men,borderRadius:3,barPercentage:.78},
+        {label:'נשים', data:[10180, 4640, 8370, 7810,1380,3460, 260, 610],backgroundColor:COL.women,borderRadius:3,barPercentage:.78}
+      ]},
+      options:{plugins:{...legBottom('bottom'),datalabels:{formatter:kFmt},
+        tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${c.raw.toLocaleString('he-IL')}`}}},
+        scales:{x:{...gridX,stacked:true,ticks:{color:COL.muted,font:{size:10.5},maxRotation:0,autoSkip:false}},
+                y:{...gridY,stacked:true,ticks:{...kTick,stepSize:10000},beginAtZero:true}}}});
+
+    // לפי רשות מקומית — Table עם פסי ערך
+    const AU=[
+      ['תל אביב-יפו',10.13,413,17006],['ירושלים',5.91,268,7733],['חיפה',5.44,258,8728],
+      ['ראשון לציון',3.46,134,5524],['פתח תקווה',3.23,159,5227],['נתניה',3.18,98,7713],
+      ['אשדוד',2.57,145,4132],['באר שבע',2.48,132,4190],['חולון',2.21,99,2831],['רמת גן',2.17,159,5181]
+    ];
+    const mx=[1,2,3].map(i=>Math.max(...AU.map(r=>r[i])));
+    const mbar=(v,i,txt,c)=>`<td><div class="mbar"><span class="mbar-v">${txt}</span>`+
+      `<span class="mbar-t"><span class="mbar-f" style="width:${(v/mx[i]*100).toFixed(1)}%;background:${c}"></span></span></div></td>`;
+    document.getElementById('sp_table').innerHTML=
+      '<table class="db-table"><thead><tr><th>רשות</th><th>תקציב מאושר</th><th>מספר קבוצות</th><th>סך ספורטאים</th></tr></thead><tbody>'+
+      AU.map(r=>'<tr><td style="font-weight:600">'+r[0]+'</td>'+
+        mbar(r[1],0,'₪'+r[1].toFixed(2)+'M',COL.navy)+
+        mbar(r[2],1,r[2].toLocaleString('he-IL'),COL.purple)+
+        mbar(r[3],2,r[3].toLocaleString('he-IL'),COL.orange)+'</tr>').join('')+
+      '</tbody></table>';
+  };
+
   INIT.status = function(){
     const SUP=[{"name":"עממי","owner":"נורית","takana":"19-43-03-12","fix":"כן","exp":20,"adv":"שולם 50%","model":"אושר","finalEta":"אושר","start":"2026-02-11","end":"2026-02-17","rfp":"11/2/26-17/2/26","mls":"","pubc":"","mPre":"אושר","mPost":"אושר","appEnd":"","appCom":""},{"name":"גופי רוחב תחרותי","owner":"נורית","takana":"19-43-03-12","fix":"לא","exp":3,"adv":"שולם 50%","model":"אושר","finalEta":"אושר","start":"2026-02-11","end":"2026-02-17","rfp":"11/2/26-17/2/26","mls":"","pubc":"","mPre":"אושר","mPost":"אושר","appEnd":"","appCom":""},{"name":"נשים","owner":"נורית","takana":"","fix":"חדש","exp":150,"adv":"לא","model":"מתוכנן","finalEta":"26.8.26","start":"2026-05-31","end":"2026-06-30","rfp":"31/05/26-30/6/26","mls":"אושר","pubc":"בוצע","mPre":"26.8.26","mPost":"2.9.26","appEnd":"","appCom":""},{"name":"מרכזי ספורט","owner":"נורית","takana":"19-43-03-42","fix":"כן","exp":5,"adv":"שולם 40%","model":"מתוכנן","finalEta":"2.9.26","start":"2025-10-23","end":"2025-11-18","rfp":"23/10/25-18/11/25","mls":"","pubc":"","mPre":"2.9.26","mPost":"23.9.26","appEnd":"","appCom":""},{"name":"איגודים אגודות - מאמנים","owner":"רועי/יניב","takana":"19-43-03-05","fix":"כן","exp":null,"adv":"שולם 40%","model":"מתוכנן","finalEta":"9.9.2026","start":"2025-12-24","end":"2026-02-12","rfp":"24/12/25-12/2/26","mls":"","pubc":"","mPre":"9.9.2026","mPost":"23.9.26","appEnd":"","appCom":""},{"name":"איגודים אגודות - איגודים ומועדפים","owner":"יניב","takana":"19-43-03-05","fix":"כן","exp":83,"adv":"שולם 60%","model":"אושר","finalEta":"אושר","start":"2025-12-24","end":"2026-02-12","rfp":"24/12/25-12/2/26","mls":"","pubc":"","mPre":"אושר","mPost":"אושר","appEnd":"","appCom":""},{"name":"איגודים אגודות - אגודות וגביע אירופה","owner":"יניב","takana":"19-43-03-05","fix":"כן","exp":1020,"adv":"אגודות - 40% גביע אירופה - לאחר אישור המודל","model":"אושר","finalEta":"אושר","start":"2025-12-24","end":"2026-02-12","rfp":"24/12/25-12/2/26","mls":"","pubc":"","mPre":"אושר","mPost":"2.9.26","appEnd":"","appCom":""},{"name":"החלפת ביתיות לאגודות ללא מתקן","owner":"יניב","takana":"19-43-03-46","fix":"כן","exp":null,"adv":"","model":"טרם","finalEta":"","start":null,"end":null,"rfp":"לא מתוכנן לפרסום","mls":"","pubc":"","mPre":"","mPost":"","appEnd":"","appCom":""},{"name":"אירוח משחקים ביתיים בחו\"ל - חרב\"ז","owner":"יניב","takana":"19-43-03-45","fix":"לא","exp":null,"adv":"","model":"טרם","finalEta":"","start":null,"end":null,"rfp":"לא מתוכנן לפרסום","mls":"","pubc":"","mPre":"","mPost":"","appEnd":"","appCom":""},{"name":"אירועים בינלאומיים","owner":"יניב","takana":"19-43-03-24","fix":"כן","exp":null,"adv":"","model":"טרם","finalEta":"","start":null,"end":null,"rfp":"לא מתוכנן לפרסום","mls":"","pubc":"","mPre":"","mPost":"","appEnd":"","appCom":""},{"name":"ארגוני גג - הישגי","owner":"ורד/יניב","takana":"19-43-03-12","fix":"—","exp":null,"adv":"שולם 40%","model":"אושר","finalEta":"אושר","start":"2026-01-29","end":"2026-03-15","rfp":"29/1/26-15/3/26","mls":"אושר","pubc":"","mPre":"אושר","mPost":"26.8.26","appEnd":"","appCom":""},{"name":"מרכזי אימון ותחרויות לספורטאי הישג","owner":"תשלום","takana":"19-43-03-22","fix":"לא","exp":3,"adv":"שולם 25%","model":"אושר","finalEta":"אושר","start":"2026-02-11","end":"2026-02-17","rfp":"11/2/26-17/2/26","mls":"","pubc":"","mPre":"אושר","mPost":"12.8.26","appEnd":"","appCom":""},{"name":"מלגות","owner":"ורד/יניב","takana":"19-43-03-12","fix":"כן","exp":null,"adv":"0.6","model":"אושר","finalEta":"אושר","start":"2026-06-17","end":"2026-07-17","rfp":"17/6/26-17/7/26","mls":"2026-04-14","pubc":"פורסם 29/3","mPre":"אושר","mPost":"26.8.26","appEnd":"","appCom":""},{"name":"תמריצים","owner":"ורד/יניב","takana":"19-43-03-12","fix":"כן","exp":null,"adv":"","model":"טרם","finalEta":"נובמבר","start":null,"end":null,"rfp":"","mls":"","pubc":"","mPre":"נובמבר","mPost":"","appEnd":"","appCom":""},{"name":"תמריצים - מגזר ערבי","owner":"ע'אזי/יניב","takana":"19-43-03-12","fix":"כן","exp":null,"adv":"","model":"טרם","finalEta":"נובמבר","start":null,"end":null,"rfp":"","mls":"","pubc":"","mPre":"נובמבר","mPost":"","appEnd":"","appCom":""},{"name":"שיטור וסדרנות ליגות מקצועיות","owner":"קארין/יניב","takana":"19-43-03-19","fix":"כן","exp":8,"adv":"שולם 50%","model":"אושר","finalEta":"25.3.26","start":"2026-02-11","end":"2026-02-17","rfp":"11/2/26-17/2/26","mls":"2026-04-14","pubc":"פורסם","mPre":"25.3.26","mPost":"מודל אושר","appEnd":"","appCom":""},{"name":"שיטור וסדרנות ליגות נמוכות","owner":"קארין/יניב","takana":"19-43-03-19","fix":"כן","exp":7,"adv":"שולם 50%","model":"אושר","finalEta":"15.4.26","start":"2026-02-11","end":"2026-02-17","rfp":"11/2/26-17/2/26","mls":"2026-04-14","pubc":"פורסם","mPre":"15.4.26","mPost":"מודל אושר","appEnd":"","appCom":""},{"name":"שחקן ישראלי","owner":"קארין/יניב","takana":"19-43-03-27","fix":"לא","exp":140,"adv":"שולם 60%","model":"אושר","finalEta":"אושר","start":"2026-02-11","end":"2026-02-17","rfp":"11/2/26-17/2/26","mls":"","pubc":"","mPre":"אושר","mPost":"19.8.26","appEnd":"","appCom":""},{"name":"ספורט מוטורי","owner":"דימה","takana":"19-43-03-31","fix":"כן","exp":2,"adv":"שולם 50%","model":"אושר","finalEta":"אפריל","start":"2026-01-21","end":"2026-03-19","rfp":"21/1/26-19/3/26","mls":"אושר","pubc":"בוצע","mPre":"אפריל","mPost":"מודל אושר","appEnd":"","appCom":""},{"name":"סל הספורט","owner":"אבי","takana":"19-43-03-07","fix":"כן","exp":265,"adv":"50% באוגוסט","model":"טרם","finalEta":"דצמבר","start":"2026-04-26","end":"2026-05-26","rfp":"26/04/26-26/5/26","mls":"2026-03-17","pubc":"פורסם","mPre":"דצמבר","mPost":"","appEnd":"","appCom":""},{"name":"מכביה","owner":"אבי","takana":"19-43-03-24","fix":"כן","exp":null,"adv":"0","model":"טרם","finalEta":"יוני","start":"2026-04-15","end":"2026-04-24","rfp":"15/04/26-24/4/26","mls":"","pubc":"","mPre":"יוני","mPost":"","appEnd":"","appCom":""},{"name":"מבחן פעילות ספורט יישובי תקומה","owner":"אבי","takana":"","fix":"כן","exp":5,"adv":"50% באוגוסט","model":"טרם","finalEta":"דצמבר","start":"2026-06-08","end":"2026-06-22","rfp":"8-22/6/2026","mls":"2026-04-14","pubc":"פורסם","mPre":"דצמבר","mPost":"","appEnd":"","appCom":""},{"name":"מיגוניות","owner":"אבי","takana":"19-43-03-27","fix":"חדש","exp":17,"adv":"0","model":"טרם","finalEta":"יוני","start":"2026-03-31","end":"2026-04-30","rfp":"31/3/26-30/4/26","mls":"2026-03-29","pubc":"פורסם","mPre":"יוני","mPost":"","appEnd":"","appCom":""},{"name":"העתקת אימונים בענפי כדור קבוצתיים אולימפיים","owner":"יניב","takana":"19-43-03-45","fix":"חדש","exp":null,"adv":"0","model":"אושר","finalEta":"אושר","start":"2026-04-30","end":"2026-05-07","rfp":"30/4/26-7/5/26","mls":"2026-03-29","pubc":"פורסם","mPre":"אושר","mPost":"19.8.26","appEnd":"","appCom":""},{"name":"אובדן הכנסות \"שאגת הארי\"","owner":"יניב","takana":"19-43-03-45","fix":"חדש","exp":null,"adv":"0","model":"אושר","finalEta":"אושר","start":"2026-04-30","end":"2026-05-31","rfp":"30/4/26-31/5/26","mls":"2026-04-14","pubc":"פורסם","mPre":"אושר","mPost":"19.8.26","appEnd":"","appCom":""}];
     const FAC=[{"name":"הישגי","cluster":"הישגי","owner":"הוליה","status":"נדרש עדכון","budget":5,"exp":50,"start":null,"end":null,"rfp":"ממתין לאישור אוצר","pubDate":"2026-08-01","pub":false,"dossier":"לא נדרש","actions":"מל\"ס + ה\"צ הכנת מסמכים נדרשים"},{"name":"תכנון שדרוג אצטדיון לאומי+ אצטדיוני ליגת העל","cluster":"הישגי","owner":"דפנה","status":"נדרש מבחן חדש","budget":30,"exp":5,"start":null,"end":null,"rfp":"נדרש דיון ה\"צ","pubDate":"2026-08-01","pub":false,"dossier":"לא נדרש","actions":"מל\"ס + ה\"צ הכנת מסמכים נדרשים"},{"name":"מרכז מצוינות בכדורגל","cluster":"הישגי","owner":"מורן","status":"נדרש מבחן חדש","budget":0,"exp":1,"start":null,"end":null,"rfp":"","pubDate":null,"pub":false,"dossier":"נדרש","actions":"מל\"ס + ה\"צ הכנת מסמכים נדרשים"},{"name":"קהילתי","cluster":"קהילתי","owner":"הוליה","status":"נדרש עדכון","budget":80,"exp":231,"start":"2026-05-07","end":"2026-06-07","rfp":"7/5/26-7/6/26","pubDate":null,"pub":true,"dossier":"לא נדרש","actions":"מל\"ס + ה\"צ הכנת מסמכים נדרשים"},{"name":"בריכות טיפוליות","cluster":"קהילתי","owner":"מורן","status":"נדרש עדכון","budget":24,"exp":24,"start":"2026-05-11","end":"2026-06-11","rfp":"11/5/26-11/6/26","pubDate":null,"pub":true,"dossier":"לא נדרש","actions":"מל\"ס + ה\"צ הכנת מסמכים נדרשים"},{"name":"אולמות ספורט","cluster":"תחרותי","owner":"מורן","status":"נדרש עדכון","budget":73,"exp":86,"start":"2026-05-11","end":"2026-06-11","rfp":"11/5/26-11/6/26","pubDate":null,"pub":true,"dossier":"נדרש עדכון","actions":"מל\"ס + ה\"צ הכנת מסמכים נדרשים"},{"name":"הקמה/שדרוג מגרשי כדורגל","cluster":"תחרותי","owner":"הוליה","status":"נדרש מבחן חדש","budget":120,"exp":116,"start":"2026-05-11","end":"2026-06-11","rfp":"11/5/26-11/6/26","pubDate":null,"pub":true,"dossier":"נדרש עדכון","actions":"מל\"ס + ה\"צ הכנת מסמכים נדרשים"},{"name":"תחרותי שוטף","cluster":"תחרותי","owner":"מורן","status":"נדרש עדכון","budget":60,"exp":400,"start":"2026-05-21","end":"2026-06-21","rfp":"21/5/26-21/6/26","pubDate":"2026-05-19","pub":true,"dossier":"לא נדרש","actions":"מל\"ס + ה\"צ הכנת מסמכים נדרשים"},{"name":"צורך ספורטיבי מיוחד","cluster":"תחרותי","owner":"הוליה","status":"נדרש עדכון","budget":12,"exp":30,"start":"2026-06-21","end":"2026-05-21","rfp":"21/6/26-21/5/26","pubDate":"2026-05-19","pub":true,"dossier":"לא נדרש","actions":"מל\"ס + ה\"צ הכנת מסמכים נדרשים"},{"name":"הסרת חסמים גדולים","cluster":"תחרותי","owner":"מורן","status":"נדרש מבחן חדש","budget":0,"exp":6,"start":null,"end":null,"rfp":"תקציב הופחת ל-0","pubDate":null,"pub":false,"dossier":"לא נדרש","actions":"מל\"ס + ה\"צ הכנת מסמכים נדרשים"},{"name":"מוטורי","cluster":"תחרותי","owner":"מורן","status":"נדרש מבחן חדש","budget":10,"exp":5,"start":null,"end":null,"rfp":"ממתין לתיק מוצר","pubDate":"2026-06-01","pub":false,"dossier":"נדרש","actions":"מל\"ס + ה\"צ הכנת מסמכים נדרשים"},{"name":"מבחן ייעודי ערי ליבה","cluster":"","owner":"","status":"","budget":null,"exp":7,"start":null,"end":null,"rfp":"","pubDate":"2026-09-01","pub":false,"dossier":"נדרש א\"ק","actions":"אישור אוצר+ מל\"ס + ה\"צ הכנת מסמכים נדרשים"},{"name":"מבחן ייעודי לרשויות חברה ערבית 550","cluster":"תחרותי","owner":"","status":"נדרש מבחן חדש","budget":null,"exp":null,"start":null,"end":null,"rfp":"","pubDate":null,"pub":false,"dossier":"","actions":""}];
@@ -1848,17 +1674,6 @@
     const nFld=n=>n===1?'שדה אחד חסר':n+' שדות חסרים';
     const nTst=n=>n===1?'1 מבחן':n+' מבחנים';
     const REPC={full:COL.success, part:v('--band-final'), none:COL.danger};
-
-    // KPIs של הדיווח
-    const noRep=REP.filter(x=>x.miss.length>=2).length,
-          partRep=REP.filter(x=>x.miss.length===1).length,
-          gapOwners=[...new Set(REP.filter(x=>x.miss.length>0).map(x=>x.owner))].length,
-          allOwners=[...new Set(REP.map(x=>x.owner))].length,
-          gapFields=REP.reduce((a,x)=>a+x.miss.length,0);
-    document.getElementById('st_rep_kpis').innerHTML=[
-      ['מבחנים ללא דיווח מלא',noRep+partRep,'מתוך '+REP.length+(noRep?' · '+noRep+' עם 2+ שדות חסרים':'')],
-      ['גורמים מקצועיים עם פערי דיווח',gapOwners,'מתוך '+allOwners+' · '+nFld(gapFields)]
-    ].map(kcard).join('');
 
     // Stacked bar — מדורג לפי גודל הפער
     const oStat={};
