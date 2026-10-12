@@ -127,6 +127,31 @@
   .st-sub { font-size:14px; font-weight:700; color:var(--ink); margin:22px 0 4px;
     padding-inline-start:9px; border-inline-start:3px solid var(--accent); }
   .st-subnote { font-size:11.5px; color:var(--ink-faint); margin:0 0 12px 12px; line-height:1.7; }
+  /* ── קבוצת פילטרים (פר מקור נתונים / רמת פירוט) + שבבי פילטר פר ויזואל ── */
+  /* כל קבוצה = קופסה אחת: כותרת + פס פילטרים + הוויזואלים שהוא מסנן */
+  .fgroup { margin-top:22px; padding:4px 16px 16px; border:1px solid #B9C6D8; border-top:4px solid var(--navy);
+    border-radius:var(--radius-lg); background:#E3E9F2; box-shadow:0 1px 4px rgba(31,63,109,.10); }
+  .fgroup > .st-h { margin-top:12px; }
+  .fgroup > .filter-bar { border-color:#B9C6D8; }
+  .fg-src { display:block; font-size:11px; font-weight:500; color:var(--ink-muted); margin-top:3px; letter-spacing:0; }
+  .fg-src code { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:10.5px; direction:ltr; unicode-bidi:isolate; }
+  .fg-miss { font-size:10.5px; color:var(--ink-faint); align-self:end; padding:7px 0; cursor:help; border-bottom:1px dotted var(--ink-faint); }
+  /* ── הערה בולטת: הגדרות תנאי סף ── */
+  .def-note { margin-top:14px; background:#FDF3D9; border:1px solid #F0DFA8; border-inline-start:4px solid var(--gold);
+    border-radius:var(--radius-lg); padding:12px 16px 14px; font-size:12px; color:var(--ink); line-height:1.6; }
+  .def-note .dn-h { font-size:14px; font-weight:700; color:var(--navy); margin-bottom:6px; }
+  .def-note .dn-q { font-size:12px; color:var(--ink-muted); margin-bottom:10px; }
+  .def-note .dn-t { width:100%; border-collapse:collapse; background:var(--surface); border-radius:var(--radius); overflow:hidden; }
+  .def-note .dn-t th { font-size:11px; font-weight:600; color:var(--ink-muted); text-align:right; padding:7px 9px; border-bottom:2px solid var(--line); white-space:nowrap; }
+  .def-note .dn-t td { padding:7px 9px; border-bottom:1px solid var(--line-soft); vertical-align:top; }
+  .def-note .dn-t td:first-child { font-weight:600; white-space:nowrap; }
+  .def-note .dn-t td:nth-child(4), .def-note .dn-t td:nth-child(5) { white-space:nowrap; }
+  .def-note .dn-t a { color:var(--navy); }
+  .def-note code { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:10.5px; direction:ltr; unicode-bidi:isolate; }
+  .def-note .ok { color:var(--green); } .def-note .no { color:var(--red); } .def-note .part { color:var(--orange); }
+  .def-note .dn-rm { display:inline-block; font-size:10px; font-weight:700; color:#fff; background:var(--red); border-radius:999px; padding:0 7px; margin-inline-start:4px; }
+  .def-note tr.rm td { color:var(--ink-muted); }
+  .def-note .dn-f { font-size:11px; color:var(--ink-faint); margin-top:8px; }
   .miss-tag { display:inline-block; background:#FAE6E7; border:1px solid #F0C7C9; color:var(--danger);
     border-radius:999px; padding:1px 8px; font-size:10.5px; font-weight:600; white-space:nowrap; }
   /* ── רצועת ניווט בתוך לשונית ── */
@@ -457,15 +482,16 @@
   <section class="page active" id="page-status" data-tab="admin" data-init="status" style="--accent:var(--navy);">
     <h1 class="page-title">סטטוס המינהל</h1>
 
+
+    <div class="fgroup">
+    <h2 class="st-h">מבחני תמיכה · 2026<span class="fg-src">מקור: <code>גאנט תמיכות 2026</code> · רמת פירוט: מבחן תמיכה</span></h2>
     <div class="filter-bar">
-      <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
-      <div class="filter"><label>גורם מקצועי</label><select><option>הכל</option><option>יניב</option><option>נורית</option><option>ורד</option><option>אבי</option><option>קארין</option><option>דימה</option><option>ע'אזי</option><option>רועי</option></select></div>
-      <div class="filter"><label>סטטוס מודל</label><select><option>הכל</option><option>אושר</option><option>מתוכנן</option><option>טרם</option></select></div>
-      <div class="filter"><label>שנה</label><select><option>2026</option><option>2025</option></select></div>
+      <span class="filter-bar-label">פילטרים על <strong>מבחני תמיכה</strong></span>
+      <div class="filter" data-f="עמודה: גורם מקצועי"><label>גורם מקצועי</label><select><option>הכל</option><option>יניב</option><option>נורית</option><option>ורד</option><option>אבי</option><option>קארין</option><option>דימה</option><option>ע'אזי</option><option>רועי</option></select></div>
+      <div class="filter" data-f="נגזר: אישור מודל לפני/אחרי ערעורים + צפי אישור מודל סופי"><label>סטטוס מודל</label><select><option>הכל</option><option>אושר</option><option>מתוכנן</option><option>טרם</option></select></div>
+      <div class="filter" data-f="שנת תמיכה — הגאנט הוא גיליון לשנה; דורש טעינת גיליון לכל שנה"><label>שנה</label><select><option>2026</option><option>2025</option></select></div>
       <button class="filter-reset">איפוס פילטרים</button>
     </div>
-
-    <h2 class="st-h">מבחני תמיכה · 2026</h2>
     <div class="kpis k6" id="st_kpis"></div>
     <div class="grid">
       <div class="card col-12"><div class="card-head"><span class="card-title">גאנט מבחני תמיכה — חלון קול קורא לאורך 2026</span><span class="card-meta"></span></div><div id="st_gantt" class="gantt-scroll"></div><div id="st_legend"></div></div>
@@ -478,11 +504,23 @@
       <div class="card col-12"><div class="card-head"><span class="card-title">לוח סטטוס — מבחני תמיכה</span><span class="card-meta"></span></div><div id="st_table"></div></div>
     </div>
 
-    <h2 class="st-h">מבחני מתקנים · 2026</h2>
+    </div>
+
+    <div class="fgroup">
+    <h2 class="st-h">מבחני מתקנים · 2026<span class="fg-src">מקור: <code>גאנט מתקנים</code> · רמת פירוט: מבחן מתקנים — אין "גורם מקצועי" ו"סטטוס מודל" של מבחני התמיכה</span></h2>
+    <div class="filter-bar">
+      <span class="filter-bar-label">פילטרים על <strong>מבחני מתקנים</strong></span>
+      <div class="filter" data-f="עמודה: אשכול"><label>אשכול</label><select><option>הכל</option><option>קהילתי</option><option>תחרותי</option><option>הישגי</option></select></div>
+      <div class="filter" data-f="עמודת האחראי בגאנט המתקנים (לא 'גורם מקצועי' של התמיכות)"><label>אחראי</label><select><option>הכל</option><option>הוליה</option><option>מורן</option><option>דפנה</option></select></div>
+      <div class="filter" data-f="עמודה: סטטוס מבחן + תאריכי קול קורא (פורסם)"><label>סטטוס מבחן</label><select><option>הכל</option><option>פורסם</option><option>נדרש עדכון</option><option>נדרש מבחן חדש</option></select></div>
+      <div class="filter" data-f="שנת תמיכה — גיליון לשנה"><label>שנה</label><select><option>2026</option><option>2025</option></select></div>
+      <button class="filter-reset">איפוס פילטרים</button>
+    </div>
     <div class="kpis" id="stf_kpis"></div>
     <div class="grid">
       <div class="card col-12"><div class="card-head"><span class="card-title">גאנט מבחני מתקנים — חלון קול קורא לאורך 2026</span><span class="card-meta"></span></div><div id="stf_gantt" class="gantt-scroll"></div><div id="stf_legend"></div></div>
       <div class="card col-12"><div class="card-head"><span class="card-title">לוח סטטוס — מבחני מתקנים</span><span class="card-meta"></span></div><div id="stf_table"></div></div>
+    </div>
     </div>
     <details class="spec"><summary>בניית הגאנט ב-QuickSight — Highcharts visual <span style="font-weight:400;color:var(--ink-faint)">· מפרט לצוות הפיתוח</span></summary>
       ל-QuickSight אין סוג ויזואל Gantt מובנה, אבל ה-<strong>Highcharts visual</strong> (מובנה, ללא עלות נוספת, נכתב כ-JSON) מכסה את כל מה שמופיע כאן.
@@ -521,39 +559,85 @@
   <section class="page" id="page-sport" data-tab="sport" data-init="sport" style="--accent:var(--navy);">
     <h1 class="page-title">מצב הספורט בישראל</h1>
 
+
+    <!-- ── קבוצה 1 · ספורטאים והישגיות · fact_athlete + fact_achievement_* — רק פילטרים משותפים לשני המקורות ── -->
+    <div class="fgroup">
+    <h2 class="st-h">ספורטאים והישגיות<span class="fg-src">מקור: <code>dwh_aa_fact_athlete</code> (ספורטאי × בקשת תמיכה) + <code>dwh_aa_fact_achievement_personal</code>/<code>_group</code> (הישג) · משותף: <code>support_request_year</code>, <code>branch_id</code> → <code>dim_branchs</code>, <code>association_id</code> (STT 12/10)</span></h2>
     <div class="filter-bar">
-      <span class="filter-bar-label">פילטרים על <strong>כל הדף</strong></span>
-      <div class="filter"><label>איגוד</label><select><option>הכל</option></select></div>
-      <div class="filter"><label>ענף</label><select><option>הכל</option></select></div>
-      <div class="filter"><label>סיווג ענף</label><select><option>הכל</option><option>אולימפי</option><option>לא אולימפי</option></select></div>
-      <div class="filter"><label>סוג ענף</label><select><option>הכל</option><option>אישי</option><option>קבוצתי</option></select></div>
-      <div class="filter"><label>עמידה בתנאי סף</label><select><option>עמד בתנאי סף</option><option>לא עמד</option><option>הכל</option></select></div>
-      <div class="filter"><label>טווח גיל</label><select><option>0–120</option></select></div>
-      <div class="filter"><label>שנה</label><select><option>2026</option><option>2025</option></select></div>
+      <span class="filter-bar-label">פילטרים על <strong>ספורטאים והישגיות</strong></span>
+      <div class="filter" data-f="support_request_year (בשני המקורות)"><label>שנה</label><select><option>2026</option><option>2025</option></select></div>
+      <div class="filter" data-f="association_id — fact_athlete + fact_achievement_personal (נוסף ב-STT 12/10). ב-fact_achievement_group חסר — להוסיף דרך support_request_code → fact_support.association_id"><label>איגוד</label><select><option>הכל</option></select></div>
+      <div class="filter" data-f="branch_id (בשני המקורות)"><label>ענף</label><select><option>הכל</option></select></div>
+      <div class="filter" data-f="branch_id → dim_branchs.is_olympic_branch"><label>סיווג ענף</label><select><option>הכל</option><option>אולימפי</option><option>לא אולימפי</option></select></div>
+      <div class="filter" data-f="branch_id → dim_branchs.personal_or_group"><label>סוג ענף</label><select><option>הכל</option><option>אישי</option><option>קבוצתי</option></select></div>
+      <span class="fg-miss" title="לא משותפים (STT 12/10): עמידה בתנאי סף — אין בהישגיות. טווח גיל / קבוצת גיל — בספורטאים ובהישגיות אישי לפי גיל הספורטאי, בהישגיות קבוצתי רק דרג תחרות (בוגרים / גיל אחד-שניים-שלושה מתחת) — סולמות שונים, יבלבל. מגדר/גיל/סוג תחרות — רק בהישגיות.">הוסרו (לא משותפים): תנאי סף · טווח גיל · מגדר/גיל/סוג תחרות</span>
       <button class="filter-reset">איפוס פילטרים</button>
     </div>
-
-    <div class="kpis k5" id="sp_kpis"></div>
-
+    <div class="kpis k3" id="sp_kpis"></div>
     <div class="grid" style="margin-bottom:14px">
       <div class="card col-4"><div class="card-head"><span class="card-title">5 האיגודים עם העלייה הגבוהה בספורטאים</span><span class="card-meta">מדורג לפי גדילה % · 2026 מול 2025</span></div><div class="card-canvas-wrap h-240"><canvas id="sp_top_ath"></canvas></div></div>
       <div class="card col-4"><div class="card-head"><span class="card-title">5 האיגודים עם העלייה הגבוהה בספורטאיות</span><span class="card-meta">מדורג לפי גדילה % · 2026 מול 2025</span></div><div class="card-canvas-wrap h-240"><canvas id="sp_top_w"></canvas></div></div>
       <div class="card col-4 pb-card"><div class="card-head"><span class="card-title">5 האיגודים עם העלייה הגבוהה במדליות דרג א'</span><span class="card-meta">מדורג לפי תוספת מדליות <span class="pb-tag">שלב ב'</span></span></div><div class="card-canvas-wrap h-240"><canvas id="sp_top_med"></canvas></div></div>
     </div>
-
-
     <div class="grid">
       <div class="card col-5"><div class="card-head"><span class="card-title">סך הספורטאים באיגודים לפי שנים</span><span class="card-meta"></span></div><div class="card-canvas-wrap h-300"><canvas id="sp_years"></canvas></div></div>
       <div class="card col-7"><div class="card-head"><span class="card-title">ספורטאים לפי קבוצת גיל ומגדר</span><span class="card-meta"></span></div><div class="card-canvas-wrap h-300"><canvas id="sp_age"></canvas></div></div>
-      <div class="card col-12"><div class="card-head"><span class="card-title">לפי רשות מקומית</span><span class="card-meta"></span></div><div id="sp_table"></div></div>
+    </div>
     </div>
 
-    <div class="grid" style="margin-top:14px">
-      <div class="card col-5"><div class="card-head"><span class="card-title">מספר הגופים שעומדים בסף, אך לכל היותר 10% מעליו — לפי תנאי</span><span class="card-meta"></span></div><div class="card-canvas-wrap h-300"><canvas id="sp_thr_bar"></canvas></div></div>
+    <!-- ── קבוצה 2 · תקציב · dwh_aa_fact_support_request_sport (+ unpivot ספורטאים) — פילטר רשות בלבד ── -->
+    <div class="fgroup">
+    <h2 class="st-h">תקציב ותמיכות<span class="fg-src">מקור: <code>dwh_aa_fact_support_request_sport</code> + ספורטאים מ-<code>fact_athlete</code> ב-unpivot (dedupe לפי רשות) · רמת פירוט: רשות מקומית</span></h2>
+    <div class="filter-bar">
+      <span class="filter-bar-label">פילטרים על <strong>תקציב</strong></span>
+      <div class="filter" data-f="authority_id"><label>רשות מקומית</label><select><option>הכל</option></select></div>
+      <span class="fg-miss" title="הספורטאים נכנסים לטבלת התקציב ב-unpivot עם dedupe ברמת רשות — כל פילטר נוסף (איגוד, ענף, תנאי סף, סוג הגשה…) חותך את הבסיס שעליו נעשה ה-dedupe ומייצר ספירות שגויות. סוג ענף מוצג כפיצול לשני ויזואלים, לא כפילטר.">פילטר רשות בלבד — הספורטאים ב-unpivot</span>
+      <button class="filter-reset">איפוס פילטרים</button>
+    </div>
+    <div class="kpis k2" id="sp_kpis_bud"></div>
+    <div class="grid">
+      <div class="card col-6"><div class="card-head"><span class="card-title">ספורטאים בספורט אישי</span><span class="card-meta">לפי רשות מקומית</span></div><div id="sp_table_ind"></div></div>
+      <div class="card col-6"><div class="card-head"><span class="card-title">ספורטאים בספורט קבוצתי</span><span class="card-meta">לפי רשות מקומית</span></div><div id="sp_table_team"></div></div>
+    </div>
+    </div>
+
+    <!-- ── קבוצה 4 · קירבה לתנאי סף · טבלה חדשה ── -->
+    <div class="fgroup">
+    <h2 class="st-h">קירבה לאי-מעבר תנאי סף<span class="fg-src">מקור: <strong>טבלה חדשה ב-ETL — לא קיימת ב-STT</strong> · רמת פירוט: גוף (איגוד / אגודה) × תנאי סף</span></h2>
+    <div class="filter-bar">
+      <span class="filter-bar-label">פילטרים על <strong>תנאי סף</strong></span>
+      <div class="filter" data-f="שנת מבחן (טבלה חדשה)"><label>שנה</label><select><option>2026</option><option>2025</option></select></div>
+      <div class="filter" data-f="רמת גוף (טבלה חדשה)"><label>רמת גוף</label><select><option>הכל</option><option>איגוד</option><option>אגודה</option></select></div>
+      <div class="filter" data-f="תנאי סף + סעיף במבחן (טבלה חדשה)"><label>תנאי סף</label><select><option>הכל</option></select></div>
+      <div class="filter" data-f="branch_id (טבלה חדשה)"><label>ענף</label><select><option>הכל</option></select></div>
+      <span class="fg-miss" title="הוויזואלים מציגים רק גופים שעברו את הסף — פילטר 'עמידה בתנאי סף' כפול/סותר כאן. גיל ומגדר לא רלוונטיים לרמת גוף.">לא רלוונטי: עמידה בתנאי סף · גיל · מגדר</span>
+      <button class="filter-reset">איפוס פילטרים</button>
+    </div>
+    <div class="grid">
+      <div class="card col-5"><div class="card-head"><span class="card-title">גופים בסכנת אי מעבר תנאי סף (כמעט ולא עברו) - מספר הגופים שעומדים בסף, אך לכל היותר 10% מעליו — לפי תנאי</span><span class="card-meta"></span></div><div class="card-canvas-wrap h-300"><canvas id="sp_thr_bar"></canvas></div></div>
       <div class="card col-7"><div class="card-head"><span class="card-title">פירוט הגופים שעומדים בסף, אך לכל היותר 10% מעליו</span><span class="card-meta">ממוין לפי מרווח</span></div><div id="sp_thr_table" style="max-height:300px;overflow:auto"></div><div style="font-size:11px;color:var(--ink-faint);margin-top:6px;line-height:1.6">תנאי סף מספריים ממבחן התמיכה 2026. בספירות קטנות (למשל 7 קבוצות) — לפחות יחידה אחת מעל הסף.</div></div>
     </div>
+    <div class="def-note">
+      <div class="dn-h">📌 הערה בולטת · הגדרות תנאי הסף — לפי מבחן התמיכה 2026 (להעברה למיכל)</div>
+      <div class="dn-q"><strong>הערת מורן:</strong> "יחושב כ-MEASURE כל שנה. לספק למיכל את ההגדרות המדויקות לכל תנאי סף, לשקול להעביר את זה לשלב ב' היות ויסתייע ב-ETL לטבלת אחוזי תקציב (היה אמור לכלול - מנופי מדיניות)"</div>
+      <table class="dn-t">
+        <thead><tr><th>תנאי</th><th>רמה</th><th>הגדרה במבחן</th><th>סף</th><th>מקור</th><th>נתון ב-STT</th></tr></thead>
+        <tbody>
+          <tr><td>ספורטאים רשומים — איגוד קבוצתי</td><td>איגוד</td><td>"באיגוד הספורט רשומים 200 ספורטאים לפחות" (איגוד בענף ספורט קבוצתי)</td><td><bdi dir="ltr">≥ 200</bdi></td><td><a href="../מבחן%20תמיכה%202026.PDF#page=12" target="_blank">§8(א) · עמ' 12</a></td><td class="ok">יש — <code>fact_athlete</code>: distinct <code>athlete_code</code> לאיגוד</td></tr>
+          <tr><td>ספורטאים רשומים — איגוד אישי</td><td>איגוד</td><td>"באיגוד הספורט רשומים 120 ספורטאים לפחות" (איגוד שמאגד ענף ספורט אישי)</td><td><bdi dir="ltr">≥ 120</bdi></td><td><a href="../מבחן%20תמיכה%202026.PDF#page=13" target="_blank">§10(1) · עמ' 13</a></td><td class="ok">יש — כנ"ל</td></tr>
+          <tr><td>נשים בהנהלת האיגוד</td><td>איגוד</td><td>מספר הנשים בהנהלה מהווה ייצוג הולם (סעיף 9א לחוק הספורט), "והוא לא יפחת מ-30% מכלל חברי ההנהלה"</td><td><bdi dir="ltr">≥ 30%</bdi></td><td><a href="../מבחן%20תמיכה%202026.PDF#page=11" target="_blank">§7(ה) · עמ' 11</a></td><td class="ok">יש — <code>fact_office_roles_sport</code>: <code>official_gender</code> לפי <code>association_id</code> + שנה. זיהוי חברי הנהלה: <code>is_vaad_menahel</code> (קיים ב-Silver <code>new_officials</code>, לא הועבר ל-Gold — להוסיף) או <code>official_desc</code></td></tr>
+          <tr><td>תקציב מתאמת נשים — ענפי על <span class="dn-rm">הוסר מהוויזואל</span></td><td>איגוד</td><td>איגוד בענפי העל המבקש תמיכה בתחום א' (§12(7) – מרכזי מצוינות): העסקת מתאמת לקידום ספורט נשים במשרה מלאה, בשכר ≥ השכר הממוצע במשק, "בתקציב שלא יפחת מ-2% מתקציב הענף"</td><td><bdi dir="ltr">≥ 2%</bdi></td><td><a href="../מבחן%20תמיכה%202026.PDF#page=12" target="_blank">§8(ד)(2) · עמ' 12</a></td><td class="part">חלקי — המתאמת: <code>official_desc</code> ב-<code>fact_office_roles_sport</code>; שכר: <code>salary</code> ב-Silver <code>new_officials</code> (לא ב-Gold); תקציב הענף: <code>approved_amount</code>. "תקציב ≥ 2%" — לאמת אם = שכר המתאמת או תקציב תוכנית</td></tr>
+          <tr><td>ליגת בוגרים</td><td>איגוד</td><td>"איגוד הספורט מקיים ליגת בוגרים אחת לפחות". <em>ליגה</em> = סדרת תחרויות "בה משתתפות 7 קבוצות לפחות" העומדות ב-§9(ב), 9(ה), 9(ו)(1); ≥ 2 תחרויות בחודש (למעט פגרה); מוכרת גם אם עד 2 קבוצות הפסיקו, אם שיחקו ≥ 50% מהסדרה</td><td><bdi dir="ltr">≥ 1 ליגה · ≥ 7 קבוצות</bdi></td><td><a href="../מבחן%20תמיכה%202026.PDF#page=12" target="_blank">§8(ב) · עמ' 12</a> + <a href="../מבחן%20תמיכה%202026.PDF#page=4" target="_blank">הגדרת "ליגה" · עמ' 4</a></td><td class="part">חלקי — קבוצות ל-<code>league_name</code> ב-<code>fact_support</code>; אין תדירות/השלמת עונה</td></tr>
+          <tr><td>רישום שחקנים מול טופס המשחק <span class="dn-rm">הוסר מהוויזואל</span></td><td>קבוצה</td><td>"מספר הספורטאים הרשומים בקבוצה עולה על 80% של המספר המרבי השלם בטופס המשחק" (מספר לא שלם — מעוגל כלפי מטה). <em>מספר מרבי בטופס</em> = המרבי שניתן לרשום בטופס המשחק בענף</td><td><bdi dir="ltr">&gt; 80%</bdi></td><td><a href="../מבחן%20תמיכה%202026.PDF#page=12" target="_blank">§9(ב) · עמ' 12</a> + <a href="../מבחן%20תמיכה%202026.PDF#page=4" target="_blank">הגדרה · עמ' 4</a></td><td class="part">חלקי — ספורטאים לקבוצה (<code>team_code</code>); חסר מרבי-טופס לענף</td></tr>
+          <tr><td>ספורטאים באגודה — ענף אישי</td><td>אגודה</td><td>"רשומים באגודת הספורט 15 ספורטאים לפחות, אשר עמדו בתנאי הסף 6(ב)(א)(ב); כאשר אחד מהם לפחות הינו ספורטאי בגיל התמחות 2 ומעלה, אשר השתתף באליפות ישראל או בתחרות דרג א'"</td><td><bdi dir="ltr">≥ 15</bdi></td><td><a href="../מבחן%20תמיכה%202026.PDF#page=13" target="_blank">§11(2) · עמ' 13</a></td><td class="part">כמעט מלא — ספירה: <code>fact_athlete</code> + <code>is_pass_threshold_athlete</code> לפי <code>society_id</code>. <strong>דרג א'</strong> (= אליפות עולם/אירופה כולל מוקדמות, <a href="../מבחן%20תמיכה%202026.PDF#page=7" target="_blank">הגדרה · עמ' 7</a>): שינוי קטן ב-STT — עמודה מחושבת ב-<code>fact_athlete</code>, <code>has_tier_a_participation</code> = קיים הישג ב-<code>new_athletetoachievements</code> עם אותו <code>athlete_support_request_code</code> (PK של מקור fact_athlete) ו-<code>champion_type</code> ∈ אליפות עולם/אירופה; + <code>athlete_age_category</code> ≥ התמחות 2. <strong>אליפות ישראל — חסר בכל מקור</strong> (ב-CRM רק אליפויות בינ"ל)</td></tr>
+          <tr><td>קבוצות גיל למידה–18 (העסקת מאמנים)</td><td>אגודה</td><td>אגודה בענף קבוצתי "שבה פועלות בין 4 ל-6 קבוצות לפחות, בגילאי למידה ועד גיל 18" (המספר המדויק לפי החלטת המינהל מראש). חריגים: רק ילדות/נערות/נשים — 4 (כדורגל — 2); ענפים מועדפים — אגודה אחת עם ≥ 2 קבוצות</td><td><bdi dir="ltr">4–6</bdi></td><td><a href="../מבחן%20תמיכה%202026.PDF#page=38" target="_blank">§31(4)(א)(2) · עמ' 38</a></td><td class="ok">יש (נגזר) — <code>fact_support_request_sport</code>: <code>team_code</code> + <code>society_id</code>; גיל הקבוצה = הקידומת של <code>league_name</code> (למשל "ילדים | ראשונה", "למידה זכר | שניה", "נערים", "נוער" מול "גברים"/"נשים"). נדרש מיפוי קידומות → "למידה–18"</td></tr>
+        </tbody>
+      </table>
+      <div class="dn-f">שורות המסומנות "הוסר מהוויזואל" — אין נתון להשלמת החישוב, ולכן אינן מוצגות בגרף ובטבלה; ההגדרה נשמרת כאן לעיון. · מקור: <a href="../מבחן%20תמיכה%202026.PDF" target="_blank">מבחן תמיכה 2026 (PDF)</a> — "נוסח משולב לא רשמי" (במקרה של שוני, הנוסח ברשומות מחייב). נתון ב-STT: מול <bdi>STT_Aigudim_Agudut_Gold.xlsx</bdi> + <bdi>STT_Aigudim_Agudut_Silver.xlsx</bdi> 12/10.</div>
+    </div>
+    </div>
 
-    <div class="footer-note"><strong>מקורות:</strong> מבחן האיגודים והאגודות · דשבורד האיגודים והאגודות · דשבורד ההישגיות (מדליות — שלב ב').</div>
+    <div class="footer-note"><strong>מקורות:</strong> מבחן האיגודים והאגודות · דשבורד האיגודים והאגודות · דשבורד ההישגיות (מדליות — שלב ב') · <bdi>STT_Aigudim_Agudut_Gold</bdi>.</div>
   </section>
 
 
@@ -1590,12 +1674,16 @@ setTimeout(()=>{mapPoly.invalidateSize();mapFac.invalidateSize();},250);
   // ================= SPORT · מצב הספורט בישראל (ערכים מדשבורד הפרודקשן) =================
   INIT.sport = function(){
     const kcard=k=>`<div class="kpi"><div class="kpi-label">${k[0]}</div><div class="kpi-value">${k[1]}</div><div class="kpi-sub">${k[2]||''}</div></div>`;
+    // קבוצת ספורטאים · fact_athlete
     document.getElementById('sp_kpis').innerHTML=[
       ['איגודים פעילים','59','עמדו בתנאי סף'],
       ['סך ספורטאים באיגודים','162,071',''],
-      ['תקציב שוטף לאיגודים','₪52.4M',''],
-      ['תקציב שוטף לאגודות','₪95.7M',''],
       ['אחוז נשים','22.52%','36,710 ספורטאיות']
+    ].map(kcard).join('');
+    // קבוצת תקציב · fact_support_request_sport
+    document.getElementById('sp_kpis_bud').innerHTML=[
+      ['תקציב שוטף לאיגודים','₪52.4M',''],
+      ['תקציב שוטף לאגודות','₪95.7M','']
     ].map(kcard).join('');
 
     // ── 5 האיגודים המובילים בעלייה (נתוני דמה להמחשה) ──
@@ -1621,15 +1709,14 @@ setTimeout(()=>{mapPoly.invalidateSize();mapFac.invalidateSize();},250);
 
     // ── קירבה לאי-מעבר תנאי סף (מבחן 2026 · פרק ג') · נתוני דמה ──
     // תנאים מספריים בלבד, ברמת גוף. u = יחידה לתצוגה
+    // הוסרו (אין נתון להשלמה — ההגדרה נשארת בהערה הבולטת): תקציב מתאמת נשים §8(ד)(2) · רישום מול טופס משחק §9(ב)
     const THR={
       ath_team:{n:'ספורטאים רשומים — איגוד קבוצתי',lvl:'איגוד',t:200,u:'',sec:'§8(א)'},
       ath_ind: {n:'ספורטאים רשומים — איגוד אישי',  lvl:'איגוד',t:120,u:'',sec:'§10(1)'},
       board:   {n:'נשים בהנהלת האיגוד',             lvl:'איגוד',t:30, u:'%',sec:'§7(ה)'},
-      coord:   {n:'תקציב מתאמת נשים — ענפי על',      lvl:'איגוד',t:2,  u:'%',sec:'§8(ד)(2)'},
-      league:  {n:'קבוצות בליגת הבוגרים',            lvl:'איגוד',t:7,  u:'',sec:'הגדרת "ליגה"'},
-      roster:  {n:'רישום שחקנים מול טופס המשחק',     lvl:'קבוצה',t:80, u:'%',sec:'§9(ב)'},
+      league:  {n:'קבוצות בליגת הבוגרים',            lvl:'איגוד',t:7,  u:'',sec:'§8(ב) + הגדרת "ליגה"'},
       soc_ind: {n:'ספורטאים באגודה — ענף אישי',      lvl:'אגודה',t:15, u:'',sec:'§11(2)'},
-      coach:   {n:'קבוצות גיל למידה–18 (העסקת מאמנים)',lvl:'אגודה',t:4,u:'',sec:'פרק ז\''}
+      coach:   {n:'קבוצות גיל למידה–18 (העסקת מאמנים)',lvl:'אגודה',t:4,u:'',sec:'§31(4)(א)(2)'}
     };
     // בטווח הסיכון: בפועל ≥ סף וגם בפועל < סף + max(10%·סף, 1)
     // גבול עליון: ספירות — 10% ולפחות יחידה אחת; אחוזים — 10% יחסי בלבד
@@ -1639,9 +1726,7 @@ setTimeout(()=>{mapPoly.invalidateSize();mapFac.invalidateSize();},250);
       ['איגוד הרוגבי','ath_team',208],['איגוד ההוקי','ath_team',214],['איגוד הכדורגל האמריקאי','ath_team',219],
       ['איגוד הטריאתלון','ath_ind',124],['איגוד הקשתות','ath_ind',129],['איגוד הסקווש','ath_ind',121],
       ['איגוד הכדורעף','board',31.2],['איגוד השייט','board',32.0],['איגוד הטניס','board',30.0],
-      ['איגוד הג\'ודו','coord',2.1],
       ['איגוד הכדוריד','league',7],['איגוד הכדורגל האמריקאי','league',7],
-      ['הפועל גליל עליון — נערות','roster',83.3],['עירוני נס ציונה — נוער','roster',86.7],['מכבי אשדוד — נשים','roster',81.8],
       ['אגודת שחייה דימונה','soc_ind',15],['מועדון טניס שולחן רמת השרון','soc_ind',16],['אגודת קליעה ירוחם','soc_ind',16],
       ['הפועל עפולה','coach',4],['מכבי שדרות','coach',4]
     ].filter(r=>atRisk(r[2],THR[r[1]]))
@@ -1688,22 +1773,32 @@ setTimeout(()=>{mapPoly.invalidateSize();mapFac.invalidateSize();},250);
         scales:{x:{...gridX,stacked:true,ticks:{color:COL.muted,font:{size:10.5},maxRotation:0,autoSkip:false}},
                 y:{...gridY,stacked:true,ticks:{...kTick,stepSize:10000},beginAtZero:true}}}});
 
-    // לפי רשות מקומית — Table עם פסי ערך
-    const AU=[
-      ['תל אביב-יפו',10.13,413,17006],['ירושלים',5.91,268,7733],['חיפה',5.44,258,8728],
-      ['ראשון לציון',3.46,134,5524],['פתח תקווה',3.23,159,5227],['נתניה',3.18,98,7713],
-      ['אשדוד',2.57,145,4132],['באר שבע',2.48,132,4190],['חולון',2.21,99,2831],['רמת גן',2.17,159,5181]
+    // לפי רשות מקומית — שתי טבלאות עם פסי ערך, מפוצלות לפי סוג ענף (דרישת לקוח). נתוני דמה להמחשה
+    // [רשות, תקציב מאושר (₪M), מספר קבוצות, סך ספורטאים]
+    const AU_IND=[
+      ['תל אביב-יפו',3.52,0,6420],['ירושלים',2.06,0,2890],['חיפה',1.98,0,3310],['נתניה',1.41,0,3460],
+      ['ראשון לציון',1.22,0,2050],['רמת גן',0.94,0,2240],['פתח תקווה',1.05,0,1880],['באר שבע',0.86,0,1530],
+      ['אשדוד',0.79,0,1410],['חולון',0.71,0,960]
     ];
-    const mx=[1,2,3].map(i=>Math.max(...AU.map(r=>r[i])));
-    const mbar=(v,i,txt,c)=>`<td><div class="mbar"><span class="mbar-v">${txt}</span>`+
-      `<span class="mbar-t"><span class="mbar-f" style="width:${(v/mx[i]*100).toFixed(1)}%;background:${c}"></span></span></div></td>`;
-    document.getElementById('sp_table').innerHTML=
-      '<table class="db-table"><thead><tr><th>רשות</th><th>תקציב מאושר</th><th>מספר קבוצות</th><th>סך ספורטאים</th></tr></thead><tbody>'+
-      AU.map(r=>'<tr><td style="font-weight:600">'+r[0]+'</td>'+
-        mbar(r[1],0,'₪'+r[1].toFixed(2)+'M',COL.navy)+
-        mbar(r[2],1,r[2].toLocaleString('he-IL'),COL.purple)+
-        mbar(r[3],2,r[3].toLocaleString('he-IL'),COL.orange)+'</tr>').join('')+
-      '</tbody></table>';
+    const AU_TEAM=[
+      ['תל אביב-יפו',6.61,413,10586],['ירושלים',3.85,268,4843],['חיפה',3.46,258,5418],['פתח תקווה',2.18,159,3347],
+      ['ראשון לציון',2.24,134,3474],['רמת גן',1.23,159,2941],['אשדוד',1.78,145,2722],['באר שבע',1.62,132,2660],
+      ['נתניה',1.77,98,4253],['חולון',1.50,99,1871]
+    ];
+    function auTable(id,rows,withTeams){
+      const mx=[1,2,3].map(i=>Math.max(...rows.map(r=>r[i]))||1);
+      const mbar=(v,i,txt,c)=>`<td><div class="mbar"><span class="mbar-v">${txt}</span>`+
+        `<span class="mbar-t"><span class="mbar-f" style="width:${(v/mx[i]*100).toFixed(1)}%;background:${c}"></span></span></div></td>`;
+      document.getElementById(id).innerHTML=
+        '<table class="db-table"><thead><tr><th>רשות</th><th>תקציב מאושר</th>'+(withTeams?'<th>מספר קבוצות</th>':'')+'<th>סך ספורטאים</th></tr></thead><tbody>'+
+        rows.map(r=>'<tr><td style="font-weight:600">'+r[0]+'</td>'+
+          mbar(r[1],0,'₪'+r[1].toFixed(2)+'M',COL.navy)+
+          (withTeams?mbar(r[2],1,r[2].toLocaleString('he-IL'),COL.purple):'')+
+          mbar(r[3],2,r[3].toLocaleString('he-IL'),COL.orange)+'</tr>').join('')+
+        '</tbody></table>';
+    }
+    auTable('sp_table_ind',AU_IND,false);   // ספורט אישי — אין קבוצות
+    auTable('sp_table_team',AU_TEAM,true);
   };
 
   INIT.status = function(){
@@ -1722,8 +1817,8 @@ setTimeout(()=>{mapPoly.invalidateSize();mapFac.invalidateSize();},250);
           pend=SUP.filter(s=>s.model==='טרם').length, sumReq=SUP.reduce((a,s)=>a+(s.exp||0),0),
           adv=SUP.filter(s=>/שולם|%/.test(s.adv||'') && (s.adv||'').trim()!=='0').length;
     document.getElementById('st_kpis').innerHTML=[
-      ['סך מבחני תמיכה',total],['מודל אושר',appr,'מתוך '+total],['בתהליך אישור',plan],
-      ['טרם / ממתין',pend],['סך צפי בקשות',fmtInt(sumReq)],['מקדמות ששולמו',adv]
+      ['סך מבחני תמיכה',total],['מודל אושר',appr,'מתוך '+total],['בתהליך אישור',plan,''],
+      ['טרם / ממתין',pend,''],['סך צפי בקשות',fmtInt(sumReq)],['מקדמות ששולמו',adv]
     ].map(kcard).join('');
 
     // ---- Gantt · HTML/CSS (משותף לתמיכה + מתקנים) ----
